@@ -32,7 +32,7 @@ body {
   font-size: 13px;
   color: #888;
   white-space: nowrap;
-  min-width: 48px;
+  min-width: 52px;
 }
 .progress-bar {
   flex: 1;
@@ -89,7 +89,6 @@ body {
   border-top: 1px solid #EEEDFE;
 }
 .s-ko.show { display: block; }
-
 .tab-row {
   display: flex;
   gap: 0;
@@ -117,7 +116,6 @@ body {
 }
 .panel { display: none; }
 .panel.active { display: block; }
-
 .section-label {
   font-size: 11px;
   color: #aaa;
@@ -136,7 +134,6 @@ body {
 .vocab-pron { font-size: 12px; color: #aaa; margin: 3px 0; }
 .vocab-meaning { font-size: 14px; color: #444; }
 .vocab-example { font-size: 13px; color: #7F77DD; margin-top: 6px; font-style: italic; }
-
 .grammar-item {
   background: #fff;
   border-radius: 12px;
@@ -147,7 +144,6 @@ body {
 .grammar-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 5px; }
 .grammar-desc { font-size: 14px; color: #555; line-height: 1.6; }
 .grammar-ex { font-size: 13px; color: #7F77DD; margin-top: 6px; font-style: italic; }
-
 .tip-item {
   background: #fff;
   border-radius: 12px;
@@ -157,7 +153,6 @@ body {
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 .tip-item p { font-size: 14px; color: #444; line-height: 1.65; }
-
 .nav-row {
   display: flex;
   gap: 10px;
@@ -185,7 +180,7 @@ body {
 
 <div class="source-tag">📰 AI for Work 뉴스레터 · 2026.06.24</div>
 <div class="top-bar">
-  <span class="prog-text" id="prog-text">1 / 10</span>
+  <span class="prog-text" id="prog-text">1 / 50</span>
   <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
 </div>
 
@@ -223,8 +218,9 @@ body {
 <script>
 const sentences = [
   {
-    num:1, en:"AI is raising the bar at work, and not just for machines.",
-    ko:"AI는 직장에서 기준을 높이고 있으며, 그것은 기계에만 해당되는 얘기가 아닙니다.",
+    num:1,
+    en:"AI is raising the bar at work, and not just for machines.",
+    ko:"AI는 직장에서 기준을 높이고 있으며, 그것은 기계에만 해당하는 이야기가 아닙니다.",
     vocab:[
       {word:"raise the bar",pron:"[레이즈 더 바]",meaning:"기준을 높이다",ex:"This product raises the bar for quality. (이 제품은 품질 기준을 높인다.)"},
       {word:"not just for",pron:"[낫 저스트 포]",meaning:"~만을 위한 것이 아닌",ex:"Not just for experts. (전문가들만을 위한 게 아니야.)"}
@@ -233,8 +229,9 @@ const sentences = [
     tip:["raise the bar는 '기대치/기준을 올리다'는 관용표현이에요. 뉴스·비즈니스에서 자주 나옵니다.","not just for ~는 '~만의 이야기가 아니다'를 강조할 때 씁니다."]
   },
   {
-    num:2, en:"As hiring slows, employers are looking for people who can pair AI fluency with judgment and strong communication skills.",
-    ko:"채용이 둔화되면서, 고용주들은 AI 활용 능력을 판단력, 강한 소통 능력과 결합할 수 있는 사람을 찾고 있습니다.",
+    num:2,
+    en:"As hiring slows, employers are looking for people who can pair AI fluency with judgment and strong communication skills.",
+    ko:"채용이 둔화되면서, 고용주들은 AI 활용 능력을 판단력과 강한 소통 능력과 결합할 수 있는 사람을 찾고 있습니다.",
     vocab:[
       {word:"hiring",pron:"[하이어링]",meaning:"채용, 고용",ex:"The company is not hiring now. (그 회사는 지금 채용하지 않는다.)"},
       {word:"fluency",pron:"[플루언시]",meaning:"유창함, 능숙함",ex:"AI fluency is important today. (오늘날 AI 능숙도가 중요하다.)"},
@@ -247,7 +244,8 @@ const sentences = [
     tip:["pair A with B는 비즈니스 영어에서 자주 나오는 표현이에요.","fluency는 언어뿐 아니라 'AI fluency'처럼 다양한 분야에서 씁니다."]
   },
   {
-    num:3, en:"Anthropic unveiled Claude Tag, a system that embeds its flagship model into Slack.",
+    num:3,
+    en:"Anthropic unveiled Claude Tag, a system that embeds its flagship model into Slack.",
     ko:"Anthropic은 슬랙에 자사의 대표 모델을 내장하는 시스템인 Claude Tag를 공개했습니다.",
     vocab:[
       {word:"unveiled",pron:"[언베일드]",meaning:"공개했다, 발표했다",ex:"Apple unveiled a new phone. (애플이 새 폰을 공개했다.)"},
@@ -255,13 +253,14 @@ const sentences = [
       {word:"embed",pron:"[임베드]",meaning:"내장하다, 삽입하다",ex:"The chip is embedded in the device. (칩이 기기에 내장되어 있다.)"}
     ],
     grammar:[
-      {title:"동격(, + 명사구)",desc:"콤마 뒤에 앞 명사를 설명하는 명사구가 와요. 'Claude Tag, a system ~'처럼요.",ex:"Seoul, the capital of Korea, is beautiful."},
+      {title:"동격 (콤마 + 명사구)",desc:"콤마 뒤에 앞 명사를 설명하는 명사구가 와요.",ex:"Seoul, the capital of Korea, is beautiful. (한국의 수도인 서울은 아름답다.)"},
       {title:"관계대명사 that",desc:"앞의 명사(a system)를 꾸며주는 절을 이끕니다.",ex:"a tool that helps you work (일을 도와주는 도구)"}
     ],
     tip:["unveil은 '베일을 벗기다'가 원래 뜻으로, 신제품·서비스 발표에 자주 씁니다.","flagship은 '주력 상품'을 뜻하는 비즈니스 핵심 용어예요."]
   },
   {
-    num:4, en:"This allows users to grant the model access to certain channels and delegate tasks to it by tagging Claude.",
+    num:4,
+    en:"This allows users to grant the model access to certain channels and delegate tasks to it by tagging Claude.",
     ko:"이를 통해 사용자는 모델에게 특정 채널에 대한 접근 권한을 부여하고, Claude를 태그해서 작업을 위임할 수 있습니다.",
     vocab:[
       {word:"grant access to",pron:"[그랜트 액세스 투]",meaning:"~에 접근 권한을 주다",ex:"Grant access to the folder. (폴더에 접근 권한을 줘.)"},
@@ -270,82 +269,553 @@ const sentences = [
     ],
     grammar:[
       {title:"allow + 목적어 + to 동사",desc:"'~가 …할 수 있게 하다'는 뜻이에요.",ex:"This app allows you to save time. (이 앱은 시간을 절약하게 해준다.)"},
-      {title:"by + ~ing (수단 표현)",desc:"'~함으로써'라는 뜻으로, 방법이나 수단을 나타냅니다.",ex:"Learn English by watching movies."}
+      {title:"by + ~ing (수단 표현)",desc:"'~함으로써'라는 뜻으로, 방법이나 수단을 나타냅니다.",ex:"Learn English by watching movies. (영화를 봄으로써 영어를 배워라.)"}
     ],
     tip:["grant + 목적어 + access to ~는 IT/비즈니스에서 정말 많이 나오는 표현이에요.","delegate는 사람에게도, AI에게도 업무를 맡길 때 씁니다."]
   },
   {
-    num:5, en:"Anthropic positions Claude Tag as a digital teammate, akin to human coworkers, rather than a tool.",
+    num:5,
+    en:"Claude builds context by remembering relevant information from the channels it's a part of.",
+    ko:"Claude는 자신이 속한 채널의 관련 정보를 기억함으로써 맥락을 쌓아갑니다.",
+    vocab:[
+      {word:"build context",pron:"[빌드 컨텍스트]",meaning:"맥락을 쌓다, 배경을 이해하다",ex:"Read more to build context. (더 읽어서 맥락을 파악해.)"},
+      {word:"relevant",pron:"[렐러번트]",meaning:"관련 있는, 적절한",ex:"Give me relevant information. (관련 있는 정보를 줘.)"},
+      {word:"be a part of",pron:"[비 어 파트 어브]",meaning:"~의 일부이다, ~에 속하다",ex:"I want to be a part of this team. (이 팀의 일원이 되고 싶어.)"}
+    ],
+    grammar:[{title:"by + ~ing",desc:"'~함으로써'라는 수단 표현이에요. by 뒤에 동사에 -ing를 붙입니다.",ex:"He learned English by reading books. (그는 책을 읽음으로써 영어를 배웠다.)"}],
+    tip:["build context는 AI·IT 분야에서 자주 쓰는 표현이에요.","relevant는 important와 비슷하지만, '주제와 관련 있는'이라는 뉘앙스가 있어요."]
+  },
+  {
+    num:6,
+    en:"Anthropic positions Claude Tag as a digital teammate, akin to human coworkers, rather than a tool.",
     ko:"Anthropic은 Claude Tag를 도구가 아닌, 사람 동료와 비슷한 디지털 팀원으로 자리매김하고 있습니다.",
     vocab:[
-      {word:"position A as B",pron:"[포지션 에이 애즈 비]",meaning:"A를 B로 자리매김하다",ex:"They positioned it as a premium product."},
+      {word:"position A as B",pron:"[포지션 에이 애즈 비]",meaning:"A를 B로 자리매김하다",ex:"They positioned it as a premium product. (그들은 그것을 프리미엄 제품으로 포지셔닝했다.)"},
       {word:"akin to",pron:"[어킨 투]",meaning:"~와 유사한, 비슷한",ex:"This feeling is akin to joy. (이 감정은 기쁨과 비슷하다.)"},
-      {word:"rather than",pron:"[래더 댄]",meaning:"~보다는, ~ 대신에",ex:"Use email rather than phone."}
+      {word:"rather than",pron:"[래더 댄]",meaning:"~보다는, ~ 대신에",ex:"Use email rather than phone. (전화보다 이메일을 써라.)"}
     ],
     grammar:[{title:"A rather than B",desc:"'B가 아니라 A'라는 뜻으로, 선호나 대조를 나타냅니다.",ex:"Walk rather than drive. (운전보다 걸어라.)"}],
     tip:["position A as B는 마케팅·비즈니스 기사에서 자주 보이는 표현이에요.","akin to는 similar to보다 좀 더 격식체 표현입니다."]
   },
   {
-    num:6, en:"The more we think of these tools as coworkers, the more we must trust them, and the more risk we undertake.",
-    ko:"이 도구들을 동료로 생각할수록, 더 많이 신뢰해야 하고, 그만큼 더 많은 위험을 감수하게 됩니다.",
+    num:7,
+    en:"The more we think of these tools as coworkers, the more we must trust them.",
+    ko:"이 도구들을 동료로 생각할수록, 우리는 더 많이 신뢰해야 합니다.",
     vocab:[
-      {word:"think of A as B",pron:"[띵크 어브 에이 애즈 비]",meaning:"A를 B로 생각하다",ex:"I think of her as a friend."},
-      {word:"undertake",pron:"[언더테이크]",meaning:"감수하다, 떠맡다",ex:"We undertake great risks."}
+      {word:"think of A as B",pron:"[띵크 어브 에이 애즈 비]",meaning:"A를 B로 생각하다",ex:"I think of her as a friend. (나는 그녀를 친구로 생각한다.)"},
+      {word:"trust",pron:"[트러스트]",meaning:"신뢰하다, 믿다",ex:"Do you trust this app? (이 앱을 믿어?)"}
     ],
     grammar:[{title:"The 비교급 ~, the 비교급 …",desc:"'~할수록 더 …하다'는 표현이에요. 영어에서 매우 중요한 패턴입니다.",ex:"The harder you work, the better the results. (더 열심히 할수록 결과가 더 좋다.)"}],
-    tip:["The more ~, the more … 패턴은 꼭 외워두세요!","think of A as B = consider A (to be) B와 같은 뜻이에요."]
+    tip:["The more ~, the more … 패턴은 꼭 외워두세요!","think of A as B = consider A to be B와 같은 뜻이에요."]
   },
   {
-    num:7, en:"Hiring across Europe is down 25% from pandemic-era highs and 15% year over year.",
-    ko:"유럽 전역의 채용은 팬데믹 시기 최고치 대비 25%, 전년 동기 대비 15% 감소했습니다.",
+    num:8,
+    en:"This mindset shift brings up two potential concerns.",
+    ko:"이러한 사고방식의 전환은 두 가지 잠재적인 우려를 불러일으킵니다.",
     vocab:[
-      {word:"down (숫자)%",pron:"[다운]",meaning:"~% 감소한",ex:"Sales are down 10% this month."},
-      {word:"pandemic-era",pron:"[팬데믹 에라]",meaning:"팬데믹 시대의",ex:"pandemic-era policies (팬데믹 시대 정책들)"},
-      {word:"year over year",pron:"[이어 오버 이어]",meaning:"전년 동기 대비 (YoY)",ex:"Revenue grew 20% year over year."}
+      {word:"mindset shift",pron:"[마인드셋 쉬프트]",meaning:"사고방식의 전환",ex:"A mindset shift is needed. (사고방식의 전환이 필요하다.)"},
+      {word:"bring up",pron:"[브링 업]",meaning:"불러일으키다, 제기하다",ex:"He brought up an important point. (그는 중요한 점을 제기했다.)"},
+      {word:"potential",pron:"[퍼텐셜]",meaning:"잠재적인, 가능성 있는",ex:"There are potential risks. (잠재적인 위험이 있다.)"}
     ],
-    grammar:[{title:"수치 표현: be down/up + %",desc:"'~% 떨어졌다/올랐다'는 경제·뉴스 기사에서 매우 자주 나오는 표현이에요.",ex:"Prices are up 5%. (가격이 5% 올랐다.)"}],
-    tip:["year over year(YoY)는 경제 기사 필수 표현이에요. 'compared to last year'와 같은 뜻입니다.","from + 기준점은 '~대비'라는 뜻으로, 통계 기사에 자주 나옵니다."]
+    grammar:[{title:"bring up",desc:"'화제를 꺼내다', '제기하다'는 뜻의 구동사예요.",ex:"She brought up the issue at the meeting. (그녀는 회의에서 그 문제를 제기했다.)"}],
+    tip:["mindset은 요즘 한국어에서도 자주 쓰는 단어예요!","bring up은 '키우다'와 '화제를 꺼내다' 두 가지 뜻이 있어요."]
   },
   {
-    num:8, en:"Specialized expertise alone is no longer enough.",
+    num:9,
+    en:"The more we trust these tools, the more risk we undertake at the same time.",
+    ko:"이 도구들을 더 많이 신뢰할수록, 동시에 더 많은 위험을 감수하게 됩니다.",
+    vocab:[
+      {word:"undertake",pron:"[언더테이크]",meaning:"감수하다, 떠맡다",ex:"We undertake great risks. (우리는 큰 위험을 감수한다.)"},
+      {word:"at the same time",pron:"[앳 더 세임 타임]",meaning:"동시에",ex:"Don't talk and eat at the same time. (동시에 말하고 먹지 마.)"}
+    ],
+    grammar:[{title:"The 비교급 ~, the 비교급 … (심화)",desc:"앞 문장과 이어지는 패턴이에요. 조건과 결과를 동시에 표현합니다.",ex:"The more you save, the richer you get. (더 많이 저축할수록 더 부유해진다.)"}],
+    tip:["undertake는 격식체 표현이에요. 회화에서는 take on을 더 많이 씁니다.","at the same time은 문장 앞이나 뒤 어디에나 올 수 있어요."]
+  },
+  {
+    num:10,
+    en:"This shift risks further growing the narrative that AI is ready to replace employees.",
+    ko:"이러한 전환은 AI가 직원을 대체할 준비가 됐다는 이야기를 더욱 키울 위험이 있습니다.",
+    vocab:[
+      {word:"risk + ~ing",pron:"[리스크]",meaning:"~할 위험이 있다",ex:"You risk losing everything. (모든 것을 잃을 위험이 있다.)"},
+      {word:"narrative",pron:"[내러티브]",meaning:"이야기, 서사, 담론",ex:"The media created a new narrative. (미디어가 새로운 담론을 만들었다.)"},
+      {word:"replace",pron:"[리플레이스]",meaning:"대체하다, 교체하다",ex:"AI may replace some jobs. (AI가 일부 직업을 대체할 수 있다.)"}
+    ],
+    grammar:[{title:"risk + 동명사(~ing)",desc:"'~할 위험을 감수하다'는 표현이에요. risk 뒤에는 반드시 -ing가 옵니다.",ex:"Don't risk making that mistake. (그 실수를 할 위험을 감수하지 마.)"}],
+    tip:["narrative는 요즘 '사회적 담론'이라는 의미로 자주 쓰여요.","risk + ~ing 패턴은 비즈니스·뉴스 영어에서 자주 나옵니다."]
+  },
+  {
+    num:11,
+    en:"Sue Duke pointed to internal data showing that hiring across Europe is down 25% from pandemic-era highs.",
+    ko:"Sue Duke는 유럽 전역의 채용이 팬데믹 시기 최고치 대비 25% 감소했음을 보여주는 내부 데이터를 언급했습니다.",
+    vocab:[
+      {word:"point to",pron:"[포인트 투]",meaning:"~을 언급하다, 지적하다",ex:"She pointed to the problem. (그녀는 문제를 지적했다.)"},
+      {word:"internal data",pron:"[인터널 데이터]",meaning:"내부 데이터",ex:"The internal data shows growth. (내부 데이터는 성장을 보여준다.)"},
+      {word:"pandemic-era highs",pron:"[팬데믹 에라 하이즈]",meaning:"팬데믹 시기 최고치",ex:"Prices hit pandemic-era highs. (가격이 팬데믹 시기 최고치에 달했다.)"}
+    ],
+    grammar:[{title:"현재분사구 (showing that ~)",desc:"'~을 보여주는'이라는 뜻으로 앞의 명사(data)를 꾸며줍니다.",ex:"a report showing that sales grew (매출이 증가했음을 보여주는 보고서)"}],
+    tip:["point to는 '손가락으로 가리키다'뿐 아니라 '증거를 제시하다'는 뜻으로도 자주 써요.","pandemic-era처럼 시대를 나타낼 때 하이픈(-)을 써서 형용사로 만들 수 있어요."]
+  },
+  {
+    num:12,
+    en:"Hiring in the U.S. remains 24% below pre-pandemic levels.",
+    ko:"미국의 채용은 팬데믹 이전 수준보다 24% 낮은 상태를 유지하고 있습니다.",
+    vocab:[
+      {word:"remains",pron:"[리메인즈]",meaning:"~인 상태를 유지하다",ex:"The situation remains the same. (상황은 그대로다.)"},
+      {word:"below",pron:"[빌로우]",meaning:"~보다 낮은, ~ 아래",ex:"Temperatures are below zero. (기온이 영하다.)"},
+      {word:"pre-pandemic",pron:"[프리팬데믹]",meaning:"팬데믹 이전의",ex:"pre-pandemic travel levels (팬데믹 이전 여행 수준)"}
+    ],
+    grammar:[{title:"remain + 형용사/명사",desc:"'~인 상태로 남아있다'는 표현이에요. stay와 비슷한 의미입니다.",ex:"He remained calm. (그는 침착함을 유지했다.)"}],
+    tip:["remain은 'stay'보다 좀 더 격식체 표현이에요.","pre-는 '이전'을 뜻하는 접두사예요. pre-war(전쟁 이전), pre-tax(세전) 등으로 씁니다."]
+  },
+  {
+    num:13,
+    en:"Even as hiring slows, employers say the roles that remain open increasingly demand a new mix of skills.",
+    ko:"채용이 둔화되는 상황에서도, 고용주들은 남아 있는 직책들이 점점 더 새로운 기술의 조합을 요구한다고 말합니다.",
+    vocab:[
+      {word:"even as",pron:"[이븐 애즈]",meaning:"~하는 상황에서도, ~임에도",ex:"Even as prices rise, demand grows. (가격이 오르는 상황에서도 수요는 증가한다.)"},
+      {word:"increasingly",pron:"[인크리싱리]",meaning:"점점 더, 갈수록",ex:"AI is increasingly important. (AI는 점점 더 중요해지고 있다.)"},
+      {word:"demand",pron:"[디맨드]",meaning:"요구하다, 필요로 하다",ex:"This job demands creativity. (이 직업은 창의성을 요구한다.)"}
+    ],
+    grammar:[{title:"even as + 절",desc:"'~임에도 불구하고'라는 뜻의 접속사예요. 대조를 강조합니다.",ex:"Even as he failed, he kept trying. (실패하면서도 그는 계속 도전했다.)"}],
+    tip:["even as는 'although'보다 상황이 동시에 진행된다는 느낌이 강해요.","increasingly는 뉴스에서 정말 자주 나오는 부사예요. '갈수록'이라고 기억하세요!"]
+  },
+  {
+    num:14,
+    en:"Specialized expertise alone is no longer enough.",
     ko:"전문 지식만으로는 더 이상 충분하지 않습니다.",
     vocab:[
-      {word:"specialized",pron:"[스페셜라이즈드]",meaning:"전문화된, 특화된",ex:"She has specialized skills."},
-      {word:"expertise",pron:"[엑스퍼티즈]",meaning:"전문 지식, 전문성",ex:"His expertise is in data science."},
-      {word:"no longer",pron:"[노 롱거]",meaning:"더 이상 ~않다",ex:"I no longer use that app."}
+      {word:"specialized",pron:"[스페셜라이즈드]",meaning:"전문화된, 특화된",ex:"She has specialized skills. (그녀는 전문 기술을 갖고 있다.)"},
+      {word:"expertise",pron:"[엑스퍼티즈]",meaning:"전문 지식, 전문성",ex:"His expertise is in data science. (그의 전문성은 데이터 사이언스에 있다.)"},
+      {word:"no longer",pron:"[노 롱거]",meaning:"더 이상 ~않다",ex:"I no longer use that app. (나는 더 이상 그 앱을 안 써.)"}
     ],
     grammar:[
-      {title:"A alone is not enough",desc:"'A만으로는 충분하지 않다'는 표현이에요. alone이 '단독으로'라는 뜻입니다.",ex:"Money alone is not enough."},
-      {title:"no longer",desc:"'더 이상 ~하지 않다'는 부정 표현. not ~ anymore와 같은 뜻입니다.",ex:"He no longer works here."}
+      {title:"A alone is not enough",desc:"'A만으로는 충분하지 않다'는 표현이에요. alone이 '단독으로'라는 뜻입니다.",ex:"Money alone is not enough. (돈만으로는 충분하지 않다.)"},
+      {title:"no longer",desc:"'더 이상 ~하지 않다'는 부정 표현. not ~ anymore와 같은 뜻입니다.",ex:"He no longer works here. (그는 더 이상 여기서 일하지 않는다.)"}
     ],
     tip:["no longer는 not anymore보다 약간 격식체 표현이에요.","expertise는 셀 수 없는 명사라서 an expertise라고 하지 않아요."]
   },
   {
-    num:9, en:"We should never have to pay for AI with our data.",
+    num:15,
+    en:"Workers are increasingly expected to pair technical skills with emotional intelligence.",
+    ko:"직원들은 기술적 능력을 감성 지능과 결합할 것을 점점 더 기대받고 있습니다.",
+    vocab:[
+      {word:"be expected to",pron:"[비 익스펙티드 투]",meaning:"~할 것으로 기대되다",ex:"You are expected to be on time. (당신은 제때 올 것으로 기대된다.)"},
+      {word:"emotional intelligence",pron:"[이모셔널 인텔리전스]",meaning:"감성 지능, EQ",ex:"Emotional intelligence is key. (감성 지능이 핵심이다.)"},
+      {word:"technical skills",pron:"[테크니컬 스킬즈]",meaning:"기술적 능력",ex:"He has strong technical skills. (그는 뛰어난 기술적 능력을 갖고 있다.)"}
+    ],
+    grammar:[{title:"수동태: be expected to + 동사원형",desc:"'~할 것으로 기대되다'는 수동 표현이에요. 직장이나 사회에서 기대되는 역할을 표현할 때 씁니다.",ex:"Students are expected to study hard. (학생들은 열심히 공부할 것으로 기대된다.)"}],
+    tip:["be expected to는 의무와 기대를 동시에 담은 표현이에요.","EQ(emotional intelligence quotient)는 IQ만큼 중요하다는 개념으로 자주 등장해요."]
+  },
+  {
+    num:16,
+    en:"In a world where more tasks are being automated, the most valuable employees may be those who demonstrate deeply human advantages.",
+    ko:"더 많은 업무가 자동화되는 세상에서, 가장 가치 있는 직원은 깊이 인간적인 강점을 보여주는 사람일 것입니다.",
+    vocab:[
+      {word:"automate",pron:"[오토메이트]",meaning:"자동화하다",ex:"This process can be automated. (이 과정은 자동화될 수 있다.)"},
+      {word:"valuable",pron:"[밸류어블]",meaning:"가치 있는, 소중한",ex:"Time is the most valuable thing. (시간이 가장 가치 있는 것이다.)"},
+      {word:"demonstrate",pron:"[데먼스트레이트]",meaning:"증명하다, 보여주다",ex:"She demonstrated her skills. (그녀는 자신의 기술을 보여줬다.)"}
+    ],
+    grammar:[{title:"관계부사 where",desc:"'~인 세상에서'처럼 장소나 상황을 나타내는 절을 이끕니다.",ex:"a world where anything is possible (모든 것이 가능한 세상)"}],
+    tip:["be being automated는 '지금 자동화되고 있는 중'이라는 진행 수동태예요.","those who ~는 '~하는 사람들'이라는 뜻으로 매우 자주 쓰여요."]
+  },
+  {
+    num:17,
+    en:"A group of leaders came together to spearhead efforts to implement data sovereignty and privacy.",
+    ko:"한 그룹의 리더들이 데이터 주권과 개인정보 보호를 시행하려는 노력을 이끌기 위해 모였습니다.",
+    vocab:[
+      {word:"spearhead",pron:"[스피어헤드]",meaning:"선두에서 이끌다, 주도하다",ex:"She spearheaded the project. (그녀가 프로젝트를 주도했다.)"},
+      {word:"implement",pron:"[임플리먼트]",meaning:"시행하다, 실행하다",ex:"We need to implement this plan. (이 계획을 시행해야 한다.)"},
+      {word:"data sovereignty",pron:"[데이터 소버린티]",meaning:"데이터 주권",ex:"Companies want data sovereignty. (기업들은 데이터 주권을 원한다.)"}
+    ],
+    grammar:[{title:"come together to + 동사원형",desc:"'~하기 위해 모이다'는 표현이에요.",ex:"They came together to solve the problem. (그들은 문제를 해결하기 위해 모였다.)"}],
+    tip:["spearhead는 '창끝'이 원래 뜻으로, '선두에서 이끌다'는 뉘앙스예요.","implement는 '아이디어를 실제로 실행하다'라는 의미예요."]
+  },
+  {
+    num:18,
+    en:"We should never have to pay for AI with our data.",
     ko:"우리는 절대 데이터로 AI 비용을 지불해서는 안 됩니다.",
     vocab:[
-      {word:"never have to",pron:"[네버 해브 투]",meaning:"절대 ~할 필요가 없다",ex:"You never have to worry."},
-      {word:"pay for A with B",pron:"[페이 포 에이 위드 비]",meaning:"B로 A 값을 치르다",ex:"Pay for coffee with your phone."}
+      {word:"never have to",pron:"[네버 해브 투]",meaning:"절대 ~할 필요가 없다",ex:"You never have to worry. (걱정할 필요가 전혀 없어.)"},
+      {word:"pay for A with B",pron:"[페이 포 에이 위드 비]",meaning:"B로 A 값을 치르다",ex:"Pay for coffee with your phone. (폰으로 커피값을 내.)"}
     ],
-    grammar:[
-      {title:"should never + 동사원형",desc:"'절대 ~해서는 안 된다'는 강한 금지·당위 표현이에요.",ex:"You should never give up."},
-      {title:"pay for A with B",desc:"'B로 A를 지불하다'는 표현. with 뒤에 지불 수단이 옵니다.",ex:"Pay for it with cash."}
-    ],
+    grammar:[{title:"should never + 동사원형",desc:"'절대 ~해서는 안 된다'는 강한 금지·당위 표현이에요.",ex:"You should never give up. (절대 포기해서는 안 된다.)"}],
     tip:["should never는 강한 도덕적 주장을 할 때 자주 씁니다.","pay for A with B 패턴을 통째로 외워두면 편해요."]
   },
   {
-    num:10, en:"The most valuable employees may be those who can demonstrate they have deeply human advantages.",
-    ko:"가장 가치 있는 직원은 자신이 깊이 인간적인 강점을 갖고 있음을 증명할 수 있는 사람일 것입니다.",
+    num:19,
+    en:"Four key themes emerged: data privacy, agent identity, hardware-based trust, and sovereign AI.",
+    ko:"네 가지 핵심 주제가 등장했습니다: 데이터 개인정보 보호, 에이전트 신원, 하드웨어 기반 신뢰, 그리고 주권적 AI입니다.",
     vocab:[
-      {word:"valuable",pron:"[밸류어블]",meaning:"가치 있는, 소중한",ex:"Time is the most valuable thing."},
-      {word:"demonstrate",pron:"[데먼스트레이트]",meaning:"증명하다, 보여주다",ex:"She demonstrated her skills."},
-      {word:"advantage",pron:"[어드밴티지]",meaning:"강점, 이점",ex:"Speaking Korean is my advantage."}
+      {word:"emerged",pron:"[이머지드]",meaning:"나타났다, 등장했다",ex:"A new trend has emerged. (새로운 트렌드가 등장했다.)"},
+      {word:"sovereign",pron:"[소버린]",meaning:"주권의, 독립적인",ex:"Each country has sovereign rights. (각 나라는 주권을 가진다.)"},
+      {word:"hardware-based",pron:"[하드웨어 베이스드]",meaning:"하드웨어 기반의",ex:"Hardware-based security is stronger. (하드웨어 기반 보안이 더 강하다.)"}
     ],
-    grammar:[
-      {title:"may be those who ~",desc:"'~인 사람들일 것이다'는 추측 표현이에요. may는 가능성을 나타냅니다.",ex:"The winners may be those who adapt."},
-      {title:"demonstrate (that) + 절",desc:"'~임을 보여주다/증명하다'는 뜻이에요.",ex:"He demonstrated that it works."}
+    grammar:[{title:"콜론(:)을 이용한 나열",desc:"콜론 뒤에 앞 문장의 내용을 구체적으로 나열할 때 씁니다.",ex:"I need three things: a pen, paper, and time."}],
+    tip:["emerge는 '물에서 나오다'가 원래 뜻으로, '새롭게 등장하다'는 의미로 자주 써요.","sovereign은 '왕'이라는 뜻도 있지만, 여기서는 '자주적인'이라는 의미예요."]
+  },
+  {
+    num:20,
+    en:"The pendulum swings between centralization and decentralization don't just mirror the on-prem vs. cloud debates of a generation ago.",
+    ko:"중앙화와 탈중앙화 사이의 진자 운동은 단순히 한 세대 전의 온프레미스 대 클라우드 논쟁을 반영하는 것만이 아닙니다.",
+    vocab:[
+      {word:"pendulum",pron:"[펜줄럼]",meaning:"진자, 추",ex:"The pendulum swings back and forth. (진자가 앞뒤로 흔들린다.)"},
+      {word:"centralization",pron:"[센트럴리제이션]",meaning:"중앙화",ex:"Centralization reduces costs. (중앙화는 비용을 줄인다.)"},
+      {word:"mirror",pron:"[미러]",meaning:"반영하다, 거울처럼 보여주다",ex:"His words mirror his thoughts. (그의 말은 그의 생각을 반영한다.)"}
     ],
-    tip:["those who ~는 '~하는 사람들'이라는 뜻으로 매우 자주 쓰이는 표현이에요.","demonstrate는 show보다 좀 더 격식 있는 표현입니다."]
+    grammar:[{title:"don't just + 동사",desc:"'단순히 ~하는 것만이 아니다'는 표현이에요. just가 '단지'라는 뜻입니다.",ex:"It doesn't just help. It changes everything. (단순히 도움이 되는 게 아니다. 모든 것을 바꾼다.)"}],
+    tip:["pendulum swings는 '양극 사이를 오가는 흐름'을 비유할 때 쓰는 표현이에요.","vs.는 versus의 줄임말로 '대(對)'라는 뜻이에요."]
+  },
+  {
+    num:21,
+    en:"AI is a much more active agent in the future of technology than cloud storage ever was.",
+    ko:"AI는 클라우드 스토리지가 과거에 그랬던 것보다 기술의 미래에서 훨씬 더 능동적인 역할을 합니다.",
+    vocab:[
+      {word:"active agent",pron:"[액티브 에이전트]",meaning:"능동적인 행위자",ex:"Humans are active agents in history. (인간은 역사의 능동적인 행위자다.)"},
+      {word:"cloud storage",pron:"[클라우드 스토리지]",meaning:"클라우드 저장소",ex:"I use cloud storage for my files. (파일을 클라우드에 저장한다.)"}
+    ],
+    grammar:[{title:"비교급 강조: much + 비교급",desc:"'훨씬 더 ~한'이라는 뜻으로, 비교급 앞에 much를 써서 강조합니다.",ex:"This is much better than before. (이건 전보다 훨씬 더 좋다.)"}],
+    tip:["much more + 형용사는 '훨씬 더 ~한'으로 강조할 때 씁니다. far more, even more도 같은 용법이에요.","than ~ ever was는 '과거에 그것이 그랬던 것보다'라는 비교 표현이에요."]
+  },
+  {
+    num:22,
+    en:"The stakes are far higher for both enterprises and society.",
+    ko:"기업과 사회 모두에 있어서 위험 부담이 훨씬 더 높습니다.",
+    vocab:[
+      {word:"stakes",pron:"[스테이크스]",meaning:"위험 부담, 판돈",ex:"The stakes are high in this game. (이 게임에서 위험 부담이 크다.)"},
+      {word:"far higher",pron:"[파 하이어]",meaning:"훨씬 더 높은",ex:"The price is far higher than expected. (가격이 예상보다 훨씬 높다.)"},
+      {word:"enterprises",pron:"[엔터프라이지즈]",meaning:"기업들",ex:"Large enterprises use AI. (대기업들은 AI를 사용한다.)"}
+    ],
+    grammar:[{title:"both A and B",desc:"'A와 B 모두'라는 표현이에요.",ex:"Both students and teachers agreed. (학생과 선생님 모두 동의했다.)"}],
+    tip:["high stakes는 '큰 위험 부담'이라는 뜻으로 자주 쓰여요. 'high-stakes decision(중요한 결정)'처럼 형용사로도 써요.","far는 비교급 앞에서 '훨씬'을 강조해요. much, even, still도 같은 역할을 합니다."]
+  },
+  {
+    num:23,
+    en:"It's encouraging to see the intensity and precision of the recommendations coming out of this event.",
+    ko:"이 행사에서 나온 권고사항들의 강도와 정밀함을 보는 것은 고무적입니다.",
+    vocab:[
+      {word:"encouraging",pron:"[인커리징]",meaning:"고무적인, 희망을 주는",ex:"The results are encouraging. (결과가 고무적이다.)"},
+      {word:"precision",pron:"[프리시전]",meaning:"정밀함, 정확성",ex:"This tool works with great precision. (이 도구는 매우 정밀하게 작동한다.)"},
+      {word:"recommendations",pron:"[레커멘데이션즈]",meaning:"권고사항들, 추천들",ex:"Follow the doctor's recommendations. (의사의 권고를 따라라.)"}
+    ],
+    grammar:[{title:"It's + 형용사 + to + 동사원형",desc:"'~하는 것은 …하다'는 표현이에요. It이 가주어, to 이하가 진주어입니다.",ex:"It's great to meet you. (만나서 반가워요.)"}],
+    tip:["encouraging은 'It's encouraging that ~(~라는 것이 고무적이다)'처럼 that절과도 함께 씁니다.","coming out of this event는 '이 행사에서 나온'이라는 뜻의 분사구예요."]
+  },
+  {
+    num:24,
+    en:"Notably absent were OpenAI and Anthropic.",
+    ko:"주목할 만하게도 OpenAI와 Anthropic은 참석하지 않았습니다.",
+    vocab:[
+      {word:"notably",pron:"[노우터블리]",meaning:"주목할 만하게도, 특히",ex:"Notably, sales increased in Asia. (주목할 만하게도, 아시아에서 매출이 증가했다.)"},
+      {word:"absent",pron:"[앱선트]",meaning:"결석한, 부재한",ex:"He was absent from the meeting. (그는 회의에 결석했다.)"}
+    ],
+    grammar:[{title:"도치 구문",desc:"강조를 위해 주어와 동사의 순서를 바꾸는 표현이에요. 'Notably absent were ~'는 '~이 주목할 만하게도 없었다'는 뜻입니다.",ex:"Gone are the days of easy money. (쉽게 돈 버는 시절은 갔다.)"}],
+    tip:["도치 구문은 뉴스와 격식 있는 글에서 자주 나와요. 주어와 동사 순서가 바뀐 걸 알아채는 게 포인트예요.","notably는 문장 앞에 쓰면 '특히 주목할 점은'이라는 강조 효과가 있어요."]
+  },
+  {
+    num:25,
+    en:"Oracle has cut 21,000 jobs in the past year, almost 13% of its workforce.",
+    ko:"Oracle은 지난 1년 동안 전체 인력의 거의 13%에 해당하는 21,000명의 일자리를 감축했습니다.",
+    vocab:[
+      {word:"cut jobs",pron:"[컷 잡스]",meaning:"일자리를 줄이다, 감원하다",ex:"The company cut 500 jobs. (그 회사는 500개의 일자리를 줄였다.)"},
+      {word:"workforce",pron:"[워크포스]",meaning:"전체 인력, 노동력",ex:"The workforce is growing. (인력이 증가하고 있다.)"},
+      {word:"in the past year",pron:"[인 더 패스트 이어]",meaning:"지난 1년 동안",ex:"A lot has changed in the past year. (지난 1년 동안 많이 변했다.)"}
+    ],
+    grammar:[{title:"현재완료: has + 과거분사",desc:"'~했다'는 뜻으로, 과거의 행동이 현재까지 영향을 미칠 때 씁니다.",ex:"She has worked here for 5 years. (그녀는 5년째 여기서 일하고 있다.)"}],
+    tip:["cut은 cut-cut-cut으로 과거형과 과거분사형이 모두 같아요.","almost 13%처럼 숫자 앞에 almost(거의)를 붙이면 '약 ~'이라는 뜻이에요."]
+  },
+  {
+    num:26,
+    en:"Meta unveiled a new line of AI glasses powered by its Muse Spark model.",
+    ko:"Meta는 Muse Spark 모델로 구동되는 새로운 AI 안경 라인을 공개했습니다.",
+    vocab:[
+      {word:"a new line of",pron:"[어 뉴 라인 어브]",meaning:"새로운 종류의, 새로운 라인의",ex:"They launched a new line of products. (그들은 새로운 제품 라인을 출시했다.)"},
+      {word:"powered by",pron:"[파워드 바이]",meaning:"~로 구동되는, ~을 동력으로 하는",ex:"This car is powered by electricity. (이 차는 전기로 구동된다.)"}
+    ],
+    grammar:[{title:"과거분사구 (powered by ~)",desc:"'~로 구동되는'이라는 뜻으로 앞의 명사를 꾸며줍니다.",ex:"a device powered by solar energy (태양에너지로 구동되는 기기)"}],
+    tip:["powered by는 기술 제품 설명에서 정말 자주 나오는 표현이에요.","line of products는 '제품 라인업'을 의미해요."]
+  },
+  {
+    num:27,
+    en:"Qualcomm is nearing a deal to acquire an AI software firm.",
+    ko:"Qualcomm은 AI 소프트웨어 회사를 인수하는 계약에 가까워지고 있습니다.",
+    vocab:[
+      {word:"near a deal",pron:"[니어 어 딜]",meaning:"계약에 가까워지다",ex:"They are nearing a deal. (그들은 합의에 가까워지고 있다.)"},
+      {word:"acquire",pron:"[어콰이어]",meaning:"인수하다, 획득하다",ex:"Google acquired YouTube in 2006. (구글은 2006년에 유튜브를 인수했다.)"},
+      {word:"firm",pron:"[펌]",meaning:"회사 (=company)",ex:"She works at a law firm. (그녀는 법률 회사에서 일한다.)"}
+    ],
+    grammar:[{title:"현재진행형으로 미래 표현",desc:"'~하고 있다'는 현재진행형이 가까운 미래 계획을 나타낼 때도 씁니다.",ex:"I'm meeting him tomorrow. (내일 그를 만날 거야.)"}],
+    tip:["acquire는 비즈니스에서 '인수하다', '사다'라는 뜻으로 자주 나와요.","firm은 회사를 뜻하는 격식체 표현이에요. 특히 법률, 금융 회사를 가리킬 때 많이 씁니다."]
+  },
+  {
+    num:28,
+    en:"Google has created an AI startup incubator for employee alumni.",
+    ko:"Google은 직원 동문들을 위한 AI 스타트업 인큐베이터를 만들었습니다.",
+    vocab:[
+      {word:"incubator",pron:"[인큐베이터]",meaning:"인큐베이터 (스타트업 지원 프로그램)",ex:"She joined a startup incubator. (그녀는 스타트업 인큐베이터에 합류했다.)"},
+      {word:"alumni",pron:"[얼럼나이]",meaning:"동문들, 졸업생들",ex:"Harvard alumni are successful. (하버드 동문들은 성공적이다.)"}
+    ],
+    grammar:[{title:"현재완료: has + 과거분사",desc:"'이미 ~했다'는 완료의 의미예요.",ex:"Google has launched many products. (구글은 많은 제품을 출시했다.)"}],
+    tip:["alumni는 라틴어 복수형이에요. 단수는 alumnus(남성), alumna(여성)입니다.","incubator는 원래 '부화기'라는 뜻이지만, 비즈니스에서는 '스타트업 육성 프로그램'을 가리켜요."]
+  },
+  {
+    num:29,
+    en:"Menlo Ventures raised $3 billion for AI firms in its largest fund to date.",
+    ko:"Menlo Ventures는 역대 최대 규모의 펀드를 통해 AI 기업들을 위해 30억 달러를 모금했습니다.",
+    vocab:[
+      {word:"raised",pron:"[레이즈드]",meaning:"모금했다, 조달했다",ex:"They raised $1 million in funding. (그들은 100만 달러를 모금했다.)"},
+      {word:"to date",pron:"[투 데이트]",meaning:"지금까지, 현재까지",ex:"This is our best result to date. (이것이 지금까지 우리의 최고 결과다.)"},
+      {word:"fund",pron:"[펀드]",meaning:"펀드, 기금",ex:"The fund will support new ideas. (그 펀드는 새 아이디어를 지원할 것이다.)"}
+    ],
+    grammar:[{title:"최상급 + to date",desc:"'지금까지 중 가장 ~한'이라는 표현이에요.",ex:"This is the largest project to date. (이것이 지금까지 중 가장 큰 프로젝트다.)"}],
+    tip:["raise money/funds는 '돈을 모으다, 모금하다'는 뜻이에요.","to date는 'so far'와 같은 의미예요. 비즈니스·뉴스에서 자주 써요."]
+  },
+  {
+    num:30,
+    en:"The newsletter platform has added a feature that allows publishers to block or allow bots.",
+    ko:"그 뉴스레터 플랫폼은 발행자들이 봇을 차단하거나 허용할 수 있는 기능을 추가했습니다.",
+    vocab:[
+      {word:"publisher",pron:"[퍼블리셔]",meaning:"발행자, 출판사",ex:"She is a content publisher. (그녀는 콘텐츠 발행자다.)"},
+      {word:"block",pron:"[블락]",meaning:"차단하다",ex:"You can block this user. (이 사용자를 차단할 수 있다.)"},
+      {word:"bots",pron:"[밧츠]",meaning:"봇 (자동화된 프로그램)",ex:"Bots can crawl websites. (봇은 웹사이트를 크롤링할 수 있다.)"}
+    ],
+    grammar:[{title:"관계대명사 that (목적격)",desc:"'~할 수 있는'이라는 뜻으로 앞의 명사(feature)를 꾸며줍니다.",ex:"a tool that you can use every day (매일 사용할 수 있는 도구)"}],
+    tip:["block or allow는 이진법적 선택(차단 vs 허용)을 나타낼 때 쓰는 표현이에요.","bot은 robot의 줄임말로, 자동화된 프로그램을 가리켜요."]
+  },
+  {
+    num:31,
+    en:"Mistral released its latest model for document parsing with bounding boxes and confidence scores.",
+    ko:"Mistral은 바운딩 박스와 신뢰도 점수를 갖춘 문서 파싱용 최신 모델을 출시했습니다.",
+    vocab:[
+      {word:"document parsing",pron:"[다큐먼트 파싱]",meaning:"문서 파싱 (문서 분석)",ex:"Document parsing saves time. (문서 파싱은 시간을 절약한다.)"},
+      {word:"confidence score",pron:"[컨피던스 스코어]",meaning:"신뢰도 점수",ex:"A high confidence score means accuracy. (높은 신뢰도 점수는 정확성을 의미한다.)"},
+      {word:"released",pron:"[릴리즈드]",meaning:"출시했다, 공개했다",ex:"They released a new update. (그들은 새 업데이트를 출시했다.)"}
+    ],
+    grammar:[{title:"전치사구로 특징 설명하기",desc:"'with + 명사'로 제품의 특징을 덧붙입니다.",ex:"a phone with a long battery life (배터리 수명이 긴 폰)"}],
+    tip:["release는 제품·소프트웨어·앨범 등을 '세상에 내놓다'는 의미로 자주 써요.","confidence score는 AI 모델이 얼마나 확신하는지를 나타내는 지표예요."]
+  },
+  {
+    num:32,
+    en:"Krea released the open weights for its models, called Krea 2 Raw and Krea 2 Turbo.",
+    ko:"Krea는 Krea 2 Raw와 Krea 2 Turbo라는 이름의 모델 오픈 웨이트를 공개했습니다.",
+    vocab:[
+      {word:"open weights",pron:"[오픈 웨이츠]",meaning:"오픈 웨이트 (공개된 모델 가중치)",ex:"Open weights allow fine-tuning. (오픈 웨이트는 파인튜닝을 가능하게 한다.)"},
+      {word:"fine-tuned",pron:"[파인 튜닝]",meaning:"미세 조정된",ex:"The model was fine-tuned for Korean. (모델이 한국어용으로 미세 조정되었다.)"}
+    ],
+    grammar:[{title:"과거분사구로 이름 설명하기 (called ~)",desc:"'~라고 불리는'이라는 뜻으로 앞의 명사를 꾸며줍니다.",ex:"a city called Seoul (서울이라고 불리는 도시)"}],
+    tip:["open weights는 오픈소스 AI 분야의 핵심 용어예요.","called는 명사 뒤에서 '~라고 불리는'이라는 뜻으로 매우 자주 쓰여요."]
+  },
+  {
+    num:33,
+    en:"Develop a tailored Client Communication Log aligned with the user's individual needs.",
+    ko:"사용자의 개별적인 필요에 맞춰진 맞춤형 고객 커뮤니케이션 로그를 개발하세요.",
+    vocab:[
+      {word:"tailored",pron:"[테일러드]",meaning:"맞춤형의, 맞춤 제작된",ex:"a tailored solution (맞춤형 솔루션)"},
+      {word:"aligned with",pron:"[얼라인드 위드]",meaning:"~에 맞춰진, ~와 일치하는",ex:"Our goals are aligned with yours. (우리의 목표는 당신의 것과 일치한다.)"},
+      {word:"individual needs",pron:"[인디비주얼 니즈]",meaning:"개별적인 필요, 개인적인 요구",ex:"Meet each student's individual needs. (각 학생의 개별적인 필요를 충족시켜라.)"}
+    ],
+    grammar:[{title:"과거분사구로 명사 수식 (aligned with ~)",desc:"'~에 맞춰진'이라는 뜻으로 앞의 명사를 꾸며줍니다.",ex:"a plan aligned with your budget (예산에 맞춰진 계획)"}],
+    tip:["tailored는 원래 '재단사가 만든'이라는 뜻으로, '맞춤형'이라는 의미로 자주 써요.","align with는 '방향을 맞추다, 일치시키다'는 뜻이에요."]
+  },
+  {
+    num:34,
+    en:"Initiate interaction with the user to obtain essential specifics and resolve any ambiguities.",
+    ko:"필수적인 세부 사항을 얻고 모호한 점을 해결하기 위해 사용자와의 상호작용을 시작하세요.",
+    vocab:[
+      {word:"initiate",pron:"[이니시에이트]",meaning:"시작하다, 개시하다",ex:"Initiate the process now. (지금 프로세스를 시작해라.)"},
+      {word:"ambiguities",pron:"[앰비규이티즈]",meaning:"모호한 점들, 불명확한 부분들",ex:"Clear up any ambiguities. (모호한 점들을 해소해라.)"},
+      {word:"specifics",pron:"[스퍼시픽스]",meaning:"구체적인 세부 사항",ex:"Give me the specifics. (구체적인 내용을 알려줘.)"}
+    ],
+    grammar:[{title:"to 부정사 (목적 표현)",desc:"'~하기 위해'라는 목적을 나타내요. to obtain, to resolve처럼 씁니다.",ex:"I study hard to pass the exam. (시험에 합격하기 위해 열심히 공부한다.)"}],
+    tip:["initiate는 start보다 격식체 표현이에요. 비즈니스 문서에서 자주 보여요.","resolve ambiguities는 '애매한 부분을 해결하다'는 뜻으로 실무에서 자주 쓰여요."]
+  },
+  {
+    num:35,
+    en:"Iteratively refine the log through consistent evaluations and gather user input.",
+    ko:"일관된 평가를 통해 로그를 반복적으로 다듬고 사용자의 의견을 수집하세요.",
+    vocab:[
+      {word:"iteratively",pron:"[이터러티블리]",meaning:"반복적으로",ex:"Test iteratively to improve. (개선하기 위해 반복적으로 테스트해라.)"},
+      {word:"refine",pron:"[리파인]",meaning:"다듬다, 개선하다",ex:"We need to refine this idea. (이 아이디어를 다듬어야 한다.)"},
+      {word:"gather input",pron:"[개더 인풋]",meaning:"의견을 수집하다",ex:"Gather input from the team. (팀에서 의견을 수집해라.)"}
+    ],
+    grammar:[{title:"명령문 + and + 명령문",desc:"두 개의 명령을 and로 연결하는 구조예요.",ex:"Study hard and you will succeed. (열심히 공부해라, 그러면 성공할 것이다.)"}],
+    tip:["iterative(반복적인)는 개발·디자인 분야에서 자주 쓰는 단어예요.","refine은 '더 좋게 다듬다'는 뜻으로, improve보다 섬세한 개선을 의미해요."]
+  },
+  {
+    num:36,
+    en:"AI is reshaping hiring across industries and experience levels.",
+    ko:"AI는 산업 전반과 경력 수준에 걸쳐 채용을 재편하고 있습니다.",
+    vocab:[
+      {word:"reshape",pron:"[리쉐입]",meaning:"재편하다, 다시 형성하다",ex:"Technology reshapes our daily lives. (기술은 우리의 일상을 재편한다.)"},
+      {word:"across industries",pron:"[어크로스 인더스트리즈]",meaning:"산업 전반에 걸쳐",ex:"This trend exists across industries. (이 트렌드는 산업 전반에 걸쳐 존재한다.)"},
+      {word:"experience levels",pron:"[익스피리언스 레벨즈]",meaning:"경력 수준들",ex:"We hire all experience levels. (우리는 모든 경력 수준을 채용한다.)"}
+    ],
+    grammar:[{title:"현재진행형으로 진행 중인 변화 표현",desc:"is reshaping처럼 현재진행형은 지금 일어나고 있는 변화를 강조해요.",ex:"The world is changing fast. (세상이 빠르게 변하고 있다.)"}],
+    tip:["reshape는 're(다시) + shape(형성하다)'로, '완전히 바꾸다'는 강한 뉘앙스예요.","across는 '~에 걸쳐, 전반에'라는 뜻으로 뉴스에서 매우 자주 나와요."]
+  },
+  {
+    num:37,
+    en:"Employers are looking for candidates who can adapt alongside AI.",
+    ko:"고용주들은 AI와 함께 적응할 수 있는 지원자들을 찾고 있습니다.",
+    vocab:[
+      {word:"candidates",pron:"[캔디데이츠]",meaning:"지원자들, 후보자들",ex:"We interviewed five candidates. (우리는 5명의 지원자를 면접했다.)"},
+      {word:"adapt",pron:"[어댑트]",meaning:"적응하다",ex:"You must adapt to change. (변화에 적응해야 한다.)"},
+      {word:"alongside",pron:"[얼롱사이드]",meaning:"~와 함께, ~와 나란히",ex:"Work alongside your team. (팀과 함께 일해라.)"}
+    ],
+    grammar:[{title:"관계대명사 who (주격)",desc:"'~하는 (사람)'이라는 뜻으로 사람을 나타내는 명사를 꾸며줍니다.",ex:"people who work hard (열심히 일하는 사람들)"}],
+    tip:["alongside는 'together with'와 비슷하지만, '나란히, 함께'라는 협력의 뉘앙스가 있어요.","adapt to는 '~에 적응하다', adapt alongside는 '~와 함께 적응하다'예요."]
+  },
+  {
+    num:38,
+    en:"Workers who can demonstrate they have deeply human advantages will be most valuable.",
+    ko:"깊이 인간적인 강점을 갖고 있음을 증명할 수 있는 직원들이 가장 가치 있을 것입니다.",
+    vocab:[
+      {word:"demonstrate",pron:"[데먼스트레이트]",meaning:"증명하다, 보여주다",ex:"Demonstrate your skills in the interview. (면접에서 기술을 보여줘라.)"},
+      {word:"deeply human",pron:"[딥리 휴먼]",meaning:"깊이 인간적인",ex:"Empathy is a deeply human trait. (공감은 깊이 인간적인 특성이다.)"},
+      {word:"advantage",pron:"[어드밴티지]",meaning:"강점, 이점",ex:"Speaking two languages is an advantage. (두 언어를 할 줄 아는 것은 강점이다.)"}
+    ],
+    grammar:[{title:"관계대명사 who + can + 동사원형",desc:"'~할 수 있는 사람들'이라는 표현이에요.",ex:"workers who can solve problems (문제를 해결할 수 있는 직원들)"}],
+    tip:["demonstrate는 단순히 '보여주다'가 아니라 '증거로 증명하다'는 뉘앙스예요.","advantage는 '남보다 유리한 점'이라는 의미예요. strength(강점)와 비슷하지만 비교의 느낌이 강해요."]
+  },
+  {
+    num:39,
+    en:"As AI reshapes work, employers want candidates who pair technical skills with strong communication.",
+    ko:"AI가 업무를 재편함에 따라, 고용주들은 기술적 능력과 강한 소통 능력을 결합하는 지원자를 원합니다.",
+    vocab:[
+      {word:"as AI reshapes",pron:"[애즈 에이아이 리쉐입스]",meaning:"AI가 재편함에 따라",ex:"As AI reshapes jobs, skills change. (AI가 직업을 재편함에 따라 기술도 변한다.)"},
+      {word:"pair A with B",pron:"[페어 에이 위드 비]",meaning:"A와 B를 결합하다",ex:"Pair creativity with logic. (창의성과 논리를 결합해라.)"}
+    ],
+    grammar:[{title:"As + 절 (시간/원인)",desc:"'~함에 따라', '~하면서'라는 뜻으로, 두 상황이 함께 변화할 때 씁니다.",ex:"As you practice, you improve. (연습할수록 실력이 늘어난다.)"}],
+    tip:["as는 접속사로 '~함에 따라', '~하면서', '~이기 때문에' 세 가지 뜻으로 쓰여요.","pair A with B는 2번 문장에서도 나왔어요. 반복해서 외우기 좋은 표현이에요!"]
+  },
+  {
+    num:40,
+    en:"Putting each enterprise in control of its own destiny is the goal of decentralized AI.",
+    ko:"각 기업이 자신의 운명을 스스로 통제하게 하는 것이 탈중앙화 AI의 목표입니다.",
+    vocab:[
+      {word:"in control of",pron:"[인 컨트롤 어브]",meaning:"~을 통제하는, ~을 관리하는",ex:"She is in control of the project. (그녀가 프로젝트를 통제하고 있다.)"},
+      {word:"destiny",pron:"[데스티니]",meaning:"운명",ex:"We shape our own destiny. (우리는 스스로 운명을 만든다.)"},
+      {word:"decentralized",pron:"[디센트럴라이즈드]",meaning:"탈중앙화된",ex:"A decentralized system is safer. (탈중앙화된 시스템이 더 안전하다.)"}
+    ],
+    grammar:[{title:"동명사 주어 (Putting ~ is ~)",desc:"동사에 -ing를 붙여 주어로 씁니다. '~하는 것은 …이다'라는 뜻이에요.",ex:"Learning English is important. (영어를 배우는 것은 중요하다.)"}],
+    tip:["in control of ~는 '~를 지배하다, 통제하다'는 표현이에요. in charge of와 비슷해요.","destiny는 문학적이고 격식체 단어예요. 일상에서는 future나 path를 더 많이 써요."]
+  },
+  {
+    num:41,
+    en:"Companies want to keep control of their data as AI agents become more common.",
+    ko:"AI 에이전트가 더 보편화됨에 따라, 기업들은 자신들의 데이터에 대한 통제권을 유지하고 싶어합니다.",
+    vocab:[
+      {word:"keep control of",pron:"[킵 컨트롤 어브]",meaning:"~에 대한 통제권을 유지하다",ex:"Keep control of your spending. (지출을 통제해라.)"},
+      {word:"common",pron:"[커먼]",meaning:"흔한, 보편적인",ex:"Smartphones are now common. (스마트폰은 이제 보편적이다.)"},
+      {word:"AI agents",pron:"[에이아이 에이전츠]",meaning:"AI 에이전트 (자율적으로 작동하는 AI)",ex:"AI agents can complete tasks alone. (AI 에이전트는 혼자 과제를 완수할 수 있다.)"}
+    ],
+    grammar:[{title:"as + 절 (비례)",desc:"'~함에 따라'라는 뜻으로, 한 상황이 변화할 때 다른 상황도 함께 변한다는 걸 나타내요.",ex:"As prices rise, demand falls. (가격이 오름에 따라 수요가 떨어진다.)"}],
+    tip:["keep control of는 '통제권을 잃지 않고 유지하다'는 뉘앙스예요.","more common은 '더 흔해지다'는 뜻으로, become more common이 자주 쓰이는 패턴이에요."]
+  },
+  {
+    num:42,
+    en:"Trust is enforced closer to the chip in a decentralized AI future.",
+    ko:"탈중앙화된 AI 미래에서는 신뢰가 칩에 더 가깝게 적용됩니다.",
+    vocab:[
+      {word:"enforced",pron:"[인포스트]",meaning:"강제 적용된, 시행된",ex:"Rules must be enforced. (규칙은 시행되어야 한다.)"},
+      {word:"closer to",pron:"[클로저 투]",meaning:"~에 더 가까이",ex:"Move closer to the screen. (화면에 더 가까이 가라.)"},
+      {word:"chip",pron:"[칩]",meaning:"칩 (반도체)",ex:"The chip processes data fast. (칩이 빠르게 데이터를 처리한다.)"}
+    ],
+    grammar:[{title:"수동태: be + 과거분사",desc:"'~되다, ~되어진다'는 수동 표현이에요. 주어가 행동을 받는 쪽일 때 씁니다.",ex:"The law is enforced by police. (법은 경찰에 의해 시행된다.)"}],
+    tip:["enforce는 '강제로 시행하다'는 뜻으로, 법·규칙·정책에 자주 써요.","closer to the chip은 '하드웨어 수준에서'라는 기술적 표현이에요."]
+  },
+  {
+    num:43,
+    en:"Agents must have verified identities in a secure AI ecosystem.",
+    ko:"안전한 AI 생태계에서는 에이전트들이 검증된 신원을 가져야 합니다.",
+    vocab:[
+      {word:"verified",pron:"[베리파이드]",meaning:"검증된, 확인된",ex:"Use a verified account. (인증된 계정을 사용해라.)"},
+      {word:"identities",pron:"[아이덴티티즈]",meaning:"신원들, 정체성들",ex:"Protect your digital identity. (디지털 신원을 보호해라.)"},
+      {word:"ecosystem",pron:"[이코시스템]",meaning:"생태계",ex:"A healthy AI ecosystem is important. (건강한 AI 생태계가 중요하다.)"}
+    ],
+    grammar:[{title:"조동사 must + 동사원형",desc:"'반드시 ~해야 한다'는 강한 의무를 나타내요.",ex:"You must wear a seatbelt. (반드시 안전벨트를 매야 한다.)"}],
+    tip:["verified는 '제3자가 확인한'이라는 뜻이에요. verified account(인증 계정)로 친숙하죠.","ecosystem은 원래 '생태계'이지만, 비즈니스/기술 분야에서도 자주 씁니다."]
+  },
+  {
+    num:44,
+    en:"Open-source solutions were seen as key answers to building decentralized AI.",
+    ko:"오픈소스 솔루션이 탈중앙화 AI 구축의 핵심 답안으로 여겨졌습니다.",
+    vocab:[
+      {word:"open-source",pron:"[오픈 소스]",meaning:"오픈소스 (소스 코드가 공개된)",ex:"Linux is an open-source system. (리눅스는 오픈소스 시스템이다.)"},
+      {word:"solutions",pron:"[솔루션즈]",meaning:"해결책들",ex:"We need practical solutions. (실용적인 해결책이 필요하다.)"},
+      {word:"be seen as",pron:"[비 씬 애즈]",meaning:"~로 여겨지다",ex:"He is seen as a leader. (그는 리더로 여겨진다.)"}
+    ],
+    grammar:[{title:"수동태: be seen as ~",desc:"'~로 여겨지다'는 수동 표현이에요. regard A as B의 수동형입니다.",ex:"This is seen as a big problem. (이것은 큰 문제로 여겨진다.)"}],
+    tip:["be seen as는 객관적인 평가를 표현할 때 자주 써요.","open-source는 이제 한국어에서도 그대로 쓰이는 용어예요."]
+  },
+  {
+    num:45,
+    en:"AI fluency is now as important as technical skills for job seekers.",
+    ko:"AI 활용 능력은 이제 구직자들에게 기술적 능력만큼이나 중요합니다.",
+    vocab:[
+      {word:"job seekers",pron:"[잡 시커즈]",meaning:"구직자들",ex:"Job seekers need new skills. (구직자들은 새로운 기술이 필요하다.)"},
+      {word:"as important as",pron:"[애즈 임포턴트 애즈]",meaning:"~만큼 중요한",ex:"Sleep is as important as exercise. (수면은 운동만큼 중요하다.)"}
+    ],
+    grammar:[{title:"as + 형용사 + as ~ (동등 비교)",desc:"'~만큼 …한'이라는 표현이에요. 두 대상이 같은 정도임을 나타냅니다.",ex:"She is as tall as her brother. (그녀는 오빠만큼 키가 크다.)"}],
+    tip:["as ~ as 패턴은 영어에서 매우 자주 쓰이는 비교 표현이에요. 꼭 외워두세요!","job seeker는 '일자리를 찾는 사람'이에요. job hunter라고도 해요."]
+  },
+  {
+    num:46,
+    en:"Adaptability is becoming one of the most sought-after qualities in the job market.",
+    ko:"적응력은 취업 시장에서 가장 많이 요구되는 자질 중 하나가 되고 있습니다.",
+    vocab:[
+      {word:"adaptability",pron:"[어댑터빌리티]",meaning:"적응력",ex:"Adaptability is key to success. (적응력이 성공의 열쇠다.)"},
+      {word:"sought-after",pron:"[소프트 애프터]",meaning:"인기 있는, 수요가 높은",ex:"She is a sought-after speaker. (그녀는 수요가 높은 강연자다.)"},
+      {word:"job market",pron:"[잡 마켓]",meaning:"취업 시장",ex:"The job market is tough now. (지금 취업 시장이 어렵다.)"}
+    ],
+    grammar:[{title:"be becoming (점진적 변화)",desc:"'~이 되어가고 있다'는 뜻으로, 진행 중인 변화를 표현해요.",ex:"Remote work is becoming the norm. (재택근무가 표준이 되어가고 있다.)"}],
+    tip:["sought-after는 seek(구하다)의 과거분사로 만들어진 형용사예요. '많이 찾는 → 인기 있는'이라는 뜻이에요.","one of the most + 최상급은 '가장 ~한 것 중 하나'라는 패턴으로 매우 자주 쓰여요."]
+  },
+  {
+    num:47,
+    en:"Companies are putting each enterprise in control of its destiny to thrive when the wave of AI agents hits.",
+    ko:"기업들은 AI 에이전트의 물결이 밀려올 때 번영할 수 있도록 각 기업이 자신의 운명을 통제할 수 있게 하고 있습니다.",
+    vocab:[
+      {word:"thrive",pron:"[쓰라이브]",meaning:"번영하다, 성장하다",ex:"Plants thrive in sunlight. (식물은 햇빛에서 잘 자란다.)"},
+      {word:"wave",pron:"[웨이브]",meaning:"물결, 흐름",ex:"A new wave of technology is coming. (새로운 기술의 물결이 오고 있다.)"},
+      {word:"hits",pron:"[힛츠]",meaning:"밀려오다, 닥치다",ex:"When the deadline hits, be ready. (마감이 닥칠 때를 대비해라.)"}
+    ],
+    grammar:[{title:"when + 현재 시제 (미래 조건)",desc:"'~할 때'라는 뜻의 시간 부사절이에요. when 뒤에서는 미래 상황도 현재 시제로 표현합니다.",ex:"Call me when you arrive. (도착하면 전화해.)"}],
+    tip:["thrive는 '번성하다, 잘 자라다'는 뜻으로, survive(살아남다)보다 긍정적인 표현이에요.","wave는 바다의 '파도'뿐 아니라 '(트렌드의) 물결'이라는 뜻으로도 자주 써요."]
+  },
+  {
+    num:48,
+    en:"The pendulum swing toward AI-driven work reflects broader societal changes.",
+    ko:"AI 중심 업무로의 추세 변화는 더 광범위한 사회적 변화를 반영합니다.",
+    vocab:[
+      {word:"reflects",pron:"[리플렉츠]",meaning:"반영하다",ex:"This data reflects reality. (이 데이터는 현실을 반영한다.)"},
+      {word:"broader",pron:"[브로더]",meaning:"더 광범위한",ex:"We need a broader perspective. (더 광범위한 시각이 필요하다.)"},
+      {word:"societal",pron:"[소사이어털]",meaning:"사회적인",ex:"societal changes (사회적 변화들)"}
+    ],
+    grammar:[{title:"toward + 명사",desc:"'~을 향한, ~쪽으로의'라는 방향을 나타내는 전치사예요.",ex:"a move toward sustainability (지속 가능성을 향한 움직임)"}],
+    tip:["reflect는 '거울처럼 반영하다'가 원래 뜻이에요. 추상적인 개념에도 자주 써요.","societal은 social과 비슷하지만, 사회 구조와 시스템에 초점을 두는 표현이에요."]
+  },
+  {
+    num:49,
+    en:"Hiring data shows that workers with AI skills have a clear edge over those without.",
+    ko:"채용 데이터는 AI 기술을 가진 직원들이 그렇지 않은 사람들보다 명확한 우위를 가진다는 것을 보여줍니다.",
+    vocab:[
+      {word:"have an edge over",pron:"[해브 언 엣지 오버]",meaning:"~보다 우위에 있다",ex:"She has an edge over others. (그녀는 다른 사람들보다 우위에 있다.)"},
+      {word:"those without",pron:"[도즈 위다웃]",meaning:"그것을 갖지 못한 사람들",ex:"Help those without access. (접근할 수 없는 사람들을 도와라.)"}
+    ],
+    grammar:[{title:"those without + 명사",desc:"'~이 없는 사람들'이라는 표현이에요. those who don't have ~와 같은 의미입니다.",ex:"Those without experience can still apply. (경험이 없는 사람들도 지원할 수 있다.)"}],
+    tip:["have an edge (over ~)는 '(~보다) 우위에 있다, 유리하다'는 관용표현이에요.","those without은 '없는 사람들'을 간결하게 표현하는 방법이에요."]
+  },
+  {
+    num:50,
+    en:"The most important thing is not just to use AI, but to understand how to work with it effectively.",
+    ko:"가장 중요한 것은 단순히 AI를 사용하는 것이 아니라, 그것과 효과적으로 함께 일하는 방법을 이해하는 것입니다.",
+    vocab:[
+      {word:"not just to",pron:"[낫 저스트 투]",meaning:"단순히 ~하는 것이 아니라",ex:"Not just to survive, but to thrive. (살아남는 것뿐 아니라 번영하는 것.)"},
+      {word:"effectively",pron:"[이펙티블리]",meaning:"효과적으로",ex:"Communicate effectively. (효과적으로 소통해라.)"},
+      {word:"work with",pron:"[워크 위드]",meaning:"~와 함께 일하다",ex:"Learn to work with new tools. (새로운 도구와 함께 일하는 법을 배워라.)"}
+    ],
+    grammar:[{title:"not just A, but (also) B",desc:"'단순히 A가 아니라 B이다'는 표현이에요. 1번 문장에서 배운 패턴이에요!",ex:"Not just smart, but kind too. (똑똑할 뿐 아니라 친절하기도 해.)"}],
+    tip:["1번에서 배운 not just ~ but … 패턴이 50번에서 다시 나왔어요! 이렇게 반복해서 익히는 게 가장 좋은 학습법이에요.","effectively는 '효과적으로'라는 부사로, 직장 영어에서 정말 자주 써요."]
   }
 ];
 
@@ -354,35 +824,29 @@ let koVisible = false;
 
 function render() {
   const s = sentences[idx];
-  document.getElementById('prog-text').textContent = `${idx+1} / ${sentences.length}`;
+  document.getElementById('prog-text').textContent = (idx+1) + ' / ' + sentences.length;
   document.getElementById('prog-fill').style.width = ((idx+1)/sentences.length*100)+'%';
-  document.getElementById('s-num').textContent = `문장 ${s.num}`;
+  document.getElementById('s-num').textContent = '문장 ' + s.num;
   document.getElementById('s-en').textContent = s.en;
   document.getElementById('s-ko').textContent = s.ko;
   document.getElementById('s-ko').classList.remove('show');
   document.getElementById('toggle-btn').textContent = '🇰🇷 번역 보기';
   koVisible = false;
 
-  document.getElementById('vocab-list').innerHTML = s.vocab.map(v =>
-    `<div class="vocab-item">
-      <div class="vocab-word">${v.word}</div>
-      <div class="vocab-pron">${v.pron}</div>
-      <div class="vocab-meaning">${v.meaning}</div>
-      <div class="vocab-example">${v.ex}</div>
-    </div>`).join('');
+  document.getElementById('vocab-list').innerHTML = s.vocab.map(function(v) {
+    return '<div class="vocab-item"><div class="vocab-word">' + v.word + '</div><div class="vocab-pron">' + v.pron + '</div><div class="vocab-meaning">' + v.meaning + '</div><div class="vocab-example">' + v.ex + '</div></div>';
+  }).join('');
 
-  document.getElementById('grammar-list').innerHTML = s.grammar.map(g =>
-    `<div class="grammar-item">
-      <div class="grammar-title">${g.title}</div>
-      <div class="grammar-desc">${g.desc}</div>
-      <div class="grammar-ex">${g.ex}</div>
-    </div>`).join('');
+  document.getElementById('grammar-list').innerHTML = s.grammar.map(function(g) {
+    return '<div class="grammar-item"><div class="grammar-title">' + g.title + '</div><div class="grammar-desc">' + g.desc + '</div><div class="grammar-ex">' + g.ex + '</div></div>';
+  }).join('');
 
-  document.getElementById('tip-list').innerHTML = s.tip.map(t =>
-    `<div class="tip-item"><p>💡 ${t}</p></div>`).join('');
+  document.getElementById('tip-list').innerHTML = s.tip.map(function(t) {
+    return '<div class="tip-item"><p>💡 ' + t + '</p></div>';
+  }).join('');
 
   document.getElementById('btn-prev').disabled = idx === 0;
-  const nb = document.getElementById('btn-next');
+  var nb = document.getElementById('btn-next');
   nb.textContent = idx === sentences.length-1 ? '완료 ✓' : '다음 →';
   nb.disabled = idx === sentences.length-1;
 
@@ -401,9 +865,10 @@ function go(dir) {
 }
 
 function switchTab(name) {
-  const tabs = ['vocab','grammar','tip'];
-  tabs.forEach((n,i) => {
-    document.querySelectorAll('.tab')[i].classList.toggle('active', n===name);
+  var names = ['vocab','grammar','tip'];
+  var tabs = document.querySelectorAll('.tab');
+  names.forEach(function(n, i) {
+    tabs[i].classList.toggle('active', n===name);
     document.getElementById('tab-'+n).classList.toggle('active', n===name);
   });
 }

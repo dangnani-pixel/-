@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영어 학습 카드</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #F5F4F0;
+  min-height: 100vh;
+  padding: 16px;
+  color: #1a1a1a;
+}
+.source-tag {
+  display: inline-block;
+  font-size: 12px;
+  color: #534AB7;
+  background: #EEEDFE;
+  border-radius: 99px;
+  padding: 4px 12px;
+  margin-bottom: 14px;
+}
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.prog-text {
+  font-size: 13px;
+  color: #888;
+  white-space: nowrap;
+  min-width: 48px;
+}
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: #E0DED8;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: #7F77DD;
+  border-radius: 99px;
+  transition: width 0.3s ease;
+}
+.sentence-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.s-num {
+  font-size: 11px;
+  color: #aaa;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.s-en {
+  font-size: 18px;
+  color: #1a1a1a;
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.toggle-btn {
+  display: inline-block;
+  font-size: 14px;
+  color: #534AB7;
+  background: #EEEDFE;
+  border: none;
+  border-radius: 99px;
+  padding: 7px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  -webkit-tap-highlight-color: transparent;
+}
+.s-ko {
+  font-size: 15px;
+  color: #534AB7;
+  line-height: 1.65;
+  display: none;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #EEEDFE;
+}
+.s-ko.show { display: block; }
+
+.tab-row {
+  display: flex;
+  gap: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.tab {
+  flex: 1;
+  padding: 10px 4px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  color: #888;
+  border-radius: 9px;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.tab.active {
+  background: #7F77DD;
+  color: #fff;
+  font-weight: 500;
+}
+.panel { display: none; }
+.panel.active { display: block; }
+
+.section-label {
+  font-size: 11px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 10px;
+}
+.vocab-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.vocab-word { font-size: 17px; font-weight: 600; color: #1a1a1a; }
+.vocab-pron { font-size: 12px; color: #aaa; margin: 3px 0; }
+.vocab-meaning { font-size: 14px; color: #444; }
+.vocab-example { font-size: 13px; color: #7F77DD; margin-top: 6px; font-style: italic; }
+
+.grammar-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.grammar-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 5px; }
+.grammar-desc { font-size: 14px; color: #555; line-height: 1.6; }
+.grammar-ex { font-size: 13px; color: #7F77DD; margin-top: 6px; font-style: italic; }
+
+.tip-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  border-left: 4px solid #7F77DD;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.tip-item p { font-size: 14px; color: #444; line-height: 1.65; }
+
+.nav-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  padding-bottom: 8px;
+}
+.nav-btn {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.nav-btn:active { transform: scale(0.97); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.secondary { background: #E0DED8; color: #555; }
+.nav-btn.primary { background: #7F77DD; color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="source-tag">📰 AI for Work 뉴스레터 · 2026.06.24</div>
+<div class="top-bar">
+  <span class="prog-text" id="prog-text">1 / 10</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="sentence-card">
+  <div class="s-num" id="s-num">문장 1</div>
+  <div class="s-en" id="s-en"></div>
+  <button class="toggle-btn" id="toggle-btn" onclick="toggleKo()">🇰🇷 번역 보기</button>
+  <div class="s-ko" id="s-ko"></div>
+</div>
+
+<div class="tab-row">
+  <div class="tab active" onclick="switchTab('vocab')">📖 단어</div>
+  <div class="tab" onclick="switchTab('grammar')">📝 문법</div>
+  <div class="tab" onclick="switchTab('tip')">💡 팁</div>
+</div>
+
+<div class="panel active" id="tab-vocab">
+  <div class="section-label">핵심 단어</div>
+  <div id="vocab-list"></div>
+</div>
+<div class="panel" id="tab-grammar">
+  <div class="section-label">문법 포인트</div>
+  <div id="grammar-list"></div>
+</div>
+<div class="panel" id="tab-tip">
+  <div class="section-label">학습 팁</div>
+  <div id="tip-list"></div>
+</div>
+
+<div class="nav-row">
+  <button class="nav-btn secondary" id="btn-prev" onclick="go(-1)">← 이전</button>
+  <button class="nav-btn primary" id="btn-next" onclick="go(1)">다음 →</button>
+</div>
+
+<script>
+const sentences = [
+  {
+    num:1, en:"AI is raising the bar at work, and not just for machines.",
+    ko:"AI는 직장에서 기준을 높이고 있으며, 그것은 기계에만 해당되는 얘기가 아닙니다.",
+    vocab:[
+      {word:"raise the bar",pron:"[레이즈 더 바]",meaning:"기준을 높이다",ex:"This product raises the bar for quality. (이 제품은 품질 기준을 높인다.)"},
+      {word:"not just for",pron:"[낫 저스트 포]",meaning:"~만을 위한 것이 아닌",ex:"Not just for experts. (전문가들만을 위한 게 아니야.)"}
+    ],
+    grammar:[{title:"not just A, but (also) B",desc:"'A만이 아니라 B도'라는 표현이에요. 여기서는 뒷부분이 생략된 형태입니다.",ex:"Not just students but teachers too. (학생뿐 아니라 선생님도.)"}],
+    tip:["raise the bar는 '기대치/기준을 올리다'는 관용표현이에요. 뉴스·비즈니스에서 자주 나옵니다.","not just for ~는 '~만의 이야기가 아니다'를 강조할 때 씁니다."]
+  },
+  {
+    num:2, en:"As hiring slows, employers are looking for people who can pair AI fluency with judgment and strong communication skills.",
+    ko:"채용이 둔화되면서, 고용주들은 AI 활용 능력을 판단력, 강한 소통 능력과 결합할 수 있는 사람을 찾고 있습니다.",
+    vocab:[
+      {word:"hiring",pron:"[하이어링]",meaning:"채용, 고용",ex:"The company is not hiring now. (그 회사는 지금 채용하지 않는다.)"},
+      {word:"fluency",pron:"[플루언시]",meaning:"유창함, 능숙함",ex:"AI fluency is important today. (오늘날 AI 능숙도가 중요하다.)"},
+      {word:"pair A with B",pron:"[페어 에이 위드 비]",meaning:"A와 B를 결합하다",ex:"Pair skills with experience. (기술과 경험을 결합해라.)"}
+    ],
+    grammar:[
+      {title:"As + 절",desc:"'~하면서', '~함에 따라'는 뜻이에요. 두 일이 동시에 일어날 때 씁니다.",ex:"As time passes, things change. (시간이 지남에 따라 상황이 바뀐다.)"},
+      {title:"현재진행형: be + ~ing",desc:"'지금 ~하고 있다'는 뜻. 현재 진행 중인 상황을 표현합니다.",ex:"They are looking for new ideas. (그들은 새 아이디어를 찾고 있다.)"}
+    ],
+    tip:["pair A with B는 비즈니스 영어에서 자주 나오는 표현이에요.","fluency는 언어뿐 아니라 'AI fluency'처럼 다양한 분야에서 씁니다."]
+  },
+  {
+    num:3, en:"Anthropic unveiled Claude Tag, a system that embeds its flagship model into Slack.",
+    ko:"Anthropic은 슬랙에 자사의 대표 모델을 내장하는 시스템인 Claude Tag를 공개했습니다.",
+    vocab:[
+      {word:"unveiled",pron:"[언베일드]",meaning:"공개했다, 발표했다",ex:"Apple unveiled a new phone. (애플이 새 폰을 공개했다.)"},
+      {word:"flagship",pron:"[플래그십]",meaning:"대표적인, 주력의",ex:"This is their flagship product. (이게 그들의 주력 제품이다.)"},
+      {word:"embed",pron:"[임베드]",meaning:"내장하다, 삽입하다",ex:"The chip is embedded in the device. (칩이 기기에 내장되어 있다.)"}
+    ],
+    grammar:[
+      {title:"동격(, + 명사구)",desc:"콤마 뒤에 앞 명사를 설명하는 명사구가 와요. 'Claude Tag, a system ~'처럼요.",ex:"Seoul, the capital of Korea, is beautiful."},
+      {title:"관계대명사 that",desc:"앞의 명사(a system)를 꾸며주는 절을 이끕니다.",ex:"a tool that helps you work (일을 도와주는 도구)"}
+    ],
+    tip:["unveil은 '베일을 벗기다'가 원래 뜻으로, 신제품·서비스 발표에 자주 씁니다.","flagship은 '주력 상품'을 뜻하는 비즈니스 핵심 용어예요."]
+  },
+  {
+    num:4, en:"This allows users to grant the model access to certain channels and delegate tasks to it by tagging Claude.",
+    ko:"이를 통해 사용자는 모델에게 특정 채널에 대한 접근 권한을 부여하고, Claude를 태그해서 작업을 위임할 수 있습니다.",
+    vocab:[
+      {word:"grant access to",pron:"[그랜트 액세스 투]",meaning:"~에 접근 권한을 주다",ex:"Grant access to the folder. (폴더에 접근 권한을 줘.)"},
+      {word:"delegate",pron:"[델리게이트]",meaning:"위임하다, 맡기다",ex:"He delegated the task to his team. (그는 팀에 일을 위임했다.)"},
+      {word:"certain",pron:"[서튼]",meaning:"특정한, 어떤",ex:"Certain rules must be followed. (특정 규칙을 따라야 한다.)"}
+    ],
+    grammar:[
+      {title:"allow + 목적어 + to 동사",desc:"'~가 …할 수 있게 하다'는 뜻이에요.",ex:"This app allows you to save time. (이 앱은 시간을 절약하게 해준다.)"},
+      {title:"by + ~ing (수단 표현)",desc:"'~함으로써'라는 뜻으로, 방법이나 수단을 나타냅니다.",ex:"Learn English by watching movies."}
+    ],
+    tip:["grant + 목적어 + access to ~는 IT/비즈니스에서 정말 많이 나오는 표현이에요.","delegate는 사람에게도, AI에게도 업무를 맡길 때 씁니다."]
+  },
+  {
+    num:5, en:"Anthropic positions Claude Tag as a digital teammate, akin to human coworkers, rather than a tool.",
+    ko:"Anthropic은 Claude Tag를 도구가 아닌, 사람 동료와 비슷한 디지털 팀원으로 자리매김하고 있습니다.",
+    vocab:[
+      {word:"position A as B",pron:"[포지션 에이 애즈 비]",meaning:"A를 B로 자리매김하다",ex:"They positioned it as a premium product."},
+      {word:"akin to",pron:"[어킨 투]",meaning:"~와 유사한, 비슷한",ex:"This feeling is akin to joy. (이 감정은 기쁨과 비슷하다.)"},
+      {word:"rather than",pron:"[래더 댄]",meaning:"~보다는, ~ 대신에",ex:"Use email rather than phone."}
+    ],
+    grammar:[{title:"A rather than B",desc:"'B가 아니라 A'라는 뜻으로, 선호나 대조를 나타냅니다.",ex:"Walk rather than drive. (운전보다 걸어라.)"}],
+    tip:["position A as B는 마케팅·비즈니스 기사에서 자주 보이는 표현이에요.","akin to는 similar to보다 좀 더 격식체 표현입니다."]
+  },
+  {
+    num:6, en:"The more we think of these tools as coworkers, the more we must trust them, and the more risk we undertake.",
+    ko:"이 도구들을 동료로 생각할수록, 더 많이 신뢰해야 하고, 그만큼 더 많은 위험을 감수하게 됩니다.",
+    vocab:[
+      {word:"think of A as B",pron:"[띵크 어브 에이 애즈 비]",meaning:"A를 B로 생각하다",ex:"I think of her as a friend."},
+      {word:"undertake",pron:"[언더테이크]",meaning:"감수하다, 떠맡다",ex:"We undertake great risks."}
+    ],
+    grammar:[{title:"The 비교급 ~, the 비교급 …",desc:"'~할수록 더 …하다'는 표현이에요. 영어에서 매우 중요한 패턴입니다.",ex:"The harder you work, the better the results. (더 열심히 할수록 결과가 더 좋다.)"}],
+    tip:["The more ~, the more … 패턴은 꼭 외워두세요!","think of A as B = consider A (to be) B와 같은 뜻이에요."]
+  },
+  {
+    num:7, en:"Hiring across Europe is down 25% from pandemic-era highs and 15% year over year.",
+    ko:"유럽 전역의 채용은 팬데믹 시기 최고치 대비 25%, 전년 동기 대비 15% 감소했습니다.",
+    vocab:[
+      {word:"down (숫자)%",pron:"[다운]",meaning:"~% 감소한",ex:"Sales are down 10% this month."},
+      {word:"pandemic-era",pron:"[팬데믹 에라]",meaning:"팬데믹 시대의",ex:"pandemic-era policies (팬데믹 시대 정책들)"},
+      {word:"year over year",pron:"[이어 오버 이어]",meaning:"전년 동기 대비 (YoY)",ex:"Revenue grew 20% year over year."}
+    ],
+    grammar:[{title:"수치 표현: be down/up + %",desc:"'~% 떨어졌다/올랐다'는 경제·뉴스 기사에서 매우 자주 나오는 표현이에요.",ex:"Prices are up 5%. (가격이 5% 올랐다.)"}],
+    tip:["year over year(YoY)는 경제 기사 필수 표현이에요. 'compared to last year'와 같은 뜻입니다.","from + 기준점은 '~대비'라는 뜻으로, 통계 기사에 자주 나옵니다."]
+  },
+  {
+    num:8, en:"Specialized expertise alone is no longer enough.",
+    ko:"전문 지식만으로는 더 이상 충분하지 않습니다.",
+    vocab:[
+      {word:"specialized",pron:"[스페셜라이즈드]",meaning:"전문화된, 특화된",ex:"She has specialized skills."},
+      {word:"expertise",pron:"[엑스퍼티즈]",meaning:"전문 지식, 전문성",ex:"His expertise is in data science."},
+      {word:"no longer",pron:"[노 롱거]",meaning:"더 이상 ~않다",ex:"I no longer use that app."}
+    ],
+    grammar:[
+      {title:"A alone is not enough",desc:"'A만으로는 충분하지 않다'는 표현이에요. alone이 '단독으로'라는 뜻입니다.",ex:"Money alone is not enough."},
+      {title:"no longer",desc:"'더 이상 ~하지 않다'는 부정 표현. not ~ anymore와 같은 뜻입니다.",ex:"He no longer works here."}
+    ],
+    tip:["no longer는 not anymore보다 약간 격식체 표현이에요.","expertise는 셀 수 없는 명사라서 an expertise라고 하지 않아요."]
+  },
+  {
+    num:9, en:"We should never have to pay for AI with our data.",
+    ko:"우리는 절대 데이터로 AI 비용을 지불해서는 안 됩니다.",
+    vocab:[
+      {word:"never have to",pron:"[네버 해브 투]",meaning:"절대 ~할 필요가 없다",ex:"You never have to worry."},
+      {word:"pay for A with B",pron:"[페이 포 에이 위드 비]",meaning:"B로 A 값을 치르다",ex:"Pay for coffee with your phone."}
+    ],
+    grammar:[
+      {title:"should never + 동사원형",desc:"'절대 ~해서는 안 된다'는 강한 금지·당위 표현이에요.",ex:"You should never give up."},
+      {title:"pay for A with B",desc:"'B로 A를 지불하다'는 표현. with 뒤에 지불 수단이 옵니다.",ex:"Pay for it with cash."}
+    ],
+    tip:["should never는 강한 도덕적 주장을 할 때 자주 씁니다.","pay for A with B 패턴을 통째로 외워두면 편해요."]
+  },
+  {
+    num:10, en:"The most valuable employees may be those who can demonstrate they have deeply human advantages.",
+    ko:"가장 가치 있는 직원은 자신이 깊이 인간적인 강점을 갖고 있음을 증명할 수 있는 사람일 것입니다.",
+    vocab:[
+      {word:"valuable",pron:"[밸류어블]",meaning:"가치 있는, 소중한",ex:"Time is the most valuable thing."},
+      {word:"demonstrate",pron:"[데먼스트레이트]",meaning:"증명하다, 보여주다",ex:"She demonstrated her skills."},
+      {word:"advantage",pron:"[어드밴티지]",meaning:"강점, 이점",ex:"Speaking Korean is my advantage."}
+    ],
+    grammar:[
+      {title:"may be those who ~",desc:"'~인 사람들일 것이다'는 추측 표현이에요. may는 가능성을 나타냅니다.",ex:"The winners may be those who adapt."},
+      {title:"demonstrate (that) + 절",desc:"'~임을 보여주다/증명하다'는 뜻이에요.",ex:"He demonstrated that it works."}
+    ],
+    tip:["those who ~는 '~하는 사람들'이라는 뜻으로 매우 자주 쓰이는 표현이에요.","demonstrate는 show보다 좀 더 격식 있는 표현입니다."]
+  }
+];
+
+let idx = 0;
+let koVisible = false;
+
+function render() {
+  const s = sentences[idx];
+  document.getElementById('prog-text').textContent = `${idx+1} / ${sentences.length}`;
+  document.getElementById('prog-fill').style.width = ((idx+1)/sentences.length*100)+'%';
+  document.getElementById('s-num').textContent = `문장 ${s.num}`;
+  document.getElementById('s-en').textContent = s.en;
+  document.getElementById('s-ko').textContent = s.ko;
+  document.getElementById('s-ko').classList.remove('show');
+  document.getElementById('toggle-btn').textContent = '🇰🇷 번역 보기';
+  koVisible = false;
+
+  document.getElementById('vocab-list').innerHTML = s.vocab.map(v =>
+    `<div class="vocab-item">
+      <div class="vocab-word">${v.word}</div>
+      <div class="vocab-pron">${v.pron}</div>
+      <div class="vocab-meaning">${v.meaning}</div>
+      <div class="vocab-example">${v.ex}</div>
+    </div>`).join('');
+
+  document.getElementById('grammar-list').innerHTML = s.grammar.map(g =>
+    `<div class="grammar-item">
+      <div class="grammar-title">${g.title}</div>
+      <div class="grammar-desc">${g.desc}</div>
+      <div class="grammar-ex">${g.ex}</div>
+    </div>`).join('');
+
+  document.getElementById('tip-list').innerHTML = s.tip.map(t =>
+    `<div class="tip-item"><p>💡 ${t}</p></div>`).join('');
+
+  document.getElementById('btn-prev').disabled = idx === 0;
+  const nb = document.getElementById('btn-next');
+  nb.textContent = idx === sentences.length-1 ? '완료 ✓' : '다음 →';
+  nb.disabled = idx === sentences.length-1;
+
+  switchTab('vocab');
+}
+
+function toggleKo() {
+  koVisible = !koVisible;
+  document.getElementById('s-ko').classList.toggle('show', koVisible);
+  document.getElementById('toggle-btn').textContent = koVisible ? '🇰🇷 번역 숨기기' : '🇰🇷 번역 보기';
+}
+
+function go(dir) {
+  idx = Math.max(0, Math.min(sentences.length-1, idx+dir));
+  render();
+}
+
+function switchTab(name) {
+  const tabs = ['vocab','grammar','tip'];
+  tabs.forEach((n,i) => {
+    document.querySelectorAll('.tab')[i].classList.toggle('active', n===name);
+    document.getElementById('tab-'+n).classList.toggle('active', n===name);
+  });
+}
+
+render();
+</script>
+</body>
+</html>

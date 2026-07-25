@@ -29,6 +29,8 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .passage-text p:last-child { margin-bottom: 0; }
 .w { color: #4b3fc4; border-bottom: 2px dotted #b7b0f0; cursor: pointer; padding: 0 1px; border-radius: 3px; }
 .w:active, .w.tapped { background: #EEEDFE; }
+.p { cursor: pointer; }
+.p:active { background: #EFEFEF; border-radius: 3px; }
 
 .action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
 .action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
@@ -352,12 +354,20 @@ Eric Park 드림
 
 let current = 0;
 let activeVocabKey = null;
+let currentSpeakWord = null;
+let activeSheetWord = null;
 
 function renderPassage(text) {
   return text.split('\n\n').map(function(para) {
+    var placeholders = [];
     var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
-      return '<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>';
+      placeholders.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
+      return '' + (placeholders.length - 1) + '';
     });
+    html = html.replace(/[A-Za-z]+(?:['’][A-Za-z]+)*/g, function(w) {
+      return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
+    });
+    html = html.replace(/(\d+)/g, function(m, idx) { return placeholders[idx]; });
     html = html.replace(/\n/g, '<br>');
     return '<p>' + html + '</p>';
   }).join('');
@@ -371,6 +381,7 @@ function buildTabs() {
 }
 
 function render() {
+  closeWord();
   var p = problems[current];
   document.getElementById('prog-text').textContent = (current + 1) + ' / ' + problems.length;
   document.getElementById('prog-fill').style.width = ((current + 1) / problems.length * 100) + '%';
@@ -456,6 +467,8 @@ function showWord(key) {
   var v = problems[current].vocab[key];
   if (!v) return;
   activeVocabKey = key;
+  activeSheetWord = null;
+  currentSpeakWord = v.word;
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
   document.getElementById('sheet-meaning').textContent = v.meaning;
@@ -464,15 +477,69 @@ function showWord(key) {
   document.getElementById('sheet').classList.add('show');
 }
 
+function showPlain(rawWord) {
+  var clean = rawWord.replace(/[^A-Za-z']/g, '');
+  if (!clean) return;
+  var lower = clean.toLowerCase();
+  var p = problems[current];
+  for (var k in p.vocab) {
+    if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
+  }
+  activeVocabKey = null;
+  currentSpeakWord = clean;
+  activeSheetWord = lower;
+  document.getElementById('sheet-word').textContent = clean;
+  document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
+  document.getElementById('sheet-example').innerHTML = '';
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  lookupWord(lower);
+}
+
+function lookupWord(lower) {
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(lower))
+    .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var entry = data[0];
+      var phonetic = entry.phonetic || '';
+      if (!phonetic && entry.phonetics) {
+        for (var i = 0; i < entry.phonetics.length; i++) {
+          if (entry.phonetics[i].text) { phonetic = entry.phonetics[i].text; break; }
+        }
+      }
+      if (phonetic) document.getElementById('sheet-pron').textContent = phonetic;
+      var meaning = entry.meanings && entry.meanings[0];
+      var def = meaning && meaning.definitions && meaning.definitions[0];
+      if (def) {
+        var exHtml = def.example ? def.example + '<br>' : '';
+        document.getElementById('sheet-example').innerHTML = exHtml + '(영영풀이) ' + def.definition;
+      }
+    })
+    .catch(function() {});
+
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(lower) + '&langpair=en|ko')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var ko = data && data.responseData && data.responseData.translatedText;
+      document.getElementById('sheet-meaning').textContent = ko ? ko : '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+    })
+    .catch(function() {
+      if (activeSheetWord !== lower) return;
+      document.getElementById('sheet-meaning').textContent = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
+    });
+}
+
 function closeWord() {
   document.getElementById('overlay').classList.remove('show');
   document.getElementById('sheet').classList.remove('show');
+  activeSheetWord = null;
 }
 
 function speakCurrent() {
-  if (!activeVocabKey) return;
-  var v = problems[current].vocab[activeVocabKey];
-  speak(v.word);
+  if (currentSpeakWord) speak(currentSpeakWord);
 }
 
 function speak(text) {

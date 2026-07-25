@@ -32,6 +32,20 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .p { cursor: pointer; }
 .p:active { background: #EFEFEF; border-radius: 3px; }
 
+.quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
+.quiz-choice { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 10px; background: #F8F7FF; margin-bottom: 8px; cursor: pointer; font-size: 14px; line-height: 1.55; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.quiz-choice:last-of-type { margin-bottom: 0; }
+.quiz-choice.selected { border-color: #7F77DD; background: #EEEDFE; }
+.quiz-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 600; }
+.quiz-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.quiz-num { font-weight: 700; color: #7F77DD; flex: 0 0 auto; }
+.quiz-check-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; }
+.quiz-result { margin-top: 12px; font-size: 13.5px; padding: 12px 14px; border-radius: 10px; line-height: 1.65; display: none; }
+.quiz-result.show { display: block; }
+.quiz-result.ok { background: #E8F8F1; color: #177350; }
+.quiz-result.no { background: #FDEDEC; color: #a8362f; }
+
 .action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
 .action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
 .action-btn.on { background: #7F77DD; color: #fff; }
@@ -99,6 +113,13 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="passage-text" id="passage-text"></div>
 </div>
 
+<div class="quiz-card">
+  <div class="quiz-q" id="quiz-q"></div>
+  <div id="quiz-choices"></div>
+  <button class="quiz-check-btn" id="quiz-check-btn" onclick="checkAnswer()">정답 확인</button>
+  <div class="quiz-result" id="quiz-result"></div>
+</div>
+
 <div class="action-row">
   <button class="action-btn" id="btn-trans" onclick="toggleTranslation()">🇰🇷 전체 해석 보기</button>
   <button class="action-btn" id="btn-vocab" onclick="toggleVocabGrid()">📖 핵심 단어 목록</button>
@@ -136,6 +157,10 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 const problems = [
 {
   num: 18, type: "글의 목적 파악",
+  question: "다음 글의 목적으로 가장 적절한 것은?",
+  choices: ["신간 도서 구입을 건의하려고", "도서관 프로그램 확대를 부탁하려고", "도서관 운영 시간 연장을 요청하려고", "도서 대출 시스템 개선에 감사하려고", "도서관 열람실 공간 확대를 제안하려고"],
+  answer: 2,
+  explanation: "편지 후반부의 'I'd like to ask you to extend the library's operating hours to 7 p.m.'에서 필자의 목적이 도서관 운영 시간 연장 요청임이 명확히 드러나므로 정답은 ③번입니다.",
   vocab: {
     reach_out: { word:"reach out", pron:"[리치 아웃]", meaning:"연락하다, 손을 내밀다", ex:"I am reaching out to ask for help.", exko:"도움을 요청하기 위해 연락드립니다." },
     regarding: { word:"regarding", pron:"[리가딩]", meaning:"~에 관하여", ex:"I have a question regarding the schedule.", exko:"일정에 관해 질문이 있습니다." },
@@ -178,6 +203,10 @@ Eric Park 드림
 },
 {
   num: 19, type: "심경 변화 파악",
+  question: "다음 글에 드러난 'I'의 심경 변화로 가장 적절한 것은?",
+  choices: ["puzzled → calm", "bored → confused", "nervous → pleased", "satisfied → regretful", "confident → disappointed"],
+  answer: 2,
+  explanation: "오디션 결과를 기다리며 shaky(불안)했던 'I'가 합격 소식을 듣고 rush of excitement(기쁨)를 느꼈으므로 nervous → pleased인 ③번이 정답입니다.",
   vocab: {
     glanced: { word:"glanced", pron:"[글랜스트]", meaning:"힐끗 보다", ex:"She glanced at her watch.", exko:"그녀는 시계를 힐끗 보았다." },
     casting_director: { word:"casting director", pron:"[캐스팅 디렉터]", meaning:"캐스팅 감독", ex:"The casting director called her back.", exko:"캐스팅 감독이 그녀에게 다시 전화했다." },
@@ -206,6 +235,10 @@ Eric Park 드림
 },
 {
   num: 20, type: "필자의 주장 파악",
+  question: "다음 글에서 필자가 주장하는 바로 가장 적절한 것은?",
+  choices: ["학생의 적극적인 참여를 위해 포용적 수업 분위기를 형성하라.", "수업을 효과적으로 전개하기 위해 시작 루틴을 마련하라.", "학습 동기를 부여할 수 있는 창의적인 수업 자료를 개발하라.", "적절한 학습량 조절을 통해 학습 부담을 줄여라.", "학생이 스스로 학습 루틴을 만들도록 장려하라."],
+  answer: 1,
+  explanation: "마지막 문장 'you should establish an opening routine to develop your class with an effective start.'가 필자의 핵심 주장이므로 정답은 ②번입니다.",
   vocab: {
     inefficient: { word:"inefficient", pron:"[인이피션트]", meaning:"비효율적인", ex:"Inefficient methods waste a lot of time.", exko:"비효율적인 방법은 많은 시간을 낭비한다." },
     overlook: { word:"overlook", pron:"[오버룩]", meaning:"간과하다, 못 보고 지나치다", ex:"Don't overlook the small details.", exko:"작은 세부사항을 간과하지 마라." },
@@ -234,6 +267,10 @@ Eric Park 드림
 },
 {
   num: 21, type: "밑줄 의미 추론",
+  question: "밑줄 친 There will be many who will follow you가 다음 글에서 의미하는 바로 가장 적절한 것은?",
+  choices: ["Atoms will become part of other forms after you", "Atoms will remain unique and cannot be shared", "Atoms will follow their original forms", "Atoms will never be taken by a new form", "Atoms will disappear completely after your lifetime"],
+  answer: 0,
+  explanation: "원자는 당신의 몸을 잠시 거쳐 다양한 방식으로 떠나 다른 형태의 일부가 된다는 것이 글의 핵심이므로, 밑줄 문장은 '당신 이후에도 원자가 다른 형태의 일부가 될 것이다'라는 의미인 ①번이 정답입니다.",
   vocab: {
     atoms: { word:"atoms", pron:"[애텀즈]", meaning:"원자", ex:"Atoms are the building blocks of matter.", exko:"원자는 물질을 이루는 기본 단위이다." },
     inhale: { word:"inhale", pron:"[인헤일]", meaning:"들이마시다", ex:"Inhale deeply and relax.", exko:"깊게 들이마시고 긴장을 풀어라." },
@@ -264,6 +301,10 @@ Eric Park 드림
 },
 {
   num: 22, type: "글의 요지 파악",
+  question: "다음 글의 요지로 가장 적절한 것은?",
+  choices: ["야외 활동을 통해 협동심과 자존감을 높일 수 있다.", "취미 활동을 지속적으로 할 수 있는 동기가 필요하다.", "원예 활동은 신체적 건강과 더불어 정신적 건강에 이롭다.", "실내에서 식물을 기르는 것은 집중력 향상에 도움이 된다.", "원예 활동은 연령에 관계없이 다양한 사람들이 즐길 수 있다."],
+  answer: 2,
+  explanation: "글은 정원 가꾸기의 신체적 이점(strength, flexibility, endurance)과 정신적 이점(calming, reducing stress)을 모두 다루고 있으므로 ③번이 요지로 가장 적절합니다.",
   vocab: {
     gardening: { word:"gardening", pron:"[가드닝]", meaning:"정원 가꾸기", ex:"Gardening is great exercise.", exko:"정원 가꾸기는 훌륭한 운동이다." },
     a_range_of: { word:"a range of", pron:"[어 레인지 오브]", meaning:"다양한", ex:"It involves a range of activities.", exko:"그것은 다양한 활동을 포함한다." },
@@ -294,6 +335,10 @@ Eric Park 드림
 },
 {
   num: 23, type: "글의 주제 파악",
+  question: "다음 글의 주제로 가장 적절한 것은?",
+  choices: ["difficulties in replacing human senses with tools", "the tools that increase the ability of human senses", "human senses that inspire the inventing of scientific tools", "differences between visual and auditory senses in humans", "the power of human imagination in discovering the universe"],
+  answer: 1,
+  explanation: "글 전체가 인간의 감각으로 지각할 수 없는 것을 지각 가능하게 바꿔주는 도구들(망원경 등)에 대해 설명하고 있으므로 ②번이 정답입니다.",
   vocab: {
     take_advantage_of: { word:"take advantage of", pron:"[테이크 어드밴티지 오브]", meaning:"이용하다", ex:"We should take advantage of new tools.", exko:"우리는 새로운 도구를 이용해야 한다." },
     perceive: { word:"perceive", pron:"[퍼시브]", meaning:"지각하다, 인식하다", ex:"We can't perceive ultraviolet light.", exko:"우리는 자외선을 지각할 수 없다." },
@@ -323,6 +368,10 @@ Eric Park 드림
 },
 {
   num: 24, type: "글의 제목 파악",
+  question: "다음 글의 제목으로 가장 적절한 것은?",
+  choices: ["Bio-medicine: Unlocking New Frontiers in Health Care", "Is Medicine Advanced by Experimenting on Animals?", "Refer to Historical Evidence to Solve Medical Issues", "Why Aren't There Strict Laws for Animal Adoption?", "Medical Advances for Extending Human Life Span"],
+  answer: 1,
+  explanation: "동물 실험에 반대하는 입장과 옹호하는 입장을 모두 소개하며 '동물 실험이 정말 의학 발전에 기여했는가'라는 쟁점을 다루므로, 의문문 형태의 제목인 ②번이 가장 적절합니다.",
   vocab: {
     opponents: { word:"opponents", pron:"[어포넌츠]", meaning:"반대자들", ex:"Opponents of the plan raised concerns.", exko:"그 계획에 반대하는 사람들이 우려를 제기했다." },
     experimentation: { word:"experimentation", pron:"[익스페리멘테이션]", meaning:"실험", ex:"Animal experimentation is controversial.", exko:"동물 실험은 논란의 여지가 있다." },
@@ -356,6 +405,8 @@ let current = 0;
 let activeVocabKey = null;
 let currentSpeakWord = null;
 let activeSheetWord = null;
+let selectedChoice = null;
+let answerChecked = false;
 
 function renderPassage(text) {
   return text.split('\n\n').map(function(para) {
@@ -380,6 +431,52 @@ function buildTabs() {
   }).join('');
 }
 
+const circled = ['①', '②', '③', '④', '⑤'];
+
+function renderQuiz(p) {
+  selectedChoice = null;
+  answerChecked = false;
+  document.getElementById('quiz-q').textContent = p.num + '. ' + p.question;
+  document.getElementById('quiz-choices').innerHTML = p.choices.map(function(c, i) {
+    return '<div class="quiz-choice" id="choice-' + i + '" onclick="selectChoice(' + i + ')"><span class="quiz-num">' + circled[i] + '</span><span>' + c + '</span></div>';
+  }).join('');
+  document.getElementById('quiz-check-btn').textContent = '정답 확인';
+  document.getElementById('quiz-check-btn').disabled = false;
+  var result = document.getElementById('quiz-result');
+  result.classList.remove('show', 'ok', 'no');
+  result.textContent = '';
+}
+
+function selectChoice(i) {
+  if (answerChecked) return;
+  selectedChoice = i;
+  document.querySelectorAll('.quiz-choice').forEach(function(el, idx) {
+    el.classList.toggle('selected', idx === i);
+  });
+}
+
+function checkAnswer() {
+  if (answerChecked) return;
+  var p = problems[current];
+  if (selectedChoice === null) {
+    document.getElementById('quiz-q').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  answerChecked = true;
+  document.querySelectorAll('.quiz-choice').forEach(function(el, idx) {
+    if (idx === p.answer) el.classList.add('correct');
+    else if (idx === selectedChoice) el.classList.add('wrong');
+  });
+  var result = document.getElementById('quiz-result');
+  var isCorrect = selectedChoice === p.answer;
+  result.classList.add('show', isCorrect ? 'ok' : 'no');
+  var head = isCorrect ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[p.answer] + '번이에요.';
+  result.innerHTML = '<b>' + head + '</b><br>' + p.explanation;
+  document.getElementById('quiz-check-btn').textContent = '다시 풀기';
+  document.getElementById('quiz-check-btn').disabled = false;
+  document.getElementById('quiz-check-btn').onclick = function() { renderQuiz(p); document.getElementById('quiz-check-btn').onclick = checkAnswer; };
+}
+
 function render() {
   closeWord();
   var p = problems[current];
@@ -387,6 +484,7 @@ function render() {
   document.getElementById('prog-fill').style.width = ((current + 1) / problems.length * 100) + '%';
   document.getElementById('type-badge').textContent = p.num + '번 · ' + p.type;
   document.getElementById('passage-text').innerHTML = renderPassage(p.passage);
+  renderQuiz(p);
   document.getElementById('translation-box').textContent = p.translation;
   document.getElementById('translation-box').classList.remove('show');
   document.getElementById('btn-trans').classList.remove('on');

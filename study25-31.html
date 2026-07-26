@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 고1 9월 모의고사 영어 25~31번 정밀 학습</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+.top-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.prog-text { font-size: 13px; color: #888; white-space: nowrap; min-width: 42px; }
+.progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.3s ease; }
+
+.problem-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.problem-tabs::-webkit-scrollbar { height: 4px; }
+.p-tab { flex: 0 0 auto; padding: 9px 16px; font-size: 14px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.p-tab.active { background: #7F77DD; color: #fff; }
+
+.type-badge { display: inline-block; font-size: 12px; font-weight: 600; color: #fff; background: #534AB7; border-radius: 99px; padding: 5px 14px; margin-bottom: 10px; }
+
+.chart-card { display: none; background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.chart-card.show { display: block; }
+.chart-title { font-size: 13.5px; font-weight: 700; text-align: center; margin-bottom: 10px; }
+.chart-wrap { display: flex; align-items: flex-end; gap: 10px; height: 200px; margin: 10px 0 8px; padding-top: 16px; }
+.chart-col { display: flex; flex-direction: column; align-items: center; flex: 1; height: 100%; justify-content: flex-end; }
+.chart-bar { width: 100%; display: flex; flex-direction: column; border-bottom: 2px solid #333; overflow: hidden; border-radius: 4px 4px 0 0; }
+.chart-seg { width: 100%; display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: #fff; font-weight: 700; }
+.chart-seg.listen { background: repeating-linear-gradient(45deg, #b7b0f0, #b7b0f0 4px, #fff 4px, #fff 8px); color: #4b3fc4; }
+.chart-seg.watch { background: #7F77DD; }
+.chart-seg.read { background: #EEEDFE; color: #534AB7; }
+.chart-label { font-size: 10.5px; color: #666; margin-top: 6px; text-align: center; }
+.chart-legend { display: flex; gap: 14px; justify-content: center; font-size: 11px; color: #555; flex-wrap: wrap; }
+.chart-legend span { display: inline-flex; align-items: center; gap: 4px; }
+.chart-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+.passage-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.passage-text p { font-size: 16px; line-height: 1.95; margin-bottom: 12px; }
+.passage-text p:last-child { margin-bottom: 0; }
+.w { color: #4b3fc4; border-bottom: 2px dotted #b7b0f0; cursor: pointer; padding: 0 1px; border-radius: 3px; }
+.w:active, .w.tapped { background: #EEEDFE; }
+.p { cursor: pointer; }
+.p:active { background: #EFEFEF; border-radius: 3px; }
+
+.quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
+.quiz-choice { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 10px; background: #F8F7FF; margin-bottom: 8px; cursor: pointer; font-size: 14px; line-height: 1.55; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.quiz-choice:last-of-type { margin-bottom: 0; }
+.quiz-choice.selected { border-color: #7F77DD; background: #EEEDFE; }
+.quiz-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 600; }
+.quiz-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.quiz-num { font-weight: 700; color: #7F77DD; flex: 0 0 auto; }
+.quiz-check-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; }
+.quiz-result { margin-top: 12px; font-size: 13.5px; padding: 12px 14px; border-radius: 10px; line-height: 1.65; display: none; }
+.quiz-result.show { display: block; }
+.quiz-result.ok { background: #E8F8F1; color: #177350; }
+.quiz-result.no { background: #FDEDEC; color: #a8362f; }
+
+.action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.action-btn.on { background: #7F77DD; color: #fff; }
+
+.translation-box { display: none; background: #F8F7FF; border: 1px solid #E4E1FA; border-radius: 12px; padding: 16px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.85; color: #3a2f8f; white-space: pre-line; }
+.translation-box.show { display: block; }
+
+.vocab-grid { display: none; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.vocab-grid.show { display: grid; }
+.vocab-chip { background: #fff; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; }
+.vocab-chip b { display: block; font-size: 13.5px; color: #1a1a1a; }
+.vocab-chip span { display: block; font-size: 12px; color: #7F77DD; margin-top: 2px; }
+
+.tab-row { display: flex; background: #fff; border-radius: 12px; padding: 4px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.tab { flex: 1; padding: 10px 4px; font-size: 14px; text-align: center; cursor: pointer; color: #888; border-radius: 9px; -webkit-tap-highlight-color: transparent; }
+.tab.active { background: #7F77DD; color: #fff; font-weight: 600; }
+.panel { display: none; }
+.panel.active { display: block; }
+.section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+
+.grammar-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.grammar-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
+.grammar-desc { font-size: 13px; color: #555; line-height: 1.65; }
+.grammar-ex { font-size: 13px; color: #7F77DD; margin-top: 7px; font-style: italic; line-height: 1.5; }
+
+.tip-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #7F77DD; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.tip-item p { font-size: 13.5px; color: #444; line-height: 1.7; }
+
+.nav-row { display: flex; gap: 10px; margin-top: 16px; }
+.nav-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nav-btn:active { transform: scale(0.98); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.secondary { background: #E0DED8; color: #555; }
+.nav-btn.primary { background: #7F77DD; color: #fff; }
+
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; z-index: 50; }
+.overlay.show { display: block; }
+.sheet { position: fixed; left: 0; right: 0; bottom: -100%; background: #fff; border-radius: 20px 20px 0 0; padding: 22px 20px 26px; z-index: 51; transition: bottom 0.25s ease; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); max-width: 640px; margin: 0 auto; }
+.sheet.show { bottom: 0; }
+.sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
+.sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.sheet-word { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+.speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
+.sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
+.sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
+.sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">📝 2025 고1 9월 전국연합학력평가 · 영어 25~31번</div>
+<h1>지문 완전정복 학습지</h1>
+<p class="subtitle">지문 속 파란 밑줄 단어를 클릭하면 뜻·발음·예문이 나와요. 🔊 버튼을 누르면 실제 발음을 들을 수 있어요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a> · <a class="home-link" href="study18-24.html">18~24번 학습지 →</a> · <a class="home-link" href="grade1-sentences.html">문장 카드(18~45번)</a></p>
+
+<div class="top-bar">
+  <span class="prog-text" id="prog-text">1 / 7</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="problem-tabs" id="problem-tabs"></div>
+
+<div class="type-badge" id="type-badge"></div>
+
+<div class="chart-card" id="chart-card">
+  <div class="chart-title" id="chart-title"></div>
+  <div class="chart-wrap" id="chart-wrap"></div>
+  <div class="chart-legend">
+    <span><i style="background:#EEEDFE;border:1px solid #ccc;"></i>Prefer to read</span>
+    <span><i style="background:#7F77DD;"></i>Prefer to watch</span>
+    <span><i style="background:repeating-linear-gradient(45deg,#b7b0f0,#b7b0f0 2px,#fff 2px,#fff 4px);border:1px solid #ccc;"></i>Prefer to listen</span>
+  </div>
+</div>
+
+<div class="passage-card">
+  <div class="passage-text" id="passage-text"></div>
+</div>
+
+<div class="quiz-card">
+  <div class="quiz-q" id="quiz-q"></div>
+  <div id="quiz-choices"></div>
+  <button class="quiz-check-btn" id="quiz-check-btn" onclick="checkAnswer()">정답 확인</button>
+  <div class="quiz-result" id="quiz-result"></div>
+</div>
+
+<div class="action-row">
+  <button class="action-btn" id="btn-trans" onclick="toggleTranslation()">🇰🇷 전체 해석 보기</button>
+  <button class="action-btn" id="btn-vocab" onclick="toggleVocabGrid()">📖 핵심 단어 목록</button>
+</div>
+
+<div class="translation-box" id="translation-box"></div>
+<div class="vocab-grid" id="vocab-grid"></div>
+
+<div class="tab-row">
+  <div class="tab active" data-t="grammar" onclick="switchTab('grammar')">📝 꼭 알아야 할 문법</div>
+  <div class="tab" data-t="tip" onclick="switchTab('tip')">💡 풀이 팁</div>
+</div>
+<div class="panel active" id="tab-grammar"><div class="section-label">문법 포인트</div><div id="grammar-list"></div></div>
+<div class="panel" id="tab-tip"><div class="section-label">유형별 풀이 팁</div><div id="tip-list"></div></div>
+
+<div class="nav-row">
+  <button class="nav-btn secondary" id="btn-prev" onclick="go(-1)">← 이전 문제</button>
+  <button class="nav-btn primary" id="btn-next" onclick="go(1)">다음 문제 →</button>
+</div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeWord()"></div>
+<div class="sheet" id="sheet">
+  <button class="sheet-close" onclick="closeWord()">✕</button>
+  <div class="sheet-word-row">
+    <div class="sheet-word" id="sheet-word"></div>
+    <button class="speak-btn" id="sheet-speak" onclick="speakCurrent()">🔊</button>
+  </div>
+  <div class="sheet-pron" id="sheet-pron"></div>
+  <div class="sheet-meaning" id="sheet-meaning"></div>
+  <div class="sheet-example" id="sheet-example"></div>
+</div>
+
+<script>
+const problems = [
+{
+  num: 25, type: "도표 내용 불일치",
+  question: "다음 도표의 내용과 일치하지 않는 것은?",
+  choices: [
+    "In Germany, the UK and Finland, reading was the most preferred way of consuming online news, with its percentage over 60 percent across the three countries.",
+    "The interesting point is that the Philippines, Thailand and India all preferred to watch online news the most.",
+    "In terms of preference to watching online news, the Philippines showed the highest percentage and Finland showed the lowest preference among all six countries.",
+    "Four out of ten preferred to watch online news in both Thailand and India, and that percentage was more than three times as high as that of Finland.",
+    "For listening, the least preferred way of consuming online news, the percentage of people who preferred it in Finland was a third of that of Thailand."
+  ],
+  answer: 4,
+  explanation: "듣기를 선호하는 비율은 핀란드가 6%, 태국이 22%로, 6은 22의 3분의 1(약 7.3%)이 아닙니다. 태국의 3분의 1에 가까운 것은 오히려 영국(7%)이므로, 핀란드가 태국의 3분의 1이라는 ⑤번 진술은 도표와 일치하지 않습니다.",
+  chart: {
+    title: "Percentage of Online News Consumption Preferences in 2020",
+    data: [
+      { label: "Philippines", read: 36, watch: 52, listen: 12 },
+      { label: "Thailand", read: 38, watch: 40, listen: 22 },
+      { label: "India", read: 39, watch: 40, listen: 21 },
+      { label: "Germany", read: 67, watch: 23, listen: 10 },
+      { label: "UK", read: 78, watch: 15, listen: 7 },
+      { label: "Finland", read: 82, watch: 12, listen: 6 }
+    ]
+  },
+  vocab: {
+    consumption: { word:"consumption", pron:"[컨섬션]", meaning:"소비", ex:"News consumption habits are changing.", exko:"뉴스 소비 습관이 변화하고 있다." },
+    preferences: { word:"preferences", pron:"[프레퍼런시즈]", meaning:"선호(도)", ex:"The survey shows different preferences.", exko:"그 설문은 서로 다른 선호도를 보여준다." },
+    percentage: { word:"percentage", pron:"[퍼센티지]", meaning:"비율, 백분율", ex:"The percentage increased sharply.", exko:"그 비율이 급격히 증가했다." },
+    preferred: { word:"preferred", pron:"[프리퍼드]", meaning:"선호된", ex:"Reading was the preferred method.", exko:"읽기가 선호되는 방법이었다." },
+    interesting_point: { word:"interesting point", pron:"[인터레스팅 포인트]", meaning:"흥미로운 점", ex:"The interesting point is the gap between countries.", exko:"흥미로운 점은 국가 간의 격차이다." },
+    in_terms_of: { word:"in terms of", pron:"[인 텀즈 오브]", meaning:"~의 측면에서", ex:"In terms of cost, this option is better.", exko:"비용 측면에서 이 옵션이 더 낫다." },
+    among: { word:"among", pron:"[어멍]", meaning:"~중에서, ~사이에서", ex:"Finland showed the lowest rate among six countries.", exko:"핀란드는 여섯 나라 중 가장 낮은 비율을 보였다." },
+    least: { word:"least", pron:"[리스트]", meaning:"가장 적은", ex:"Listening was the least preferred way.", exko:"듣기는 가장 덜 선호되는 방법이었다." }
+  },
+  passage: `The graph above shows the [[consumption::percentage of online news consumption]] [[preferences::preferences]] in three ways for six countries in 2020. In Germany, the UK and Finland, reading was the most [[preferred::preferred]] way of consuming online news, with its [[percentage::percentage]] over 60 percent across the three countries. The [[interesting_point::interesting point]] is that the Philippines, Thailand and India all preferred to watch online news the most. [[in_terms_of::In terms of]] preference to watching online news, the Philippines showed the highest percentage and Finland showed the lowest preference [[among::among]] all six countries. Four out of ten preferred to watch online news in both Thailand and India, and that percentage was more than three times as high as that of Finland. For listening, the [[least::least]] preferred way of consuming online news, the percentage of people who preferred it in Finland was a third of that of Thailand.`,
+  translation: `위 도표는 2020년 여섯 개 국가의 온라인 뉴스 소비 선호도를 세 가지 방식으로 보여준다. 독일, 영국, 핀란드에서는 읽기가 온라인 뉴스를 소비하는 가장 선호되는 방식이었으며, 세 나라 모두에서 그 비율이 60퍼센트를 넘었다. 흥미로운 점은 필리핀, 태국, 인도는 모두 온라인 뉴스를 시청하는 것을 가장 선호했다는 것이다. 시청 선호도 측면에서는 필리핀이 여섯 개 국가 중 가장 높은 비율을 보였고 핀란드가 가장 낮은 선호도를 보였다. 태국과 인도 모두에서 10명 중 4명이 온라인 뉴스를 시청하는 것을 선호했으며, 그 비율은 핀란드의 세 배가 넘었다. 청취의 경우, 온라인 뉴스를 소비하는 가장 덜 선호되는 방식으로, 핀란드에서 그것을 선호하는 사람들의 비율은 태국의 3분의 1이었다.`,
+  grammar: [
+    { title:"배수 비교: as ~ as", desc:"'…보다 몇 배 더 ~한'이라는 뜻으로, more than + 배수 + as + 형용사/부사 + as 형태로 씁니다.", ex:"more than three times as high as Finland's (핀란드보다 세 배 넘게 높은)" },
+    { title:"분수 표현: a third of", desc:"'~의 3분의 1'이라는 뜻이에요. a quarter of(4분의 1), half of(2분의 1)처럼 분수를 나타냅니다.", ex:"a third of that of Thailand (태국의 것의 3분의 1)" },
+    { title:"최상급 the + most/lowest", desc:"여러 대상 중 정도가 가장 큰/작은 것을 나타낼 때 씁니다.", ex:"Finland showed the lowest preference among all six countries. (핀란드가 여섯 나라 중 가장 낮은 선호도를 보였다.)" }
+  ],
+  tips: [
+    "도표 문제는 선택지를 도표의 수치와 하나씩 직접 대조하며 계산해보는 것이 가장 확실해요.",
+    "'more than ~ times as ~ as', 'a third of'처럼 배수·분수 표현이 나오면 반드시 실제 숫자로 계산해서 검증하세요.",
+    "국가명이나 항목이 많을 때는 도표에 표시해가며 읽어야 헷갈리지 않아요."
+  ]
+},
+{
+  num: 26, type: "내용 불일치 (전기문)",
+  question: "Roger Payne에 관한 다음 글의 내용과 일치하지 않는 것은?",
+  choices: ["하버드 대학교에서 생물학을 공부했다.", "혹등고래가 길고 복잡한 소리를 낸다는 것을 발견했다.", "그의 앨범 Songs of the Humpback Whale은 인기를 얻지 못했다.", "고래와 지구의 해양을 보호하기 위해 Ocean Alliance를 설립했다.", "그의 연구는 해양 포유류를 보호하는 법 제정에 도움을 주었다."],
+  answer: 2,
+  explanation: "'he released an album Songs of the Humpback Whale, which became a surprise hit'라고 했으므로 앨범이 뜻밖의 히트를 기록했다는 것을 알 수 있습니다. 인기를 얻지 못했다는 ③번은 글의 내용과 일치하지 않습니다.",
+  vocab: {
+    discovered: { word:"discovered", pron:"[디스커버드]", meaning:"발견했다", ex:"He discovered a new species.", exko:"그는 새로운 종을 발견했다." },
+    complex: { word:"complex", pron:"[컴플렉스]", meaning:"복잡한", ex:"Whales make complex sounds.", exko:"고래는 복잡한 소리를 낸다." },
+    communicate: { word:"communicate", pron:"[커뮤니케이트]", meaning:"의사소통하다", ex:"Whales communicate using songs.", exko:"고래는 노래를 이용해 의사소통한다." },
+    surprise_hit: { word:"surprise hit", pron:"[서프라이즈 힛]", meaning:"뜻밖의 히트작", ex:"The album became a surprise hit.", exko:"그 앨범은 뜻밖의 히트작이 되었다." },
+    founded: { word:"founded", pron:"[파운디드]", meaning:"설립했다", ex:"She founded a nonprofit organization.", exko:"그녀는 비영리 단체를 설립했다." },
+    harming: { word:"harming", pron:"[함잉]", meaning:"해를 끼치는 것", ex:"They studied whales without harming them.", exko:"그들은 고래에게 해를 끼치지 않으면서 연구했다." },
+    research_trips: { word:"research trips", pron:"[리서치 트립스]", meaning:"연구 여행", ex:"He led many research trips.", exko:"그는 많은 연구 여행을 이끌었다." },
+    pollution: { word:"pollution", pron:"[폴루션]", meaning:"오염", ex:"The trip studied ocean pollution.", exko:"그 여행은 해양 오염을 연구했다." },
+    marine_mammals: { word:"marine mammals", pron:"[머린 매멀즈]", meaning:"해양 포유류", ex:"Laws now protect marine mammals.", exko:"이제 법이 해양 포유류를 보호한다." },
+    commercial_whaling: { word:"commercial whaling", pron:"[커머셜 웨일링]", meaning:"상업 포경", ex:"Commercial whaling was banned in 1986.", exko:"상업 포경은 1986년에 금지되었다." },
+    eventually: { word:"eventually", pron:"[이벤추얼리]", meaning:"결국, 마침내", ex:"He eventually earned his Ph.D.", exko:"그는 결국 박사 학위를 받았다." }
+  },
+  passage: `Roger Payne was born in Manhattan in 1935. He studied biology at Harvard University and [[eventually::eventually]] earned his Ph.D. from Cornell University in 1961. In 1967, he [[discovered::discovered]] that humpback whales make long and [[complex::complex]] sounds. They're known as "whale songs," and he showed that whales use them to [[communicate::communicate]]. Then in 1970, he released an album Songs of the Humpback Whale, which became a [[surprise_hit::surprise hit]] and helped start the global "Save the Whales" movement. The following year, he [[founded::founded]] Ocean Alliance to protect whales and the earth's oceans, and he used new, safe methods to study whales without [[harming::harming]] them. Over his career, he led more than 100 [[research_trips::research trips]] worldwide, including the Voyage of the Odyssey from 2000 to 2005, which studied ocean [[pollution::pollution]]. His work helped make laws that protect [[marine_mammals::marine mammals]], which finally led to the global ban on [[commercial_whaling::commercial whaling]] in 1986.`,
+  translation: `Roger Payne은 1935년 맨해튼에서 태어났다. 그는 하버드 대학교에서 생물학을 공부했고 결국 1961년 코넬 대학교에서 박사 학위를 받았다. 1967년, 그는 혹등고래가 길고 복잡한 소리를 낸다는 것을 발견했다. 그것은 '고래의 노래'로 알려져 있으며, 그는 고래들이 그것을 이용해 의사소통한다는 것을 보여주었다. 그 후 1970년, 그는 앨범 Songs of the Humpback Whale을 발매했는데, 이는 뜻밖의 히트를 기록했고 전 세계적인 '고래를 구하자' 운동이 시작되는 데 도움을 주었다. 이듬해, 그는 고래와 지구의 해양을 보호하기 위해 Ocean Alliance를 설립했고, 고래에게 해를 끼치지 않으면서 연구하는 새롭고 안전한 방법들을 사용했다. 그의 경력 동안, 그는 전 세계에서 100회가 넘는 연구 여행을 이끌었으며, 여기에는 해양 오염을 연구한 2000년부터 2005년까지의 Voyage of the Odyssey도 포함된다. 그의 연구는 해양 포유류를 보호하는 법을 만드는 데 도움을 주었고, 이는 결국 1986년 상업 포경에 대한 전 세계적인 금지로 이어졌다.`,
+  grammar: [
+    { title:"관계대명사 계속적 용법 (, which)", desc:"콤마 뒤의 which는 앞 내용 전체나 앞 명사를 부연 설명해요. '그런데 그것은 ~했다'로 해석합니다.", ex:"the album, which became a surprise hit (그 앨범은, 그런데 그것은 뜻밖의 히트작이 되었다)" },
+    { title:"전치사 including (~을 포함하여)", desc:"예시를 덧붙일 때 사용하는 전치사예요.", ex:"more than 100 research trips, including the Voyage of the Odyssey (Voyage of the Odyssey를 포함한 100회가 넘는 연구 여행)" },
+    { title:"전기문의 시제", desc:"전기문은 과거에 일어난 일을 서술하므로 대부분 과거시제로 쓰입니다.", ex:"He studied biology and earned his Ph.D. (그는 생물학을 공부했고 박사 학위를 받았다.)" }
+  ],
+  tips: [
+    "전기문 불일치 문제는 선택지 순서가 대개 지문의 흐름 순서와 일치해요. 선택지를 하나씩 순서대로 대조하며 읽으세요.",
+    "연도, 인물, 지명 같은 숫자·고유명사 정보가 자주 함정으로 쓰이니 정확히 확인하세요.",
+    "'인기를 얻지 못했다'처럼 본문의 긍정적 내용을 부정으로 뒤집은 선택지를 특히 조심하세요."
+  ]
+},
+{
+  num: 27, type: "안내문 내용 불일치",
+  question: "Father-Daughter Sock Hop에 관한 다음 안내문의 내용과 일치하지 않는 것은?",
+  choices: ["9월 12일 금요일에 개최된다.", "한 쌍당 참가비는 $25이다.", "행사 당일 취소 시 환불이 가능하다.", "모든 참가자에게 선물이 제공된다.", "포토존에서 사진을 찍을 수 있다."],
+  answer: 2,
+  explanation: "안내문에 'No refund for cancellations on the day of the event'라고 명시되어 있어 행사 당일 취소 시 환불이 불가능합니다. 따라서 환불이 가능하다는 ③번은 내용과 일치하지 않습니다.",
+  vocab: {
+    annual: { word:"annual", pron:"[애뉴얼]", meaning:"연례의, 매년의", ex:"This is our 5th annual event.", exko:"이것은 우리의 다섯 번째 연례 행사이다." },
+    incredibly: { word:"incredibly", pron:"[인크레더블리]", meaning:"믿을 수 없을 정도로", ex:"It was an incredibly special evening.", exko:"믿을 수 없을 정도로 특별한 저녁이었다." },
+    participation_fee: { word:"participation fee", pron:"[파티시페이션 피]", meaning:"참가비", ex:"The participation fee is $25 per pair.", exko:"참가비는 한 쌍당 25달러이다." },
+    additional: { word:"additional", pron:"[어디셔널]", meaning:"추가의", ex:"$5 per each additional daughter.", exko:"추가되는 딸 한 명당 5달러이다." },
+    refund: { word:"refund", pron:"[리펀드]", meaning:"환불", ex:"There is no refund after the event starts.", exko:"행사가 시작된 후에는 환불이 없다." },
+    cancellations: { word:"cancellations", pron:"[캔슬레이션즈]", meaning:"취소", ex:"Cancellations must be made in advance.", exko:"취소는 미리 이루어져야 한다." },
+    notice: { word:"notice", pron:"[노티스]", meaning:"공지, 안내", ex:"Please read the notice carefully.", exko:"공지사항을 주의 깊게 읽어주세요." },
+    registration: { word:"registration", pron:"[레지스트레이션]", meaning:"등록", ex:"Registration is available online.", exko:"등록은 온라인으로 가능하다." },
+    register: { word:"register", pron:"[레지스터]", meaning:"등록하다", ex:"Register online before the deadline.", exko:"마감 전에 온라인으로 등록하세요." }
+  },
+  passage: `We are excited to bring you the 5th [[annual::annual]] Father-Daughter Sock Hop — an [[incredibly::incredibly]] special evening for fathers and daughters to dance!
+
+When & Where
+September 12th (Friday), from 6 p.m. to 9 p.m.
+Maple Creek Community Center
+
+[[participation_fee::Participation Fee]]
+$25 per pair
+$5 per each [[additional::additional]] daughter
+No [[refund::refund]] for [[cancellations::cancellations]] on the day of the event
+
+[[notice::Notice]]
+A pair of socks will be given out as a gift to every participant.
+Take pictures at the photo zone.
+
+[[registration::Registration]]
+[[register::Register]] online at www.maplecreekcity.org.`,
+  translation: `저희는 신나는 제5회 연례 Father-Daughter Sock Hop을 소개합니다 — 아버지와 딸이 함께 춤을 추는 믿을 수 없을 정도로 특별한 저녁입니다!
+
+일시 및 장소
+9월 12일 (금요일), 오후 6시부터 9시까지
+Maple Creek 커뮤니티 센터
+
+참가비
+한 쌍당 $25
+추가되는 딸 한 명당 $5
+행사 당일 취소 시 환불 불가
+
+안내
+모든 참가자에게 양말 한 켤레가 선물로 제공됩니다.
+포토존에서 사진을 찍으세요.
+
+등록
+www.maplecreekcity.org에서 온라인으로 등록하세요.`,
+  grammar: [
+    { title:"전치사 per (~당, ~마다)", desc:"단위당 가격이나 수량을 나타낼 때 씁니다.", ex:"$5 per each additional daughter (추가되는 딸 한 명당 5달러)" },
+    { title:"서수 + annual (제 ~회 연례의)", desc:"'제 ~번째 연례의'라는 뜻으로 행사가 몇 번째로 열리는지 나타냅니다.", ex:"the 5th annual event (제5회 연례 행사)" },
+    { title:"명령문으로 안내하기", desc:"안내문에서는 동사원형으로 시작하는 명령문을 자주 사용해 행동을 안내합니다.", ex:"Register online at www.maplecreekcity.org. (웹사이트에서 온라인으로 등록하세요.)" }
+  ],
+  tips: [
+    "안내문 불일치 문제는 숫자(날짜, 금액, 시간)와 No, Do not 같은 부정어가 포함된 문장을 특히 꼼꼼히 대조하세요.",
+    "선택지를 안내문의 소제목(When & Where, Fee, Notice 등) 순서와 맞춰가며 하나씩 확인하면 빠르게 풀 수 있어요.",
+    "'환불이 가능하다' vs '환불이 불가능하다'처럼 긍정/부정이 뒤바뀐 선택지가 정답으로 자주 출제돼요."
+  ]
+},
+{
+  num: 28, type: "안내문 내용 일치",
+  question: "2025 Library Bookmark Design Contest에 관한 다음 안내문의 내용과 일치하는 것은?",
+  choices: ["여덟 번째 열리는 대회이다.", "13세 이상이면 누구나 참가할 수 있다.", "상업용 캐릭터 이미지를 사용할 수 있다.", "출품작은 참가자당 두 개로 제한된다.", "수상자의 책갈피는 인쇄되어 방문객에게 제공될 것이다."],
+  answer: 4,
+  explanation: "'Winners' bookmarks will be printed and given to visitors.'라는 내용과 일치하므로 정답은 ⑤번입니다. 나머지는 각각 '6th annual'(8회 아님), 'ages of 5-12'(13세 이상 아님), 'Do not use commercialized character images'(사용 불가), 'Limit one entry per participant'(2개 아닌 1개)와 어긋납니다.",
+  vocab: {
+    creativity: { word:"creativity", pron:"[크리에이티비티]", meaning:"창의성", ex:"Show your creativity in the design.", exko:"디자인에서 당신의 창의성을 보여주세요." },
+    guidelines: { word:"guidelines", pron:"[가이드라인즈]", meaning:"지침", ex:"Please follow the guidelines carefully.", exko:"지침을 주의 깊게 따라주세요." },
+    slogan: { word:"slogan", pron:"[슬로건]", meaning:"슬로건, 표어", ex:"Designs must fit the slogan.", exko:"디자인은 슬로건에 맞아야 한다." },
+    commercialized: { word:"commercialized", pron:"[커머셜라이즈드]", meaning:"상업화된", ex:"Do not use commercialized images.", exko:"상업화된 이미지를 사용하지 마세요." },
+    submission: { word:"submission", pron:"[서브미션]", meaning:"제출", ex:"The submission deadline is October 4th.", exko:"제출 마감일은 10월 4일이다." },
+    entry: { word:"entry", pron:"[엔트리]", meaning:"출품작, 참가", ex:"Limit one entry per participant.", exko:"참가자당 출품작 하나로 제한된다." },
+    via_email: { word:"via email", pron:"[비아 이메일]", meaning:"이메일을 통해", ex:"Submit your work via email.", exko:"이메일을 통해 작품을 제출하세요." },
+    prizes: { word:"prizes", pron:"[프라이지즈]", meaning:"상, 상품", ex:"There are great prizes for winners.", exko:"수상자를 위한 멋진 상품이 있다." }
+  },
+  passage: `The 6th annual Library Bookmark Design Contest is now open! Show your [[creativity::creativity]] and design skills.
+
+Participation
+Participants need to be between the ages of 5-12.
+
+[[guidelines::Guidelines]]
+Create a bookmark by hand using markers or crayons.
+Designs must fit the [[slogan::slogan]] "Find Your Voice."
+Do not use [[commercialized::commercialized]] character images in your design.
+
+[[submission::Submission]]
+Limit one [[entry::entry]] per participant.
+Entries should be submitted [[via_email::via email]] to contest@srpls.org by October 4th.
+
+[[prizes::Prizes]]
+1st place: $50 gift card, 2nd place: $30 gift card
+Winners' bookmarks will be printed and given to visitors.`,
+  translation: `제6회 연례 Library Bookmark Design Contest가 지금 시작됩니다! 여러분의 창의성과 디자인 실력을 보여주세요.
+
+참가 자격
+참가자는 5세에서 12세 사이여야 합니다.
+
+작성 지침
+마커나 크레용을 사용해 손으로 책갈피를 만드세요.
+디자인은 "Find Your Voice"라는 슬로건에 맞아야 합니다.
+디자인에 상업화된 캐릭터 이미지를 사용하지 마세요.
+
+제출
+참가자당 출품작 하나로 제한됩니다.
+작품은 10월 4일까지 contest@srpls.org로 이메일을 통해 제출해야 합니다.
+
+상품
+1등: $50 상품권, 2등: $30 상품권
+수상자의 책갈피는 인쇄되어 방문객에게 제공될 것입니다.`,
+  grammar: [
+    { title:"must + 동사원형 (의무)", desc:"'~해야 한다'는 뜻으로 반드시 지켜야 할 규칙을 나타냅니다.", ex:"Designs must fit the slogan. (디자인은 슬로건에 맞아야 한다.)" },
+    { title:"Do not + 동사원형 (금지 명령문)", desc:"'~하지 마세요'라는 금지를 나타내는 명령문이에요.", ex:"Do not use commercialized character images. (상업화된 캐릭터 이미지를 사용하지 마세요.)" },
+    { title:"between A and B (A와 B 사이의 범위)", desc:"숫자 범위를 나타낼 때 사용해요.", ex:"between the ages of 5-12 (5세에서 12세 사이)" }
+  ],
+  tips: [
+    "'일치하는 것'을 묻는 문제는 나머지 4개 선택지가 왜 틀렸는지 하나씩 소거하는 방식이 오히려 빠를 때가 많아요.",
+    "연차(6th annual), 나이 제한, 개수 제한 같은 숫자 정보를 안내문에서 정확히 대조하세요.",
+    "Do not, Limit 같은 금지·제한 표현이 있는 문장은 선택지에서 반대로 뒤집혀 나오는 경우가 많으니 주의하세요."
+  ]
+},
+{
+  num: 29, type: "어법상 틀린 것 찾기",
+  question: "다음 글의 밑줄 친 부분 중, 어법상 틀린 것은? [3점]",
+  choices: ["① stand", "② putting", "③ which", "④ to domesticate", "⑤ itself"],
+  answer: 1,
+  explanation: "'If put into an enclosure'는 'If they are put into an enclosure'에서 주어(they)와 be동사가 생략된 분사구문이에요. 동물들이 우리에 '넣어지는' 것이므로 수동의 의미를 나타내는 과거분사 put이 와야 합니다. 현재분사 putting은 능동의 의미라서 어법상 틀렸으므로 정답은 ②번입니다.",
+  vocab: {
+    mammalian: { word:"mammalian", pron:"[매메일리언]", meaning:"포유류의", ex:"Mammalian species vary widely.", exko:"포유류 종은 매우 다양하다." },
+    herbivore: { word:"herbivore", pron:"[허비보어]", meaning:"초식동물", ex:"A herbivore eats only plants.", exko:"초식동물은 식물만 먹는다." },
+    predators: { word:"predators", pron:"[프레데터즈]", meaning:"포식자", ex:"Herbivores watch out for predators.", exko:"초식동물은 포식자를 경계한다." },
+    instant_flight: { word:"instant flight", pron:"[인스턴트 플라이트]", meaning:"즉각적인 도주", ex:"They are programmed for instant flight.", exko:"그것들은 즉각적으로 도주하도록 프로그램되어 있다." },
+    perceive: { word:"perceive", pron:"[퍼시브]", meaning:"감지하다, 인식하다", ex:"They perceive a threat quickly.", exko:"그것들은 위협을 빠르게 감지한다." },
+    threat: { word:"threat", pron:"[쓰레트]", meaning:"위협", ex:"A loud noise can be a threat.", exko:"큰 소음은 위협이 될 수 있다." },
+    captivity: { word:"captivity", pron:"[캡티비티]", meaning:"감금, 사육 상태", ex:"Some animals suffer in captivity.", exko:"어떤 동물들은 사육 상태에서 고통받는다." },
+    enclosure: { word:"enclosure", pron:"[인클로저]", meaning:"울타리, 우리", ex:"The animal panicked inside the enclosure.", exko:"그 동물은 우리 안에서 공황 상태에 빠졌다." },
+    panic: { word:"panic", pron:"[패닉]", meaning:"공황 상태에 빠지다", ex:"They panic when trapped.", exko:"그것들은 갇히면 공황 상태에 빠진다." },
+    repeatedly: { word:"repeatedly", pron:"[리피티들리]", meaning:"반복적으로", ex:"It hit the fence repeatedly.", exko:"그것은 울타리에 반복적으로 부딪혔다." },
+    escape: { word:"escape", pron:"[이스케이프]", meaning:"탈출하다", ex:"They tried to escape the enclosure.", exko:"그것들은 우리에서 탈출하려고 했다." },
+    domesticate: { word:"domesticate", pron:"[도메스티케이트]", meaning:"길들이다, 가축화하다", ex:"Humans domesticated many animals.", exko:"인간은 많은 동물을 길들였다." },
+    leap: { word:"leap", pron:"[리프]", meaning:"뛰어오르다", ex:"It can leap nearly 30 feet.", exko:"그것은 거의 30피트까지 뛰어오를 수 있다." }
+  },
+  passage: `Big [[mammalian::mammalian]] [[herbivore::herbivore]] species react to danger from [[predators::predators]] or humans in different ways. Some species are nervous, fast, and programmed for [[instant_flight::instant flight]] when they [[perceive::perceive]] a [[threat::threat]]. Other species are slower, less nervous, seek protection in herds, stand their ground when threatened, and don't run until necessary. Naturally, the nervous species are difficult to keep in [[captivity::captivity]]. If putting into an [[enclosure::enclosure]], they are likely to [[panic::panic]], and either die of shock or hit themselves [[repeatedly::repeatedly]] to death against the fence in their attempts to [[escape::escape]]. That's true, for example, of gazelles, which for thousands of years were the most frequently hunted game species in some parts of the Fertile Crescent. There is no mammal species that the first settled peoples of that area had more opportunity to [[domesticate::domesticate]] than gazelles. But no gazelle species has ever been domesticated. Just imagine trying to herd an animal that runs away, blindly hits itself against walls, can [[leap::leap]] up to nearly 30 feet, and can run at a speed of 50 miles per hour!`,
+  translation: `대형 포유류 초식동물 종들은 포식자나 인간으로부터의 위험에 서로 다른 방식으로 반응한다. 어떤 종들은 예민하고, 빠르며, 위협을 감지하면 즉각 도주하도록 프로그램되어 있다. 다른 종들은 더 느리고, 덜 예민하며, 무리 지어 보호받고, 위협받을 때 자리를 지키며, 필요할 때까지 도망가지 않는다. 당연히, 예민한 종들은 가두어 기르기 어렵다. 만약 (그것들이) 우리에 넣어지면, 그것들은 공황 상태에 빠지기 쉬우며, 충격으로 죽거나 탈출을 시도하다가 울타리에 반복적으로 부딪혀 죽기도 한다. 예를 들어 가젤이 그러한데, 가젤은 수천 년 동안 비옥한 초승달 지대의 일부 지역에서 가장 자주 사냥된 사냥감 종이었다. 그 지역의 초기 정착민들이 가젤보다 길들일 기회가 더 많았던 포유류 종은 없었다. 하지만 어떤 가젤 종도 길들여진 적이 없다. 도망치고, 앞뒤 가리지 않고 벽에 스스로 부딪히며, 거의 30피트까지 뛰어오를 수 있고, 시속 50마일로 달릴 수 있는 동물을 몰고 다닌다고 상상해 보라!`,
+  grammar: [
+    { title:"병렬구조 (동사 나열)", desc:"and로 연결된 동사들은 형태를 통일해야 해요. seek, stand가 모두 원형이므로 병렬을 이룹니다.", ex:"seek protection, stand their ground (보호를 구하다, 자리를 지키다 — 둘 다 원형 동사)" },
+    { title:"분사구문의 수동태 (If put ~)", desc:"'If (they are) put into an enclosure'에서 주어와 be동사가 생략된 형태예요. 의미상 수동(넣어지다)이면 과거분사를 써야 해요.", ex:"If put into an enclosure, they panic. (우리에 넣어지면, 그것들은 공황 상태에 빠진다.)" },
+    { title:"계속적 용법의 관계대명사 which", desc:"콤마 뒤 which는 바로 앞의 명사(gazelles)를 부연 설명해요.", ex:"gazelles, which were hunted for years (가젤은, 그런데 그것은 수년간 사냥되었다)" },
+    { title:"opportunity + to부정사", desc:"'~할 기회'라는 뜻으로 opportunity 뒤에는 to부정사가 옵니다.", ex:"more opportunity to domesticate (길들일 기회가 더 많은)" },
+    { title:"재귀대명사의 수 일치", desc:"주어가 단수(an animal)이면 재귀대명사도 단수(itself)로 일치시켜야 해요.", ex:"an animal that hits itself (스스로에게 부딪히는 동물)" }
+  ],
+  tips: [
+    "어법 문제는 밑줄 부분이 문장에서 동사·준동사·대명사·접속사 중 어떤 역할인지 먼저 파악하세요.",
+    "분사구문에서는 생략된 주어와 be동사를 복원해보면 능동(-ing)인지 수동(p.p.)인지 쉽게 판단할 수 있어요. If (they are) put ~ 처럼요.",
+    "정답을 찾은 뒤에는 나머지 4개가 왜 맞는 표현인지도 설명할 수 있어야 확실하게 이해한 것입니다."
+  ]
+},
+{
+  num: 30, type: "문맥상 낱말 쓰임 파악",
+  question: "다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?",
+  choices: ["① complicated", "② interest", "③ survival", "④ more", "⑤ increased"],
+  answer: 4,
+  explanation: "부유해질수록 '평범한 사람들'과의 물리적 접촉이 줄어들면서 현실과의 단절이 생긴다는 것이 문맥상 자연스러우므로, increased(증가된)가 아니라 decreased(감소된)가 되어야 합니다. 따라서 정답은 ⑤번입니다.",
+  vocab: {
+    tendency: { word:"tendency", pron:"[텐던시]", meaning:"경향, 성향", ex:"We have a tendency to share.", exko:"우리는 나누려는 경향이 있다." },
+    cooperate: { word:"cooperate", pron:"[코오퍼레이트]", meaning:"협력하다", ex:"They cooperate to survive.", exko:"그들은 생존하기 위해 협력한다." },
+    nomadic_tribes: { word:"nomadic tribes", pron:"[노매딕 트라이브즈]", meaning:"유목 부족", ex:"Nomadic tribes move often.", exko:"유목 부족은 자주 이동한다." },
+    hospitality: { word:"hospitality", pron:"[하스피탤리티]", meaning:"환대", ex:"They showed great hospitality.", exko:"그들은 큰 환대를 보여주었다." },
+    ironically: { word:"ironically", pron:"[아이러니컬리]", meaning:"아이러니하게도", ex:"Ironically, richer people share less.", exko:"아이러니하게도, 더 부유한 사람들이 덜 나눈다." },
+    sophisticated: { word:"sophisticated", pron:"[서피스티케이티드]", meaning:"정교한", ex:"Their security became more sophisticated.", exko:"그들의 보안은 더 정교해졌다." },
+    combined_with: { word:"combined with", pron:"[컴바인드 위드]", meaning:"~와 결합되어", ex:"Desire combined with fear creates anxiety.", exko:"욕구가 두려움과 결합되어 불안을 만든다." },
+    disconnection: { word:"disconnection", pron:"[디스커넥션]", meaning:"단절", ex:"Wealth can cause disconnection.", exko:"부는 단절을 초래할 수 있다." },
+    blindness: { word:"blindness", pron:"[블라인드니스]", meaning:"무지, 눈이 멂", ex:"It creates blindness to reality.", exko:"그것은 현실에 대한 무지를 만든다." }
+  },
+  passage: `For a species born in a time when resources were limited and dangers were great, our natural [[tendency::tendency]] to share and [[cooperate::cooperate]] is complicated when resources are plenty and outside dangers are few. When we have less, we tend to be more open to sharing what we have. Certain [[nomadic_tribes::nomadic tribes]] don't have much, yet they are happy to share because it is in their interest to do so. If you happen upon them in your travels, they will open up their homes and give you their food and [[hospitality::hospitality]]. It's not just because they are nice people; it's because their survival depends on sharing, for they know that they may be the travelers in need of food and shelter another day. [[ironically::Ironically]], the more we have, the bigger our fences, the more [[sophisticated::sophisticated]] our security to keep people away and the less we want to share. Our desire for more, [[combined_with::combined with]] our increased physical interaction with the "common folk," starts to create a [[disconnection::disconnection]] or [[blindness::blindness]] to reality.`,
+  translation: `자원이 한정되고 위험이 컸던 시대에 태어난 종에게 있어, 공유하고 협력하려는 우리의 타고난 성향은 자원이 풍부하고 외부의 위험이 적을 때 복잡해진다. 우리는 가진 것이 적을 때 가진 것을 더 기꺼이 나누려는 경향이 있다. 어떤 유목 부족들은 가진 것이 많지 않지만, 그렇게 하는 것이 그들에게 이익이 되기 때문에 기꺼이 나눈다. 만약 여행 중에 그들을 우연히 만난다면, 그들은 자신의 집을 열어주고 음식과 환대를 베풀 것이다. 그것은 단지 그들이 착한 사람들이기 때문만이 아니라, 그들의 생존이 나눔에 달려 있기 때문이다. 그들은 언젠가 자신들이 음식과 잠자리가 필요한 여행자가 될 수도 있다는 것을 알기 때문이다. 아이러니하게도, 우리가 더 많이 가질수록, 우리의 울타리는 더 커지고, 사람들을 멀리하기 위한 보안은 더 정교해지며, 나누고 싶은 마음은 더 줄어든다. 더 많은 것을 원하는 우리의 욕구는 '평범한 사람들'과의 늘어난(→실제로는 줄어든) 물리적 접촉과 결합하여 현실과의 단절이나 무지를 만들어내기 시작한다.`,
+  grammar: [
+    { title:"the 비교급 ~, the 비교급 … (~할수록 더 …하다)", desc:"두 가지가 함께 변화하는 관계를 나타내는 구문이에요.", ex:"the more we have, the bigger our fences (더 많이 가질수록, 울타리는 더 커진다)" },
+    { title:"it is in one's interest to R", desc:"'~하는 것이 …에게 이익이다'라는 뜻이에요.", ex:"it is in their interest to share (나누는 것이 그들에게 이익이다)" },
+    { title:"combined with (~와 결합되어)", desc:"두 가지 요인이 함께 작용함을 나타낼 때 씁니다.", ex:"desire combined with fear (두려움과 결합된 욕구)" }
+  ],
+  tips: [
+    "어휘 문맥 문제는 반의어로 바꿔치기된 단어가 정답인 경우가 많아요. 문장의 논리 흐름(원인-결과, 대조)이 앞뒤와 맞는지 확인하세요.",
+    "Ironically(아이러니하게도) 같은 신호어 뒤에는 예상과 반대되는 내용이 나오니 특히 주의 깊게 읽으세요.",
+    "밑줄 단어를 반의어로 바꿔서 읽어보고 문맥이 더 자연스러워지면 그 단어가 정답일 가능성이 높아요."
+  ]
+},
+{
+  num: 31, type: "빈칸 추론",
+  question: "다음 빈칸에 들어갈 말로 가장 적절한 것을 고르시오.",
+  choices: ["adapt", "regret", "explore", "struggle", "celebrate"],
+  answer: 0,
+  explanation: "글 전체가 좋은 일이든 나쁜 일이든 결국 원래의 행복 기준선(baseline)으로 돌아간다는 '쾌락 적응(hedonic adaptation)'을 설명하고 있어요. 앞서 나온 adjust(적응하다), return to our baseline(기준선으로 돌아가다)과 같은 의미이므로 빈칸에는 '적응하다'라는 뜻의 adapt가 들어가야 합니다. 정답은 ①번입니다.",
+  vocab: {
+    content: { word:"content", pron:"[컨텐트]", meaning:"만족하는", ex:"She felt content with her life.", exko:"그녀는 자신의 삶에 만족했다." },
+    discontent: { word:"discontent", pron:"[디스컨텐트]", meaning:"불만족", ex:"There was some discontent among workers.", exko:"직원들 사이에 약간의 불만이 있었다." },
+    successive: { word:"successive", pron:"[석세시브]", meaning:"연속적인", ex:"Each successive moment brings change.", exko:"매 연속적인 순간은 변화를 가져온다." },
+    gust_of_wind: { word:"gust of wind", pron:"[거스트 오브 윈드]", meaning:"한 줄기 바람", ex:"A gust of wind blew the papers away.", exko:"한 줄기 바람이 서류들을 날려버렸다." },
+    adjust: { word:"adjust", pron:"[어저스트]", meaning:"적응하다, 조정하다", ex:"We adjust to new situations.", exko:"우리는 새로운 상황에 적응한다." },
+    baseline: { word:"baseline", pron:"[베이스라인]", meaning:"기준선", ex:"We return to our baseline mood.", exko:"우리는 기준이 되는 기분으로 돌아간다." },
+    euphoria: { word:"euphoria", pron:"[유포리아]", meaning:"(극도의) 행복감", ex:"The euphoria of winning faded quickly.", exko:"승리의 행복감은 빠르게 사라졌다." },
+    despair: { word:"despair", pron:"[디스페어]", meaning:"절망", ex:"He felt despair after the loss.", exko:"그는 패배 후 절망을 느꼈다." },
+    break_up: { word:"break-up", pron:"[브레이크업]", meaning:"이별", ex:"The break-up was hard for both of them.", exko:"그 이별은 둘 모두에게 힘들었다." },
+    longed_for: { word:"longed for", pron:"[롱드 포]", meaning:"간절히 바랐던", ex:"They finally got what they longed for.", exko:"그들은 마침내 간절히 바라던 것을 얻었다." }
+  },
+  passage: `Whether we feel happy or sad, [[content::content]] or [[discontent::discontent]], is not determined merely by each individual [[successive::successive]] moment of life experience — a good thing happens and I'm happy, a bad thing happens and I'm sad. While our experiences affect our mood, we are not blown in a completely new direction by each [[gust_of_wind::gust of wind]]. As humans, we [[adjust::adjust]] — to new information and events both good and bad — and return to our personal default level of well-being. There will be highs and lows, but over time, like water seeking its own level, we are pulled toward our [[baseline::baseline]] — back up after bad news and back down after good. The [[euphoria::euphoria]] of first love fades, and so does the [[despair::despair]] of a [[break_up::break-up]]. This tendency is best seen with little kids and their toy joy: When they get what they've [[longed_for::longed for]], they believe they will be happy for the rest of their lives. And for the first few minutes of the rest of their lives, they are. But then the kids — like adults — adapt.`,
+  translation: `우리가 행복한지 슬픈지, 만족스러운지 불만족스러운지는 삶의 경험의 매 순간순간에 의해서만 결정되는 것이 아니다 — 좋은 일이 생기면 행복하고, 나쁜 일이 생기면 슬프다는 식으로만 결정되지 않는다는 것이다. 우리의 경험이 기분에 영향을 미치기는 하지만, 우리는 한 줄기 바람에 완전히 새로운 방향으로 날아가 버리지는 않는다. 인간으로서 우리는 좋고 나쁜 새로운 정보와 사건들에 적응하며, 우리 개인의 기본적인 행복 수준으로 되돌아간다. 오르내림은 있겠지만, 시간이 지나면 마치 물이 스스로 수평을 찾아가듯, 우리는 우리의 기준선으로 이끌려간다 — 나쁜 소식 후에는 다시 올라가고, 좋은 소식 후에는 다시 내려온다. 첫사랑의 행복감은 사라지고, 이별의 절망감도 마찬가지로 사라진다. 이러한 경향은 어린아이들과 그들의 장난감에 대한 기쁨에서 가장 잘 나타난다: 아이들은 그토록 바라던 것을 얻으면, 남은 평생 행복할 것이라고 믿는다. 그리고 남은 평생의 첫 몇 분 동안은, 실제로 그렇다. 하지만 그 후 아이들은 — 어른들처럼 — 적응한다.`,
+  grammar: [
+    { title:"like + 명사 (원급 직유)", desc:"'~처럼'이라는 뜻으로 비유를 나타낼 때 씁니다.", ex:"like water seeking its own level (스스로 수평을 찾는 물처럼)" },
+    { title:"대시(—)를 이용한 삽입", desc:"문장 중간에 부가 설명을 삽입할 때 대시를 사용해요.", ex:"we adjust — to new information — and return (우리는 — 새로운 정보에 — 적응하고 돌아간다)" },
+    { title:"so + 조동사/동사 + 주어 (~도 마찬가지다)", desc:"앞 내용과 같은 상황이 뒤에도 적용될 때 쓰는 도치 구문이에요.", ex:"so does the despair of a break-up (이별의 절망감도 마찬가지로 사라진다)" }
+  ],
+  tips: [
+    "빈칸추론은 글의 처음과 끝에 있는 핵심 주제문을 먼저 찾고, 빈칸 문장이 그것을 어떻게 재진술하는지 확인하세요.",
+    "이 글의 adjust, return to our baseline 같은 표현이 빈칸의 정답 adapt와 같은 의미를 반복하고 있어요. 반복되는 핵심 개념어를 찾는 것이 핵심이에요.",
+    "선택지가 모두 짧은 동사 하나로 제시될 때는 글 전체의 주제를 한 단어로 요약한다는 느낌으로 골라야 해요."
+  ]
+}
+];
+
+let current = 0;
+let activeVocabKey = null;
+let currentSpeakWord = null;
+let activeSheetWord = null;
+let selectedChoice = null;
+let answerChecked = false;
+
+function renderPassage(text) {
+  return text.split('\n\n').map(function(para) {
+    var placeholders = [];
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+      placeholders.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
+      return '' + (placeholders.length - 1) + '';
+    });
+    html = html.replace(/[A-Za-z]+(?:['’][A-Za-z]+)*/g, function(w) {
+      return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
+    });
+    html = html.replace(/(\d+)/g, function(m, idx) { return placeholders[idx]; });
+    html = html.replace(/\n/g, '<br>');
+    return '<p>' + html + '</p>';
+  }).join('');
+}
+
+function buildTabs() {
+  var el = document.getElementById('problem-tabs');
+  el.innerHTML = problems.map(function(p, i) {
+    return '<div class="p-tab" data-i="' + i + '" onclick="selectProblem(' + i + ')">' + p.num + '번</div>';
+  }).join('');
+}
+
+const circled = ['①', '②', '③', '④', '⑤'];
+
+function renderChart(p) {
+  var card = document.getElementById('chart-card');
+  if (!p.chart) { card.classList.remove('show'); return; }
+  card.classList.add('show');
+  document.getElementById('chart-title').textContent = p.chart.title;
+  document.getElementById('chart-wrap').innerHTML = p.chart.data.map(function(d) {
+    return '<div class="chart-col">' +
+      '<div class="chart-bar" style="height:' + (d.read + d.watch + d.listen) * 2 + 'px;">' +
+        '<div class="chart-seg listen" style="height:' + (d.listen * 2) + 'px;">' + d.listen + '</div>' +
+        '<div class="chart-seg watch" style="height:' + (d.watch * 2) + 'px;">' + d.watch + '</div>' +
+        '<div class="chart-seg read" style="height:' + (d.read * 2) + 'px;">' + d.read + '</div>' +
+      '</div>' +
+      '<div class="chart-label">' + d.label + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderQuiz(p) {
+  selectedChoice = null;
+  answerChecked = false;
+  document.getElementById('quiz-q').textContent = p.num + '. ' + p.question;
+  document.getElementById('quiz-choices').innerHTML = p.choices.map(function(c, i) {
+    var label = /^[①②③④⑤]/.test(c) ? c : circled[i] + ' ' + c;
+    return '<div class="quiz-choice" id="choice-' + i + '" onclick="selectChoice(' + i + ')"><span>' + label + '</span></div>';
+  }).join('');
+  document.getElementById('quiz-check-btn').textContent = '정답 확인';
+  document.getElementById('quiz-check-btn').disabled = false;
+  var result = document.getElementById('quiz-result');
+  result.classList.remove('show', 'ok', 'no');
+  result.textContent = '';
+}
+
+function selectChoice(i) {
+  if (answerChecked) return;
+  selectedChoice = i;
+  document.querySelectorAll('.quiz-choice').forEach(function(el, idx) {
+    el.classList.toggle('selected', idx === i);
+  });
+}
+
+function checkAnswer() {
+  if (answerChecked) return;
+  var p = problems[current];
+  if (selectedChoice === null) {
+    document.getElementById('quiz-q').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  answerChecked = true;
+  document.querySelectorAll('.quiz-choice').forEach(function(el, idx) {
+    if (idx === p.answer) el.classList.add('correct');
+    else if (idx === selectedChoice) el.classList.add('wrong');
+  });
+  var result = document.getElementById('quiz-result');
+  var isCorrect = selectedChoice === p.answer;
+  result.classList.add('show', isCorrect ? 'ok' : 'no');
+  var head = isCorrect ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[p.answer] + '번이에요.';
+  result.innerHTML = '<b>' + head + '</b><br>' + p.explanation;
+  document.getElementById('quiz-check-btn').textContent = '다시 풀기';
+  document.getElementById('quiz-check-btn').disabled = false;
+  document.getElementById('quiz-check-btn').onclick = function() { renderQuiz(p); document.getElementById('quiz-check-btn').onclick = checkAnswer; };
+}
+
+function render() {
+  closeWord();
+  var p = problems[current];
+  document.getElementById('prog-text').textContent = (current + 1) + ' / ' + problems.length;
+  document.getElementById('prog-fill').style.width = ((current + 1) / problems.length * 100) + '%';
+  document.getElementById('type-badge').textContent = p.num + '번 · ' + p.type;
+  renderChart(p);
+  document.getElementById('passage-text').innerHTML = renderPassage(p.passage);
+  renderQuiz(p);
+  document.getElementById('translation-box').textContent = p.translation;
+  document.getElementById('translation-box').classList.remove('show');
+  document.getElementById('btn-trans').classList.remove('on');
+  document.getElementById('btn-trans').textContent = '🇰🇷 전체 해석 보기';
+
+  var vg = document.getElementById('vocab-grid');
+  var keys = Object.keys(p.vocab);
+  vg.innerHTML = keys.map(function(k) {
+    var v = p.vocab[k];
+    return '<div class="vocab-chip" onclick="showWord(\'' + k + '\')"><b>' + v.word + '</b><span>' + v.meaning + '</span></div>';
+  }).join('');
+  vg.classList.remove('show');
+  document.getElementById('btn-vocab').classList.remove('on');
+  document.getElementById('btn-vocab').textContent = '📖 핵심 단어 목록';
+
+  document.getElementById('grammar-list').innerHTML = p.grammar.map(function(g) {
+    return '<div class="grammar-item"><div class="grammar-title">' + g.title + '</div><div class="grammar-desc">' + g.desc + '</div><div class="grammar-ex">' + g.ex + '</div></div>';
+  }).join('');
+
+  document.getElementById('tip-list').innerHTML = p.tips.map(function(t) {
+    return '<div class="tip-item"><p>' + t + '</p></div>';
+  }).join('');
+
+  document.querySelectorAll('.p-tab').forEach(function(t, i) {
+    t.classList.toggle('active', i === current);
+  });
+
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === problems.length - 1;
+  document.getElementById('btn-next').textContent = current === problems.length - 1 ? '처음으로' : '다음 문제 →';
+
+  switchTab('grammar');
+}
+
+function selectProblem(i) {
+  current = i;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function go(delta) {
+  if (current === problems.length - 1 && delta === 1) {
+    current = 0;
+  } else {
+    current = Math.max(0, Math.min(problems.length - 1, current + delta));
+  }
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTranslation() {
+  var box = document.getElementById('translation-box');
+  var btn = document.getElementById('btn-trans');
+  var show = !box.classList.contains('show');
+  box.classList.toggle('show', show);
+  btn.classList.toggle('on', show);
+  btn.textContent = show ? '🇰🇷 해석 숨기기' : '🇰🇷 전체 해석 보기';
+}
+
+function toggleVocabGrid() {
+  var grid = document.getElementById('vocab-grid');
+  var btn = document.getElementById('btn-vocab');
+  var show = !grid.classList.contains('show');
+  grid.classList.toggle('show', show);
+  btn.classList.toggle('on', show);
+  btn.textContent = show ? '📖 목록 숨기기' : '📖 핵심 단어 목록';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-t') === name);
+  });
+  document.getElementById('tab-grammar').classList.toggle('active', name === 'grammar');
+  document.getElementById('tab-tip').classList.toggle('active', name === 'tip');
+}
+
+function showWord(key) {
+  var v = problems[current].vocab[key];
+  if (!v) return;
+  activeVocabKey = key;
+  activeSheetWord = null;
+  currentSpeakWord = v.word;
+  document.getElementById('sheet-word').textContent = v.word;
+  document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-meaning').textContent = v.meaning;
+  document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
+function showPlain(rawWord) {
+  var clean = rawWord.replace(/[^A-Za-z']/g, '');
+  if (!clean) return;
+  var lower = clean.toLowerCase();
+  var p = problems[current];
+  for (var k in p.vocab) {
+    if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
+  }
+  activeVocabKey = null;
+  currentSpeakWord = clean;
+  activeSheetWord = lower;
+  document.getElementById('sheet-word').textContent = clean;
+  document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
+  document.getElementById('sheet-example').innerHTML = '';
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  lookupWord(lower);
+}
+
+function lookupWord(lower) {
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(lower))
+    .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var entry = data[0];
+      var phonetic = entry.phonetic || '';
+      if (!phonetic && entry.phonetics) {
+        for (var i = 0; i < entry.phonetics.length; i++) {
+          if (entry.phonetics[i].text) { phonetic = entry.phonetics[i].text; break; }
+        }
+      }
+      if (phonetic) document.getElementById('sheet-pron').textContent = phonetic;
+      var meaning = entry.meanings && entry.meanings[0];
+      var def = meaning && meaning.definitions && meaning.definitions[0];
+      if (def) {
+        var exHtml = def.example ? def.example + '<br>' : '';
+        document.getElementById('sheet-example').innerHTML = exHtml + '(영영풀이) ' + def.definition;
+      }
+    })
+    .catch(function() {});
+
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(lower) + '&langpair=en|ko')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var ko = data && data.responseData && data.responseData.translatedText;
+      document.getElementById('sheet-meaning').textContent = ko ? ko : '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+    })
+    .catch(function() {
+      if (activeSheetWord !== lower) return;
+      document.getElementById('sheet-meaning').textContent = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
+    });
+}
+
+function closeWord() {
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('sheet').classList.remove('show');
+  activeSheetWord = null;
+}
+
+function speakCurrent() {
+  if (currentSpeakWord) speak(currentSpeakWord);
+}
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  window.speechSynthesis.speak(utter);
+}
+
+buildTabs();
+render();
+</script>
+</body>
+</html>

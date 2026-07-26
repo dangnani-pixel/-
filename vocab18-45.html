@@ -21,21 +21,6 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .card { background: #fff; border-radius: 16px; padding: 18px 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
 .card-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; font-weight: 700; }
 
-.search-row { display: flex; gap: 8px; }
-.search-input { flex: 1; padding: 12px 14px; border-radius: 10px; border: 1.5px solid #E0DED8; font-size: 14.5px; font-family: inherit; }
-.search-input:focus { outline: none; border-color: #7F77DD; }
-.search-btn { padding: 12px 18px; border: none; border-radius: 10px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 14px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-
-.search-result { display: none; position: relative; margin-top: 14px; background: #F8F7FF; border-radius: 12px; padding: 16px; }
-.search-result.show { display: block; }
-.star-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 24px; cursor: pointer; color: #ccc; line-height: 1; -webkit-tap-highlight-color: transparent; }
-.star-btn.starred { color: #F5B700; }
-.sr-word-row { display: flex; align-items: center; gap: 8px; }
-.sr-word { font-size: 18px; font-weight: 700; }
-.sr-speak { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 28px; height: 28px; font-size: 13px; cursor: pointer; flex: 0 0 auto; }
-.sr-pron { font-size: 12px; color: #aaa; margin: 3px 0 8px; }
-.sr-meaning { font-size: 14.5px; color: #333; font-weight: 600; }
-
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .chip { background: #F8F7FF; border-radius: 99px; padding: 7px 12px; font-size: 12.5px; color: #4b3fc4; display: flex; align-items: center; gap: 6px; cursor: pointer; }
 .chip .x { color: #b7b0f0; font-weight: 700; }
@@ -76,32 +61,15 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="wrap">
 <div class="source-tag">📝 2025 고1 9월 모의고사 · 영어 단어장 18~45번</div>
 <h1>핵심 단어 퀴즈</h1>
-<p class="subtitle">문제별 핵심 단어로 퀴즈를 풀어보세요. 모르는 단어를 검색해 ⭐로 저장하면 그 단어도 함께 퀴즈에 나와요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a></p>
+<p class="subtitle">문제별 핵심 단어로 퀴즈를 풀어보세요. 18~24번, 25~31번 지문 완전정복 페이지에서 단어를 클릭한 뒤 ⭐로 저장하면 그 단어도 여기서 함께 퀴즈에 나와요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a></p>
 
 <div class="group-tabs" id="group-tabs"></div>
 
 <div class="browse-wrap" id="browse-wrap">
   <div class="card">
-    <div class="card-label">🔍 단어 검색해서 저장하기</div>
-    <div class="search-row">
-      <input class="search-input" id="search-input" type="text" placeholder="영어 단어를 입력하세요 (예: gentle)" autocomplete="off">
-      <button class="search-btn" onclick="doSearch()">검색</button>
-    </div>
-    <div class="search-result" id="search-result">
-      <button class="star-btn" id="star-btn" onclick="toggleStar()">☆</button>
-      <div class="sr-word-row">
-        <div class="sr-word" id="sr-word"></div>
-        <button class="sr-speak" onclick="speak(currentSearch && currentSearch.word)">🔊</button>
-      </div>
-      <div class="sr-pron" id="sr-pron"></div>
-      <div class="sr-meaning" id="sr-meaning"></div>
-    </div>
-  </div>
-
-  <div class="card">
     <div class="card-label">⭐ 내가 저장한 단어</div>
     <div class="chip-row" id="starred-chips"></div>
-    <div class="empty-note" id="starred-empty">아직 저장한 단어가 없어요. 위에서 단어를 검색하고 별표를 눌러보세요.</div>
+    <div class="empty-note" id="starred-empty">아직 저장한 단어가 없어요. 18~24번·25~31번 지문 학습지에서 단어를 클릭하고 별표를 눌러보세요.</div>
   </div>
 
   <div class="card">
@@ -323,7 +291,6 @@ const groups = [
 const allWords = groups.reduce(function(acc, g) { return acc.concat(g.words); }, []);
 
 let currentGroupIdx = 0;
-let currentSearch = null;
 let quizQueue = [];
 let quizIdx = 0;
 let quizScore = 0;
@@ -358,10 +325,6 @@ function selectGroup(i) {
 
 function renderBrowse() {
   var g = groups[currentGroupIdx];
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-result').classList.remove('show');
-  currentSearch = null;
-
   var starred = getStarred(g.id);
   var chipsEl = document.getElementById('starred-chips');
   var emptyEl = document.getElementById('starred-empty');
@@ -391,93 +354,6 @@ function removeStar(i) {
   starred.splice(i, 1);
   setStarred(g.id, starred);
   renderBrowse();
-}
-
-function doSearch() {
-  var input = document.getElementById('search-input');
-  var raw = input.value.trim();
-  if (!raw) return;
-  var word = raw.toLowerCase();
-  var box = document.getElementById('search-result');
-  box.classList.add('show');
-  document.getElementById('sr-word').textContent = raw;
-  document.getElementById('sr-pron').textContent = '';
-  document.getElementById('sr-meaning').textContent = '뜻을 찾는 중...';
-  currentSearch = { word: raw, pron: '', meaning: '', en: '', ko: '' };
-  updateStarBtn();
-
-  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word))
-    .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
-    .then(function(data) {
-      if (!currentSearch || currentSearch.word !== raw) return;
-      var entry = data[0];
-      var phonetic = entry.phonetic || '';
-      if (!phonetic && entry.phonetics) {
-        for (var i = 0; i < entry.phonetics.length; i++) {
-          if (entry.phonetics[i].text) { phonetic = entry.phonetics[i].text; break; }
-        }
-      }
-      currentSearch.pron = phonetic;
-      document.getElementById('sr-pron').textContent = phonetic;
-      var meaning = entry.meanings && entry.meanings[0];
-      var def = meaning && meaning.definitions && meaning.definitions[0];
-      if (def && def.example) {
-        currentSearch.en = def.example;
-      }
-    })
-    .catch(function() {});
-
-  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(word) + '&langpair=en|ko')
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (!currentSearch || currentSearch.word !== raw) return;
-      var ko = data && data.responseData && data.responseData.translatedText;
-      currentSearch.meaning = ko || '뜻을 찾을 수 없어요';
-      currentSearch.ko = ko || '';
-      document.getElementById('sr-meaning').textContent = currentSearch.meaning;
-    })
-    .catch(function() {
-      if (!currentSearch || currentSearch.word !== raw) return;
-      currentSearch.meaning = '인터넷 연결을 확인해주세요';
-      document.getElementById('sr-meaning').textContent = currentSearch.meaning;
-    });
-}
-
-function updateStarBtn() {
-  var g = groups[currentGroupIdx];
-  var starred = getStarred(g.id);
-  var btn = document.getElementById('star-btn');
-  var isStarred = currentSearch && starred.some(function(w) { return w.word.toLowerCase() === currentSearch.word.toLowerCase(); });
-  btn.textContent = isStarred ? '★' : '☆';
-  btn.classList.toggle('starred', !!isStarred);
-}
-
-function toggleStar() {
-  if (!currentSearch) return;
-  var g = groups[currentGroupIdx];
-  var saved = currentSearch;
-  var starred = getStarred(g.id);
-  var idx = starred.findIndex(function(w) { return w.word.toLowerCase() === saved.word.toLowerCase(); });
-  if (idx >= 0) {
-    starred.splice(idx, 1);
-  } else {
-    starred.push({
-      word: saved.word,
-      pron: saved.pron || '',
-      meaning: saved.meaning || '뜻 정보 없음',
-      en: saved.en || '',
-      ko: saved.ko || ''
-    });
-  }
-  setStarred(g.id, starred);
-  renderBrowse();
-  currentSearch = saved;
-  document.getElementById('search-input').value = saved.word;
-  document.getElementById('search-result').classList.add('show');
-  document.getElementById('sr-word').textContent = saved.word;
-  document.getElementById('sr-pron').textContent = saved.pron;
-  document.getElementById('sr-meaning').textContent = saved.meaning;
-  updateStarBtn();
 }
 
 function shuffle(arr) {
@@ -632,10 +508,6 @@ function speak(text) {
   utter.rate = 0.9;
   window.speechSynthesis.speak(utter);
 }
-
-document.getElementById('search-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') doSearch();
-});
 
 buildTabs();
 document.querySelector('.g-tab').classList.add('active');

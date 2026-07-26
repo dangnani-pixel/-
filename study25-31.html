@@ -101,6 +101,8 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet { position: fixed; left: 0; right: 0; bottom: -100%; background: #fff; border-radius: 20px 20px 0 0; padding: 22px 20px 26px; z-index: 51; transition: bottom 0.25s ease; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); max-width: 640px; margin: 0 auto; }
 .sheet.show { bottom: 0; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
+.sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
+.sheet-star.starred { color: #F5B700; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; color: #1a1a1a; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
@@ -169,6 +171,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="overlay" id="overlay" onclick="closeWord()"></div>
 <div class="sheet" id="sheet">
   <button class="sheet-close" onclick="closeWord()">✕</button>
+  <button class="sheet-star" id="sheet-star" onclick="toggleSheetStar()">☆</button>
   <div class="sheet-word-row">
     <div class="sheet-word" id="sheet-word"></div>
     <button class="speak-btn" id="sheet-speak" onclick="speakCurrent()">🔊</button>
@@ -484,8 +487,45 @@ let current = 0;
 let activeVocabKey = null;
 let currentSpeakWord = null;
 let activeSheetWord = null;
+let currentSheetWordData = null;
 let selectedChoice = null;
 let answerChecked = false;
+
+function starKey(gid) { return 'vocabStar_' + gid; }
+function getStarred(gid) {
+  try { return JSON.parse(localStorage.getItem(starKey(gid)) || '[]'); } catch(e) { return []; }
+}
+function setStarred(gid, list) {
+  localStorage.setItem(starKey(gid), JSON.stringify(list));
+}
+function updateSheetStarBtn() {
+  var btn = document.getElementById('sheet-star');
+  if (!currentSheetWordData) { btn.textContent = '☆'; btn.classList.remove('starred'); return; }
+  var gid = String(problems[current].num);
+  var starred = getStarred(gid);
+  var isStarred = starred.some(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  btn.textContent = isStarred ? '★' : '☆';
+  btn.classList.toggle('starred', isStarred);
+}
+function toggleSheetStar() {
+  if (!currentSheetWordData) return;
+  var gid = String(problems[current].num);
+  var starred = getStarred(gid);
+  var idx = starred.findIndex(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  if (idx >= 0) {
+    starred.splice(idx, 1);
+  } else {
+    starred.push({
+      word: currentSheetWordData.word,
+      pron: currentSheetWordData.pron || '',
+      meaning: currentSheetWordData.meaning || '뜻 정보 없음',
+      en: currentSheetWordData.en || '',
+      ko: currentSheetWordData.ko || ''
+    });
+  }
+  setStarred(gid, starred);
+  updateSheetStarBtn();
+}
 
 function renderPassage(text) {
   return text.split('\n\n').map(function(para) {
@@ -665,12 +705,14 @@ function showWord(key) {
   activeVocabKey = key;
   activeSheetWord = null;
   currentSpeakWord = v.word;
+  currentSheetWordData = { word: v.word, pron: v.pron, meaning: v.meaning, en: v.ex, ko: v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
 }
 
 function showPlain(rawWord) {
@@ -684,12 +726,14 @@ function showPlain(rawWord) {
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
+  currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: '', ko: '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = '';
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
   lookupWord(lower);
 }
 
@@ -706,11 +750,13 @@ function lookupWord(lower) {
         }
       }
       if (phonetic) document.getElementById('sheet-pron').textContent = phonetic;
+      if (currentSheetWordData) currentSheetWordData.pron = phonetic;
       var meaning = entry.meanings && entry.meanings[0];
       var def = meaning && meaning.definitions && meaning.definitions[0];
       if (def) {
         var exHtml = def.example ? def.example + '<br>' : '';
         document.getElementById('sheet-example').innerHTML = exHtml + '(영영풀이) ' + def.definition;
+        if (currentSheetWordData && def.example) currentSheetWordData.en = def.example;
       }
     })
     .catch(function() {});
@@ -720,11 +766,15 @@ function lookupWord(lower) {
     .then(function(data) {
       if (activeSheetWord !== lower) return;
       var ko = data && data.responseData && data.responseData.translatedText;
-      document.getElementById('sheet-meaning').textContent = ko ? ko : '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+      var meaningText = ko ? ko : '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+      document.getElementById('sheet-meaning').textContent = meaningText;
+      if (currentSheetWordData) { currentSheetWordData.meaning = meaningText; currentSheetWordData.ko = ko || ''; }
     })
     .catch(function() {
       if (activeSheetWord !== lower) return;
-      document.getElementById('sheet-meaning').textContent = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
+      var meaningText = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
+      document.getElementById('sheet-meaning').textContent = meaningText;
+      if (currentSheetWordData) currentSheetWordData.meaning = meaningText;
     });
 }
 

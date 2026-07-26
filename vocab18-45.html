@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고1 영어 단어장 퀴즈 (18~45번)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+
+.group-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.group-tabs::-webkit-scrollbar { height: 4px; }
+.g-tab { flex: 0 0 auto; padding: 9px 15px; font-size: 13.5px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.g-tab.active { background: #7F77DD; color: #fff; }
+
+.card { background: #fff; border-radius: 16px; padding: 18px 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.card-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; font-weight: 700; }
+
+.search-row { display: flex; gap: 8px; }
+.search-input { flex: 1; padding: 12px 14px; border-radius: 10px; border: 1.5px solid #E0DED8; font-size: 14.5px; font-family: inherit; }
+.search-input:focus { outline: none; border-color: #7F77DD; }
+.search-btn { padding: 12px 18px; border: none; border-radius: 10px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 14px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+.search-result { display: none; position: relative; margin-top: 14px; background: #F8F7FF; border-radius: 12px; padding: 16px; }
+.search-result.show { display: block; }
+.star-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 24px; cursor: pointer; color: #ccc; line-height: 1; -webkit-tap-highlight-color: transparent; }
+.star-btn.starred { color: #F5B700; }
+.sr-word-row { display: flex; align-items: center; gap: 8px; }
+.sr-word { font-size: 18px; font-weight: 700; }
+.sr-speak { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 28px; height: 28px; font-size: 13px; cursor: pointer; flex: 0 0 auto; }
+.sr-pron { font-size: 12px; color: #aaa; margin: 3px 0 8px; }
+.sr-meaning { font-size: 14.5px; color: #333; font-weight: 600; }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.chip { background: #F8F7FF; border-radius: 99px; padding: 7px 12px; font-size: 12.5px; color: #4b3fc4; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.chip .x { color: #b7b0f0; font-weight: 700; }
+.chip.plain { background: #F5F4F0; color: #555; cursor: default; }
+.empty-note { font-size: 12.5px; color: #aaa; margin-top: 8px; }
+
+.start-btn { width: 100%; padding: 16px; border: none; border-radius: 14px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 16px; cursor: pointer; margin-top: 4px; -webkit-tap-highlight-color: transparent; }
+.start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.quiz-wrap { display: none; }
+.quiz-wrap.show { display: block; }
+.browse-wrap.hide { display: none; }
+
+.q-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.q-prog-text { font-size: 13px; color: #888; white-space: nowrap; }
+.q-progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.q-progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.25s ease; }
+.q-type-badge { display: inline-block; font-size: 11.5px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 12px; }
+.q-prompt { font-size: 20px; font-weight: 700; line-height: 1.5; margin-bottom: 4px; }
+.q-prompt-sub { font-size: 13px; color: #aaa; margin-bottom: 16px; }
+.q-choice { display: block; width: 100%; text-align: left; padding: 14px 16px; border-radius: 12px; background: #F8F7FF; margin-bottom: 10px; cursor: pointer; font-size: 15px; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.q-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 700; }
+.q-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.q-choice:disabled { cursor: default; }
+.q-next-btn { width: 100%; padding: 15px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 6px; display: none; -webkit-tap-highlight-color: transparent; }
+.q-next-btn.show { display: block; }
+
+.result-wrap { display: none; text-align: center; padding: 30px 10px; }
+.result-wrap.show { display: block; }
+.result-score { font-size: 42px; font-weight: 700; color: #7F77DD; margin-bottom: 6px; }
+.result-label { font-size: 14px; color: #888; margin-bottom: 26px; }
+.result-btn { padding: 14px 22px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; margin: 0 6px; -webkit-tap-highlight-color: transparent; }
+.result-btn.primary { background: #7F77DD; color: #fff; }
+.result-btn.secondary { background: #E0DED8; color: #555; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">📝 2025 고1 9월 모의고사 · 영어 단어장 18~45번</div>
+<h1>핵심 단어 퀴즈</h1>
+<p class="subtitle">문제별 핵심 단어로 퀴즈를 풀어보세요. 모르는 단어를 검색해 ⭐로 저장하면 그 단어도 함께 퀴즈에 나와요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a></p>
+
+<div class="group-tabs" id="group-tabs"></div>
+
+<div class="browse-wrap" id="browse-wrap">
+  <div class="card">
+    <div class="card-label">🔍 단어 검색해서 저장하기</div>
+    <div class="search-row">
+      <input class="search-input" id="search-input" type="text" placeholder="영어 단어를 입력하세요 (예: gentle)" autocomplete="off">
+      <button class="search-btn" onclick="doSearch()">검색</button>
+    </div>
+    <div class="search-result" id="search-result">
+      <button class="star-btn" id="star-btn" onclick="toggleStar()">☆</button>
+      <div class="sr-word-row">
+        <div class="sr-word" id="sr-word"></div>
+        <button class="sr-speak" onclick="speak(currentSearch && currentSearch.word)">🔊</button>
+      </div>
+      <div class="sr-pron" id="sr-pron"></div>
+      <div class="sr-meaning" id="sr-meaning"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">⭐ 내가 저장한 단어</div>
+    <div class="chip-row" id="starred-chips"></div>
+    <div class="empty-note" id="starred-empty">아직 저장한 단어가 없어요. 위에서 단어를 검색하고 별표를 눌러보세요.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">📖 이 문제의 핵심 단어 (<span id="core-count"></span>개)</div>
+    <div class="chip-row" id="core-chips"></div>
+  </div>
+
+  <button class="start-btn" id="start-btn" onclick="startQuiz()">🎯 퀴즈 시작하기 (<span id="pool-count"></span>문제)</button>
+</div>
+
+<div class="quiz-wrap" id="quiz-wrap">
+  <div class="card">
+    <div class="q-top">
+      <span class="q-prog-text" id="q-prog-text"></span>
+      <div class="q-progress-bar"><div class="q-progress-fill" id="q-progress-fill"></div></div>
+    </div>
+    <div class="q-type-badge" id="q-type-badge"></div>
+    <div class="q-prompt" id="q-prompt"></div>
+    <div class="q-prompt-sub" id="q-prompt-sub"></div>
+    <div id="q-choices"></div>
+    <button class="q-next-btn" id="q-next-btn" onclick="nextQuestion()">다음 →</button>
+  </div>
+</div>
+
+<div class="result-wrap" id="result-wrap">
+  <div class="result-score" id="result-score"></div>
+  <div class="result-label" id="result-label"></div>
+  <button class="result-btn secondary" onclick="backToBrowse()">단어 목록으로</button>
+  <button class="result-btn primary" onclick="startQuiz()">다시 풀기</button>
+</div>
+
+</div>
+<script>
+const groups = [
+{ id:"18", label:"18번", words:[
+  { word:"reach out", pron:"[리치 아웃]", meaning:"연락하다, 손을 내밀다", en:"I am reaching out to ask for help.", ko:"도움을 요청하기 위해 연락드립니다." },
+  { word:"regarding", pron:"[리가딩]", meaning:"~에 관하여", en:"I have a question regarding the schedule.", ko:"일정에 관해 질문이 있습니다." },
+  { word:"operating hours", pron:"[오퍼레이팅 아워즈]", meaning:"운영 시간", en:"What are the library's operating hours?", ko:"도서관 운영 시간이 어떻게 되나요?" },
+  { word:"limits", pron:"[리미츠]", meaning:"제한하다", en:"The rule limits how long we can stay.", ko:"그 규칙은 우리가 머무를 수 있는 시간을 제한한다." },
+  { word:"resources", pron:"[리소시즈]", meaning:"자원, 자료", en:"Students should use all available resources.", ko:"학생들은 이용 가능한 모든 자료를 활용해야 한다." },
+  { word:"challenging", pron:"[챌린징]", meaning:"힘든, 도전적인", en:"The exam was very challenging.", ko:"그 시험은 매우 어려웠다." },
+  { word:"entrance exams", pron:"[엔트런스 이그잼즈]", meaning:"입학시험", en:"She is preparing for college entrance exams.", ko:"그녀는 대학 입학시험을 준비하고 있다." },
+  { word:"extend", pron:"[익스텐드]", meaning:"연장하다, 늘리다", en:"Can you extend the deadline?", ko:"마감을 연장해 주실 수 있나요?" },
+  { word:"proposal", pron:"[프러포절]", meaning:"제안", en:"The board accepted the proposal.", ko:"이사회는 그 제안을 받아들였다." }
+]},
+{ id:"19", label:"19번", words:[
+  { word:"glanced", pron:"[글랜스트]", meaning:"힐끗 보다", en:"She glanced at her watch.", ko:"그녀는 시계를 힐끗 보았다." },
+  { word:"audition", pron:"[오디션]", meaning:"오디션", en:"He passed the audition for the play.", ko:"그는 연극 오디션에 합격했다." },
+  { word:"shaky", pron:"[쉐이키]", meaning:"떨리는, 불안정한", en:"My hands were shaky before the test.", ko:"시험 전에 손이 떨렸다." },
+  { word:"jiggling", pron:"[지글링]", meaning:"흔들다, 들썩이다", en:"Stop jiggling your leg!", ko:"다리 좀 그만 흔들어!" },
+  { word:"announced", pron:"[어나운스트]", meaning:"알렸다, 발표했다", en:"He announced the good news.", ko:"그는 좋은 소식을 알렸다." },
+  { word:"rush of excitement", pron:"[러쉬 어브 익사이트먼트]", meaning:"흥분이 밀려옴", en:"I felt a rush of excitement when I heard the news.", ko:"그 소식을 들었을 때 흥분이 밀려왔다." },
+  { word:"involved", pron:"[인볼브드]", meaning:"참여한, 관련된", en:"I want to be involved in this project.", ko:"나는 이 프로젝트에 참여하고 싶다." },
+  { word:"production", pron:"[프러덕션]", meaning:"공연, 제작", en:"She has a role in the school production.", ko:"그녀는 학교 공연에서 역할을 맡았다." }
+]},
+{ id:"20", label:"20번", words:[
+  { word:"inefficient", pron:"[인이피션트]", meaning:"비효율적인", en:"Inefficient methods waste a lot of time.", ko:"비효율적인 방법은 많은 시간을 낭비한다." },
+  { word:"overlook", pron:"[오버룩]", meaning:"간과하다, 못 보고 지나치다", en:"Don't overlook the small details.", ko:"작은 세부사항을 간과하지 마라." },
+  { word:"potential", pron:"[퍼텐셜]", meaning:"잠재적인", en:"There is great potential for growth.", ko:"성장 가능성이 크다." },
+  { word:"pressing", pron:"[프레싱]", meaning:"긴급한, 절박한", en:"She has a pressing matter to deal with.", ko:"그녀는 처리해야 할 긴급한 일이 있다." },
+  { word:"establish", pron:"[이스태블리쉬]", meaning:"확립하다, 마련하다", en:"Establish clear rules from the start.", ko:"처음부터 명확한 규칙을 마련해라." },
+  { word:"routine", pron:"[루틴]", meaning:"루틴, 정해진 일과", en:"A morning routine helps you focus.", ko:"아침 루틴은 집중하는 데 도움이 된다." },
+  { word:"effective", pron:"[이펙티브]", meaning:"효과적인", en:"This is an effective way to study.", ko:"이것은 효과적인 공부 방법이다." }
+]},
+{ id:"21", label:"21번", words:[
+  { word:"atoms", pron:"[애텀즈]", meaning:"원자", en:"Atoms are the building blocks of matter.", ko:"원자는 물질을 이루는 기본 단위이다." },
+  { word:"inhale", pron:"[인헤일]", meaning:"들이마시다", en:"Inhale deeply and relax.", ko:"깊게 들이마시고 긴장을 풀어라." },
+  { word:"own", pron:"[오운]", meaning:"소유하다", en:"You don't truly own these atoms.", ko:"당신은 이 원자들을 진정으로 소유하지 않는다." },
+  { word:"pool", pron:"[풀]", meaning:"공동 자원, 풀", en:"We share from the same pool of atoms.", ko:"우리는 같은 원자 풀을 공유한다." },
+  { word:"recycle", pron:"[리사이클]", meaning:"재활용하다, 순환시키다", en:"Nature recycles atoms endlessly.", ko:"자연은 원자를 끝없이 재활용한다." },
+  { word:"origin", pron:"[오리진]", meaning:"기원", en:"The origin of the universe is a mystery.", ko:"우주의 기원은 미스터리이다." },
+  { word:"caretaker", pron:"[케어테이커]", meaning:"관리인", en:"You're just the caretaker of these atoms.", ko:"당신은 그저 이 원자들의 관리자일 뿐이다." },
+  { word:"limitless", pron:"[리미트리스]", meaning:"무한한", en:"The universe has limitless forms.", ko:"우주는 무한한 형태를 가진다." }
+]},
+{ id:"22", label:"22번", words:[
+  { word:"gardening", pron:"[가드닝]", meaning:"정원 가꾸기", en:"Gardening is great exercise.", ko:"정원 가꾸기는 훌륭한 운동이다." },
+  { word:"harvesting", pron:"[하베스팅]", meaning:"수확하기", en:"Harvesting vegetables is rewarding.", ko:"채소를 수확하는 것은 보람 있다." },
+  { word:"endurance", pron:"[인듀어런스]", meaning:"지구력", en:"Running builds endurance.", ko:"달리기는 지구력을 길러준다." },
+  { word:"weeding", pron:"[위딩]", meaning:"잡초 뽑기", en:"Weeding can burn calories.", ko:"잡초 뽑기는 칼로리를 소모할 수 있다." },
+  { word:"accessible", pron:"[액세서블]", meaning:"접근하기 쉬운, 이용 가능한", en:"The park is accessible to everyone.", ko:"그 공원은 모두가 이용할 수 있다." },
+  { word:"profound", pron:"[프러파운드]", meaning:"깊은, 심오한", en:"It has a profound effect on health.", ko:"그것은 건강에 깊은 영향을 미친다." },
+  { word:"meditative", pron:"[메디테이티브]", meaning:"명상적인", en:"Walking can be a meditative activity.", ko:"걷기는 명상적인 활동이 될 수 있다." },
+  { word:"self-esteem", pron:"[셀프 이스팀]", meaning:"자존감", en:"Success can boost self-esteem.", ko:"성공은 자존감을 높여줄 수 있다." }
+]},
+{ id:"23", label:"23번", words:[
+  { word:"take advantage of", pron:"[테이크 어드밴티지 오브]", meaning:"이용하다", en:"We should take advantage of new tools.", ko:"우리는 새로운 도구를 이용해야 한다." },
+  { word:"perceive", pron:"[퍼시브]", meaning:"지각하다, 인식하다", en:"We can't perceive ultraviolet light.", ko:"우리는 자외선을 지각할 수 없다." },
+  { word:"phenomena", pron:"[퍼나머나]", meaning:"현상들", en:"Scientists study natural phenomena.", ko:"과학자들은 자연 현상을 연구한다." },
+  { word:"amplifying", pron:"[앰플리파잉]", meaning:"증폭시키는", en:"The device works by amplifying sound.", ko:"그 기기는 소리를 증폭시켜 작동한다." },
+  { word:"telescope", pron:"[텔레스코프]", meaning:"망원경", en:"A telescope brings distant stars closer.", ko:"망원경은 멀리 있는 별을 가까이 보이게 한다." },
+  { word:"instruments", pron:"[인스트루먼츠]", meaning:"기기, 도구", en:"Scientific instruments measure tiny changes.", ko:"과학 기기는 미세한 변화를 측정한다." },
+  { word:"spectrum", pron:"[스펙트럼]", meaning:"스펙트럼, 범위", en:"Light has a wide spectrum of colors.", ko:"빛은 넓은 색의 스펙트럼을 가진다." },
+  { word:"capacity", pron:"[커패서티]", meaning:"능력, 수용력", en:"We have no sensory capacity for X-rays.", ko:"우리는 엑스레이를 감지할 감각 능력이 없다." }
+]},
+{ id:"24", label:"24번", words:[
+  { word:"opponents", pron:"[어포넌츠]", meaning:"반대자들", en:"Opponents of the plan raised concerns.", ko:"그 계획에 반대하는 사람들이 우려를 제기했다." },
+  { word:"mortality", pron:"[모탤리티]", meaning:"사망률", en:"Mortality rates have declined.", ko:"사망률이 감소했다." },
+  { word:"correlation", pron:"[코럴레이션]", meaning:"상관관계", en:"There is a correlation between the two.", ko:"둘 사이에는 상관관계가 있다." },
+  { word:"inference", pron:"[인퍼런스]", meaning:"추론", en:"They rejected this inference.", ko:"그들은 이 추론을 거부했다." },
+  { word:"prescribes", pron:"[프리스크라이브즈]", meaning:"규정하다", en:"The law prescribes strict testing.", ko:"법률은 엄격한 시험을 규정한다." },
+  { word:"subsequently", pron:"[서브시퀀틀리]", meaning:"그 결과, 그 후에", en:"We subsequently found a correlation.", ko:"우리는 그 결과 상관관계를 발견했다." },
+  { word:"substantial", pron:"[서브스탠셜]", meaning:"실질적인, 상당한", en:"They played a substantial role.", ko:"그들은 실질적인 역할을 했다." }
+]},
+{ id:"25", label:"25번", words:[
+  { word:"consumption", pron:"[컨섬션]", meaning:"소비", en:"News consumption habits are changing.", ko:"뉴스 소비 습관이 변화하고 있다." },
+  { word:"preferences", pron:"[프레퍼런시즈]", meaning:"선호(도)", en:"The survey shows different preferences.", ko:"그 설문은 서로 다른 선호도를 보여준다." },
+  { word:"percentage", pron:"[퍼센티지]", meaning:"비율, 백분율", en:"The percentage increased sharply.", ko:"그 비율이 급격히 증가했다." },
+  { word:"in terms of", pron:"[인 텀즈 오브]", meaning:"~의 측면에서", en:"In terms of cost, this option is better.", ko:"비용 측면에서 이 옵션이 더 낫다." },
+  { word:"among", pron:"[어멍]", meaning:"~중에서, ~사이에서", en:"Finland showed the lowest rate among six countries.", ko:"핀란드는 여섯 나라 중 가장 낮은 비율을 보였다." }
+]},
+{ id:"26", label:"26번", words:[
+  { word:"discovered", pron:"[디스커버드]", meaning:"발견했다", en:"He discovered a new species.", ko:"그는 새로운 종을 발견했다." },
+  { word:"complex", pron:"[컴플렉스]", meaning:"복잡한", en:"Whales make complex sounds.", ko:"고래는 복잡한 소리를 낸다." },
+  { word:"surprise hit", pron:"[서프라이즈 힛]", meaning:"뜻밖의 히트작", en:"The album became a surprise hit.", ko:"그 앨범은 뜻밖의 히트작이 되었다." },
+  { word:"founded", pron:"[파운디드]", meaning:"설립했다", en:"She founded a nonprofit organization.", ko:"그녀는 비영리 단체를 설립했다." },
+  { word:"pollution", pron:"[폴루션]", meaning:"오염", en:"The trip studied ocean pollution.", ko:"그 여행은 해양 오염을 연구했다." },
+  { word:"marine mammals", pron:"[머린 매멀즈]", meaning:"해양 포유류", en:"Laws now protect marine mammals.", ko:"이제 법이 해양 포유류를 보호한다." }
+]},
+{ id:"27", label:"27번", words:[
+  { word:"annual", pron:"[애뉴얼]", meaning:"연례의, 매년의", en:"This is our 5th annual event.", ko:"이것은 우리의 다섯 번째 연례 행사이다." },
+  { word:"participation fee", pron:"[파티시페이션 피]", meaning:"참가비", en:"The participation fee is $25 per pair.", ko:"참가비는 한 쌍당 25달러이다." },
+  { word:"refund", pron:"[리펀드]", meaning:"환불", en:"There is no refund after the event starts.", ko:"행사가 시작된 후에는 환불이 없다." },
+  { word:"cancellations", pron:"[캔슬레이션즈]", meaning:"취소", en:"Cancellations must be made in advance.", ko:"취소는 미리 이루어져야 한다." },
+  { word:"register", pron:"[레지스터]", meaning:"등록하다", en:"Register online before the deadline.", ko:"마감 전에 온라인으로 등록하세요." }
+]},
+{ id:"28", label:"28번", words:[
+  { word:"creativity", pron:"[크리에이티비티]", meaning:"창의성", en:"Show your creativity in the design.", ko:"디자인에서 당신의 창의성을 보여주세요." },
+  { word:"guidelines", pron:"[가이드라인즈]", meaning:"지침", en:"Please follow the guidelines carefully.", ko:"지침을 주의 깊게 따라주세요." },
+  { word:"commercialized", pron:"[커머셜라이즈드]", meaning:"상업화된", en:"Do not use commercialized images.", ko:"상업화된 이미지를 사용하지 마세요." },
+  { word:"submission", pron:"[서브미션]", meaning:"제출", en:"The submission deadline is October 4th.", ko:"제출 마감일은 10월 4일이다." },
+  { word:"entry", pron:"[엔트리]", meaning:"출품작, 참가", en:"Limit one entry per participant.", ko:"참가자당 출품작 하나로 제한된다." }
+]},
+{ id:"29", label:"29번", words:[
+  { word:"herbivore", pron:"[허비보어]", meaning:"초식동물", en:"A herbivore eats only plants.", ko:"초식동물은 식물만 먹는다." },
+  { word:"predators", pron:"[프레데터즈]", meaning:"포식자", en:"Herbivores watch out for predators.", ko:"초식동물은 포식자를 경계한다." },
+  { word:"threat", pron:"[쓰레트]", meaning:"위협", en:"A loud noise can be a threat.", ko:"큰 소음은 위협이 될 수 있다." },
+  { word:"captivity", pron:"[캡티비티]", meaning:"감금, 사육 상태", en:"Some animals suffer in captivity.", ko:"어떤 동물들은 사육 상태에서 고통받는다." },
+  { word:"enclosure", pron:"[인클로저]", meaning:"울타리, 우리", en:"The animal panicked inside the enclosure.", ko:"그 동물은 우리 안에서 공황 상태에 빠졌다." },
+  { word:"panic", pron:"[패닉]", meaning:"공황 상태에 빠지다", en:"They panic when trapped.", ko:"그것들은 갇히면 공황 상태에 빠진다." },
+  { word:"domesticate", pron:"[도메스티케이트]", meaning:"길들이다, 가축화하다", en:"Humans domesticated many animals.", ko:"인간은 많은 동물을 길들였다." }
+]},
+{ id:"30", label:"30번", words:[
+  { word:"tendency", pron:"[텐던시]", meaning:"경향, 성향", en:"We have a tendency to share.", ko:"우리는 나누려는 경향이 있다." },
+  { word:"nomadic tribes", pron:"[노매딕 트라이브즈]", meaning:"유목 부족", en:"Nomadic tribes move often.", ko:"유목 부족은 자주 이동한다." },
+  { word:"hospitality", pron:"[하스피탤리티]", meaning:"환대", en:"They showed great hospitality.", ko:"그들은 큰 환대를 보여주었다." },
+  { word:"ironically", pron:"[아이러니컬리]", meaning:"아이러니하게도", en:"Ironically, richer people share less.", ko:"아이러니하게도, 더 부유한 사람들이 덜 나눈다." },
+  { word:"sophisticated", pron:"[서피스티케이티드]", meaning:"정교한", en:"Their security became more sophisticated.", ko:"그들의 보안은 더 정교해졌다." },
+  { word:"disconnection", pron:"[디스커넥션]", meaning:"단절", en:"Wealth can cause disconnection.", ko:"부는 단절을 초래할 수 있다." }
+]},
+{ id:"31", label:"31번", words:[
+  { word:"content", pron:"[컨텐트]", meaning:"만족하는", en:"She felt content with her life.", ko:"그녀는 자신의 삶에 만족했다." },
+  { word:"adjust", pron:"[어저스트]", meaning:"적응하다, 조정하다", en:"We adjust to new situations.", ko:"우리는 새로운 상황에 적응한다." },
+  { word:"baseline", pron:"[베이스라인]", meaning:"기준선", en:"We return to our baseline mood.", ko:"우리는 기준이 되는 기분으로 돌아간다." },
+  { word:"euphoria", pron:"[유포리아]", meaning:"(극도의) 행복감", en:"The euphoria of winning faded quickly.", ko:"승리의 행복감은 빠르게 사라졌다." },
+  { word:"despair", pron:"[디스페어]", meaning:"절망", en:"He felt despair after the loss.", ko:"그는 패배 후 절망을 느꼈다." },
+  { word:"longed for", pron:"[롱드 포]", meaning:"간절히 바랐던", en:"They finally got what they longed for.", ko:"그들은 마침내 간절히 바라던 것을 얻었다." }
+]},
+{ id:"32", label:"32번", words:[
+  { word:"build up", pron:"[빌드 업]", meaning:"축적되다, 쌓이다", en:"Stress can build up over time.", ko:"스트레스는 시간이 지남에 따라 쌓일 수 있다." },
+  { word:"awake", pron:"[어웨이크]", meaning:"깨어 있는", en:"Stay awake during class!", ko:"수업 중에 깨어 있어라!" },
+  { word:"chemical", pron:"[케미컬]", meaning:"화학 물질", en:"This chemical is natural.", ko:"이 화학 물질은 천연이다." }
+]},
+{ id:"33", label:"33번", words:[
+  { word:"whether or not", pron:"[웨더 오어 낫]", meaning:"~인지 아닌지", en:"Whether or not it rains, we'll go.", ko:"비가 오든 오지 않든 우리는 갈 것이다." },
+  { word:"precise", pron:"[프리사이스]", meaning:"정밀한, 정확한", en:"Be precise in your measurements.", ko:"측정에서 정밀하게 해라." },
+  { word:"intend to", pron:"[인텐드 투]", meaning:"~할 의도이다", en:"I intend to finish this today.", ko:"오늘 이것을 끝낼 의도이다." }
+]},
+{ id:"34", label:"34번", words:[
+  { word:"transformation", pron:"[트랜스포메이션]", meaning:"변혁, 전환", en:"Technology causes transformation.", ko:"기술이 변혁을 야기한다." },
+  { word:"fossil fuels", pron:"[파실 퓨얼즈]", meaning:"화석 연료", en:"Fossil fuels cause pollution.", ko:"화석 연료는 오염을 야기한다." },
+  { word:"concrete", pron:"[컨크리트]", meaning:"콘크리트", en:"The building is made of concrete.", ko:"그 건물은 콘크리트로 만들어졌다." }
+]},
+{ id:"35", label:"35번", words:[
+  { word:"dreamed of", pron:"[드림드 어브]", meaning:"~을 꿈꿔왔다", en:"She dreamed of becoming a doctor.", ko:"그녀는 의사가 되는 것을 꿈꿔왔다." },
+  { word:"intelligent", pron:"[인텔리전트]", meaning:"지능적인", en:"AI is becoming more intelligent.", ko:"AI가 점점 더 지능적이 되고 있다." },
+  { word:"human-like", pron:"[휴먼라이크]", meaning:"인간과 같은", en:"These are human-like robots.", ko:"이것들은 인간과 같은 로봇들이다." }
+]},
+{ id:"36", label:"36번", words:[
+  { word:"hibernation", pron:"[하이버네이션]", meaning:"동면, 겨울잠", en:"The tortoise stays in its tunnel during hibernation.", ko:"거북은 동면 기간 동안 굴 속에 머문다." },
+  { word:"bladder", pron:"[블래더]", meaning:"방광", en:"The tortoise's bladder holds water for a long time.", ko:"거북의 방광은 오랫동안 물을 저장한다." },
+  { word:"reabsorb", pron:"[리업소브]", meaning:"재흡수하다", en:"The tortoise can reabsorb water back into its body.", ko:"거북은 물을 몸속으로 다시 흡수할 수 있다." },
+  { word:"immobile", pron:"[이모바일]", meaning:"움직이지 않는", en:"It spends more than 90 percent of its life immobile.", ko:"그것은 생애의 90퍼센트 이상을 움직이지 않고 지낸다." },
+  { word:"terrified", pron:"[테러파이드]", meaning:"겁에 질린", en:"Tortoises become terrified when people pick them up.", ko:"거북은 사람들이 집어 들면 겁에 질린다." }
+]},
+{ id:"37", label:"37번", words:[
+  { word:"pedalling", pron:"[페달링]", meaning:"페달을 밟는 것", en:"Imagine you are pedalling your bicycle on a level road.", ko:"당신이 평지에서 자전거 페달을 밟고 있다고 상상해 보라." },
+  { word:"friction", pron:"[프릭션]", meaning:"마찰", en:"Friction slows down moving things.", ko:"마찰은 움직이는 물체의 속도를 늦춘다." },
+  { word:"resistance", pron:"[리지스턴스]", meaning:"저항", en:"Air resistance pushes you backwards.", ko:"공기 저항은 당신을 뒤로 밀어낸다." },
+  { word:"axles", pron:"[액슬즈]", meaning:"차축", en:"Friction happens in the wheels rubbing on the axles.", ko:"마찰은 바퀴가 차축에 마찰될 때 생긴다." },
+  { word:"exerting", pron:"[이그저팅]", meaning:"(힘을) 가하는", en:"The brakes must be exerting a force on the bicycle.", ko:"브레이크는 자전거에 힘을 가하고 있는 것이 틀림없다." }
+]},
+{ id:"38", label:"38번", words:[
+  { word:"nonlinear", pron:"[논리니어]", meaning:"비선형의", en:"Nonlinear editing is flexible.", ko:"비선형 편집은 유연하다." },
+  { word:"random access", pron:"[랜덤 액세스]", meaning:"무작위 접근", en:"Random access saves time.", ko:"무작위 접근은 시간을 절약한다." },
+  { word:"shot", pron:"[샷]", meaning:"촬영 장면", en:"That was a great shot!", ko:"그건 훌륭한 장면이었어!" }
+]},
+{ id:"39", label:"39번", words:[
+  { word:"morally", pron:"[모럴리]", meaning:"도덕적으로", en:"Act morally in all situations.", ko:"모든 상황에서 도덕적으로 행동해라." },
+  { word:"significantly", pron:"[시그니피컨틀리]", meaning:"훨씬, 상당히", en:"Prices increased significantly.", ko:"가격이 상당히 올랐다." },
+  { word:"intentions", pron:"[인텐션즈]", meaning:"의도들", en:"Good intentions are important.", ko:"좋은 의도가 중요하다." }
+]},
+{ id:"40", label:"40번", words:[
+  { word:"visualizing", pron:"[비주얼라이징]", meaning:"시각화하는", en:"Visualize your goals clearly.", ko:"목표를 명확하게 시각화해라." },
+  { word:"mind's eye", pron:"[마인즈 아이]", meaning:"마음의 눈, 머릿속", en:"I can see it in my mind's eye.", ko:"머릿속으로 볼 수 있다." },
+  { word:"profile", pron:"[프로파일]", meaning:"옆모습, 측면", en:"I saw her profile.", ko:"그녀의 옆모습을 보았다." }
+]},
+{ id:"41-42", label:"41~42번", words:[
+  { word:"retail", pron:"[리테일]", meaning:"소매의", en:"She works in retail.", ko:"그녀는 소매업에 종사한다." },
+  { word:"utter", pron:"[어터]", meaning:"말하다, 발화하다", en:"He didn't utter a word.", ko:"그는 한마디도 하지 않았다." },
+  { word:"encourage", pron:"[인커리지]", meaning:"격려하다, 유도하다", en:"Encourage students to speak up.", ko:"학생들이 발언하도록 유도해라." }
+]},
+{ id:"43-45", label:"43~45번", words:[
+  { word:"although", pron:"[올도우]", meaning:"비록 ~이지만", en:"Although he was tired, he kept going.", ko:"비록 피곤했지만 그는 계속했다." },
+  { word:"shared", pron:"[쉐어드]", meaning:"공유했다", en:"They shared the same dream.", ko:"그들은 같은 꿈을 공유했다." },
+  { word:"understanding", pron:"[언더스탠딩]", meaning:"이해, 공감", en:"Reach a mutual understanding.", ko:"상호 이해에 도달해라." }
+]}
+];
+
+const allWords = groups.reduce(function(acc, g) { return acc.concat(g.words); }, []);
+
+let currentGroupIdx = 0;
+let currentSearch = null;
+let quizQueue = [];
+let quizIdx = 0;
+let quizScore = 0;
+let answered = false;
+
+function starKey(gid) { return 'vocabStar_' + gid; }
+
+function getStarred(gid) {
+  try { return JSON.parse(localStorage.getItem(starKey(gid)) || '[]'); } catch(e) { return []; }
+}
+
+function setStarred(gid, list) {
+  localStorage.setItem(starKey(gid), JSON.stringify(list));
+}
+
+function buildTabs() {
+  var el = document.getElementById('group-tabs');
+  el.innerHTML = groups.map(function(g, i) {
+    return '<div class="g-tab" data-i="' + i + '" onclick="selectGroup(' + i + ')">' + g.label + '</div>';
+  }).join('');
+}
+
+function selectGroup(i) {
+  currentGroupIdx = i;
+  backToBrowse();
+  renderBrowse();
+  document.querySelectorAll('.g-tab').forEach(function(t, idx) {
+    t.classList.toggle('active', idx === i);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderBrowse() {
+  var g = groups[currentGroupIdx];
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-result').classList.remove('show');
+  currentSearch = null;
+
+  var starred = getStarred(g.id);
+  var chipsEl = document.getElementById('starred-chips');
+  var emptyEl = document.getElementById('starred-empty');
+  if (starred.length === 0) {
+    chipsEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+  } else {
+    emptyEl.style.display = 'none';
+    chipsEl.innerHTML = starred.map(function(w, i) {
+      return '<div class="chip">⭐ ' + w.word + '<span class="x" onclick="removeStar(' + i + ')">✕</span></div>';
+    }).join('');
+  }
+
+  document.getElementById('core-count').textContent = g.words.length;
+  document.getElementById('core-chips').innerHTML = g.words.map(function(w) {
+    return '<div class="chip plain" onclick="speak(\'' + w.word.replace(/'/g,"\\'") + '\')">🔊 ' + w.word + '</div>';
+  }).join('');
+
+  var poolSize = g.words.length + starred.length;
+  document.getElementById('pool-count').textContent = poolSize;
+  document.getElementById('start-btn').disabled = poolSize < 2;
+}
+
+function removeStar(i) {
+  var g = groups[currentGroupIdx];
+  var starred = getStarred(g.id);
+  starred.splice(i, 1);
+  setStarred(g.id, starred);
+  renderBrowse();
+}
+
+function doSearch() {
+  var input = document.getElementById('search-input');
+  var raw = input.value.trim();
+  if (!raw) return;
+  var word = raw.toLowerCase();
+  var box = document.getElementById('search-result');
+  box.classList.add('show');
+  document.getElementById('sr-word').textContent = raw;
+  document.getElementById('sr-pron').textContent = '';
+  document.getElementById('sr-meaning').textContent = '뜻을 찾는 중...';
+  currentSearch = { word: raw, pron: '', meaning: '', en: '', ko: '' };
+  updateStarBtn();
+
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word))
+    .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
+    .then(function(data) {
+      if (!currentSearch || currentSearch.word !== raw) return;
+      var entry = data[0];
+      var phonetic = entry.phonetic || '';
+      if (!phonetic && entry.phonetics) {
+        for (var i = 0; i < entry.phonetics.length; i++) {
+          if (entry.phonetics[i].text) { phonetic = entry.phonetics[i].text; break; }
+        }
+      }
+      currentSearch.pron = phonetic;
+      document.getElementById('sr-pron').textContent = phonetic;
+      var meaning = entry.meanings && entry.meanings[0];
+      var def = meaning && meaning.definitions && meaning.definitions[0];
+      if (def && def.example) {
+        currentSearch.en = def.example;
+      }
+    })
+    .catch(function() {});
+
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(word) + '&langpair=en|ko')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!currentSearch || currentSearch.word !== raw) return;
+      var ko = data && data.responseData && data.responseData.translatedText;
+      currentSearch.meaning = ko || '뜻을 찾을 수 없어요';
+      currentSearch.ko = ko || '';
+      document.getElementById('sr-meaning').textContent = currentSearch.meaning;
+    })
+    .catch(function() {
+      if (!currentSearch || currentSearch.word !== raw) return;
+      currentSearch.meaning = '인터넷 연결을 확인해주세요';
+      document.getElementById('sr-meaning').textContent = currentSearch.meaning;
+    });
+}
+
+function updateStarBtn() {
+  var g = groups[currentGroupIdx];
+  var starred = getStarred(g.id);
+  var btn = document.getElementById('star-btn');
+  var isStarred = currentSearch && starred.some(function(w) { return w.word.toLowerCase() === currentSearch.word.toLowerCase(); });
+  btn.textContent = isStarred ? '★' : '☆';
+  btn.classList.toggle('starred', !!isStarred);
+}
+
+function toggleStar() {
+  if (!currentSearch) return;
+  var g = groups[currentGroupIdx];
+  var saved = currentSearch;
+  var starred = getStarred(g.id);
+  var idx = starred.findIndex(function(w) { return w.word.toLowerCase() === saved.word.toLowerCase(); });
+  if (idx >= 0) {
+    starred.splice(idx, 1);
+  } else {
+    starred.push({
+      word: saved.word,
+      pron: saved.pron || '',
+      meaning: saved.meaning || '뜻 정보 없음',
+      en: saved.en || '',
+      ko: saved.ko || ''
+    });
+  }
+  setStarred(g.id, starred);
+  renderBrowse();
+  currentSearch = saved;
+  document.getElementById('search-input').value = saved.word;
+  document.getElementById('search-result').classList.add('show');
+  document.getElementById('sr-word').textContent = saved.word;
+  document.getElementById('sr-pron').textContent = saved.pron;
+  document.getElementById('sr-meaning').textContent = saved.meaning;
+  updateStarBtn();
+}
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function canBlank(item) {
+  return item.en && item.word && item.en.toLowerCase().indexOf(item.word.toLowerCase()) !== -1;
+}
+
+function startQuiz() {
+  var g = groups[currentGroupIdx];
+  var pool = g.words.concat(getStarred(g.id));
+  if (pool.length < 2) return;
+
+  quizQueue = shuffle(pool).map(function(item) {
+    var types = ['en2ko', 'ko2en'];
+    if (canBlank(item)) types.push('blank');
+    var type = types[Math.floor(Math.random() * types.length)];
+    return { item: item, type: type };
+  });
+  quizIdx = 0;
+  quizScore = 0;
+
+  document.getElementById('browse-wrap').classList.add('hide');
+  document.getElementById('result-wrap').classList.remove('show');
+  document.getElementById('quiz-wrap').classList.add('show');
+  renderQuestion();
+}
+
+function buildDistractorPool(currentGroupWords, exclude) {
+  var localPool = currentGroupWords.filter(function(w) { return w.word !== exclude.word; });
+  var pool = localPool.length >= 3 ? localPool : localPool.concat(shuffle(allWords.filter(function(w) { return w.word !== exclude.word; })));
+  return pool;
+}
+
+function renderQuestion() {
+  answered = false;
+  var total = quizQueue.length;
+  document.getElementById('q-prog-text').textContent = (quizIdx + 1) + ' / ' + total;
+  document.getElementById('q-progress-fill').style.width = ((quizIdx + 1) / total * 100) + '%';
+
+  var q = quizQueue[quizIdx];
+  var g = groups[currentGroupIdx];
+  var groupWords = g.words.concat(getStarred(g.id));
+  var distractorSource = buildDistractorPool(groupWords, q.item);
+
+  var badge = document.getElementById('q-type-badge');
+  var prompt = document.getElementById('q-prompt');
+  var sub = document.getElementById('q-prompt-sub');
+  var choicesEl = document.getElementById('q-choices');
+  var correctText, choiceTexts, seen;
+
+  if (q.type === 'en2ko') {
+    badge.textContent = '영어 → 한국어 뜻 찾기';
+    prompt.textContent = q.item.word;
+    sub.textContent = q.item.pron || '';
+    correctText = q.item.meaning;
+    seen = {}; seen[correctText] = true;
+    choiceTexts = [correctText];
+    for (var i = 0; i < distractorSource.length && choiceTexts.length < 4; i++) {
+      var m = distractorSource[i].meaning;
+      if (m && !seen[m]) { seen[m] = true; choiceTexts.push(m); }
+    }
+  } else if (q.type === 'ko2en') {
+    badge.textContent = '한국어 → 영어 단어 찾기';
+    prompt.textContent = q.item.meaning;
+    sub.textContent = '';
+    correctText = q.item.word;
+    seen = {}; seen[correctText] = true;
+    choiceTexts = [correctText];
+    for (var j = 0; j < distractorSource.length && choiceTexts.length < 4; j++) {
+      var w = distractorSource[j].word;
+      if (w && !seen[w]) { seen[w] = true; choiceTexts.push(w); }
+    }
+  } else {
+    badge.textContent = '빈칸에 알맞은 단어 찾기';
+    var re = new RegExp(q.item.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+    prompt.textContent = q.item.en.replace(re, '_____');
+    sub.textContent = q.item.ko || '';
+    correctText = q.item.word;
+    seen = {}; seen[correctText] = true;
+    choiceTexts = [correctText];
+    for (var k = 0; k < distractorSource.length && choiceTexts.length < 4; k++) {
+      var w2 = distractorSource[k].word;
+      if (w2 && !seen[w2]) { seen[w2] = true; choiceTexts.push(w2); }
+    }
+  }
+
+  choiceTexts = shuffle(choiceTexts);
+  choicesEl.innerHTML = choiceTexts.map(function(t, i) {
+    return '<button class="q-choice" data-t="' + encodeURIComponent(t) + '" onclick="selectAnswer(this,\'' + encodeURIComponent(t) + '\',\'' + encodeURIComponent(correctText) + '\')">' + t + '</button>';
+  }).join('');
+  document.getElementById('q-next-btn').classList.remove('show');
+}
+
+function selectAnswer(btn, chosenEnc, correctEnc) {
+  if (answered) return;
+  answered = true;
+  var chosen = decodeURIComponent(chosenEnc);
+  var correct = decodeURIComponent(correctEnc);
+  var isCorrect = chosen === correct;
+  if (isCorrect) quizScore++;
+
+  document.querySelectorAll('.q-choice').forEach(function(el) {
+    el.disabled = true;
+    var t = decodeURIComponent(el.getAttribute('data-t'));
+    if (t === correct) el.classList.add('correct');
+    else if (t === chosen) el.classList.add('wrong');
+  });
+
+  var nextBtn = document.getElementById('q-next-btn');
+  nextBtn.textContent = quizIdx === quizQueue.length - 1 ? '결과 보기' : '다음 →';
+  nextBtn.classList.add('show');
+}
+
+function nextQuestion() {
+  quizIdx++;
+  if (quizIdx >= quizQueue.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-wrap').classList.remove('show');
+  document.getElementById('result-wrap').classList.add('show');
+  document.getElementById('result-score').textContent = quizScore + ' / ' + quizQueue.length;
+  var pct = Math.round(quizScore / quizQueue.length * 100);
+  var label = pct === 100 ? '완벽해요! 🎉' : pct >= 70 ? '잘했어요! 👍' : '조금 더 복습해봐요 💪';
+  document.getElementById('result-label').textContent = label;
+}
+
+function backToBrowse() {
+  document.getElementById('quiz-wrap').classList.remove('show');
+  document.getElementById('result-wrap').classList.remove('show');
+  document.getElementById('browse-wrap').classList.remove('hide');
+  renderBrowse();
+}
+
+function speak(text) {
+  if (!text || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  window.speechSynthesis.speak(utter);
+}
+
+document.getElementById('search-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doSearch();
+});
+
+buildTabs();
+document.querySelector('.g-tab').classList.add('active');
+renderBrowse();
+</script>
+</body>
+</html>

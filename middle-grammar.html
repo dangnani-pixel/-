@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중학 필수 문법 총정리</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+
+.top-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.prog-text { font-size: 13px; color: #888; white-space: nowrap; min-width: 42px; }
+.progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.3s ease; }
+
+.topic-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.topic-tabs::-webkit-scrollbar { height: 4px; }
+.t-tab { flex: 0 0 auto; padding: 9px 15px; font-size: 13.5px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.t-tab.active { background: #7F77DD; color: #fff; }
+
+.topic-badge { display: inline-block; font-size: 12px; font-weight: 600; color: #fff; background: #534AB7; border-radius: 99px; padding: 5px 14px; margin-bottom: 10px; }
+
+.card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.explain { font-size: 15.5px; line-height: 1.85; color: #333; margin-bottom: 4px; }
+
+.rule-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13.5px; }
+.rule-table th, .rule-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #F0EFEB; }
+.rule-table th { color: #888; font-weight: 600; font-size: 12px; }
+.rule-table td.hl { color: #534AB7; font-weight: 700; }
+
+.section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin: 18px 0 10px; font-weight: 700; }
+.section-label:first-of-type { margin-top: 0; }
+
+.example-item { background: #F8F7FF; border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.example-item:last-child { margin-bottom: 0; }
+.example-text { flex: 1; }
+.example-en { font-size: 14.5px; color: #1a1a1a; font-weight: 600; line-height: 1.5; }
+.example-ko { font-size: 13px; color: #7F77DD; margin-top: 3px; line-height: 1.5; }
+.example-speak { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 30px; height: 30px; font-size: 13px; cursor: pointer; flex: 0 0 auto; -webkit-tap-highlight-color: transparent; }
+
+.tip-box { background: #FFF8E6; border: 1.5px dashed #E0B84D; border-radius: 12px; padding: 14px 16px; margin-top: 4px; }
+.tip-box-label { font-size: 12px; font-weight: 700; color: #a67c1f; margin-bottom: 6px; }
+.tip-box p { font-size: 13.5px; color: #5a4413; line-height: 1.7; }
+
+.nav-row { display: flex; gap: 10px; margin-top: 16px; }
+.nav-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nav-btn:active { transform: scale(0.98); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.secondary { background: #E0DED8; color: #555; }
+.nav-btn.primary { background: #7F77DD; color: #fff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">📘 중학 영어 · 필수 문법 총정리</div>
+<h1>중학 필수 문법</h1>
+<p class="subtitle">중학교 영어에서 가장 자주 나오는 핵심 문법 12개만 뽑았어요. 예문의 🔊 버튼을 누르면 발음을 들을 수 있어요.<br><a class="home-link" href="index.html">← 학년 선택으로</a></p>
+
+<div class="top-bar">
+  <span class="prog-text" id="prog-text">1 / 12</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="topic-tabs" id="topic-tabs"></div>
+
+<div class="topic-badge" id="topic-badge"></div>
+
+<div class="card">
+  <div class="explain" id="explain"></div>
+  <table class="rule-table" id="rule-table" style="display:none;"></table>
+
+  <div class="section-label">예문</div>
+  <div id="example-list"></div>
+
+  <div id="tip-wrap" style="display:none;">
+    <div class="section-label">헷갈리기 쉬운 점</div>
+    <div class="tip-box"><p id="tip-text"></p></div>
+  </div>
+</div>
+
+<div class="nav-row">
+  <button class="nav-btn secondary" id="btn-prev" onclick="go(-1)">← 이전</button>
+  <button class="nav-btn primary" id="btn-next" onclick="go(1)">다음 →</button>
+</div>
+</div>
+
+<script>
+const topics = [
+{
+  title: "be동사 (am / is / are)",
+  explain: "be동사는 '~이다, ~있다'라는 뜻이에요. 주어가 누구냐에 따라 모양이 달라져요.",
+  table: { headers: ["주어", "be동사"], rows: [["I", "am"], ["You / We / They", "are"], ["He / She / It", "is"]] },
+  examples: [
+    { en: "I am a student.", ko: "나는 학생이다." },
+    { en: "She is happy.", ko: "그녀는 행복하다." },
+    { en: "They are friends.", ko: "그들은 친구이다." }
+  ],
+  tip: "'He are'처럼 주어와 be동사를 잘못 짝짓는 실수가 흔해요. I-am, He/She/It-is, 나머지는 are! 이렇게 짝을 지어 외워두세요."
+},
+{
+  title: "일반동사와 3인칭 단수",
+  explain: "주어가 He, She, It처럼 '3인칭 단수'이고 현재시제일 때, 일반동사 뒤에 -s나 -es를 붙여요.",
+  examples: [
+    { en: "I like pizza.", ko: "나는 피자를 좋아한다." },
+    { en: "She likes pizza.", ko: "그녀는 피자를 좋아한다." },
+    { en: "He watches TV every day.", ko: "그는 매일 TV를 본다." }
+  ],
+  tip: "동사가 -s, -x, -ch, -sh로 끝나면 -es를 붙여요 (watch→watches). 자음+y로 끝나면 y를 i로 바꾸고 -es (study→studies)."
+},
+{
+  title: "인칭대명사 (주격 · 소유격 · 목적격)",
+  explain: "대명사는 문장에서 어디에 쓰이느냐에 따라 모양이 바뀌어요. '주어 자리(주격)', '~의(소유격)', '목적어 자리(목적격)'를 구별해야 해요.",
+  table: { headers: ["주격", "소유격", "목적격"], rows: [["I", "my", "me"], ["you", "your", "you"], ["he", "his", "him"], ["she", "her", "her"], ["we", "our", "us"], ["they", "their", "them"]] },
+  examples: [
+    { en: "I love my dog.", ko: "나는 내 개를 사랑한다." },
+    { en: "He loves me too.", ko: "그도 나를 사랑한다." },
+    { en: "This is her bag.", ko: "이것은 그녀의 가방이다." }
+  ],
+  tip: "'her'는 소유격(그녀의)과 목적격(그녀를) 둘 다로 쓰여요. 문장에서 자리를 보고 뜻을 구별하세요."
+},
+{
+  title: "현재진행형 (be + ~ing)",
+  explain: "지금 이 순간 하고 있는 일을 말할 때는 'be동사 + 동사ing'를 써요.",
+  examples: [
+    { en: "I am reading a book now.", ko: "나는 지금 책을 읽고 있다." },
+    { en: "She is cooking dinner.", ko: "그녀는 저녁을 요리하고 있다." },
+    { en: "They are playing soccer.", ko: "그들은 축구를 하고 있다." }
+  ],
+  tip: "e로 끝나는 동사는 e를 빼고 ing (make→making). '짧은모음+자음'으로 끝나면 자음을 한 번 더 쓰고 ing (run→running)."
+},
+{
+  title: "과거시제 (규칙 · 불규칙 동사)",
+  explain: "이미 지나간 일은 동사의 과거형으로 말해요. 대부분은 -ed를 붙이지만(규칙동사), 모양이 완전히 바뀌는 동사도 많아요(불규칙동사).",
+  examples: [
+    { en: "I played soccer yesterday.", ko: "나는 어제 축구를 했다. (규칙: play→played)" },
+    { en: "I went to school.", ko: "나는 학교에 갔다. (불규칙: go→went)" },
+    { en: "She ate breakfast.", ko: "그녀는 아침을 먹었다. (불규칙: eat→ate)" }
+  ],
+  tip: "불규칙 동사는 외우는 수밖에 없어요! go-went, eat-ate, have-had, see-saw, buy-bought처럼 자주 쓰는 것부터 익히세요."
+},
+{
+  title: "미래표현 (will / be going to)",
+  explain: "앞으로 할 일이나 예정된 일을 말할 때 will이나 be going to를 써요.",
+  examples: [
+    { en: "I will call you tomorrow.", ko: "내일 너에게 전화할게." },
+    { en: "We are going to travel this weekend.", ko: "우리는 이번 주말에 여행 갈 예정이다." },
+    { en: "It will rain soon.", ko: "곧 비가 올 것이다." }
+  ],
+  tip: "will은 그 자리에서 즉흥적으로 결정한 일에, be going to는 미리 세워둔 계획에 더 잘 어울려요."
+},
+{
+  title: "조동사 (can / must / should / may)",
+  explain: "조동사는 동사 앞에서 능력, 의무, 충고, 허락 같은 의미를 더해줘요. 조동사 뒤에는 항상 동사원형이 와요.",
+  examples: [
+    { en: "I can swim.", ko: "나는 수영할 수 있다. (능력)" },
+    { en: "You must wear a seatbelt.", ko: "너는 안전벨트를 매야 한다. (의무)" },
+    { en: "You should sleep early.", ko: "너는 일찍 자는 게 좋겠다. (충고)" },
+    { en: "May I come in?", ko: "들어가도 될까요? (허락)" }
+  ],
+  tip: "'She can plays'(X)처럼 조동사 뒤 동사에 -s를 붙이거나 to를 넣는 실수를 자주 해요. 조동사 뒤에는 무조건 동사원형!"
+},
+{
+  title: "명사와 관사 (a / an / the)",
+  explain: "셀 수 있는 명사가 하나면 앞에 a나 an을 붙여요(모음 발음으로 시작하면 an). 이미 언급했거나 서로 아는 것에는 the를 써요. 물, 사랑처럼 셀 수 없는 명사에는 a/an을 붙이지 않아요.",
+  examples: [
+    { en: "I have a pen.", ko: "나는 펜 하나를 가지고 있다." },
+    { en: "She is an artist.", ko: "그녀는 예술가이다." },
+    { en: "I bought a book. The book is interesting.", ko: "나는 책을 샀다. 그 책은 재미있다." },
+    { en: "I need water.", ko: "나는 물이 필요하다. (셀 수 없어서 관사 없음)" }
+  ],
+  tip: "apple처럼 모음 발음(a, e, i, o, u)으로 시작하면 a가 아니라 an을 써요. an apple (O), a apple (X)"
+},
+{
+  title: "비교급과 최상급",
+  explain: "두 가지를 비교할 때는 형용사에 -er을 붙이고(비교급), 셋 이상 중 가장 ~한 것은 -est를 붙여요(최상급). 긴 단어는 앞에 more/most를 붙여요.",
+  examples: [
+    { en: "This is bigger than that.", ko: "이것이 저것보다 더 크다." },
+    { en: "She is the tallest in her class.", ko: "그녀는 반에서 가장 키가 크다." },
+    { en: "This movie is more interesting than that one.", ko: "이 영화가 저 영화보다 더 재미있다." }
+  ],
+  tip: "형용사가 2음절 이상으로 길면 -er/-est 대신 more/most를 앞에 붙여요. beautiful → more beautiful (O), beautifuler (X)"
+},
+{
+  title: "전치사 (시간 · 장소: in / on / at)",
+  explain: "시간과 장소를 나타낼 때 in, on, at을 상황에 맞게 구별해서 써요.",
+  table: { headers: ["전치사", "시간", "장소"], rows: [["at", "정확한 시각 (at 3 o'clock)", "좁은 지점 (at home)"], ["on", "요일 · 날짜 (on Monday)", "표면 위 (on the table)"], ["in", "월 · 년 (in March)", "넓은 공간 (in Korea)"]] },
+  examples: [
+    { en: "I get up at 7.", ko: "나는 7시에 일어난다." },
+    { en: "I was born in March.", ko: "나는 3월에 태어났다." },
+    { en: "The cat is on the sofa.", ko: "고양이가 소파 위에 있다." }
+  ],
+  tip: "at(콕 집은 지점) → on(표면) → in(넓은 공간) 순서로 범위가 커진다고 생각하면 기억하기 쉬워요."
+},
+{
+  title: "to부정사와 동명사",
+  explain: "동사를 명사처럼 쓰고 싶을 때 'to + 동사원형'(to부정사)이나 '동사+ing'(동명사)를 써요.",
+  examples: [
+    { en: "I want to eat pizza.", ko: "나는 피자를 먹고 싶다." },
+    { en: "I like eating pizza.", ko: "나는 피자 먹는 것을 좋아한다." },
+    { en: "Learning English is fun.", ko: "영어를 배우는 것은 재미있다." }
+  ],
+  tip: "want, need, decide 뒤에는 to부정사만! enjoy, finish, avoid 뒤에는 동명사만! 헷갈리면 동사별로 짝을 지어 외우세요."
+},
+{
+  title: "접속사 (and / but / or / because / if / when)",
+  explain: "접속사는 두 단어나 문장을 연결해줘요. 뜻에 따라 어떤 접속사를 쓸지 정해져요.",
+  examples: [
+    { en: "I like apples and bananas.", ko: "나는 사과와 바나나를 좋아한다. (그리고)" },
+    { en: "I was tired, but I finished my homework.", ko: "나는 피곤했지만, 숙제를 끝냈다. (그러나)" },
+    { en: "I stayed home because it was raining.", ko: "비가 와서 집에 있었다. (왜냐하면)" },
+    { en: "If you study hard, you will pass.", ko: "열심히 공부하면, 합격할 것이다. (만약)" }
+  ],
+  tip: "because 뒤에는 '이유(문장)'가, because of 뒤에는 '명사'가 와요. because it rained (O) / because of rain (O) / because rain (X)"
+}
+];
+
+let current = 0;
+
+function buildTabs() {
+  var el = document.getElementById('topic-tabs');
+  el.innerHTML = topics.map(function(t, i) {
+    var short = t.title.split(' (')[0];
+    return '<div class="t-tab" data-i="' + i + '" onclick="selectTopic(' + i + ')">' + (i + 1) + '. ' + short + '</div>';
+  }).join('');
+}
+
+function render() {
+  var t = topics[current];
+  document.getElementById('prog-text').textContent = (current + 1) + ' / ' + topics.length;
+  document.getElementById('prog-fill').style.width = ((current + 1) / topics.length * 100) + '%';
+  document.getElementById('topic-badge').textContent = (current + 1) + '. ' + t.title;
+  document.getElementById('explain').textContent = t.explain;
+
+  var tableEl = document.getElementById('rule-table');
+  if (t.table) {
+    tableEl.style.display = 'table';
+    var thead = '<tr>' + t.table.headers.map(function(h) { return '<th>' + h + '</th>'; }).join('') + '</tr>';
+    var rows = t.table.rows.map(function(r) {
+      return '<tr>' + r.map(function(c, i) { return '<td' + (i === 0 ? ' class="hl"' : '') + '>' + c + '</td>'; }).join('') + '</tr>';
+    }).join('');
+    tableEl.innerHTML = thead + rows;
+  } else {
+    tableEl.style.display = 'none';
+    tableEl.innerHTML = '';
+  }
+
+  document.getElementById('example-list').innerHTML = t.examples.map(function(ex) {
+    return '<div class="example-item"><div class="example-text"><div class="example-en">' + ex.en + '</div><div class="example-ko">' + ex.ko + '</div></div><button class="example-speak" onclick="speak(\'' + ex.en.replace(/'/g, "\\'") + '\')">🔊</button></div>';
+  }).join('');
+
+  var tipWrap = document.getElementById('tip-wrap');
+  if (t.tip) {
+    tipWrap.style.display = 'block';
+    document.getElementById('tip-text').textContent = t.tip;
+  } else {
+    tipWrap.style.display = 'none';
+  }
+
+  document.querySelectorAll('.t-tab').forEach(function(el, i) {
+    el.classList.toggle('active', i === current);
+  });
+
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === topics.length - 1;
+  document.getElementById('btn-next').textContent = current === topics.length - 1 ? '처음으로' : '다음 →';
+}
+
+function selectTopic(i) {
+  current = i;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function go(delta) {
+  if (current === topics.length - 1 && delta === 1) {
+    current = 0;
+  } else {
+    current = Math.max(0, Math.min(topics.length - 1, current + delta));
+  }
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+var ttsVoices = [];
+if ('speechSynthesis' in window) {
+  var loadTtsVoices = function() { ttsVoices = window.speechSynthesis.getVoices(); };
+  loadTtsVoices();
+  window.speechSynthesis.onvoiceschanged = loadTtsVoices;
+}
+
+function speak(text) {
+  if (!text || !('speechSynthesis' in window)) return;
+  var synth = window.speechSynthesis;
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  var voices = (ttsVoices && ttsVoices.length) ? ttsVoices : synth.getVoices();
+  if (voices && voices.length) {
+    var enVoice = voices.find(function(v) { return v.lang === 'en-US'; }) || voices.find(function(v) { return v.lang && v.lang.indexOf('en') === 0; });
+    if (enVoice) utter.voice = enVoice;
+  }
+  synth.cancel();
+  setTimeout(function() { synth.speak(utter); }, 80);
+}
+
+buildTabs();
+render();
+</script>
+</body>
+</html>

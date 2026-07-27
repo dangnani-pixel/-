@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 고1 9월 모의고사 영어 32~38번 정밀 학습</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+.top-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.prog-text { font-size: 13px; color: #888; white-space: nowrap; min-width: 42px; }
+.progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.3s ease; }
+
+.problem-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.problem-tabs::-webkit-scrollbar { height: 4px; }
+.p-tab { flex: 0 0 auto; padding: 9px 16px; font-size: 14px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.p-tab.active { background: #7F77DD; color: #fff; }
+
+.type-badge { display: inline-block; font-size: 12px; font-weight: 600; color: #fff; background: #534AB7; border-radius: 99px; padding: 5px 14px; margin-bottom: 10px; }
+
+.insert-card { display: none; background: #FFF8E6; border: 1.5px dashed #E0B84D; border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; }
+.insert-card.show { display: block; }
+.insert-label { font-size: 11.5px; color: #a67c1f; font-weight: 700; margin-bottom: 6px; }
+.insert-text { font-size: 15px; color: #5a4413; line-height: 1.6; }
+.insert-text-ko { font-size: 13px; color: #a67c1f; margin-top: 6px; line-height: 1.5; }
+
+.passage-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.passage-text p { font-size: 16px; line-height: 1.95; margin-bottom: 12px; }
+.passage-text p:last-child { margin-bottom: 0; }
+.passage-text .plabel { font-weight: 700; color: #534AB7; }
+.w { color: #4b3fc4; border-bottom: 2px dotted #b7b0f0; cursor: pointer; padding: 0 1px; border-radius: 3px; }
+.w:active, .w.tapped { background: #EEEDFE; }
+.p { cursor: pointer; }
+.p:active { background: #EFEFEF; border-radius: 3px; }
+
+.quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
+.quiz-choice { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 10px; background: #F8F7FF; margin-bottom: 8px; cursor: pointer; font-size: 14px; line-height: 1.55; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.quiz-choice:last-of-type { margin-bottom: 0; }
+.quiz-choice.selected { border-color: #7F77DD; background: #EEEDFE; }
+.quiz-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 600; }
+.quiz-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.quiz-num { font-weight: 700; color: #7F77DD; flex: 0 0 auto; }
+.quiz-check-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; }
+.quiz-result { margin-top: 12px; font-size: 13.5px; padding: 12px 14px; border-radius: 10px; line-height: 1.65; display: none; }
+.quiz-result.show { display: block; }
+.quiz-result.ok { background: #E8F8F1; color: #177350; }
+.quiz-result.no { background: #FDEDEC; color: #a8362f; }
+
+.action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.action-btn.on { background: #7F77DD; color: #fff; }
+
+.translation-box { display: none; background: #F8F7FF; border: 1px solid #E4E1FA; border-radius: 12px; padding: 16px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.85; color: #3a2f8f; white-space: pre-line; }
+.translation-box.show { display: block; }
+
+.vocab-grid { display: none; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.vocab-grid.show { display: grid; }
+.vocab-chip { background: #fff; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; }
+.vocab-chip b { display: block; font-size: 13.5px; color: #1a1a1a; }
+.vocab-chip span { display: block; font-size: 12px; color: #7F77DD; margin-top: 2px; }
+
+.tab-row { display: flex; background: #fff; border-radius: 12px; padding: 4px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.tab { flex: 1; padding: 10px 4px; font-size: 14px; text-align: center; cursor: pointer; color: #888; border-radius: 9px; -webkit-tap-highlight-color: transparent; }
+.tab.active { background: #7F77DD; color: #fff; font-weight: 600; }
+.panel { display: none; }
+.panel.active { display: block; }
+.section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+
+.grammar-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.grammar-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
+.grammar-desc { font-size: 13px; color: #555; line-height: 1.65; }
+.grammar-ex { font-size: 13px; color: #7F77DD; margin-top: 7px; font-style: italic; line-height: 1.5; }
+
+.tip-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #7F77DD; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.tip-item p { font-size: 13.5px; color: #444; line-height: 1.7; }
+
+.nav-row { display: flex; gap: 10px; margin-top: 16px; }
+.nav-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nav-btn:active { transform: scale(0.98); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.secondary { background: #E0DED8; color: #555; }
+.nav-btn.primary { background: #7F77DD; color: #fff; }
+
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; z-index: 50; }
+.overlay.show { display: block; }
+.sheet { position: fixed; left: 0; right: 0; bottom: -100%; background: #fff; border-radius: 20px 20px 0 0; padding: 22px 20px 26px; z-index: 51; transition: bottom 0.25s ease; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); max-width: 640px; margin: 0 auto; }
+.sheet.show { bottom: 0; }
+.sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
+.sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
+.sheet-star.starred { color: #F5B700; }
+.sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.sheet-word { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+.speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
+.sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
+.sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
+.sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">📝 2025 고1 9월 전국연합학력평가 · 영어 32~38번</div>
+<h1>지문 완전정복 학습지</h1>
+<p class="subtitle">지문 속 파란 밑줄 단어를 클릭하면 뜻·발음·예문이 나와요. 🔊 버튼을 누르면 실제 발음을 들을 수 있어요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a> · <a class="home-link" href="study39-45.html">39~45번 학습지 →</a> · <a class="home-link" href="vocab18-45.html">단어장 퀴즈</a></p>
+
+<div class="top-bar">
+  <span class="prog-text" id="prog-text">1 / 7</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="problem-tabs" id="problem-tabs"></div>
+
+<div class="type-badge" id="type-badge"></div>
+
+<div class="insert-card" id="insert-card">
+  <div class="insert-label">📌 삽입할 문장</div>
+  <div class="insert-text" id="insert-text"></div>
+  <div class="insert-text-ko" id="insert-text-ko"></div>
+</div>
+
+<div class="passage-card">
+  <div class="passage-text" id="passage-text"></div>
+</div>
+
+<div class="quiz-card">
+  <div class="quiz-q" id="quiz-q"></div>
+  <div id="quiz-choices"></div>
+  <button class="quiz-check-btn" id="quiz-check-btn" onclick="checkAnswer()">정답 확인</button>
+  <div class="quiz-result" id="quiz-result"></div>
+</div>
+
+<div class="action-row">
+  <button class="action-btn" id="btn-trans" onclick="toggleTranslation()">🇰🇷 전체 해석 보기</button>
+  <button class="action-btn" id="btn-vocab" onclick="toggleVocabGrid()">📖 핵심 단어 목록</button>
+</div>
+
+<div class="translation-box" id="translation-box"></div>
+<div class="vocab-grid" id="vocab-grid"></div>
+
+<div class="tab-row">
+  <div class="tab active" data-t="grammar" onclick="switchTab('grammar')">📝 꼭 알아야 할 문법</div>
+  <div class="tab" data-t="tip" onclick="switchTab('tip')">💡 풀이 팁</div>
+</div>
+<div class="panel active" id="tab-grammar"><div class="section-label">문법 포인트</div><div id="grammar-list"></div></div>
+<div class="panel" id="tab-tip"><div class="section-label">유형별 풀이 팁</div><div id="tip-list"></div></div>
+
+<div class="nav-row">
+  <button class="nav-btn secondary" id="btn-prev" onclick="go(-1)">← 이전 문제</button>
+  <button class="nav-btn primary" id="btn-next" onclick="go(1)">다음 문제 →</button>
+</div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeWord()"></div>
+<div class="sheet" id="sheet">
+  <button class="sheet-close" onclick="closeWord()">✕</button>
+  <button class="sheet-star" id="sheet-star" onclick="toggleSheetStar()">☆</button>
+  <div class="sheet-word-row">
+    <div class="sheet-word" id="sheet-word"></div>
+    <button class="speak-btn" id="sheet-speak" onclick="speakCurrent()">🔊</button>
+  </div>
+  <div class="sheet-pron" id="sheet-pron"></div>
+  <div class="sheet-meaning" id="sheet-meaning"></div>
+  <div class="sheet-example" id="sheet-example"></div>
+</div>
+
+<script>
+const problems = [
+{
+  num: 32, type: "빈칸 추론",
+  question: "다음 빈칸에 들어갈 말로 가장 적절한 것을 고르시오. [3점]",
+  choices: ["takes away your energy", "causes mood swings", "catches up with you", "breaks down natural chemicals", "triggers adenosine to disappear"],
+  answer: 2,
+  explanation: "글 전체가 아데노신이 쌓여 수면 부채가 생기고 결국 그 대가를 치르게 된다는 내용을 설명하므로, '결국 수면 부족은 당신을 따라잡는다(catches up with you)'는 ③번이 정답입니다.",
+  vocab: {
+    put_off: { word:"put off", pron:"[풋 오프]", meaning:"미루다, 연기하다", ex:"Don't put off your homework until tomorrow.", exko:"숙제를 내일로 미루지 마라." },
+    overwhelming: { word:"overwhelming", pron:"[오버웰밍]", meaning:"압도적인, 감당할 수 없는", ex:"The workload was overwhelming.", exko:"업무량이 압도적이었다." },
+    compound: { word:"compound", pron:"[컴파운드]", meaning:"화합물", ex:"Water is a compound of hydrogen and oxygen.", exko:"물은 수소와 산소의 화합물이다." },
+    builds_up: { word:"builds up", pron:"[빌즈 업]", meaning:"축적되다, 쌓이다", ex:"Pressure builds up over time.", exko:"압력은 시간이 지나면서 쌓인다." },
+    break_down: { word:"breaks down", pron:"[브레익스 다운]", meaning:"분해하다", ex:"Enzymes break down food in the stomach.", exko:"효소는 위에서 음식을 분해한다." },
+    accumulation: { word:"accumulation", pron:"[어큐뮬레이션]", meaning:"축적, 누적", ex:"An accumulation of snow blocked the road.", exko:"눈이 쌓여 도로를 막았다." },
+    optimal: { word:"optimal", pron:"[옵티멀]", meaning:"최적의", ex:"Eight hours is the optimal amount of sleep.", exko:"8시간이 최적의 수면량이다." },
+    accustomed_to: { word:"accustomed to", pron:"[어커스텀드 투]", meaning:"~에 익숙한", ex:"I'm accustomed to waking up early.", exko:"나는 일찍 일어나는 것에 익숙하다." }
+  },
+  passage: `Although you may [[put_off::put off]] going to sleep in order to squeeze more activities into your day, eventually your need for sleep becomes [[overwhelming::overwhelming]] and you are forced to get some sleep. This daily drive for sleep appears to be due, in part, to a [[compound::compound]] known as adenosine. This natural chemical [[builds_up::builds up]] in your blood as time awake increases. While you sleep, your body [[break_down::breaks down]] the adenosine. Thus, this molecule may be what your body uses to keep track of lost sleep and to trigger sleep when needed. An [[accumulation::accumulation]] of adenosine and other factors might explain why, after several nights of less than [[optimal::optimal]] amounts of sleep, you build up a sleep debt that you must make up by sleeping longer than normal. Because of such built-in molecular feedback, you can't become [[accustomed_to::accustomed to]] getting less sleep than your body needs. Eventually, a lack of sleep ________.`,
+  translation: `당신은 하루에 더 많은 활동을 욱여넣기 위해 잠자리에 드는 것을 미룰 수도 있지만, 결국 수면에 대한 욕구는 압도적이 되어 당신은 어느 정도 잠을 자도록 강요받는다. 이러한 매일의 수면 욕구는 부분적으로 아데노신이라고 알려진 화합물 때문인 것으로 보인다. 이 천연 화학물질은 깨어 있는 시간이 늘어남에 따라 혈액 속에 축적된다. 잠을 자는 동안, 당신의 몸은 아데노신을 분해한다. 따라서 이 분자는 당신의 몸이 부족한 수면을 파악하고 필요할 때 수면을 유발하기 위해 사용하는 것일 수 있다. 아데노신과 다른 요인들의 축적은 왜 최적량보다 적은 수면을 며칠 밤 취한 후에, 정상보다 더 오래 자서 보충해야 하는 수면 부채가 쌓이는지를 설명해 줄 수 있다. 이러한 내장된 분자적 피드백 때문에, 당신은 몸이 필요로 하는 것보다 적은 수면에 익숙해질 수 없다. 결국, 수면 부족은 ________.`,
+  grammar: [
+    { title:"put off + ~ing (미루다)", desc:"'~하는 것을 미루다'라는 뜻으로 뒤에는 동명사가 옵니다.", ex:"Stop putting off going to bed. (잠자리에 드는 것을 그만 미뤄라.)" },
+    { title:"become accustomed to + (동)명사", desc:"'~에 익숙해지다'라는 뜻으로, to는 전치사이므로 뒤에 명사/동명사가 옵니다.", ex:"You can't become accustomed to less sleep. (더 적은 수면에 익숙해질 수 없다.)" },
+    { title:"known as + 명사 (과거분사구)", desc:"'~로 알려진'이라는 뜻으로 앞의 명사를 꾸며줍니다.", ex:"a compound known as adenosine (아데노신으로 알려진 화합물)" }
+  ],
+  tips: [
+    "빈칸이 글의 마지막 문장에 있으면, 앞 내용 전체를 요약·결론짓는 표현을 골라야 해요.",
+    "'sleep debt', 'built-in molecular feedback' 같은 핵심어가 가리키는 결과(결국 대가를 치른다)를 놓치지 마세요.",
+    "관용표현(catch up with someone/something)을 알고 있으면 빈칸을 훨씬 쉽게 채울 수 있어요."
+  ]
+},
+{
+  num: 33, type: "빈칸 추론",
+  question: "다음 빈칸에 들어갈 말로 가장 적절한 것을 고르시오. [3점]",
+  choices: ["the significance of uncertainty is relative", "the relativity of time is difficult to recognize", "all measurements have the same level of uncertainty", "measurements of distance do not depend on intention", "specific numbers make people believe without question"],
+  answer: 0,
+  explanation: "이어지는 내용에서 같은 숫자라도 목적(내일 해가 언제 뜨는지 vs 태양 궤도로 위성을 보내는 일)에 따라 '정밀함'의 기준이 달라진다고 설명하므로, 불확실성의 중요성은 상대적이라는 ①번이 정답입니다.",
+  vocab: {
+    uncertainty: { word:"uncertainty", pron:"[언서튼티]", meaning:"불확실성", ex:"There is uncertainty about the results.", exko:"결과에 대한 불확실성이 있다." },
+    appreciate: { word:"appreciate", pron:"[어프리쉬에이트]", meaning:"이해하다, 진가를 알아보다", ex:"It's hard to appreciate the risk.", exko:"위험을 이해하기 어렵다." },
+    significant_digits: { word:"significant digits", pron:"[시그니피컨트 디짓츠]", meaning:"유효 숫자", ex:"Round the answer to three significant digits.", exko:"답을 유효 숫자 세 자리로 반올림해라." },
+    accuracy: { word:"accuracy", pron:"[애큐러시]", meaning:"정확도", ex:"The device measures with high accuracy.", exko:"그 기기는 높은 정확도로 측정한다." },
+    quoted: { word:"quoted", pron:"[쿼티드]", meaning:"인용된, 언급된", ex:"The quoted price includes tax.", exko:"인용된 가격에는 세금이 포함된다." },
+    intending: { word:"intending to", pron:"[인텐딩 투]", meaning:"~할 의도인", ex:"I'm intending to travel next year.", exko:"나는 내년에 여행할 의도이다." },
+    orbit: { word:"orbit", pron:"[오빗]", meaning:"궤도(를 돌다)", ex:"The satellite orbits the Earth.", exko:"그 위성은 지구 궤도를 돈다." },
+    precise: { word:"precise", pron:"[프리사이스]", meaning:"정밀한, 정확한", ex:"Give me the precise time.", exko:"정확한 시간을 알려줘." }
+  },
+  passage: `One of the things that makes [[uncertainty::uncertainty]] difficult for members of the public to [[appreciate::appreciate]] is that ________. Take, for example, the distance between Earth and the sun: 1.49597 × 10^8 km, as measured at one point during the year. This seems relatively [[precise::precise]]; after all, using six [[significant_digits::significant digits]] means I know the distance to an [[accuracy::accuracy]] of one part in a million or so. However, if the next digit is uncertain, that means the uncertainty in knowing the precise Earth-sun distance is larger than the distance between New York and Chicago! Whether or not the [[quoted::quoted]] number is "precise" therefore depends on what I'm [[intending::intending to]] do with it. If I care only about what minute the sun will rise tomorrow, then the number quoted here is fine. If I want to send a satellite to [[orbit::orbit]] just above the sun, however, then I would need to know distances more accurately.`,
+  translation: `대중의 구성원들이 불확실성을 이해하기 어렵게 만드는 것들 중 하나는 ________는 것이다. 예를 들어 지구와 태양 사이의 거리를 생각해 보자: 연중 한 시점에서 측정된 1.49597×10^8 km. 이것은 비교적 정밀해 보인다; 결국, 유효숫자 여섯 자리를 사용한다는 것은 내가 백만분의 일 정도의 정확도로 그 거리를 안다는 것을 의미한다. 그러나 만약 다음 자릿수가 불확실하다면, 그것은 지구와 태양 사이의 정확한 거리를 아는 데 있어서의 불확실성이 뉴욕과 시카고 사이의 거리보다 크다는 것을 의미한다! 따라서 인용된 숫자가 '정밀한지' 여부는 내가 그것으로 무엇을 하려고 하는지에 달려 있다. 만약 내가 내일 해가 몇 시에 뜨는지에만 관심이 있다면, 여기서 인용된 숫자는 괜찮다. 하지만 만약 내가 태양 바로 위 궤도로 위성을 보내고 싶다면, 나는 거리를 더 정확하게 알아야 할 것이다.`,
+  grammar: [
+    { title:"whether or not + 절 (~인지 아닌지)", desc:"뒤에 오는 내용이 사실인지 아닌지를 나타내는 명사절이에요.", ex:"Whether or not it is precise depends on intention. (그것이 정밀한지 아닌지는 의도에 달려있다.)" },
+    { title:"depend on + 명사/절 (~에 달려있다)", desc:"결과가 무엇에 의해 좌우되는지 나타낼 때 씁니다.", ex:"It depends on what I'm intending to do. (그것은 내가 무엇을 하려는지에 달려있다.)" },
+    { title:"세미콜론(;)으로 부연 설명", desc:"앞 내용을 부연하거나 이유를 덧붙일 때 세미콜론을 씁니다.", ex:"This seems precise; after all, six digits is accurate. (이것은 정밀해 보인다; 결국 여섯 자리는 정확하다.)" }
+  ],
+  tips: [
+    "빈칸이 글 맨 앞에 있으면, 뒤에 나오는 구체적인 예시(지구-태양 거리)를 먼저 읽고 그것이 뒷받침하는 일반적 진술을 빈칸에 넣어보세요.",
+    "'however', 'therefore' 같은 연결어를 따라가며 논리 흐름을 파악하세요.",
+    "예시가 두 가지 상황(해돋이 시간 vs 위성 궤도)으로 나뉘면, 그 공통점(목적에 따라 기준이 달라짐)을 일반화한 선택지를 고르세요."
+  ]
+},
+{
+  num: 34, type: "빈칸 추론",
+  question: "다음 빈칸에 들어갈 말로 가장 적절한 것을 고르시오. [3점]",
+  choices: ["we are taking full advantage of renewable energy sources", "we have to use fossil energy for the construction process", "we invest in more natural resources for the environment", "we are able to decrease the rate of global warming", "alternative energy markets become competitive"],
+  answer: 1,
+  explanation: "빈칸 뒤에서 콘크리트·태양광 패널 생산에 화석 연료가 필요하다는 예시가 이어지고, 재생 에너지로 전환할수록 건설 과정에서 화석 연료 사용이 늘어난다는 것이 글의 핵심 역설이므로 ②번이 정답입니다.",
+  vocab: {
+    argues: { word:"argues that", pron:"[아규즈 댓]", meaning:"~라고 주장하다", ex:"She argues that the plan is risky.", exko:"그녀는 그 계획이 위험하다고 주장한다." },
+    infrastructure: { word:"infrastructure", pron:"[인프라스트럭처]", meaning:"기반시설", ex:"The city needs better infrastructure.", exko:"그 도시는 더 나은 기반시설이 필요하다." },
+    transformation: { word:"transformation", pron:"[트랜스포메이션]", meaning:"변혁, 전환", ex:"The company underwent a transformation.", exko:"그 회사는 변혁을 겪었다." },
+    excavated: { word:"excavated", pron:"[엑스커베이티드]", meaning:"채굴된, 발굴된", ex:"The minerals were excavated from the mountain.", exko:"그 광물들은 산에서 채굴되었다." },
+    undermining: { word:"undermining", pron:"[언더마이닝]", meaning:"약화시키는", ex:"Stress is undermining her health.", exko:"스트레스가 그녀의 건강을 약화시키고 있다." },
+    seldom: { word:"seldom", pron:"[셀덤]", meaning:"좀처럼 ~않는", ex:"He is seldom late.", exko:"그는 좀처럼 늦지 않는다." },
+    transition: { word:"transition", pron:"[트랜지션]", meaning:"전환, 이행", ex:"The transition to renewable energy takes time.", exko:"재생 에너지로의 전환은 시간이 걸린다." },
+    emissions: { word:"emissions", pron:"[이미션즈]", meaning:"배출(물)", ex:"We must cut carbon emissions.", exko:"우리는 탄소 배출을 줄여야 한다." }
+  },
+  passage: `Richard Heinberg, an American journalist, [[argues::argues]] that in building the renewable energy [[infrastructure::infrastructure]] to stop global warming, we are actually involved in one of the greatest change projects in human history. In addition to solar panels and wind turbines, we have to build an alternative transport infrastructure, farming procedures and industrial processes. This [[transformation::transformation]] cannot happen without fossil fuels. For instance, production of concrete structures and steel elements require amounts of energy that is only possible to produce with fossil energy. Production of solar panels requires scarce and expensive minerals which must be [[excavated::excavated]], again requiring the use of fossil fuels. Thus, the harder we push towards a renewable energy system, the faster ________. This is not only expensive, but also an [[undermining::undermining]] factor for our efforts to cut global [[emissions::emissions]]. Heinberg remarks that the cost of building this new energy infrastructure is [[seldom::seldom]] counted in [[transition::transition]] proposals, which tend to focus just on energy supply requirements.`,
+  translation: `미국인 저널리스트인 Richard Heinberg는 지구 온난화를 막기 위한 재생 가능 에너지 기반시설을 구축하는 데 있어, 우리는 실제로 인류 역사상 가장 큰 변화 프로젝트 중 하나에 관여하고 있다고 주장한다. 태양광 패널과 풍력 터빈 외에도, 우리는 대체 교통 기반시설, 농업 절차, 산업 공정을 구축해야 한다. 이러한 변혁은 화석 연료 없이는 일어날 수 없다. 예를 들어, 콘크리트 구조물과 철강 요소의 생산은 화석 에너지로만 생산 가능한 양의 에너지를 필요로 한다. 태양광 패널의 생산은 희귀하고 값비싼 광물을 필요로 하는데, 이는 채굴되어야 하며, 이는 또다시 화석 연료의 사용을 필요로 한다. 따라서, 우리가 재생 가능 에너지 시스템을 향해 더 세게 밀어붙일수록, ________. 이것은 비용이 많이 들 뿐만 아니라, 전 세계 배출량을 줄이려는 우리의 노력을 약화시키는 요인이기도 하다. Heinberg는 이 새로운 에너지 기반시설을 구축하는 비용이 에너지 공급 요구 사항에만 초점을 맞추는 경향이 있는 전환 제안서에는 거의 계산되지 않는다고 언급한다.`,
+  grammar: [
+    { title:"cannot ~ without + 명사/~ing", desc:"'~없이는 …할 수 없다'는 강한 의존 관계를 나타내요.", ex:"This cannot happen without fossil fuels. (이것은 화석 연료 없이는 일어날 수 없다.)" },
+    { title:"the 비교급 ~, the 비교급 … (~할수록 더 …하다)", desc:"두 가지가 함께 변화하는 관계를 나타내는 구문이에요.", ex:"The harder we push, the faster we use fossil energy. (더 세게 밀어붙일수록, 화석 에너지를 더 빨리 사용하게 된다.)" },
+    { title:"관계대명사 which (계속적 용법)", desc:"콤마 뒤 which는 앞 명사를 부연 설명해요.", ex:"proposals, which tend to focus on supply (제안서들은, 그런데 그것들은 공급에 초점을 맞추는 경향이 있다)" }
+  ],
+  tips: [
+    "'the 비교급, the 비교급' 구문이 나오면 앞뒤 내용의 인과관계를 정확히 파악하세요.",
+    "글의 핵심 역설(재생 에너지로 전환하려면 오히려 화석 연료가 더 필요하다)을 놓치지 마세요.",
+    "빈칸 바로 뒤 문장(This is not only expensive...)이 빈칸 내용을 이어받아 부연 설명하는지 확인하세요."
+  ]
+},
+{
+  num: 35, type: "무관한 문장 찾기",
+  question: "다음 글에서 전체 흐름과 관계 없는 문장은?",
+  choices: [
+    "Likewise, literature throughout history has dreamed of creating human-like creatures and thinking machines (e.g., Mary Shelley's Frankenstein).",
+    "In 1950, British mathematician Alan Turing asked whether machines could think and reason like humans and then developed the Turing test to measure a machine's intelligence and whether the machines can think autonomously.",
+    "A few years later, MIT professor John McCarthy coined \"artificial intelligence,\" replacing the previously used expression \"automata studies.\"",
+    "But artificial intelligence didn't stop there; its first major appearance was in a movie where feeling artificial intelligence replaced human characters with robots.",
+    "Since then, artificial intelligence has become the study and practice of \"making intelligent machines\" that are programmed to think like humans — endowed by their creators with reasoning and learning."
+  ],
+  answer: 3,
+  explanation: "글은 인공지능의 역사적 발전(신화 → 문학 → 튜링 → 매카시 → 현재)을 순서대로 설명하는데, ④번 문장은 영화 속 등장이라는 대중문화 이야기로 흐름에서 벗어나므로 정답은 ④번입니다.",
+  vocab: {
+    intelligent: { word:"intelligent", pron:"[인텔리전트]", meaning:"지능적인", ex:"AI is becoming more intelligent.", exko:"AI가 점점 더 지능적이 되고 있다." },
+    myths: { word:"myths", pron:"[미쓰즈]", meaning:"신화", ex:"Ancient Greek myths are fascinating.", exko:"고대 그리스 신화는 매혹적이다." },
+    automatons: { word:"automatons", pron:"[오토마턴즈]", meaning:"자동 장치, 로봇", ex:"Automatons appear in old stories.", exko:"자동 장치는 오래된 이야기에 등장한다." },
+    autonomously: { word:"autonomously", pron:"[오토노머슬리]", meaning:"자율적으로", ex:"The robot can move autonomously.", exko:"그 로봇은 자율적으로 움직일 수 있다." },
+    coined: { word:"coined", pron:"[코인드]", meaning:"(용어를) 만들었다", ex:"She coined a new term.", exko:"그녀는 새로운 용어를 만들었다." },
+    replacing: { word:"replacing", pron:"[리플레이싱]", meaning:"대체하는", ex:"Robots are replacing some jobs.", exko:"로봇이 일부 일자리를 대체하고 있다." },
+    endowed: { word:"endowed", pron:"[인다우드]", meaning:"부여받은", ex:"Humans are endowed with reason.", exko:"인간은 이성을 부여받았다." },
+    reasoning: { word:"reasoning", pron:"[리즈닝]", meaning:"추론, 사고력", ex:"Good reasoning leads to good decisions.", exko:"좋은 추론은 좋은 결정으로 이어진다." }
+  },
+  passage: `Humans for centuries have dreamed of machines that could become [[intelligent::intelligent]] and make human-like decisions. There have been [[myths::myths]] about robots, [[automatons::automatons]], and artificial beings since ancient Greece (e.g., the myth of Pandora, who released ills upon the world). ① Likewise, literature throughout history has dreamed of creating human-like creatures and thinking machines (e.g., Mary Shelley's Frankenstein). ② In 1950, British mathematician Alan Turing asked whether machines could think and reason like humans and then developed the Turing test to measure a machine's intelligence and whether the machines can think [[autonomously::autonomously]]. ③ A few years later, MIT professor John McCarthy [[coined::coined]] "artificial intelligence," [[replacing::replacing]] the previously used expression "automata studies." ④ But artificial intelligence didn't stop there; its first major appearance was in a movie where feeling artificial intelligence replaced human characters with robots. ⑤ Since then, artificial intelligence has become the study and practice of "making intelligent machines" that are programmed to think like humans — [[endowed::endowed]] by their creators with [[reasoning::reasoning]] and learning.`,
+  translation: `인간은 수 세기 동안 지능을 갖추고 인간과 같은 결정을 내릴 수 있는 기계를 꿈꿔왔다. 고대 그리스 이래로 로봇, 자동 장치, 인공 존재에 관한 신화들이 있었다(예: 세상에 재앙을 풀어놓은 판도라 신화). ① 마찬가지로, 역사 전반에 걸친 문학은 인간과 같은 존재와 사고하는 기계를 만드는 것을 꿈꿔왔다(예: 메리 셸리의 프랑켄슈타인). ② 1950년, 영국의 수학자 앨런 튜링은 기계가 생각할 수 있는지 물었고 기계의 지능과 기계가 자율적으로 사고할 수 있는지를 측정하기 위한 튜링 테스트를 개발했다. ③ 몇 년 후, MIT 교수 존 매카시는 이전에 사용되던 '자동 연구'라는 표현을 대체하여 '인공지능'이라는 용어를 만들었다. ④ 하지만 인공지능은 거기서 멈추지 않았다; 그것의 첫 주요 등장은 감정을 가진 인공지능이 인간 캐릭터를 로봇으로 대체한 한 영화에서였다. ⑤ 그 이후로, 인공지능은 창조자에 의해 추론과 학습 능력을 부여받아 인간처럼 생각하도록 프로그램된 '지능적인 기계를 만드는' 연구와 실천이 되었다.`,
+  grammar: [
+    { title:"since + 시점 (~이래로)", desc:"과거의 한 시점부터 지금까지 계속됨을 나타내요.", ex:"since ancient Greece (고대 그리스 이래로)" },
+    { title:"(e.g., ~) 로 예시 제시", desc:"괄호 안에 e.g.(예를 들어)로 구체적인 예를 덧붙입니다.", ex:"myths about robots (e.g., Pandora) (로봇에 관한 신화(예: 판도라))" },
+    { title:"수동태 be programmed to + 동사원형", desc:"'~하도록 프로그램되다'라는 뜻이에요.", ex:"machines programmed to think like humans (인간처럼 생각하도록 프로그램된 기계)" }
+  ],
+  tips: [
+    "무관한 문장 문제는 글의 중심 소재(여기서는 AI의 역사적·학문적 발전 과정)를 벗어나는 문장을 찾는 것이 핵심이에요.",
+    "갑자기 영화 같은 대중문화 이야기가 끼어드는 문장은 전체 흐름과 어긋날 가능성이 높아요.",
+    "Likewise, A few years later, Since then 같은 연결어가 자연스럽게 이어지는지 앞뒤 문장을 확인하세요."
+  ]
+},
+{
+  num: 36, type: "글의 순서 배열",
+  question: "주어진 글 다음에 이어질 글의 순서로 가장 적절한 것을 고르시오.",
+  choices: ["(A) - (C) - (B)", "(B) - (A) - (C)", "(B) - (C) - (A)", "(C) - (A) - (B)", "(C) - (B) - (A)"],
+  answer: 1,
+  explanation: "주어진 글에서 거북이 더위를 피한다고 했고, (B)에서 겨울잠과 여름철 행동을 설명한 뒤, (A)에서 'something else'라는 표현으로 방광이라는 새로운 생존 방법을 제시하고, (C)에서 그 방광의 중요성을 이어서 설명하므로 (B)-(A)-(C) 순서인 ②번이 정답입니다.",
+  vocab: {
+    hibernation: { word:"hibernation", pron:"[하이버네이션]", meaning:"동면, 겨울잠", ex:"Bears go into hibernation in winter.", exko:"곰은 겨울에 동면에 들어간다." },
+    bladder: { word:"bladder", pron:"[블래더]", meaning:"방광", ex:"The bladder stores liquid waste.", exko:"방광은 액체 노폐물을 저장한다." },
+    reabsorb: { word:"reabsorb", pron:"[리업소브]", meaning:"재흡수하다", ex:"The body can reabsorb some water.", exko:"몸은 일부 물을 재흡수할 수 있다." },
+    immobile: { word:"immobile", pron:"[이모바일]", meaning:"움직이지 않는", ex:"He remained immobile for hours.", exko:"그는 몇 시간 동안 움직이지 않았다." },
+    terrified: { word:"terrified", pron:"[테러파이드]", meaning:"겁에 질린", ex:"She was terrified of the storm.", exko:"그녀는 폭풍이 무서웠다." },
+    sophisticated: { word:"sophisticated", pron:"[서피스티케이티드]", meaning:"정교한", ex:"This is a sophisticated system.", exko:"이것은 정교한 시스템이다." },
+    holding_tank: { word:"holding tank", pron:"[홀딩 탱크]", meaning:"저장 탱크", ex:"The holding tank stores extra water.", exko:"저장 탱크는 여분의 물을 저장한다." },
+    reserves: { word:"reserves", pron:"[리저브즈]", meaning:"비축량", ex:"The camel uses its fat reserves.", exko:"낙타는 자신의 지방 비축량을 사용한다." }
+  },
+  passage: `The desert tortoise has a simple solution for coping with Death Valley's extreme heat: It avoids it.
+
+(A) But to stay supplied with water through its extended [[hibernation::hibernation]], the reptile relies on something else — its highly [[sophisticated::sophisticated]] [[bladder::bladder]]. Unlike most animals, the tortoise's bladder acts as a [[holding_tank::holding tank]], allowing it to [[reabsorb::reabsorb]] water back into its body. Incredibly, a desert tortoise can go a full year without taking in any freshwater at all.
+
+(B) The slow-moving creature hibernates during the winter and stays in its tunnel for much of the summer, meaning that it spends more than 90 percent of its life [[immobile::immobile]]. In fact, the tortoise usually only surfaces after a good rain. Then, it gets to work. The tortoise stocks up on water by eating plants and digging holes to collect rain.
+
+(C) And because its bladder is so important to a tortoise's survival, park rangers often remind visitors not to stop and help the slow-movers across the road. Tortoises become so [[terrified::terrified]] when people pick them up that they empty their bladders, losing their precious water [[reserves::reserves]].`,
+  translation: `사막 거북은 데스밸리의 극심한 더위에 대처하는 간단한 해결책을 가지고 있다: 그것을 피하는 것이다.
+
+(A) 하지만 연장된 동면 기간 동안 물을 계속 공급받기 위해, 이 파충류는 다른 무언가에 의존하는데 — 바로 매우 정교한 방광이다. 대부분의 동물과 달리, 거북의 방광은 저장 탱크 역할을 하여, 물을 몸속으로 다시 흡수할 수 있게 해준다. 놀랍게도, 사막 거북은 민물을 전혀 섭취하지 않고도 꼬박 1년을 버틸 수 있다.
+
+(B) 이 느리게 움직이는 생물은 겨울 동안 동면하고 여름의 대부분을 굴 속에서 지내는데, 이는 생애의 90퍼센트 이상을 움직이지 않고 보낸다는 것을 의미한다. 실제로, 거북은 보통 좋은 비가 온 후에만 지표면에 나온다. 그러고 나서, 그것은 작업에 들어간다. 거북은 식물을 먹고 빗물을 모으기 위해 구멍을 파서 물을 비축한다.
+
+(C) 그리고 거북의 방광이 생존에 매우 중요하기 때문에, 공원 관리인들은 방문객들에게 느리게 움직이는 거북을 도와 길을 건너게 해주려고 멈추지 말라고 자주 당부한다. 거북은 사람들이 자신을 집어 들면 너무 겁에 질려서 방광을 비워버려, 소중한 수분 비축량을 잃게 된다.`,
+  grammar: [
+    { title:"unlike + 명사 (~와 달리)", desc:"대조되는 대상을 나타낼 때 씁니다.", ex:"Unlike most animals, tortoises reabsorb water. (대부분의 동물과 달리, 거북은 물을 재흡수한다.)" },
+    { title:"allow + 목적어 + to부정사", desc:"'~가 …하게 해주다'라는 뜻의 5형식 구조예요.", ex:"The bladder allows it to reabsorb water. (방광은 그것이 물을 재흡수하게 해준다.)" },
+    { title:"so + 형용사 + that + 절 (너무 ~해서 …하다)", desc:"원인과 결과를 나타내는 구문이에요.", ex:"They become so terrified that they empty their bladders. (그들은 너무 겁에 질려서 방광을 비운다.)" }
+  ],
+  tips: [
+    "순서배열은 지시어(something else, its bladder)와 연결어(But, And because)가 가리키는 대상을 앞 문단에서 찾는 것이 핵심이에요.",
+    "주어진 문장의 핵심 소재(더위를 피함)를 가장 먼저 이어받는 문단을 찾아보세요.",
+    "시간 순서(겨울잠 → 비 온 후 활동 → 방광 사용 → 사람과의 관계)로 논리를 재구성해보면 순서를 확인하기 쉬워요."
+  ]
+},
+{
+  num: 37, type: "글의 순서 배열",
+  question: "주어진 글 다음에 이어질 글의 순서로 가장 적절한 것을 고르시오. [3점]",
+  choices: ["(A) - (C) - (B)", "(B) - (A) - (C)", "(B) - (C) - (A)", "(C) - (A) - (B)", "(C) - (B) - (A)"],
+  answer: 2,
+  explanation: "질문(What happens?) 뒤에 (B)에서 자전거가 느려지는 현상과 브레이크의 힘을 설명하고, (C)에서 그 힘을 '마찰'이라 명명하며 브레이크 없이도 다른 마찰력이 있다고 언급한 뒤, (A)에서 'these'로 그 다른 마찰력들(바퀴 축 마찰, 공기 저항)을 구체적으로 설명하므로 (B)-(C)-(A) 순서인 ③번이 정답입니다.",
+  vocab: {
+    pedalling: { word:"pedalling", pron:"[페달링]", meaning:"페달을 밟는 것", ex:"She kept pedalling up the hill.", exko:"그녀는 언덕을 계속 페달을 밟으며 올라갔다." },
+    friction: { word:"friction", pron:"[프릭션]", meaning:"마찰", ex:"Friction slows down moving objects.", exko:"마찰은 움직이는 물체의 속도를 늦춘다." },
+    resistance: { word:"resistance", pron:"[리지스턴스]", meaning:"저항", ex:"Air resistance affects speed.", exko:"공기 저항은 속도에 영향을 미친다." },
+    axles: { word:"axles", pron:"[액슬즈]", meaning:"차축", ex:"The wheels rotate around the axles.", exko:"바퀴는 차축을 중심으로 회전한다." },
+    exerting: { word:"exerting", pron:"[이그저팅]", meaning:"(힘을) 가하는", ex:"The rope is exerting force on the pole.", exko:"그 밧줄은 기둥에 힘을 가하고 있다." },
+    rims: { word:"rims", pron:"[림즈]", meaning:"(바퀴) 테두리", ex:"The brakes grip the wheel rims.", exko:"브레이크는 바퀴 테두리를 붙잡는다." },
+    generating: { word:"generating", pron:"[제너레이팅]", meaning:"발생시키는", ex:"The engine is generating heat.", exko:"엔진이 열을 발생시키고 있다." },
+    opposite: { word:"opposite", pron:"[아퍼짓]", meaning:"반대의", ex:"Friction acts in the opposite direction.", exko:"마찰은 반대 방향으로 작용한다." }
+  },
+  passage: `Imagine you are [[pedalling::pedalling]] your bicycle on a level road. You stop pedalling: no force is now acting to move you forward. What happens?
+
+(A) One of these is [[friction::friction]] in the wheels rubbing on the [[axles::axles]]. Another is air [[resistance::resistance]], which you can feel, pushing you backwards as you and the bicycle move forwards. When you apply these ideas to something around you, like a cart, you can see what could be [[generating::generating]] friction: mainly the axles rubbing on the body as they rotate.
+
+(B) You gradually slow down. How could you slow down more suddenly, in a shorter distance? By putting the brakes on. Because the brakes change your movement, making you slow down more suddenly, they must be [[exerting::exerting]] a force on the bicycle and you, as they grip and rub on the wheel-[[rims::rims]].
+
+(C) This is the force called friction, which tends to slow down moving things by acting in the direction [[opposite::opposite]] to movement, that is backwards. Even without the brakes on, there are other friction forces acting on you and your bicycle, which also slow you down.`,
+  translation: `당신이 평지에서 자전거 페달을 밟고 있다고 상상해 보라. 당신이 페달 밟기를 멈춘다: 이제 당신을 앞으로 움직이게 하는 힘은 없다. 무슨 일이 일어날까?
+
+(A) 이것들 중 하나는 바퀴가 축에 마찰하는 것에서 생기는 마찰이다. 다른 하나는 공기 저항인데, 이것은 당신과 자전거가 앞으로 움직일 때 당신을 뒤로 미는 것을 느낄 수 있다. 이러한 개념들을 당신 주변의 것, 예를 들어 카트 같은 것에 적용하면, 무엇이 마찰을 일으킬 수 있는지 알 수 있다: 주로 축이 회전하면서 몸체에 마찰하는 것이다.
+
+(B) 당신은 점점 느려진다. 어떻게 더 짧은 거리에서 더 갑자기 느려질 수 있을까? 브레이크를 밟음으로써다. 브레이크가 당신의 움직임을 바꾸어 더 갑자기 느려지게 만들기 때문에, 그것들은 자전거와 당신에게 힘을 가하고 있는 것이 틀림없다, 왜냐하면 그것들은 바퀴 테두리를 붙잡고 마찰하기 때문이다.
+
+(C) 이것이 바로 마찰이라고 불리는 힘인데, 이는 움직임의 반대 방향, 즉 뒤쪽으로 작용함으로써 움직이는 물체를 느리게 하는 경향이 있다. 브레이크가 없어도, 당신과 자전거에 작용하는 다른 마찰력들이 있어서, 이것들 또한 당신을 느리게 한다.`,
+  grammar: [
+    { title:"조동사 must (강한 추측: ~임에 틀림없다)", desc:"근거를 바탕으로 한 강한 추측을 나타내요.", ex:"They must be exerting a force. (그것들은 힘을 가하고 있는 것이 틀림없다.)" },
+    { title:"like + 명사 (전치사: ~과 같은)", desc:"비교 대상을 예로 들 때 씁니다.", ex:"something around you, like a cart (카트 같은, 당신 주변의 것)" },
+    { title:"관계대명사 which (계속적 용법)", desc:"콤마 뒤 which는 앞 내용을 부연 설명해요.", ex:"other friction forces, which also slow you down (다른 마찰력들은, 그런데 그것들도 당신을 느리게 한다)" }
+  ],
+  tips: [
+    "순서배열에서 this, these, one of these 같은 지시어가 가리키는 대상을 정확히 추적하는 것이 핵심이에요.",
+    "질문(What happens?)에 직접 답하는 문단을 먼저 찾으면 시작 지점을 알 수 있어요.",
+    "힘의 결과(느려짐) → 힘의 이름(마찰) → 구체적 원인(바퀴 축, 공기 저항) 순서로 논리가 전개된다는 패턴을 기억하세요."
+  ]
+},
+{
+  num: 38, type: "문장 삽입",
+  question: "글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳을 고르시오.",
+  choices: ["①", "②", "③", "④", "⑤"],
+  answer: 3,
+  explanation: "주어진 문장은 'on the other hand'로 시작해 비선형 편집을 워드 프로세싱에 비유합니다. 바로 앞 문장이 '선형 편집은 타자기로 글을 쓰는 것과 같았다'이므로, 그와 대조되는 내용이 이어지는 ④번 위치가 가장 적절합니다.",
+  insertSentence: "Nonlinear editing, on the other hand, is like using a word processing program.",
+  insertSentenceKo: "반면에, 비선형 편집은 워드 프로세싱 프로그램을 사용하는 것과 같다.",
+  vocab: {
+    nonlinear: { word:"nonlinear", pron:"[논리니어]", meaning:"비선형의", ex:"Nonlinear editing is flexible.", exko:"비선형 편집은 유연하다." },
+    random_access: { word:"random access", pron:"[랜덤 액세스]", meaning:"무작위 접근", ex:"Random access saves time.", exko:"무작위 접근은 시간을 절약한다." },
+    dissolves: { word:"dissolves", pron:"[디졸브즈]", meaning:"디졸브(화면 전환 기법)", ex:"The film uses smooth dissolves between scenes.", exko:"그 영화는 장면 사이에 부드러운 디졸브를 사용한다." },
+    retyped: { word:"retyped", pron:"[리타입드]", meaning:"다시 타이핑된", ex:"The whole page had to be retyped.", exko:"그 페이지 전체를 다시 타이핑해야 했다." },
+    keystrokes: { word:"keystrokes", pron:"[키스트로크스]", meaning:"키 입력", ex:"Fix it with a few keystrokes.", exko:"몇 번의 키 입력으로 그것을 고쳐라." },
+    adjusts: { word:"adjusts", pron:"[어저스츠]", meaning:"조정하다", ex:"The computer adjusts the settings automatically.", exko:"컴퓨터가 자동으로 설정을 조정한다." },
+    highlight: { word:"highlight", pron:"[하이라이트]", meaning:"장점, 하이라이트", ex:"The highlight of the trip was the beach.", exko:"그 여행의 하이라이트는 해변이었다." },
+    composing: { word:"composing", pron:"[컴포징]", meaning:"작성하는, 작곡하는", ex:"She is composing a letter.", exko:"그녀는 편지를 작성하고 있다." }
+  },
+  passage: `All editing systems are now [[nonlinear::nonlinear]] computer-based systems that allow [[random_access::random access]] to any video shot or scene without having to fast forward or fast reverse to find it. Nonlinear systems can create a range of special effects, such as slow motion, wipes and [[dissolves::dissolves]]. ① Another [[highlight::highlight]] of a digital nonlinear system is its random access process that makes it easy for an editor to find desired shots or scenes without having to spend time fast forwarding or rewinding videotape. ② With nonlinear editing, shots or scenes can be easily added or removed anywhere in the program, and the computer [[adjusts::adjusts]] the program length automatically. ③ Linear editing was like [[composing::composing]] a paper on a typewriter. ④ If a mistake was made or new information needed to be added the whole piece had to be [[retyped::retyped]]. ⑤ If a mistake is made, it is easily deleted and fixed with a few [[keystrokes::keystrokes]], and new information can be added easily.`,
+  translation: `모든 편집 시스템은 이제 비디오 샷이나 장면에 빨리 감기나 되감기를 할 필요 없이 무작위로 접근할 수 있게 해주는 비선형 컴퓨터 기반 시스템이다. 비선형 시스템은 슬로우 모션, 와이프, 디졸브와 같은 다양한 특수 효과를 만들어낼 수 있다. ① 디지털 비선형 시스템의 또 다른 장점은 편집자가 비디오테이프를 빨리 감거나 되감는 데 시간을 쓸 필요 없이 원하는 샷이나 장면을 쉽게 찾을 수 있게 해주는 무작위 접근 과정이다. ② 비선형 편집을 사용하면, 프로그램의 어느 곳에서든 샷이나 장면을 쉽게 추가하거나 제거할 수 있고, 컴퓨터가 자동으로 프로그램 길이를 조정한다. ③ 선형 편집은 타자기로 논문을 작성하는 것과 같았다. ④ 만약 실수가 있었거나 새로운 정보를 추가해야 했다면 전체 원고를 다시 타이핑해야 했다. ⑤ 만약 실수가 생기면, 몇 번의 키 입력으로 쉽게 삭제하고 고칠 수 있으며, 새로운 정보도 쉽게 추가할 수 있다.`,
+  grammar: [
+    { title:"on the other hand (반면에)", desc:"앞 내용과 대조되는 내용을 이끄는 연결어예요.", ex:"Linear editing was like a typewriter. Nonlinear editing, on the other hand, is like a word processor. (선형 편집은 타자기와 같았다. 반면에 비선형 편집은 워드 프로세서와 같다.)" },
+    { title:"like + ~ing (동명사): ~하는 것과 같다", desc:"비유를 나타낼 때 like 뒤에 동명사가 옵니다.", ex:"It's like using a word processing program. (그것은 워드 프로세싱 프로그램을 사용하는 것과 같다.)" },
+    { title:"have to be + 과거분사 (수동 의무)", desc:"'~되어야 했다'는 뜻의 수동태 표현이에요.", ex:"The whole piece had to be retyped. (전체 원고를 다시 타이핑해야 했다.)" }
+  ],
+  tips: [
+    "문장삽입 문제는 주어진 문장의 연결어(on the other hand, however, for example)가 어떤 관계(대조/부연)를 나타내는지 먼저 파악하세요.",
+    "주어진 문장 속 지시어나 비교 대상(Nonlinear editing ↔ 무엇과 대조되는가)이 앞 문장에 있는지 확인하세요.",
+    "삽입한 뒤 앞뒤 문장을 이어서 직접 읽어보며 흐름이 자연스러운지 검증하는 것이 가장 확실해요."
+  ]
+}
+];
+
+let current = 0;
+let activeVocabKey = null;
+let currentSpeakWord = null;
+let activeSheetWord = null;
+let currentSheetWordData = null;
+let selectedChoice = null;
+let answerChecked = false;
+
+function starKey(gid) { return 'vocabStar_' + gid; }
+function getStarred(gid) {
+  try { return JSON.parse(localStorage.getItem(starKey(gid)) || '[]'); } catch(e) { return []; }
+}
+function setStarred(gid, list) {
+  localStorage.setItem(starKey(gid), JSON.stringify(list));
+}
+function updateSheetStarBtn() {
+  var btn = document.getElementById('sheet-star');
+  if (!currentSheetWordData) { btn.textContent = '☆'; btn.classList.remove('starred'); return; }
+  var gid = String(problems[current].num);
+  var starred = getStarred(gid);
+  var isStarred = starred.some(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  btn.textContent = isStarred ? '★' : '☆';
+  btn.classList.toggle('starred', isStarred);
+}
+function toggleSheetStar() {
+  if (!currentSheetWordData) return;
+  var gid = String(problems[current].num);
+  var starred = getStarred(gid);
+  var idx = starred.findIndex(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  if (idx >= 0) {
+    starred.splice(idx, 1);
+  } else {
+    starred.push({
+      word: currentSheetWordData.word,
+      pron: currentSheetWordData.pron || '',
+      meaning: currentSheetWordData.meaning || '뜻 정보 없음',
+      en: currentSheetWordData.en || '',
+      ko: currentSheetWordData.ko || ''
+    });
+  }
+  setStarred(gid, starred);
+  updateSheetStarBtn();
+}
+
+function renderPassage(text) {
+  return text.split('\n\n').map(function(para) {
+    var placeholders = [];
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+      placeholders.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
+      return '' + (placeholders.length - 1) + '';
+    });
+    html = html.replace(/^\(([A-D])\)/, function(m, letter) {
+      placeholders.push('<span class="plabel">(' + letter + ')</span>');
+      return '' + (placeholders.length - 1) + '';
+    });
+    html = html.replace(/[A-Za-z]+(?:['’][A-Za-z]+)*/g, function(w) {
+      return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
+    });
+    html = html.replace(/(\d+)/g, function(m, idx) { return placeholders[idx]; });
+    html = html.replace(/\n/g, '<br>');
+    return '<p>' + html + '</p>';
+  }).join('');
+}
+
+function buildTabs() {
+  var el = document.getElementById('problem-tabs');
+  el.innerHTML = problems.map(function(p, i) {
+    return '<div class="p-tab" data-i="' + i + '" onclick="selectProblem(' + i + ')">' + p.num + '번</div>';
+  }).join('');
+}
+
+const circled = ['①', '②', '③', '④', '⑤'];
+
+function renderInsert(p) {
+  var card = document.getElementById('insert-card');
+  if (!p.insertSentence) { card.classList.remove('show'); return; }
+  card.classList.add('show');
+  document.getElementById('insert-text').textContent = p.insertSentence;
+  document.getElementById('insert-text-ko').textContent = p.insertSentenceKo || '';
+}
+
+function renderQuiz(p) {
+  selectedChoice = null;
+  answerChecked = false;
+  document.getElementById('quiz-q').textContent = p.num + '. ' + p.question;
+  document.getElementById('quiz-choices').innerHTML = p.choices.map(function(c, i) {
+    var label = /^[①②③④⑤]/.test(c) ? c : circled[i] + ' ' + c;
+    return '<div class="quiz-choice" id="choice-' + i + '" onclick="selectChoice(' + i + ')"><span>' + label + '</span></div>';
+  }).join('');
+  document.getElementById('quiz-check-btn').textContent = '정답 확인';
+  document.getElementById('quiz-check-btn').disabled = false;
+  var result = document.getElementById('quiz-result');
+  result.classList.remove('show', 'ok', 'no');
+  result.textContent = '';
+}
+
+function selectChoice(i) {
+  if (answerChecked) return;
+  selectedChoice = i;
+  document.querySelectorAll('.quiz-choice').forEach(function(el, idx) {
+    el.classList.toggle('selected', idx === i);
+  });
+}
+
+function checkAnswer() {
+  if (answerChecked) return;
+  var p = problems[current];
+  if (selectedChoice === null) {
+    document.getElementById('quiz-q').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  answerChecked = true;
+  document.querySelectorAll('.quiz-choice').forEach(function(el, idx) {
+    if (idx === p.answer) el.classList.add('correct');
+    else if (idx === selectedChoice) el.classList.add('wrong');
+  });
+  var result = document.getElementById('quiz-result');
+  var isCorrect = selectedChoice === p.answer;
+  result.classList.add('show', isCorrect ? 'ok' : 'no');
+  var head = isCorrect ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[p.answer] + '번이에요.';
+  result.innerHTML = '<b>' + head + '</b><br>' + p.explanation;
+  document.getElementById('quiz-check-btn').textContent = '다시 풀기';
+  document.getElementById('quiz-check-btn').disabled = false;
+  document.getElementById('quiz-check-btn').onclick = function() { renderQuiz(p); document.getElementById('quiz-check-btn').onclick = checkAnswer; };
+}
+
+function render() {
+  closeWord();
+  var p = problems[current];
+  document.getElementById('prog-text').textContent = (current + 1) + ' / ' + problems.length;
+  document.getElementById('prog-fill').style.width = ((current + 1) / problems.length * 100) + '%';
+  document.getElementById('type-badge').textContent = p.num + '번 · ' + p.type;
+  renderInsert(p);
+  document.getElementById('passage-text').innerHTML = renderPassage(p.passage);
+  renderQuiz(p);
+  document.getElementById('translation-box').textContent = p.translation;
+  document.getElementById('translation-box').classList.remove('show');
+  document.getElementById('btn-trans').classList.remove('on');
+  document.getElementById('btn-trans').textContent = '🇰🇷 전체 해석 보기';
+
+  var vg = document.getElementById('vocab-grid');
+  var keys = Object.keys(p.vocab);
+  vg.innerHTML = keys.map(function(k) {
+    var v = p.vocab[k];
+    return '<div class="vocab-chip" onclick="showWord(\'' + k + '\')"><b>' + v.word + '</b><span>' + v.meaning + '</span></div>';
+  }).join('');
+  vg.classList.remove('show');
+  document.getElementById('btn-vocab').classList.remove('on');
+  document.getElementById('btn-vocab').textContent = '📖 핵심 단어 목록';
+
+  document.getElementById('grammar-list').innerHTML = p.grammar.map(function(g) {
+    return '<div class="grammar-item"><div class="grammar-title">' + g.title + '</div><div class="grammar-desc">' + g.desc + '</div><div class="grammar-ex">' + g.ex + '</div></div>';
+  }).join('');
+
+  document.getElementById('tip-list').innerHTML = p.tips.map(function(t) {
+    return '<div class="tip-item"><p>' + t + '</p></div>';
+  }).join('');
+
+  document.querySelectorAll('.p-tab').forEach(function(t, i) {
+    t.classList.toggle('active', i === current);
+  });
+
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === problems.length - 1;
+  document.getElementById('btn-next').textContent = current === problems.length - 1 ? '처음으로' : '다음 문제 →';
+
+  switchTab('grammar');
+}
+
+function selectProblem(i) {
+  current = i;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function go(delta) {
+  if (current === problems.length - 1 && delta === 1) {
+    current = 0;
+  } else {
+    current = Math.max(0, Math.min(problems.length - 1, current + delta));
+  }
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTranslation() {
+  var box = document.getElementById('translation-box');
+  var btn = document.getElementById('btn-trans');
+  var show = !box.classList.contains('show');
+  box.classList.toggle('show', show);
+  btn.classList.toggle('on', show);
+  btn.textContent = show ? '🇰🇷 해석 숨기기' : '🇰🇷 전체 해석 보기';
+}
+
+function toggleVocabGrid() {
+  var grid = document.getElementById('vocab-grid');
+  var btn = document.getElementById('btn-vocab');
+  var show = !grid.classList.contains('show');
+  grid.classList.toggle('show', show);
+  btn.classList.toggle('on', show);
+  btn.textContent = show ? '📖 목록 숨기기' : '📖 핵심 단어 목록';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-t') === name);
+  });
+  document.getElementById('tab-grammar').classList.toggle('active', name === 'grammar');
+  document.getElementById('tab-tip').classList.toggle('active', name === 'tip');
+}
+
+function showWord(key) {
+  var v = problems[current].vocab[key];
+  if (!v) return;
+  activeVocabKey = key;
+  activeSheetWord = null;
+  currentSpeakWord = v.word;
+  currentSheetWordData = { word: v.word, pron: v.pron, meaning: v.meaning, en: v.ex, ko: v.exko };
+  document.getElementById('sheet-word').textContent = v.word;
+  document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-meaning').textContent = v.meaning;
+  document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+}
+
+function showPlain(rawWord) {
+  var clean = rawWord.replace(/[^A-Za-z']/g, '');
+  if (!clean) return;
+  var lower = clean.toLowerCase();
+  var p = problems[current];
+  for (var k in p.vocab) {
+    if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
+  }
+  activeVocabKey = null;
+  currentSpeakWord = clean;
+  activeSheetWord = lower;
+  currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: '', ko: '' };
+  document.getElementById('sheet-word').textContent = clean;
+  document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
+  document.getElementById('sheet-example').innerHTML = '';
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+  lookupWord(lower);
+}
+
+function lookupWord(lower) {
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(lower))
+    .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var entry = data[0];
+      var phonetic = entry.phonetic || '';
+      if (!phonetic && entry.phonetics) {
+        for (var i = 0; i < entry.phonetics.length; i++) {
+          if (entry.phonetics[i].text) { phonetic = entry.phonetics[i].text; break; }
+        }
+      }
+      if (phonetic) document.getElementById('sheet-pron').textContent = phonetic;
+      if (currentSheetWordData) currentSheetWordData.pron = phonetic;
+      var meaning = entry.meanings && entry.meanings[0];
+      var def = meaning && meaning.definitions && meaning.definitions[0];
+      if (def) {
+        var exHtml = def.example ? def.example + '<br>' : '';
+        document.getElementById('sheet-example').innerHTML = exHtml + '(영영풀이) ' + def.definition;
+        if (currentSheetWordData && def.example) currentSheetWordData.en = def.example;
+      }
+    })
+    .catch(function() {});
+
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(lower) + '&langpair=en|ko')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var ko = data && data.responseData && data.responseData.translatedText;
+      var meaningText = ko ? ko : '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+      document.getElementById('sheet-meaning').textContent = meaningText;
+      if (currentSheetWordData) { currentSheetWordData.meaning = meaningText; currentSheetWordData.ko = ko || ''; }
+    })
+    .catch(function() {
+      if (activeSheetWord !== lower) return;
+      var meaningText = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
+      document.getElementById('sheet-meaning').textContent = meaningText;
+      if (currentSheetWordData) currentSheetWordData.meaning = meaningText;
+    });
+}
+
+function closeWord() {
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('sheet').classList.remove('show');
+  activeSheetWord = null;
+}
+
+function speakCurrent() {
+  if (currentSpeakWord) speak(currentSpeakWord);
+}
+
+var ttsVoices = [];
+if ('speechSynthesis' in window) {
+  var loadTtsVoices = function() { ttsVoices = window.speechSynthesis.getVoices(); };
+  loadTtsVoices();
+  window.speechSynthesis.onvoiceschanged = loadTtsVoices;
+}
+
+function speak(text) {
+  if (!text || !('speechSynthesis' in window)) return;
+  var synth = window.speechSynthesis;
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  var voices = (ttsVoices && ttsVoices.length) ? ttsVoices : synth.getVoices();
+  if (voices && voices.length) {
+    var enVoice = voices.find(function(v) { return v.lang === 'en-US'; }) || voices.find(function(v) { return v.lang && v.lang.indexOf('en') === 0; });
+    if (enVoice) utter.voice = enVoice;
+  }
+  synth.cancel();
+  setTimeout(function() { synth.speak(utter); }, 80);
+}
+
+buildTabs();
+render();
+</script>
+</body>
+</html>

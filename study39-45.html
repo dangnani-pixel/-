@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 고1 9월 모의고사 영어 39~45번 정밀 학습</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+.top-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.prog-text { font-size: 13px; color: #888; white-space: nowrap; min-width: 42px; }
+.progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.3s ease; }
+
+.problem-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.problem-tabs::-webkit-scrollbar { height: 4px; }
+.p-tab { flex: 0 0 auto; padding: 9px 16px; font-size: 14px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.p-tab.active { background: #7F77DD; color: #fff; }
+
+.type-badge { display: inline-block; font-size: 12px; font-weight: 600; color: #fff; background: #534AB7; border-radius: 99px; padding: 5px 14px; margin-bottom: 10px; }
+
+.note-card { display: none; background: #FFF8E6; border: 1.5px dashed #E0B84D; border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; }
+.note-card.show { display: block; }
+.note-label { font-size: 11.5px; color: #a67c1f; font-weight: 700; margin-bottom: 6px; }
+.note-text { font-size: 15px; color: #5a4413; line-height: 1.6; }
+.note-text-ko { font-size: 13px; color: #a67c1f; margin-top: 6px; line-height: 1.5; }
+
+.passage-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.passage-text p { font-size: 16px; line-height: 1.95; margin-bottom: 12px; }
+.passage-text p:last-child { margin-bottom: 0; }
+.passage-text .plabel { font-weight: 700; color: #534AB7; }
+.w { color: #4b3fc4; border-bottom: 2px dotted #b7b0f0; cursor: pointer; padding: 0 1px; border-radius: 3px; }
+.w:active, .w.tapped { background: #EEEDFE; }
+.p { cursor: pointer; }
+.p:active { background: #EFEFEF; border-radius: 3px; }
+
+.quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
+.quiz-choice { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 10px; background: #F8F7FF; margin-bottom: 8px; cursor: pointer; font-size: 14px; line-height: 1.55; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.quiz-choice:last-of-type { margin-bottom: 0; }
+.quiz-choice.selected { border-color: #7F77DD; background: #EEEDFE; }
+.quiz-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 600; }
+.quiz-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.quiz-check-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; }
+.quiz-result { margin-top: 12px; font-size: 13.5px; padding: 12px 14px; border-radius: 10px; line-height: 1.65; display: none; }
+.quiz-result.show { display: block; }
+.quiz-result.ok { background: #E8F8F1; color: #177350; }
+.quiz-result.no { background: #FDEDEC; color: #a8362f; }
+
+.action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.action-btn.on { background: #7F77DD; color: #fff; }
+
+.translation-box { display: none; background: #F8F7FF; border: 1px solid #E4E1FA; border-radius: 12px; padding: 16px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.85; color: #3a2f8f; white-space: pre-line; }
+.translation-box.show { display: block; }
+
+.vocab-grid { display: none; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.vocab-grid.show { display: grid; }
+.vocab-chip { background: #fff; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; }
+.vocab-chip b { display: block; font-size: 13.5px; color: #1a1a1a; }
+.vocab-chip span { display: block; font-size: 12px; color: #7F77DD; margin-top: 2px; }
+
+.tab-row { display: flex; background: #fff; border-radius: 12px; padding: 4px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.tab { flex: 1; padding: 10px 4px; font-size: 14px; text-align: center; cursor: pointer; color: #888; border-radius: 9px; -webkit-tap-highlight-color: transparent; }
+.tab.active { background: #7F77DD; color: #fff; font-weight: 600; }
+.panel { display: none; }
+.panel.active { display: block; }
+.section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+
+.grammar-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.grammar-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 5px; }
+.grammar-desc { font-size: 13px; color: #555; line-height: 1.65; }
+.grammar-ex { font-size: 13px; color: #7F77DD; margin-top: 7px; font-style: italic; line-height: 1.5; }
+
+.tip-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #7F77DD; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.tip-item p { font-size: 13.5px; color: #444; line-height: 1.7; }
+
+.nav-row { display: flex; gap: 10px; margin-top: 16px; }
+.nav-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nav-btn:active { transform: scale(0.98); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.secondary { background: #E0DED8; color: #555; }
+.nav-btn.primary { background: #7F77DD; color: #fff; }
+
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; z-index: 50; }
+.overlay.show { display: block; }
+.sheet { position: fixed; left: 0; right: 0; bottom: -100%; background: #fff; border-radius: 20px 20px 0 0; padding: 22px 20px 26px; z-index: 51; transition: bottom 0.25s ease; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); max-width: 640px; margin: 0 auto; }
+.sheet.show { bottom: 0; }
+.sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
+.sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
+.sheet-star.starred { color: #F5B700; }
+.sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.sheet-word { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+.speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
+.sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
+.sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
+.sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">📝 2025 고1 9월 전국연합학력평가 · 영어 39~45번</div>
+<h1>지문 완전정복 학습지</h1>
+<p class="subtitle">지문 속 파란 밑줄 단어를 클릭하면 뜻·발음·예문이 나와요. 🔊 버튼을 누르면 실제 발음을 들을 수 있어요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a> · <a class="home-link" href="study32-38.html">← 32~38번 학습지</a> · <a class="home-link" href="vocab18-45.html">단어장 퀴즈</a></p>
+
+<div class="top-bar">
+  <span class="prog-text" id="prog-text">1 / 4</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="problem-tabs" id="problem-tabs"></div>
+
+<div class="type-badge" id="type-badge"></div>
+
+<div class="note-card" id="note-card">
+  <div class="note-label" id="note-label"></div>
+  <div class="note-text" id="note-text"></div>
+  <div class="note-text-ko" id="note-text-ko"></div>
+</div>
+
+<div class="passage-card">
+  <div class="passage-text" id="passage-text"></div>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="action-row">
+  <button class="action-btn" id="btn-trans" onclick="toggleTranslation()">🇰🇷 전체 해석 보기</button>
+  <button class="action-btn" id="btn-vocab" onclick="toggleVocabGrid()">📖 핵심 단어 목록</button>
+</div>
+
+<div class="translation-box" id="translation-box"></div>
+<div class="vocab-grid" id="vocab-grid"></div>
+
+<div class="tab-row">
+  <div class="tab active" data-t="grammar" onclick="switchTab('grammar')">📝 꼭 알아야 할 문법</div>
+  <div class="tab" data-t="tip" onclick="switchTab('tip')">💡 풀이 팁</div>
+</div>
+<div class="panel active" id="tab-grammar"><div class="section-label">문법 포인트</div><div id="grammar-list"></div></div>
+<div class="panel" id="tab-tip"><div class="section-label">유형별 풀이 팁</div><div id="tip-list"></div></div>
+
+<div class="nav-row">
+  <button class="nav-btn secondary" id="btn-prev" onclick="go(-1)">← 이전 문제</button>
+  <button class="nav-btn primary" id="btn-next" onclick="go(1)">다음 문제 →</button>
+</div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeWord()"></div>
+<div class="sheet" id="sheet">
+  <button class="sheet-close" onclick="closeWord()">✕</button>
+  <button class="sheet-star" id="sheet-star" onclick="toggleSheetStar()">☆</button>
+  <div class="sheet-word-row">
+    <div class="sheet-word" id="sheet-word"></div>
+    <button class="speak-btn" id="sheet-speak" onclick="speakCurrent()">🔊</button>
+  </div>
+  <div class="sheet-pron" id="sheet-pron"></div>
+  <div class="sheet-meaning" id="sheet-meaning"></div>
+  <div class="sheet-example" id="sheet-example"></div>
+</div>
+
+<script>
+const problems = [
+{
+  num: "39", label: "39번", type: "문장 삽입",
+  note: "A person who always tries to prevent harm but never does, is not generally thought of as morally good.",
+  noteKo: "항상 해를 막으려 하지만 결코 그렇게 하지 못하는 사람은 일반적으로 도덕적으로 선하다고 여겨지지 않는다.",
+  noteLabel: "📌 삽입할 문장",
+  vocab: {
+    morally: { word:"morally", pron:"[모럴리]", meaning:"도덕적으로", ex:"Act morally in all situations.", exko:"모든 상황에서 도덕적으로 행동해라." },
+    significantly: { word:"significantly", pron:"[시그니피컨틀리]", meaning:"훨씬, 상당히", ex:"Prices increased significantly.", exko:"가격이 상당히 올랐다." },
+    intentions: { word:"intentions", pron:"[인텐션즈]", meaning:"의도들", ex:"Good intentions are important.", exko:"좋은 의도가 중요하다." },
+    motives: { word:"motives", pron:"[모티브즈]", meaning:"동기", ex:"Her motives were unclear.", exko:"그녀의 동기는 불분명했다." },
+    relevant: { word:"relevant", pron:"[렐러번트]", meaning:"관련 있는", ex:"That information is not relevant.", exko:"그 정보는 관련이 없다." },
+    unintentionally: { word:"unintentionally", pron:"[언인텐셔널리]", meaning:"의도치 않게", ex:"He unintentionally offended her.", exko:"그는 의도치 않게 그녀를 기분 상하게 했다." },
+    consequences: { word:"consequences", pron:"[컨시퀀시즈]", meaning:"결과", ex:"Actions have consequences.", exko:"행동에는 결과가 따른다." },
+    regarded: { word:"regarded as", pron:"[리가딛 애즈]", meaning:"~로 여겨지는", ex:"She is regarded as an expert.", exko:"그녀는 전문가로 여겨진다." }
+  },
+  passage: `A [[morally::morally]] good person is one who does morally bad actions [[significantly::significantly]] less often than most and does morally good ones significantly more often than most. In judging a person not only her actions but also her [[intentions::intentions]] and [[motives::motives]] are [[relevant::relevant]]. ① A morally good person must intend to do morally good actions and intend to avoid morally bad ones. ② A person who [[unintentionally::unintentionally]] prevents harm to others and does not harm them simply because things do not turn out as she intends is not morally good. ③ Although this kind of situation generally occurs only in slapstick movies, it is worth mentioning to avoid the false impression that it is the actual [[consequences::consequences]] of a person's actions that count toward her being judged morally good or bad. ④ But actual consequences are important. ⑤ Of such a person, it may be said that she means well; but, contrary to Kant, some results are necessary before she is [[regarded::regarded as]] morally good.`,
+  translation: `도덕적으로 좋은 사람은 대부분의 사람들보다 훨씬 드물게 도덕적으로 나쁜 행동을 하고, 대부분의 사람들보다 훨씬 자주 도덕적으로 좋은 행동을 하는 사람이다. 어떤 사람을 판단할 때 그 사람의 행동뿐만 아니라 의도와 동기도 관련이 있다. ① 도덕적으로 좋은 사람은 도덕적으로 좋은 행동을 하려는 의도가 있어야 하고 도덕적으로 나쁜 행동을 피하려는 의도가 있어야 한다. ② 의도치 않게 다른 사람에게 해를 끼치는 것을 막고, 단지 자신이 의도한 대로 일이 되지 않아서 그들에게 해를 끼치지 않는 사람은 도덕적으로 선한 것이 아니다. ③ 이런 상황은 일반적으로 슬랩스틱 영화에서만 발생하지만, 어떤 사람이 도덕적으로 선하거나 나쁘다고 판단되는 데 있어 중요한 것이 그 사람 행동의 실제 결과라는 잘못된 인상을 피하기 위해 언급할 가치가 있다. ④ 하지만 실제 결과는 중요하다. ⑤ 그런 사람에 대해, 그녀는 선의를 가지고 있다고 말할 수는 있지만, 칸트와는 달리, 그녀가 도덕적으로 선하다고 여겨지기 전에 일부 결과가 필요하다.`,
+  grammar: [
+    { title:"one who + 동사 (~하는 사람)", desc:"one은 '사람'을 뜻하며 who절의 수식을 받아요.", ex:"A morally good person is one who intends well. (도덕적으로 좋은 사람은 선의를 의도하는 사람이다.)" },
+    { title:"not only A but also B", desc:"'A뿐만 아니라 B도'라는 뜻이에요.", ex:"not only her actions but also her intentions (그녀의 행동뿐만 아니라 의도도)" },
+    { title:"contrary to + 명사 (~와는 달리)", desc:"앞서 언급된 견해와 반대됨을 나타냅니다.", ex:"Contrary to Kant, results matter. (칸트와는 달리, 결과가 중요하다.)" }
+  ],
+  tips: [
+    "문장삽입은 주어진 문장 속 지시어나 예외적 상황이 앞뒤 문장의 어떤 표현과 연결되는지 찾는 것이 핵심이에요.",
+    "'이런 상황(this kind of situation)'이 가리키는 대상이 주어진 문장의 내용(항상 막으려 하지만 못함)인지 확인하세요.",
+    "도덕철학 지문은 '의도'와 '결과' 두 개념의 대립 구조를 파악하면 흐름을 따라가기 쉬워요."
+  ],
+  questions: [
+    { qNum: 39, question: "글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳을 고르시오.", choices: ["①","②","③","④","⑤"], answer: 2, explanation: "주어진 문장은 '항상 해를 막으려 하지만 결코 하지 못하는 사람은 도덕적으로 선하다고 여겨지지 않는다'는 내용으로, 뒤에 이어지는 '이런 상황은 슬랩스틱 영화에서만 일어난다'는 문장과 자연스럽게 연결되므로 ③번 위치가 가장 적절합니다." }
+  ]
+},
+{
+  num: "40", label: "40번", type: "요약문 완성",
+  note: "Our visual perception is shaped by an established hierarchy based on functional relationships, which _____(A)_____ our ability to see objects as they truly are, unlike the _____(B)_____ perspective of a camera.",
+  noteKo: "우리의 시각적 지각은 기능적 관계에 기반한 확립된 위계에 의해 형성되는데, 이는 카메라의 (B) 관점과 달리 사물을 있는 그대로 보는 우리의 능력을 (A).",
+  noteLabel: "📝 요약문 (빈칸 A, B를 채우세요)",
+  vocab: {
+    preconceptions: { word:"preconceptions", pron:"[프리컨셉션즈]", meaning:"선입견", ex:"Try to set aside your preconceptions.", exko:"당신의 선입견을 제쳐두려고 노력해라." },
+    hierarchies: { word:"hierarchies", pron:"[하이어라키즈]", meaning:"위계, 계층", ex:"Companies often have strict hierarchies.", exko:"회사는 종종 엄격한 위계를 가진다." },
+    priorities: { word:"priorities", pron:"[프라이오리티즈]", meaning:"우선순위", ex:"Set your priorities straight.", exko:"우선순위를 명확히 해라." },
+    interfere: { word:"interfere", pron:"[인터피어]", meaning:"방해하다", ex:"Noise can interfere with focus.", exko:"소음은 집중을 방해할 수 있다." },
+    impartially: { word:"impartially", pron:"[임파셜리]", meaning:"공정하게", ex:"The judge must act impartially.", exko:"판사는 공정하게 행동해야 한다." },
+    indifference: { word:"indifference", pron:"[인디퍼런스]", meaning:"무관심", ex:"She treated the news with indifference.", exko:"그녀는 그 소식을 무관심하게 대했다." },
+    flatness: { word:"flatness", pron:"[플랫니스]", meaning:"평면성", ex:"The flatness of the image surprised us.", exko:"이미지의 평면성이 우리를 놀라게 했다." },
+    unrecognizable: { word:"unrecognizable", pron:"[언레커그나이저블]", meaning:"인식할 수 없는", ex:"The old photo was almost unrecognizable.", exko:"그 오래된 사진은 거의 알아볼 수 없었다." }
+  },
+  passage: `Vision is influenced by our [[preconceptions::preconceptions]] about reality. In viewing a scene, we establish unconscious [[hierarchies::hierarchies]] that reflect our functional relationship to objects and our momentary [[priorities::priorities]]. For example, when visualizing a hammer in our mind's eye, we tend to "see" it in profile or at some other "ready for use" angle. One would probably not visualize a hammer as seen from the top so that the handle is hidden by the hammer's head. The functional relationship we have with objects creates visual expectations that [[interfere::interfere]] with our ability to see "like a camera." The camera, like the human eye, sees only shapes and colors. It documents the world [[impartially::impartially]] through a lens that is similar to the eye. When we look at them carefully, photographs are often surprising because they don't interpret confusing details but simply serve them up to us with a mechanical [[indifference::indifference]]. And because of their [[flatness::flatness]], photographs often contain areas that appear as [[unrecognizable::unrecognizable]] colors and shapes.`,
+  translation: `시각은 현실에 대한 우리의 선입견에 영향을 받는다. 한 장면을 볼 때, 우리는 대상과의 기능적 관계와 순간적인 우선순위를 반영하는 무의식적인 위계를 확립한다. 예를 들어, 마음속으로 망치를 시각화할 때, 우리는 그것을 옆모습이나 어떤 '사용할 준비가 된' 각도에서 '보는' 경향이 있다. 손잡이가 망치의 머리에 가려지도록 위에서 본 모습으로 망치를 시각화하지는 않을 것이다. 우리가 사물과 맺는 기능적 관계는 우리가 '카메라처럼' 보는 능력을 방해하는 시각적 기대를 만들어낸다. 카메라는 인간의 눈처럼 오직 형태와 색깔만을 본다. 그것은 눈과 비슷한 렌즈를 통해 세상을 공정하게 기록한다. 우리가 사진을 자세히 볼 때, 사진은 종종 놀라운데, 왜냐하면 사진은 혼란스러운 세부사항을 해석하지 않고 단지 기계적인 무관심으로 우리에게 그것을 제공하기 때문이다. 그리고 그 평면성 때문에, 사진은 종종 인식할 수 없는 색깔과 형태로 나타나는 영역들을 포함한다.`,
+  grammar: [
+    { title:"unlike + 명사 (~와 달리)", desc:"대조되는 대상을 나타낼 때 씁니다.", ex:"unlike the objective perspective of a camera (카메라의 객관적인 관점과 달리)" },
+    { title:"so that + 절 (결과)", desc:"'그래서 ~하도록'이라는 결과를 나타내요.", ex:"seen from the top so that the handle is hidden (손잡이가 가려지도록 위에서 본)" },
+    { title:"관계대명사 which (계속적 용법)", desc:"콤마 뒤 which는 앞 내용을 부연 설명해요.", ex:"a hierarchy, which interrupts our ability to see (위계는, 그런데 그것은 보는 능력을 방해한다)" }
+  ],
+  tips: [
+    "요약문 완성은 지문 전체의 핵심 대립 구조(우리의 위계적 시각 vs 카메라의 객관적 시각)를 먼저 파악하세요.",
+    "빈칸 (A)와 (B)가 지문의 어느 부분과 대응되는지 표시하며 읽으면 선택지를 좁히기 쉬워요.",
+    "반의어 쌍으로 이루어진 선택지가 많으니, 문맥과 반대되는 단어가 포함된 선택지부터 소거하세요."
+  ],
+  questions: [
+    { qNum: 40, question: "다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것을 고르시오.", choices: ["enhances ... accurate", "simplifies ... fixed", "interrupts ... objective", "enhances ... neutral", "interrupts ... inconsistent"], answer: 2, explanation: "지문은 우리의 위계적 지각이 사물을 있는 그대로 보는 능력을 '방해하며(interrupts)', 이는 형태와 색만을 있는 그대로 기록하는 카메라의 '객관적인(objective)' 관점과 대조된다고 설명하므로 ③번이 정답입니다." }
+  ]
+},
+{
+  num: "41-42", label: "41~42번", type: "장문 (제목 · 어휘)",
+  vocab: {
+    retail: { word:"retail", pron:"[리테일]", meaning:"소매의", ex:"She works in retail.", exko:"그녀는 소매업에 종사한다." },
+    utter: { word:"utter", pron:"[어터]", meaning:"말하다, 발화하다", ex:"He didn't utter a word.", exko:"그는 한마디도 하지 않았다." },
+    encourage: { word:"encourage", pron:"[인커리지]", meaning:"격려하다, 유도하다", ex:"Encourage students to speak up.", exko:"학생들이 발언하도록 유도해라." },
+    shudder: { word:"shudder", pron:"[셔더]", meaning:"몸서리치다", ex:"I shudder to think about it.", exko:"그것을 생각하면 몸서리가 쳐진다." },
+    subconscious: { word:"subconscious", pron:"[서브컨셔스]", meaning:"잠재의식의", ex:"That was a subconscious reaction.", exko:"그것은 잠재의식적인 반응이었다." },
+    cornered: { word:"cornered", pron:"[코너드]", meaning:"궁지에 몰린", ex:"He felt cornered by the questions.", exko:"그는 질문들에 궁지에 몰린 느낌이었다." },
+    promote: { word:"promote", pron:"[프러모트]", meaning:"촉진하다, 조성하다", ex:"The approach should promote comfort.", exko:"그 접근법은 편안함을 조성해야 한다." },
+    rote: { word:"rote", pron:"[로트]", meaning:"기계적인, 반복 암기의", ex:"It's just a rote answer.", exko:"그것은 그냥 기계적인 대답이다." }
+  },
+  passage: `"May I help you?" are the worst four words that a [[retail::retail]] salesperson can [[utter::utter]] because they don't [[encourage::encourage]] the customer to talk and put them on the defensive. The four words usually draw out a negative response that stops cold a sales transaction. Examples of (a) better questions to use when approaching customers are "Is there anything in particular that you are looking for?" and "Are you shopping for a gift?" If a fashion salesperson approached you with "May I help you?" chances are you would feel the salesperson didn't (b) care. This line is a [[rote::rote]] approach that is so overused by untrained and uninterested salespeople. In fact, most of us [[shudder::shudder]] in horror on hearing these words. The very meaning of the question "May I help you?" (c) rejects that the customer is in trouble of some sort and needs rescuing. This almost always puts the customer on the defense. "No, thank you" is usually the immediate response, even if the customer is actually in need of assistance. The [[subconscious::subconscious]] thought by the customer is often "I'm smart enough to figure out what I want, and I don't need your help!"
+
+If customers feel pressured or [[cornered::cornered]], then salespeople won't make any sales. The approach has to [[promote::promote]] a (d) comfortable environment that makes customers feel there is no rush. Furthermore, if customers just want to look around, they should feel that it is all right to do so. In situations where customers really do want to look around on their own, salespeople should give customers their business cards and keep themselves (e) accessible in case customers have questions or concerns.`,
+  translation: `'도와드릴까요?'는 소매 판매원이 할 수 있는 최악의 네 단어인데, 이는 고객이 말을 하도록 유도하지 않고 그들을 방어적으로 만들기 때문이다. 이 네 단어는 대개 판매 거래를 딱 멈추게 하는 부정적인 반응을 이끌어낸다. 고객에게 다가갈 때 사용할 (a)더 나은 질문의 예로는 '특별히 찾으시는 것이 있나요?'와 '선물을 사고 계신가요?'가 있다. 만약 패션 판매원이 당신에게 '도와드릴까요?'라고 다가온다면, 아마도 당신은 그 판매원이 신경 쓰지 (b)않는다고 느낄 것이다. 이 말은 훈련받지 않고 무관심한 판매원들에게 너무 남용되는 기계적인 접근법이다. 실제로, 우리 대부분은 이 말을 들으면 몸서리를 친다. '도와드릴까요?'라는 질문의 진짜 의미는 고객이 어떤 종류의 곤란에 처해 있어서 구조가 필요하다는 것을 (c)거부한다. 이것은 거의 항상 고객을 방어적으로 만든다. '아니요, 괜찮아요'가 대개 즉각적인 반응인데, 고객이 실제로 도움이 필요한 경우에도 그렇다. 고객의 잠재의식적인 생각은 종종 '나는 내가 원하는 것을 알아낼 만큼 충분히 똑똑해요, 당신의 도움은 필요 없어요!'이다.
+
+만약 고객이 압박감을 느끼거나 궁지에 몰린 느낌을 받으면, 판매원은 어떤 판매도 성사시키지 못할 것이다. 그 접근법은 고객이 서두를 필요가 없다고 느끼게 만드는 (d)편안한 환경을 조성해야 한다. 게다가, 만약 고객이 그냥 둘러보고 싶어 한다면, 그들은 그렇게 해도 괜찮다고 느껴야 한다. 고객이 정말로 스스로 둘러보고 싶어 하는 상황에서는, 판매원은 고객에게 명함을 주고 질문이나 우려 사항이 있을 경우를 대비해 (e)연락이 닿을 수 있는 상태를 유지해야 한다.`,
+  grammar: [
+    { title:"put A on the defensive (A를 방어적으로 만들다)", desc:"상대방이 방어 태세를 취하게 만드는 표현이에요.", ex:"The question puts customers on the defensive. (그 질문은 고객을 방어적으로 만든다.)" },
+    { title:"even if + 절 (~라 할지라도)", desc:"양보의 부사절로, 실제 상황과 상관없이 결과가 같음을 나타내요.", ex:"even if the customer is in need (고객이 필요로 하더라도)" },
+    { title:"in case + 절 (~할 경우를 대비해서)", desc:"만약의 상황에 대비함을 나타내는 표현이에요.", ex:"keep yourself accessible in case they have questions. (질문이 있을 경우를 대비해 연락 가능한 상태를 유지해라.)" }
+  ],
+  tips: [
+    "제목 문제는 글 전체가 지적하는 핵심 문제('May I help you?'가 실패하는 이유)를 압축한 선택지를 고르세요.",
+    "어휘 문맥 문제(42번)는 문장의 논리와 반대로 쓰인 단어를 찾는 것이 핵심이에요. rejects는 '거부한다'는 뜻이라 문맥과 반대됩니다.",
+    "(a)~(e) 각각의 앞뒤 문맥을 읽고, 그 단어가 문장의 논리 흐름과 자연스럽게 이어지는지 하나씩 확인하세요."
+  ],
+  questions: [
+    { qNum: 41, question: "윗글의 제목으로 가장 적절한 것은?", choices: ["Breaking the Ice: Building Trust with Customers", "To Be a Smart Consumer or Not", "Why \"May I Help You?\" Fails", "How \"Buy One Get One\" Opens Your Wallet", "The Closer to Customers, the More Money You Make"], answer: 2, explanation: "글 전체가 '도와드릴까요?'라는 질문이 왜 판매 접근법으로 실패하는지 설명하고 있으므로 ③번이 정답입니다." },
+    { qNum: 42, question: "밑줄 친 (a)~(e) 중에서 문맥상 낱말의 쓰임이 적절하지 않은 것은? [3점]", choices: ["(a) better", "(b) care", "(c) rejects", "(d) comfortable", "(e) accessible"], answer: 2, explanation: "'그 질문의 진짜 의미는 고객이 곤란에 처해 도움이 필요하다는 것을 (c)rejects(거부한다)'는 문맥상 어색합니다. 질문이 그런 의미를 '암시한다(implies)'는 것이 자연스러우므로 정답은 ③번입니다." }
+  ]
+},
+{
+  num: "43-45", label: "43~45번", type: "장문 (순서 · 지칭 · 내용일치)",
+  vocab: {
+    cafeteria: { word:"cafeteria", pron:"[캐프테리아]", meaning:"구내식당", ex:"We ate lunch in the cafeteria.", exko:"우리는 구내식당에서 점심을 먹었다." },
+    thirsty: { word:"thirsty", pron:"[써스티]", meaning:"목마른", ex:"He was thirsty after running.", exko:"그는 달린 후 목이 말랐다." },
+    determined: { word:"determined", pron:"[디터민드]", meaning:"단호한, 결연한", ex:"She had a determined look on her face.", exko:"그녀의 얼굴에는 단호한 표정이 있었다." },
+    aimlessly: { word:"aimlessly", pron:"[에임리슬리]", meaning:"목적 없이", ex:"He wandered aimlessly around the town.", exko:"그는 마을을 목적 없이 돌아다녔다." },
+    fumbling: { word:"fumbling", pron:"[펌블링]", meaning:"더듬어 찾는", ex:"She was fumbling for her keys.", exko:"그녀는 열쇠를 더듬어 찾고 있었다." },
+    wrinkled: { word:"wrinkled", pron:"[링클드]", meaning:"구겨진, 주름진", ex:"He pulled out a wrinkled bill.", exko:"그는 구겨진 지폐를 꺼냈다." },
+    nervously: { word:"nervously", pron:"[너버슬리]", meaning:"불안하게, 초조하게", ex:"She glanced nervously at the door.", exko:"그녀는 불안하게 문 쪽을 흘끗 보았다." },
+    given_up: { word:"given up", pron:"[기븐 업]", meaning:"포기한", ex:"He looked like he had given up.", exko:"그는 포기한 것처럼 보였다." }
+  },
+  passage: `(A) While the [[cafeteria::cafeteria]] was full of high school students on that afternoon, Dave was [[thirsty::thirsty]]. We sat near yet away from him, fixing our hair and worrying about the test next period we hadn't studied for. (a)He was far away from our world, yet forced to be a part of it.
+
+(B) Although it was clear that they were from very different worlds, for one moment, they'd shared a real understanding. As I walked away from my lunch table that day, I looked at Dave. I thought he and the dollar were very much alike. They both weren't accepted where the world said they were supposed to be. But just as the dollar had found a place in a warm-hearted senior's pocket, I was sure (b)he would eventually find his, too.
+
+(C) But for some reason, he decided against it. He wasn't leaving until he got a drink. With a [[determined::determined]] expression, (c)he kept [[aimlessly::aimlessly]] pushing the dollar bill into the machine. Just then a popular senior boy stood up from his seat, and walked over to the boy. (d)He calmly explained how the machine often had trouble accepting dollar bills. After that, he pulled some coins from his pocket and put them into the machine. Dave gave him his dollar and chose a flavor of fruit juice. Then the two walked off in different directions.
+
+(D) He stood at the drink machine with purpose, [[fumbling::fumbling]] through his fake leather wallet for some change. He came up with a [[wrinkled::wrinkled]] dollar bill, and [[nervously::nervously]] glanced back at his table where other students in (e)his class were sitting. Dave tried to make the machine accept his money. After he failed a few times, some students began to laugh at him. He started shaking, and tears began to form in his eyes. I saw him turn to sit down, looking like he had [[given_up::given up]].`,
+  translation: `(A) 그날 오후 구내식당이 고등학생들로 가득 차 있는 동안, Dave는 목이 말랐다. 우리는 그와 가까이 있으면서도 멀리 앉아, 머리를 매만지고 공부하지 못한 다음 시간 시험을 걱정하고 있었다. (a)그는 우리의 세계에서 멀리 떨어져 있었지만, 그 일부가 되도록 강요받았다.
+
+(B) 그들이 매우 다른 세계에서 왔다는 것은 분명했지만, 잠깐 동안 그들은 진정한 이해를 공유했다. 그날 점심 식탁에서 걸어 나오면서, 나는 Dave를 바라보았다. 나는 그와 그 지폐가 매우 닮았다고 생각했다. 그 둘 다 세상이 있어야 한다고 말하는 곳에서 받아들여지지 않았다. 하지만 그 지폐가 마음씨 따뜻한 상급생의 주머니에서 자리를 찾은 것처럼, 나는 (b)그도 결국 자신의 자리를 찾을 것이라고 확신했다.
+
+(C) 하지만 어떤 이유에서인지, 그는 포기하지 않기로 했다. 그는 음료수를 얻을 때까지 떠나지 않을 생각이었다. 단호한 표정으로, (c)그는 계속 목적 없이 지폐를 기계에 밀어 넣었다. 바로 그때 인기 많은 상급생 남학생이 자리에서 일어나 그 소년에게 걸어갔다. (d)그는 그 기계가 종종 지폐를 받아들이는 데 문제가 있다고 차분하게 설명해 주었다. 그 후, 그는 주머니에서 동전을 꺼내 기계에 넣었다. Dave는 그에게 자신의 지폐를 주고 과일 주스 맛을 골랐다. 그러고 나서 둘은 서로 다른 방향으로 걸어갔다.
+
+(D) 그는 목적을 가지고 음료수 기계 앞에 서서, 가짜 가죽 지갑 속을 더듬어 잔돈을 찾았다. 그는 구겨진 지폐 한 장을 꺼냈고, (e)그의 반 학생들이 앉아 있는 테이블 쪽을 불안하게 흘끗 보았다. Dave는 기계가 자신의 돈을 받아들이게 하려고 애썼다. 몇 번 실패한 후, 몇몇 학생들이 그를 비웃기 시작했다. 그는 떨기 시작했고, 눈에 눈물이 맺히기 시작했다. 나는 그가 포기한 것처럼 보이며 자리에 앉으러 돌아서는 것을 보았다.`,
+  grammar: [
+    { title:"Although + 절 (양보: 비록 ~이지만)", desc:"뒤에 대조되는 내용이 이어져요.", ex:"Although they were different, they shared understanding. (그들은 달랐지만, 이해를 공유했다.)" },
+    { title:"just as A, B (마치 A처럼 B)", desc:"두 상황을 비유적으로 연결할 때 씁니다.", ex:"just as the dollar had found a place (그 지폐가 자리를 찾았던 것처럼)" },
+    { title:"look like + 절 (~처럼 보이다)", desc:"겉으로 보이는 인상을 나타내요.", ex:"He looked like he had given up. (그는 포기한 것처럼 보였다.)" }
+  ],
+  tips: [
+    "순서배열+지칭 복합 문제는 각 문단의 대명사(He, he)가 누구를 가리키는지 먼저 표시하며 읽으세요.",
+    "감정과 사건의 시간 순서(목마름 → 시도 → 실패 → 도움 → 해결 → 회상)를 따라가면 문단 순서를 재구성하기 쉬워요.",
+    "내용 일치 문제는 방향, 동전, 표정 같은 세부 정보를 지문과 하나하나 정확히 대조하세요."
+  ],
+  questions: [
+    { qNum: 43, question: "주어진 글 (A)에 이어질 내용을 순서에 맞게 배열한 것으로 가장 적절한 것은?", choices: ["(B) - (D) - (C)", "(C) - (B) - (D)", "(C) - (D) - (B)", "(D) - (B) - (C)", "(D) - (C) - (B)"], answer: 4, explanation: "(A)에서 Dave가 목이 마르다고 소개된 뒤, (D)에서 Dave가 음료수 기계 앞에서 애쓰는 모습이 이어지고, (C)에서 인기 많은 상급생이 도와주며 둘이 다른 방향으로 걸어가고, 마지막으로 (B)에서 화자가 그 순간을 돌아보며 Dave와 지폐를 비교하는 것으로 마무리되므로 (D)-(C)-(B) 순서인 ⑤번이 정답입니다." },
+    { qNum: 44, question: "밑줄 친 (a)~(e) 중에서 가리키는 대상이 나머지 넷과 다른 것은?", choices: ["(a)", "(b)", "(c)", "(d)", "(e)"], answer: 3, explanation: "(a),(b),(c),(e)는 모두 Dave를 가리키지만, (d)는 Dave를 도와준 상급생 소년을 가리키므로 나머지 넷과 다른 대상을 가리키는 것은 ④번입니다." },
+    { qNum: 45, question: "윗글에 관한 내용으로 적절하지 않은 것은?", choices: ["그날 오후 식당은 고등학생들로 가득 찼다.", "'I'는 Dave와 그 달러가 비슷하다고 생각했다.", "상급생은 주머니에서 동전을 꺼냈다.", "Dave와 상급생은 같은 방향으로 떠났다.", "Dave의 눈에 눈물이 맺히기 시작했다."], answer: 3, explanation: "본문에 'Then the two walked off in different directions.'라고 되어 있어 Dave와 상급생은 서로 다른 방향으로 떠났습니다. 같은 방향으로 떠났다는 ④번은 내용과 일치하지 않습니다." }
+  ]
+}
+];
+
+let current = 0;
+let activeVocabKey = null;
+let currentSpeakWord = null;
+let activeSheetWord = null;
+let currentSheetWordData = null;
+let quizState = [];
+
+function starKey(gid) { return 'vocabStar_' + gid; }
+function getStarred(gid) {
+  try { return JSON.parse(localStorage.getItem(starKey(gid)) || '[]'); } catch(e) { return []; }
+}
+function setStarred(gid, list) {
+  localStorage.setItem(starKey(gid), JSON.stringify(list));
+}
+function updateSheetStarBtn() {
+  var btn = document.getElementById('sheet-star');
+  if (!currentSheetWordData) { btn.textContent = '☆'; btn.classList.remove('starred'); return; }
+  var gid = String(problems[current].num);
+  var starred = getStarred(gid);
+  var isStarred = starred.some(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  btn.textContent = isStarred ? '★' : '☆';
+  btn.classList.toggle('starred', isStarred);
+}
+function toggleSheetStar() {
+  if (!currentSheetWordData) return;
+  var gid = String(problems[current].num);
+  var starred = getStarred(gid);
+  var idx = starred.findIndex(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  if (idx >= 0) {
+    starred.splice(idx, 1);
+  } else {
+    starred.push({
+      word: currentSheetWordData.word,
+      pron: currentSheetWordData.pron || '',
+      meaning: currentSheetWordData.meaning || '뜻 정보 없음',
+      en: currentSheetWordData.en || '',
+      ko: currentSheetWordData.ko || ''
+    });
+  }
+  setStarred(gid, starred);
+  updateSheetStarBtn();
+}
+
+function renderPassage(text) {
+  return text.split('\n\n').map(function(para) {
+    var placeholders = [];
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+      placeholders.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
+      return '§' + (placeholders.length - 1) + '§';
+    });
+    html = html.replace(/^\(([A-D])\)/, function(m, letter) {
+      placeholders.push('<span class="plabel">(' + letter + ')</span>');
+      return '§' + (placeholders.length - 1) + '§';
+    });
+    html = html.replace(/[A-Za-z]+(?:['’][A-Za-z]+)*/g, function(w) {
+      return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
+    });
+    html = html.replace(/§(\d+)§/g, function(m, idx) { return placeholders[idx]; });
+    html = html.replace(/\n/g, '<br>');
+    return '<p>' + html + '</p>';
+  }).join('');
+}
+
+function buildTabs() {
+  var el = document.getElementById('problem-tabs');
+  el.innerHTML = problems.map(function(p, i) {
+    return '<div class="p-tab" data-i="' + i + '" onclick="selectProblem(' + i + ')">' + p.label + '</div>';
+  }).join('');
+}
+
+const circled = ['①', '②', '③', '④', '⑤'];
+
+function renderNote(p) {
+  var card = document.getElementById('note-card');
+  if (!p.note) { card.classList.remove('show'); return; }
+  card.classList.add('show');
+  document.getElementById('note-label').textContent = p.noteLabel || '📌 참고';
+  document.getElementById('note-text').textContent = p.note;
+  document.getElementById('note-text-ko').textContent = p.noteKo || '';
+}
+
+function choiceLabel(c, i) {
+  return /^[①②③④⑤]/.test(c) ? c : circled[i] + ' ' + c;
+}
+
+function renderChoicesHtml(q, qi) {
+  return q.choices.map(function(c, i) {
+    return '<div class="quiz-choice" onclick="selectChoice(' + qi + ',' + i + ')"><span>' + choiceLabel(c, i) + '</span></div>';
+  }).join('');
+}
+
+function renderQuiz(p) {
+  quizState = p.questions.map(function() { return { selected: null, checked: false }; });
+  document.getElementById('quiz-container').innerHTML = p.questions.map(function(q, qi) {
+    return '<div class="quiz-card">' +
+      '<div class="quiz-q">' + q.qNum + '. ' + q.question + '</div>' +
+      '<div id="qchoices-' + qi + '">' + renderChoicesHtml(q, qi) + '</div>' +
+      '<button class="quiz-check-btn" id="qcheck-' + qi + '" onclick="checkAnswer(' + qi + ')">정답 확인</button>' +
+      '<div class="quiz-result" id="qresult-' + qi + '"></div>' +
+    '</div>';
+  }).join('');
+}
+
+function selectChoice(qi, i) {
+  if (quizState[qi].checked) return;
+  quizState[qi].selected = i;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    el.classList.toggle('selected', idx === i);
+  });
+}
+
+function checkAnswer(qi) {
+  var p = problems[current];
+  var q = p.questions[qi];
+  if (quizState[qi].checked) return;
+  if (quizState[qi].selected === null) {
+    document.getElementById('qchoices-' + qi).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  quizState[qi].checked = true;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    if (idx === q.answer) el.classList.add('correct');
+    else if (idx === quizState[qi].selected) el.classList.add('wrong');
+  });
+  var result = document.getElementById('qresult-' + qi);
+  var isCorrect = quizState[qi].selected === q.answer;
+  result.classList.add('show', isCorrect ? 'ok' : 'no');
+  var head = isCorrect ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[q.answer] + '번이에요.';
+  result.innerHTML = '<b>' + head + '</b><br>' + q.explanation;
+  var btn = document.getElementById('qcheck-' + qi);
+  btn.textContent = '다시 풀기';
+  btn.onclick = function() { retryQuestion(qi); };
+}
+
+function retryQuestion(qi) {
+  var p = problems[current];
+  quizState[qi] = { selected: null, checked: false };
+  document.getElementById('qchoices-' + qi).innerHTML = renderChoicesHtml(p.questions[qi], qi);
+  var result = document.getElementById('qresult-' + qi);
+  result.classList.remove('show', 'ok', 'no');
+  result.innerHTML = '';
+  var btn = document.getElementById('qcheck-' + qi);
+  btn.textContent = '정답 확인';
+  btn.onclick = function() { checkAnswer(qi); };
+}
+
+function render() {
+  closeWord();
+  var p = problems[current];
+  document.getElementById('prog-text').textContent = (current + 1) + ' / ' + problems.length;
+  document.getElementById('prog-fill').style.width = ((current + 1) / problems.length * 100) + '%';
+  document.getElementById('type-badge').textContent = p.label + ' · ' + p.type;
+  renderNote(p);
+  document.getElementById('passage-text').innerHTML = renderPassage(p.passage);
+  renderQuiz(p);
+  document.getElementById('translation-box').textContent = p.translation;
+  document.getElementById('translation-box').classList.remove('show');
+  document.getElementById('btn-trans').classList.remove('on');
+  document.getElementById('btn-trans').textContent = '🇰🇷 전체 해석 보기';
+
+  var vg = document.getElementById('vocab-grid');
+  var keys = Object.keys(p.vocab);
+  vg.innerHTML = keys.map(function(k) {
+    var v = p.vocab[k];
+    return '<div class="vocab-chip" onclick="showWord(\'' + k + '\')"><b>' + v.word + '</b><span>' + v.meaning + '</span></div>';
+  }).join('');
+  vg.classList.remove('show');
+  document.getElementById('btn-vocab').classList.remove('on');
+  document.getElementById('btn-vocab').textContent = '📖 핵심 단어 목록';
+
+  document.getElementById('grammar-list').innerHTML = p.grammar.map(function(g) {
+    return '<div class="grammar-item"><div class="grammar-title">' + g.title + '</div><div class="grammar-desc">' + g.desc + '</div><div class="grammar-ex">' + g.ex + '</div></div>';
+  }).join('');
+
+  document.getElementById('tip-list').innerHTML = p.tips.map(function(t) {
+    return '<div class="tip-item"><p>' + t + '</p></div>';
+  }).join('');
+
+  document.querySelectorAll('.p-tab').forEach(function(t, i) {
+    t.classList.toggle('active', i === current);
+  });
+
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === problems.length - 1;
+  document.getElementById('btn-next').textContent = current === problems.length - 1 ? '처음으로' : '다음 문제 →';
+
+  switchTab('grammar');
+}
+
+function selectProblem(i) {
+  current = i;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function go(delta) {
+  if (current === problems.length - 1 && delta === 1) {
+    current = 0;
+  } else {
+    current = Math.max(0, Math.min(problems.length - 1, current + delta));
+  }
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTranslation() {
+  var box = document.getElementById('translation-box');
+  var btn = document.getElementById('btn-trans');
+  var show = !box.classList.contains('show');
+  box.classList.toggle('show', show);
+  btn.classList.toggle('on', show);
+  btn.textContent = show ? '🇰🇷 해석 숨기기' : '🇰🇷 전체 해석 보기';
+}
+
+function toggleVocabGrid() {
+  var grid = document.getElementById('vocab-grid');
+  var btn = document.getElementById('btn-vocab');
+  var show = !grid.classList.contains('show');
+  grid.classList.toggle('show', show);
+  btn.classList.toggle('on', show);
+  btn.textContent = show ? '📖 목록 숨기기' : '📖 핵심 단어 목록';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-t') === name);
+  });
+  document.getElementById('tab-grammar').classList.toggle('active', name === 'grammar');
+  document.getElementById('tab-tip').classList.toggle('active', name === 'tip');
+}
+
+function showWord(key) {
+  var v = problems[current].vocab[key];
+  if (!v) return;
+  activeVocabKey = key;
+  activeSheetWord = null;
+  currentSpeakWord = v.word;
+  currentSheetWordData = { word: v.word, pron: v.pron, meaning: v.meaning, en: v.ex, ko: v.exko };
+  document.getElementById('sheet-word').textContent = v.word;
+  document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-meaning').textContent = v.meaning;
+  document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+}
+
+function showPlain(rawWord) {
+  var clean = rawWord.replace(/[^A-Za-z']/g, '');
+  if (!clean) return;
+  var lower = clean.toLowerCase();
+  var p = problems[current];
+  for (var k in p.vocab) {
+    if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
+  }
+  activeVocabKey = null;
+  currentSpeakWord = clean;
+  activeSheetWord = lower;
+  currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: '', ko: '' };
+  document.getElementById('sheet-word').textContent = clean;
+  document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
+  document.getElementById('sheet-example').innerHTML = '';
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+  lookupWord(lower);
+}
+
+function lookupWord(lower) {
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(lower))
+    .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var entry = data[0];
+      var phonetic = entry.phonetic || '';
+      if (!phonetic && entry.phonetics) {
+        for (var i = 0; i < entry.phonetics.length; i++) {
+          if (entry.phonetics[i].text) { phonetic = entry.phonetics[i].text; break; }
+        }
+      }
+      if (phonetic) document.getElementById('sheet-pron').textContent = phonetic;
+      if (currentSheetWordData) currentSheetWordData.pron = phonetic;
+      var meaning = entry.meanings && entry.meanings[0];
+      var def = meaning && meaning.definitions && meaning.definitions[0];
+      if (def) {
+        var exHtml = def.example ? def.example + '<br>' : '';
+        document.getElementById('sheet-example').innerHTML = exHtml + '(영영풀이) ' + def.definition;
+        if (currentSheetWordData && def.example) currentSheetWordData.en = def.example;
+      }
+    })
+    .catch(function() {});
+
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(lower) + '&langpair=en|ko')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var ko = data && data.responseData && data.responseData.translatedText;
+      var meaningText = ko ? ko : '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+      document.getElementById('sheet-meaning').textContent = meaningText;
+      if (currentSheetWordData) { currentSheetWordData.meaning = meaningText; currentSheetWordData.ko = ko || ''; }
+    })
+    .catch(function() {
+      if (activeSheetWord !== lower) return;
+      var meaningText = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
+      document.getElementById('sheet-meaning').textContent = meaningText;
+      if (currentSheetWordData) currentSheetWordData.meaning = meaningText;
+    });
+}
+
+function closeWord() {
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('sheet').classList.remove('show');
+  activeSheetWord = null;
+}
+
+function speakCurrent() {
+  if (currentSpeakWord) speak(currentSpeakWord);
+}
+
+var ttsVoices = [];
+if ('speechSynthesis' in window) {
+  var loadTtsVoices = function() { ttsVoices = window.speechSynthesis.getVoices(); };
+  loadTtsVoices();
+  window.speechSynthesis.onvoiceschanged = loadTtsVoices;
+}
+
+function speak(text) {
+  if (!text || !('speechSynthesis' in window)) return;
+  var synth = window.speechSynthesis;
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  var voices = (ttsVoices && ttsVoices.length) ? ttsVoices : synth.getVoices();
+  if (voices && voices.length) {
+    var enVoice = voices.find(function(v) { return v.lang === 'en-US'; }) || voices.find(function(v) { return v.lang && v.lang.indexOf('en') === 0; });
+    if (enVoice) utter.voice = enVoice;
+  }
+  synth.cancel();
+  setTimeout(function() { synth.speak(utter); }, 80);
+}
+
+buildTabs();
+render();
+</script>
+</body>
+</html>

@@ -30,6 +30,14 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .start-btn { width: 100%; padding: 16px; border: none; border-radius: 14px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 16px; cursor: pointer; margin-top: 4px; -webkit-tap-highlight-color: transparent; }
 .start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+.multi-card { border: 1.5px solid #EEEDFE; }
+.select-actions { display: flex; gap: 8px; margin-bottom: 10px; }
+.mini-btn { font-size: 12.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 6px 12px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.select-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; max-height: 260px; overflow-y: auto; padding: 2px; }
+.select-item { display: flex; align-items: center; justify-content: center; gap: 6px; background: #F8F7FF; border-radius: 8px; padding: 9px 4px; font-size: 12.5px; color: #4b3fc4; cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent; }
+.select-item.checked { background: #7F77DD; color: #fff; font-weight: 700; }
+.select-item input { display: none; }
+
 .quiz-wrap { display: none; }
 .quiz-wrap.show { display: block; }
 .browse-wrap.hide { display: none; }
@@ -61,7 +69,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="wrap">
 <div class="source-tag">📝 2025 고1 9월 모의고사 · 영어 단어장 18~45번</div>
 <h1>핵심 단어 퀴즈</h1>
-<p class="subtitle">문제별 핵심 단어로 퀴즈를 풀어보세요. 18~24번, 25~31번 지문 완전정복 페이지에서 단어를 클릭한 뒤 ⭐로 저장하면 그 단어도 여기서 함께 퀴즈에 나와요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a></p>
+<p class="subtitle">문제별 핵심 단어로 퀴즈를 풀어보세요. 18~24번, 25~31번 지문 완전정복 페이지에서 단어를 클릭한 뒤 ⭐로 저장하면 그 단어도 여기서 함께 퀴즈에 나와요. 아래에서 여러 문제 번호를 골라 한 번에 시험볼 수도 있어요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a></p>
 
 <div class="group-tabs" id="group-tabs"></div>
 
@@ -78,6 +86,16 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   </div>
 
   <button class="start-btn" id="start-btn" onclick="startQuiz()">🎯 퀴즈 시작하기 (<span id="pool-count"></span>문제)</button>
+
+  <div class="card multi-card">
+    <div class="card-label">🔢 여러 문제 번호 골라서 시험보기 (18~45번)</div>
+    <div class="select-actions">
+      <button class="mini-btn" onclick="selectAllGroups()">전체 선택</button>
+      <button class="mini-btn" onclick="clearAllGroups()">전체 해제</button>
+    </div>
+    <div class="select-grid" id="select-grid"></div>
+    <button class="start-btn" id="multi-start-btn" onclick="startMultiQuiz()" disabled>문제를 선택해주세요</button>
+  </div>
 </div>
 
 <div class="quiz-wrap" id="quiz-wrap">
@@ -98,7 +116,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="result-score" id="result-score"></div>
   <div class="result-label" id="result-label"></div>
   <button class="result-btn secondary" onclick="backToBrowse()">단어 목록으로</button>
-  <button class="result-btn primary" onclick="startQuiz()">다시 풀기</button>
+  <button class="result-btn primary" onclick="retryQuiz()">다시 풀기</button>
 </div>
 
 </div>
@@ -295,6 +313,9 @@ let quizQueue = [];
 let quizIdx = 0;
 let quizScore = 0;
 let answered = false;
+let selectedGroupIds = new Set();
+let activeQuizPool = [];
+let quizMode = 'single';
 
 function starKey(gid) { return 'vocabStar_' + gid; }
 
@@ -346,6 +367,8 @@ function renderBrowse() {
   var poolSize = g.words.length + starred.length;
   document.getElementById('pool-count').textContent = poolSize;
   document.getElementById('start-btn').disabled = poolSize < 2;
+
+  updateMultiStartBtn();
 }
 
 function removeStar(i) {
@@ -373,7 +396,79 @@ function startQuiz() {
   var g = groups[currentGroupIdx];
   var pool = g.words.concat(getStarred(g.id));
   if (pool.length < 2) return;
+  quizMode = 'single';
+  beginQuiz(pool);
+}
 
+function buildSelectGrid() {
+  document.getElementById('select-grid').innerHTML = groups.map(function(g) {
+    return '<label class="select-item" id="sel-' + g.id + '"><input type="checkbox" onchange="toggleGroupSelect(\'' + g.id + '\')">' + g.label + '</label>';
+  }).join('');
+}
+
+function toggleGroupSelect(id) {
+  if (selectedGroupIds.has(id)) selectedGroupIds.delete(id); else selectedGroupIds.add(id);
+  var el = document.getElementById('sel-' + id);
+  el.classList.toggle('checked', selectedGroupIds.has(id));
+  el.querySelector('input').checked = selectedGroupIds.has(id);
+  updateMultiStartBtn();
+}
+
+function selectAllGroups() {
+  groups.forEach(function(g) { selectedGroupIds.add(g.id); });
+  document.querySelectorAll('.select-item').forEach(function(el) {
+    el.classList.add('checked');
+    el.querySelector('input').checked = true;
+  });
+  updateMultiStartBtn();
+}
+
+function clearAllGroups() {
+  selectedGroupIds.clear();
+  document.querySelectorAll('.select-item').forEach(function(el) {
+    el.classList.remove('checked');
+    el.querySelector('input').checked = false;
+  });
+  updateMultiStartBtn();
+}
+
+function updateMultiStartBtn() {
+  var btn = document.getElementById('multi-start-btn');
+  if (selectedGroupIds.size === 0) {
+    btn.textContent = '문제를 선택해주세요';
+    btn.disabled = true;
+    return;
+  }
+  var total = 0;
+  groups.forEach(function(g) {
+    if (selectedGroupIds.has(g.id)) total += g.words.length + getStarred(g.id).length;
+  });
+  btn.textContent = '🎯 선택한 ' + selectedGroupIds.size + '개 문제로 퀴즈 시작 (' + total + '문제)';
+  btn.disabled = total < 2;
+}
+
+function startMultiQuiz() {
+  if (selectedGroupIds.size === 0) return;
+  var pool = [];
+  var seen = {};
+  groups.forEach(function(g) {
+    if (!selectedGroupIds.has(g.id)) return;
+    g.words.concat(getStarred(g.id)).forEach(function(w) {
+      var key = w.word.toLowerCase();
+      if (!seen[key]) { seen[key] = true; pool.push(w); }
+    });
+  });
+  if (pool.length < 2) return;
+  quizMode = 'multi';
+  beginQuiz(pool);
+}
+
+function retryQuiz() {
+  if (quizMode === 'multi') startMultiQuiz(); else startQuiz();
+}
+
+function beginQuiz(pool) {
+  activeQuizPool = pool;
   quizQueue = shuffle(pool).map(function(item) {
     var types = ['en2ko', 'ko2en'];
     if (canBlank(item)) types.push('blank');
@@ -387,6 +482,7 @@ function startQuiz() {
   document.getElementById('result-wrap').classList.remove('show');
   document.getElementById('quiz-wrap').classList.add('show');
   renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function buildDistractorPool(currentGroupWords, exclude) {
@@ -402,9 +498,7 @@ function renderQuestion() {
   document.getElementById('q-progress-fill').style.width = ((quizIdx + 1) / total * 100) + '%';
 
   var q = quizQueue[quizIdx];
-  var g = groups[currentGroupIdx];
-  var groupWords = g.words.concat(getStarred(g.id));
-  var distractorSource = buildDistractorPool(groupWords, q.item);
+  var distractorSource = buildDistractorPool(activeQuizPool, q.item);
 
   var badge = document.getElementById('q-type-badge');
   var prompt = document.getElementById('q-prompt');
@@ -524,6 +618,7 @@ function speak(text) {
 
 buildTabs();
 document.querySelector('.g-tab').classList.add('active');
+buildSelectGrid();
 renderBrowse();
 </script>
 </body>

@@ -17,6 +17,15 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
 .progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.3s ease; }
 
+.player-card { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.player-note { font-size: 11.5px; color: #aaa; margin-bottom: 10px; line-height: 1.5; }
+.player-row { display: flex; align-items: center; gap: 12px; }
+.player-playbtn { width: 50px; height: 50px; border-radius: 50%; background: #7F77DD; color: #fff; border: none; font-size: 18px; cursor: pointer; flex: 0 0 auto; -webkit-tap-highlight-color: transparent; }
+.player-playbtn:active { transform: scale(0.95); }
+.player-info { flex: 1; min-width: 0; }
+.seek-bar { width: 100%; accent-color: #7F77DD; cursor: pointer; }
+.player-time { font-size: 11.5px; color: #aaa; margin-top: 2px; display: flex; justify-content: space-between; }
+
 .rate-card { background: #fff; border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
 .rate-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; font-weight: 700; }
 .rate-row { display: flex; gap: 6px; }
@@ -36,12 +45,6 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .given-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .given-table th, .given-table td { border: 1px solid #E0DED8; padding: 8px 6px; text-align: center; }
 .given-table th { background: #F8F7FF; color: #534AB7; }
-
-.play-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-align: center; }
-.play-btn { width: 96px; height: 96px; border-radius: 50%; background: #7F77DD; color: #fff; border: none; font-size: 34px; cursor: pointer; -webkit-tap-highlight-color: transparent; box-shadow: 0 4px 14px rgba(127,119,221,0.4); }
-.play-btn:active { transform: scale(0.96); }
-.play-caption { font-size: 12.5px; color: #aaa; margin-top: 10px; }
-.stop-link { font-size: 12px; color: #b7b0f0; margin-top: 6px; display: inline-block; cursor: pointer; text-decoration: underline; }
 
 .action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
 .action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
@@ -89,7 +92,18 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="wrap">
 <div class="source-tag">🎧 2025 고1 9월 전국연합학력평가 · 영어 듣기평가 1~17번</div>
 <h1>듣기평가 완전정복</h1>
-<p class="subtitle">재생 속도를 고르고 들어보세요. 대본과 해석은 버튼을 눌러야 나와요 — 먼저 듣고 풀어보는 걸 추천해요!<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a></p>
+<p class="subtitle">EBSi 공식 원본 음성으로 들어보세요. 1~17번이 실제 시험처럼 이어져 있어요. 대본과 해석은 버튼을 눌러야 나와요 — 먼저 듣고 풀어보는 걸 추천해요!<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a></p>
+
+<div class="player-card">
+  <div class="player-note">🎧 EBSi 원본 듣기 파일 (1~17번 전체, 순서대로 재생돼요)</div>
+  <div class="player-row">
+    <button class="player-playbtn" id="player-playbtn" onclick="toggleRealAudio()">▶️</button>
+    <div class="player-info">
+      <input type="range" class="seek-bar" id="seek-bar" min="0" max="100" value="0" oninput="seekRealAudio(this.value)">
+      <div class="player-time"><span id="time-current">0:00</span><span id="time-total">0:00</span></div>
+    </div>
+  </div>
+</div>
 
 <div class="rate-card">
   <div class="rate-label">🔊 재생 속도</div>
@@ -106,12 +120,6 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="type-badge" id="type-badge"></div>
 
 <div class="given-card" id="given-card"></div>
-
-<div class="play-card">
-  <button class="play-btn" onclick="playScript()">▶️</button>
-  <div class="play-caption">누르면 대화를 들려드려요</div>
-  <span class="stop-link" onclick="stopScript()">⏹ 정지</span>
-</div>
 
 <div class="action-row">
   <button class="action-btn" id="btn-script" onclick="toggleScript()">📄 대본 보기</button>
@@ -467,6 +475,36 @@ const items = [
 let current = 0;
 let currentRate = 1;
 
+const realAudio = new Audio('https://wdown.ebsi.co.kr/W61001/01exam/20250903/go1/eng_1_mp3_821718YB.mp3');
+realAudio.preload = 'none';
+
+function formatTime(s) {
+  s = Math.max(0, Math.floor(s || 0));
+  var m = Math.floor(s / 60);
+  var sec = s % 60;
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function toggleRealAudio() {
+  if (realAudio.paused) { realAudio.play(); } else { realAudio.pause(); }
+}
+
+function seekRealAudio(pct) {
+  if (realAudio.duration) realAudio.currentTime = (pct / 100) * realAudio.duration;
+}
+
+realAudio.addEventListener('play', function() { document.getElementById('player-playbtn').textContent = '⏸️'; });
+realAudio.addEventListener('pause', function() { document.getElementById('player-playbtn').textContent = '▶️'; });
+realAudio.addEventListener('ended', function() { document.getElementById('player-playbtn').textContent = '▶️'; });
+realAudio.addEventListener('loadedmetadata', function() {
+  document.getElementById('time-total').textContent = formatTime(realAudio.duration);
+});
+realAudio.addEventListener('timeupdate', function() {
+  var bar = document.getElementById('seek-bar');
+  if (realAudio.duration) bar.value = (realAudio.currentTime / realAudio.duration) * 100;
+  document.getElementById('time-current').textContent = formatTime(realAudio.currentTime);
+});
+
 function buildRateRow() {
   var rates = [0.5, 0.7, 1, 1.2, 1.5];
   document.getElementById('rate-row').innerHTML = rates.map(function(r) {
@@ -476,6 +514,7 @@ function buildRateRow() {
 
 function setRate(r, btnEl) {
   currentRate = r;
+  realAudio.playbackRate = r;
   document.querySelectorAll('.rate-btn').forEach(function(b) { b.classList.remove('active'); });
   btnEl.classList.add('active');
 }
@@ -575,7 +614,6 @@ function renderGiven(it) {
 }
 
 function render() {
-  stopScript();
   var it = items[current];
   document.getElementById('prog-text').textContent = (current + 1) + ' / ' + items.length;
   document.getElementById('prog-fill').style.width = ((current + 1) / items.length * 100) + '%';
@@ -648,38 +686,6 @@ if ('speechSynthesis' in window) {
   var loadTtsVoices = function() { ttsVoices = window.speechSynthesis.getVoices(); };
   loadTtsVoices();
   window.speechSynthesis.onvoiceschanged = loadTtsVoices;
-}
-
-function pickVoice(spk) {
-  if (!ttsVoices || !ttsVoices.length) return null;
-  var enVoices = ttsVoices.filter(function(v) { return v.lang && v.lang.indexOf('en') === 0; });
-  if (!enVoices.length) return null;
-  var femaleRe = /female|zira|susan|samantha|victoria|hazel|karen|moira|tessa/i;
-  var maleRe = /male|david|mark|daniel|alex|guy|fred|george/i;
-  var pick;
-  if (spk === 'W') pick = enVoices.find(function(v) { return femaleRe.test(v.name); });
-  else pick = enVoices.find(function(v) { return maleRe.test(v.name); });
-  return pick || enVoices[0];
-}
-
-function playScript() {
-  if (!('speechSynthesis' in window)) return;
-  var synth = window.speechSynthesis;
-  synth.cancel();
-  var it = items[current];
-  it.lines.forEach(function(line) {
-    var utter = new SpeechSynthesisUtterance(line.text);
-    utter.lang = 'en-US';
-    utter.rate = currentRate;
-    utter.pitch = line.spk === 'W' ? 1.12 : 0.95;
-    var v = pickVoice(line.spk);
-    if (v) utter.voice = v;
-    synth.speak(utter);
-  });
-}
-
-function stopScript() {
-  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 }
 
 function speak(text) {

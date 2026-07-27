@@ -22,15 +22,14 @@ h1 { font-size: 21px; margin-bottom: 22px; line-height: 1.4; }
 .month-chip.active { background: #7F77DD; color: #fff; box-shadow: none; }
 
 .cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 26px; }
-.card { display: flex; align-items: center; justify-content: space-between; padding: 20px 22px; border-radius: 16px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-decoration: none; color: #1a1a1a; -webkit-tap-highlight-color: transparent; transition: transform 0.1s ease; }
-.card:active { transform: scale(0.98); }
+.card { display: flex; align-items: center; justify-content: space-between; padding: 20px 22px; border-radius: 16px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-decoration: none; color: #1a1a1a; -webkit-tap-highlight-color: transparent; transition: transform 0.1s ease, background 0.1s ease, color 0.1s ease; }
+.card:active { transform: scale(0.98); background: #7F77DD; color: #fff; }
+.card:active .card-sub { color: rgba(255,255,255,0.8); }
+.card:active .card-arrow { color: rgba(255,255,255,0.7); }
 .card-main { text-align: left; }
 .card-title { font-size: 16.5px; font-weight: 700; margin-bottom: 4px; }
 .card-sub { font-size: 12.5px; color: #888; line-height: 1.5; }
 .card-arrow { font-size: 20px; color: #ccc; flex: 0 0 auto; margin-left: 12px; }
-.card.primary { background: #7F77DD; color: #fff; }
-.card.primary .card-sub { color: rgba(255,255,255,0.8); }
-.card.primary .card-arrow { color: rgba(255,255,255,0.7); }
 
 .soon-card { text-align: center; padding: 40px 20px; border-radius: 16px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.07); color: #aaa; font-size: 14px; line-height: 1.7; }
 </style>
@@ -63,19 +62,23 @@ const data = {
 };
 
 const cardsHtml = '<div class="cards">' +
-  '<a class="card primary" href="study18-24.html">' +
+  '<a class="card" href="listening1-17.html">' +
+    '<div class="card-main"><div class="card-title">🎧 1~17번 듣기평가</div><div class="card-sub">0.5~1.5배속 재생, 대본·해석, 문제 풀이, 핵심 단어</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="study18-24.html">' +
     '<div class="card-main"><div class="card-title">18~24번 지문 완전정복</div><div class="card-sub">단어 클릭 뜻·발음, 전체 해석, 문법, 실전 문제</div></div>' +
     '<div class="card-arrow">→</div>' +
   '</a>' +
-  '<a class="card primary" href="study25-31.html">' +
+  '<a class="card" href="study25-31.html">' +
     '<div class="card-main"><div class="card-title">25~31번 지문 완전정복</div><div class="card-sub">도표·안내문·어법·빈칸까지, 단어 클릭 학습</div></div>' +
     '<div class="card-arrow">→</div>' +
   '</a>' +
-  '<a class="card primary" href="study32-38.html">' +
+  '<a class="card" href="study32-38.html">' +
     '<div class="card-main"><div class="card-title">32~38번 지문 완전정복</div><div class="card-sub">빈칸추론·무관한 문장·순서배열·문장삽입, 단어 클릭 학습</div></div>' +
     '<div class="card-arrow">→</div>' +
   '</a>' +
-  '<a class="card primary" href="study39-45.html">' +
+  '<a class="card" href="study39-45.html">' +
     '<div class="card-main"><div class="card-title">39~45번 지문 완전정복</div><div class="card-sub">문장삽입·요약문·장문까지, 단어 클릭 학습</div></div>' +
     '<div class="card-arrow">→</div>' +
   '</a>' +

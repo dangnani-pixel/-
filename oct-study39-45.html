@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 고1 10월 모의고사 영어 39~45번 정밀 학습</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+.top-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.prog-text { font-size: 13px; color: #888; white-space: nowrap; min-width: 42px; }
+.progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.3s ease; }
+
+.problem-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.problem-tabs::-webkit-scrollbar { height: 4px; }
+.p-tab { flex: 0 0 auto; padding: 9px 16px; font-size: 14px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.p-tab.active { background: #7F77DD; color: #fff; }
+
+.type-badge { display: inline-block; font-size: 12px; font-weight: 600; color: #fff; background: #534AB7; border-radius: 99px; padding: 5px 14px; margin-bottom: 10px; }
+
+.insert-card { display: none; background: #FFF8E6; border: 1.5px dashed #E0B84D; border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; }
+.insert-card.show { display: block; }
+.insert-label { font-size: 11.5px; color: #a67c1f; font-weight: 700; margin-bottom: 6px; }
+.insert-text { font-size: 15px; color: #5a4413; line-height: 1.6; }
+.insert-text-ko { font-size: 13px; color: #a67c1f; margin-top: 6px; line-height: 1.5; }
+.passage-text .plabel { font-weight: 700; color: #534AB7; }
+.given-card { display: none; background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-align: center; }
+.given-card.show { display: block; }
+.given-card img { max-width: 100%; border-radius: 8px; }
+.passage-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.passage-text p { font-size: 16px; line-height: 1.95; margin-bottom: 12px; }
+.passage-text p:last-child { margin-bottom: 0; }
+.w { color: #4b3fc4; border-bottom: 2px dotted #b7b0f0; cursor: pointer; padding: 0 1px; border-radius: 3px; }
+.w:active { background: #EEEDFE; }
+.p { cursor: pointer; }
+.p:active { background: #EFEFEF; border-radius: 3px; }
+
+.quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
+.quiz-choice { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 10px; background: #F8F7FF; margin-bottom: 8px; cursor: pointer; font-size: 14px; line-height: 1.55; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.quiz-choice:last-of-type { margin-bottom: 0; }
+.quiz-choice.selected { border-color: #7F77DD; background: #EEEDFE; }
+.quiz-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 600; }
+.quiz-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.quiz-check-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; }
+.quiz-result { margin-top: 12px; font-size: 13.5px; padding: 12px 14px; border-radius: 10px; line-height: 1.65; display: none; }
+.quiz-result.show { display: block; }
+.quiz-result.ok { background: #E8F8F1; color: #177350; }
+.quiz-result.no { background: #FDEDEC; color: #a8362f; }
+
+.action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.action-btn.on { background: #7F77DD; color: #fff; }
+
+.translation-box { display: none; background: #F8F7FF; border: 1px solid #E4E1FA; border-radius: 12px; padding: 16px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.85; color: #3a2f8f; white-space: pre-line; }
+.translation-box.show { display: block; }
+
+.vocab-grid { display: none; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.vocab-grid.show { display: grid; }
+.vocab-chip { background: #fff; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; }
+.vocab-chip b { display: block; font-size: 13.5px; color: #1a1a1a; }
+.vocab-chip span { display: block; font-size: 12px; color: #7F77DD; margin-top: 2px; }
+
+.tab-row { display: flex; background: #fff; border-radius: 12px; padding: 4px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.tab { flex: 1; padding: 10px 4px; font-size: 14px; text-align: center; cursor: pointer; color: #888; border-radius: 9px; -webkit-tap-highlight-color: transparent; }
+.tab.active { background: #7F77DD; color: #fff; font-weight: 600; }
+.panel { display: none; }
+.panel.active { display: block; }
+.section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+
+.grammar-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.grammar-title { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+.grammar-desc { font-size: 13px; color: #555; line-height: 1.65; }
+.grammar-ex { font-size: 13px; color: #7F77DD; margin-top: 7px; font-style: italic; line-height: 1.5; }
+
+.tip-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #7F77DD; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.tip-item p { font-size: 13.5px; color: #444; line-height: 1.7; }
+
+.nav-row { display: flex; gap: 10px; margin-top: 16px; }
+.nav-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nav-btn:active { transform: scale(0.98); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.secondary { background: #E0DED8; color: #555; }
+.nav-btn.primary { background: #7F77DD; color: #fff; }
+
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; z-index: 50; }
+.overlay.show { display: block; }
+.sheet { position: fixed; left: 0; right: 0; bottom: -100%; background: #fff; border-radius: 20px 20px 0 0; padding: 22px 20px 26px; z-index: 51; transition: bottom 0.25s ease; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); max-width: 640px; margin: 0 auto; }
+.sheet.show { bottom: 0; }
+.sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
+.sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
+.sheet-star.starred { color: #F5B700; }
+.sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.sheet-word { font-size: 22px; font-weight: 700; }
+.speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
+.sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
+.sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
+.sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">📝 2025 고1 10월 전국연합학력평가 · 영어 39~45번</div>
+<h1>지문 완전정복 학습지</h1>
+<p class="subtitle">지문 속 단어를 클릭하면 뜻·발음·예문이 나와요. 팝업의 ⭐를 누르면 단어장에 저장돼요.<br><a class="home-link" href="grade1.html">← 고1 학습 홈</a> · <a class="home-link" href="oct-study32-38.html">32~38번 학습지</a></p>
+
+<div class="top-bar">
+  <span class="prog-text" id="prog-text">1 / 7</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="problem-tabs" id="problem-tabs"></div>
+<div class="type-badge" id="type-badge"></div>
+
+<div class="given-card" id="given-card"></div>
+
+<div class="insert-card" id="insert-card">
+  <div class="insert-label">📌 삽입할 문장</div>
+  <div class="insert-text" id="insert-text"></div>
+  <div class="insert-text-ko" id="insert-text-ko"></div>
+</div>
+
+<div class="passage-card"><div class="passage-text" id="passage-text"></div></div>
+
+<div id="quiz-container"></div>
+
+<div class="action-row">
+  <button class="action-btn" id="btn-trans" onclick="toggleTranslation()">🇰🇷 전체 해석 보기</button>
+  <button class="action-btn" id="btn-vocab" onclick="toggleVocabGrid()">📖 핵심 단어 목록</button>
+</div>
+
+<div class="translation-box" id="translation-box"></div>
+<div class="vocab-grid" id="vocab-grid"></div>
+
+<div class="tab-row">
+  <div class="tab active" data-t="grammar" onclick="switchTab('grammar')">📝 꼭 알아야 할 문법</div>
+  <div class="tab" data-t="tip" onclick="switchTab('tip')">💡 풀이 팁</div>
+</div>
+<div class="panel active" id="tab-grammar"><div class="section-label">문법 포인트</div><div id="grammar-list"></div></div>
+<div class="panel" id="tab-tip"><div class="section-label">유형별 풀이 팁</div><div id="tip-list"></div></div>
+
+<div class="nav-row">
+  <button class="nav-btn secondary" id="btn-prev" onclick="go(-1)">← 이전 문제</button>
+  <button class="nav-btn primary" id="btn-next" onclick="go(1)">다음 문제 →</button>
+</div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeWord()"></div>
+<div class="sheet" id="sheet">
+  <button class="sheet-close" onclick="closeWord()">✕</button>
+  <button class="sheet-star" id="sheet-star" onclick="toggleSheetStar()">☆</button>
+  <div class="sheet-word-row">
+    <div class="sheet-word" id="sheet-word"></div>
+    <button class="speak-btn" onclick="speakCurrent()">🔊</button>
+  </div>
+  <div class="sheet-pron" id="sheet-pron"></div>
+  <div class="sheet-meaning" id="sheet-meaning"></div>
+  <div class="sheet-example" id="sheet-example"></div>
+</div>
+
+<script>
+const problems = [
+{
+  num: "39", label: "39번", type: "문장 삽입",
+  insertSentence: "But with more permanent things, companies must invent reasons for their customers to continue to consume them.",
+  insertSentenceKo: "그러나 더 오래가는 물건의 경우, 기업은 고객이 그것을 계속 소비할 이유를 만들어내야 한다.",
+  vocab: {
+    purchase: { word:"purchase", pron:"[퍼처스]", meaning:"구매하다", ex:"Those who purchase goods are called customers.", exko:"물건을 구매하는 사람들은 고객이라 불린다." },
+    consume: { word:"consume", pron:"[컨슘]", meaning:"소비하다", ex:"Individuals who consume goods are consumers.", exko:"물건을 소비하는 개인은 소비자이다." },
+    permanent: { word:"permanent", pron:"[퍼머넌트]", meaning:"영구적인, 오래가는", ex:"with more permanent things", exko:"더 오래가는 물건의 경우" },
+    quantities: { word:"quantities", pron:"[콴터티즈]", meaning:"양, 수량", ex:"in larger and larger quantities", exko:"점점 더 많은 양으로" },
+    literally: { word:"literally", pron:"[리터럴리]", meaning:"말 그대로", ex:"Food is literally consumed.", exko:"음식은 말 그대로 소비된다." },
+    outdated: { word:"outdated", pron:"[아웃데이티드]", meaning:"구식의", ex:"make the stuff people have outdated", exko:"사람들이 가진 물건을 구식으로 만들다" },
+    functionable: { word:"functionable", pron:"[펑셔너블]", meaning:"쓸 수 있는", ex:"the old is still perfectly functionable", exko:"낡은 것도 여전히 완벽하게 쓸 수 있다" },
+    indefinitely: { word:"indefinitely", pron:"[인데퍼니틀리]", meaning:"무한정", ex:"The list is extended indefinitely.", exko:"그 목록은 무한정 늘어난다." }
+  },
+  passage: `Those who [[purchase::purchase]] the goods of a company are called customers. Individuals who purchase goods for personal use are called consumers: beings who [[consume::consume]]. ( ① ) Therefore, companies have invented multiple ways to ensure that their customers consume the produced items in larger and larger [[quantities::quantities]] and more and more frequently. ( ② ) Those who sell food have an easy time, for food is [[literally::literally]] consumed, so there is always a need to purchase new food. ( ③ ) One approach is to make the stuff that people already have [[outdated::outdated]] by convincing them that it is no longer fashionable. ( ④ ) The entire fashion industry is built to convince people that fashion matters, so they must purchase new clothing, even though the old is still perfectly [[functionable::functionable]]. ( ⑤ ) Fashion today extends to far more things than clothes: automobiles, mobile phones, computers — the list is extended [[indefinitely::indefinitely]], limited only by the limits of the creative minds of the marketing divisions of companies.`,
+  translation: `어떤 회사의 상품을 구매하는 사람들은 고객이라고 불린다. 개인적인 사용을 위해 물건을 구매하는 개인은 소비자라고 불리는데, 이는 소비하는 존재를 뜻한다. ( ① ) 따라서 기업들은 고객이 생산된 물품을 점점 더 많은 양으로, 점점 더 자주 소비하도록 보장하기 위한 여러 방법을 고안해 왔다. ( ② ) 음식을 파는 사람들은 수월하다. 왜냐하면 음식은 말 그대로 소비되어서 새 음식을 구매할 필요가 항상 있기 때문이다. ( ③ ) 한 가지 접근법은 사람들이 이미 가지고 있는 물건이 더 이상 유행하지 않는다고 설득함으로써 그것을 구식으로 만드는 것이다. ( ④ ) 패션 산업 전체는 패션이 중요하다고 사람들을 설득하도록 만들어져 있어서, 낡은 옷이 여전히 완벽하게 쓸 수 있는데도 사람들은 새 옷을 사야만 한다. ( ⑤ ) 오늘날 패션은 옷보다 훨씬 더 많은 것으로 확장된다. 자동차, 휴대전화, 컴퓨터 — 그 목록은 기업 마케팅 부서의 창의적인 두뇌의 한계에 의해서만 제한될 뿐 무한정 늘어난다.`,
+  grammar: [
+    { title:"ensure that + 절", desc:"'~하도록 확실히 하다'라는 뜻으로 뒤에 완전한 절이 옵니다.", ex:"ensure that customers consume more (고객이 더 많이 소비하도록 확실히 하다)" },
+    { title:"for (이유의 등위접속사)", desc:"'왜냐하면 ~이기 때문이다'라는 뜻으로 앞 문장의 이유를 덧붙입니다.", ex:"They have an easy time, for food is consumed. (그들은 수월한데, 음식은 소비되기 때문이다.)" },
+    { title:"make + 목적어 + 형용사 (5형식)", desc:"'~을 …하게 만들다'라는 뜻이에요.", ex:"make the stuff outdated (그 물건을 구식으로 만들다)" }
+  ],
+  tips: [
+    "주어진 문장의 'But'과 'more permanent things'가 앞 문장(음식=바로 소비됨)과 대조된다는 점이 핵심입니다.",
+    "삽입 후 뒤 문장 'One approach is ~'가 '기업이 만들어내는 이유'의 구체적 방법으로 자연스럽게 이어지는지 확인하세요.",
+    "문장삽입은 대조 연결어(But, However)와 지시어가 가리키는 대상을 추적하면 대부분 풀립니다."
+  ],
+  questions: [{ qNum:39, question:"글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳을 고르시오. [3점]",
+    choices:["①","②","③","④","⑤"], answer:2,
+    explanation:"음식은 바로 소비되어 재구매가 자연스럽다는 문장 뒤에, 'But 더 오래가는 물건은 기업이 소비할 이유를 만들어야 한다'가 오고, 그 뒤 'One approach is ~'로 구체적 방법이 이어지므로 ③번이 정답입니다." }]
+},
+{
+  num: "40", label: "40번", type: "요약문 완성",
+  insertSentence: "According to the study above, customers were more driven to _____(A)_____ their goals when they perceived the reward as _____(B)_____.",
+  insertSentenceKo: "위 연구에 따르면, 고객들은 보상이 (B)하다고 인식했을 때 목표를 (A)하려는 동기가 더 강했다.",
+  vocab: {
+    illusory: { word:"illusory", pron:"[일루서리]", meaning:"착각의, 환상의", ex:"the motivating effect of illusory progress", exko:"착각된 진전이 주는 동기 부여 효과" },
+    reward_card: { word:"reward card", pron:"[리워드 카드]", meaning:"적립 카드", ex:"Customers received a reward card.", exko:"고객들은 적립 카드를 받았다." },
+    slots: { word:"slots", pron:"[슬랏츠]", meaning:"칸", ex:"a card with ten open slots", exko:"빈칸이 열 개 있는 카드" },
+    preexisting: { word:"preexisting", pron:"[프리이그지스팅]", meaning:"미리 있는", ex:"two preexisting bonus stamps", exko:"미리 찍혀 있는 보너스 도장 두 개" },
+    strictly: { word:"strictly speaking", pron:"[스트릭틀리 스피킹]", meaning:"엄밀히 말하면", ex:"Strictly speaking, these were identical.", exko:"엄밀히 말하면 이것들은 동일했다." },
+    identical: { word:"identical", pron:"[아이덴티컬]", meaning:"동일한", ex:"They were identical reward programs.", exko:"그것들은 동일한 적립 프로그램이었다." },
+    head_start: { word:"head start", pron:"[헤드 스타트]", meaning:"유리한 출발", ex:"People thought they'd gotten a head start.", exko:"사람들은 유리하게 출발했다고 생각했다." },
+    motivated: { word:"motivated", pron:"[모티베이티드]", meaning:"동기가 부여된", ex:"They were more motivated to reach the goal.", exko:"그들은 목표에 도달하려는 동기가 더 강했다." }
+  },
+  passage: `Kivetz, Urminsky, and Zheng partnered with a café to test the motivating effect of [[illusory::illusory]] progress in an experiment. Customers received a [[reward_card::reward card]] that offered one free coffee after they'd bought ten. While half of the customers received a card with ten open [[slots::slots]], the other half got a card with twelve open slots. Yet the twelve-slot card had two [[preexisting::preexisting]] "bonus" stamps, so, [[strictly::strictly speaking]], these were [[identical::identical]] reward programs. Every customer who got a card needed to make ten coffee purchases (and collect ten stamps) to get their free coffee. But the appeal of the free stamps was high. People who thought they'd gotten a [[head_start::head start]] came back to the café more often, filling in their reward card more quickly than the others. When the card came with two out of twelve slots already filled, it felt to customers like they were already 16 percent finished with the goal before they'd even started. Believing they were closer to the reward, they were more [[motivated::motivated]] to reach the finish line.`,
+  translation: `Kivetz, Urminsky, Zheng은 한 카페와 협력하여 착각된 진전이 주는 동기 부여 효과를 실험으로 검증했다. 고객들은 커피 열 잔을 사면 한 잔을 무료로 주는 적립 카드를 받았다. 고객의 절반은 빈칸이 열 개 있는 카드를 받았고, 나머지 절반은 빈칸이 열두 개 있는 카드를 받았다. 그런데 열두 칸짜리 카드에는 이미 '보너스' 도장이 두 개 찍혀 있었으므로, 엄밀히 말하면 이 둘은 동일한 적립 프로그램이었다. 카드를 받은 모든 고객은 무료 커피를 받기 위해 열 번의 커피 구매를 해야(그리고 도장 열 개를 모아야) 했다. 하지만 무료 도장의 매력은 컸다. 유리하게 출발했다고 생각한 사람들은 카페에 더 자주 돌아왔고, 다른 사람들보다 더 빠르게 적립 카드를 채웠다. 카드에 열두 칸 중 두 칸이 이미 채워져 있을 때, 고객들은 시작도 하기 전에 이미 목표의 16퍼센트를 끝낸 것처럼 느꼈다. 자신이 보상에 더 가까이 있다고 믿었기에, 그들은 결승선에 도달하려는 동기가 더 강했다.`,
+  grammar: [
+    { title:"While + 절 (대조: ~인 반면)", desc:"두 대상을 대조할 때 씁니다.", ex:"While half received ten slots, the other half got twelve. (절반은 열 칸을 받은 반면, 나머지 절반은 열두 칸을 받았다.)" },
+    { title:"It felt to A like + 절", desc:"'A에게는 ~처럼 느껴졌다'는 뜻이에요.", ex:"It felt to customers like they were already finished. (고객들에게는 이미 끝낸 것처럼 느껴졌다.)" },
+    { title:"분사구문 (Believing ~)", desc:"이유를 나타내는 분사구문으로 '~라고 믿었기 때문에'로 해석합니다.", ex:"Believing they were closer, they were more motivated. (더 가깝다고 믿었기에 동기가 더 강했다.)" }
+  ],
+  tips: [
+    "요약문의 (A), (B)가 지문의 어느 부분과 대응되는지 먼저 표시하세요.",
+    "핵심은 '보상이 더 가깝다고(closer/nearer) 느끼면 목표를 완수하려는 동기가 커진다'입니다.",
+    "실제 조건은 동일했다는 점(identical)이 함정이니, 인식(perceived)의 차이에 초점을 맞추세요."
+  ],
+  questions: [{ qNum:40, question:"다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것을 고르시오.",
+    choices:["complete ... nearer","complete ... bigger","change ... farther","change ... closer","reach ... rarer"],
+    answer:0,
+    explanation:"보상이 더 '가깝다(nearer)'고 인식했을 때 목표를 '완수하려는(complete)' 동기가 강해졌다는 내용이므로 ①번이 정답입니다. 보상의 크기(bigger)나 희소성(rarer)은 언급되지 않았습니다." }]
+},
+{
+  num: "41-42", label: "41~42번", type: "장문 (제목 · 어휘)",
+  vocab: {
+    novel: { word:"novel", pron:"[노벌]", meaning:"참신한, 새로운", ex:"the ability to generate novel ideas", exko:"참신한 아이디어를 만들어내는 능력" },
+    divergent: { word:"divergent thinking", pron:"[다이버전트 씽킹]", meaning:"확산적 사고", ex:"It involves divergent thinking.", exko:"그것은 확산적 사고를 포함한다." },
+    originality: { word:"originality", pron:"[오리지낼리티]", meaning:"독창성", ex:"the risk of limiting originality", exko:"독창성을 제한할 위험" },
+    derivative: { word:"derivative", pron:"[디리버티브]", meaning:"모방적인, 파생된", ex:"derivative works that lack originality", exko:"독창성이 없는 모방적 작품들" },
+    constraints: { word:"constraints", pron:"[컨스트레인츠]", meaning:"제약", ex:"the constraints of the training data", exko:"훈련 데이터의 제약" },
+    breakthroughs: { word:"breakthroughs", pron:"[브레이크쓰루즈]", meaning:"돌파구, 획기적 발전", ex:"struggle that leads to breakthroughs", exko:"돌파구로 이어지는 분투" },
+    setbacks: { word:"setbacks", pron:"[셋백스]", meaning:"좌절", ex:"involving numerous failures and setbacks", exko:"수많은 실패와 좌절을 수반하는" },
+    inhibiting: { word:"inhibiting", pron:"[인히비팅]", meaning:"억제하는", ex:"ultimately inhibiting the development of talent", exko:"궁극적으로 재능의 발달을 억제하는" }
+  },
+  passage: `Creativity is the ability to generate [[novel::novel]] and valuable ideas. It involves [[divergent::divergent thinking]], imagination, and a willingness to experiment and take risks. While AI can be a powerful tool for creative efforts, it also (a) carries the risk of limiting [[originality::originality]] and innovation. AI algorithms are trained on (b) existing datasets, often identifying patterns and trends in past creations. While this can be useful for generating new content in similar styles or formats, it can also lead to [[derivative::derivative]] works that lack genuine originality. If artists and designers rely too heavily on AI for inspiration and content generation, they may find themselves (c) trapped in a cycle of imitation, unable to break free from the [[constraints::constraints]] of the AI's training data. Moreover, the ease with which AI can generate content can discourage the kind of struggle and experimentation that often leads to [[breakthroughs::breakthroughs]]. The creative process is often messy and repetitive, involving numerous failures and [[setbacks::setbacks]]. It is through these (d) challenges that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible. If AI provides instant solutions, it can (e) enhance this essential process of learning through trial and error, ultimately [[inhibiting::inhibiting]] the development of true creative talent.`,
+  translation: `창의성은 참신하고 가치 있는 아이디어를 만들어내는 능력이다. 그것은 확산적 사고, 상상력, 그리고 실험하고 위험을 감수하려는 의지를 포함한다. AI가 창의적 노력에 강력한 도구가 될 수 있지만, 그것은 또한 독창성과 혁신을 제한할 위험도 (a)지닌다. AI 알고리즘은 (b)기존의 데이터셋으로 훈련되며, 종종 과거 창작물의 패턴과 경향을 식별한다. 이것이 비슷한 스타일이나 형식의 새로운 콘텐츠를 생성하는 데는 유용할 수 있지만, 진정한 독창성이 결여된 모방적 작품으로 이어질 수도 있다. 만약 예술가와 디자이너가 영감과 콘텐츠 생성을 AI에 지나치게 의존한다면, 그들은 AI 훈련 데이터의 제약에서 벗어나지 못한 채 모방의 순환에 (c)갇힌 자신을 발견하게 될지도 모른다. 게다가, AI가 콘텐츠를 생성할 수 있는 그 용이함은 종종 돌파구로 이어지는 종류의 분투와 실험을 위축시킬 수 있다. 창작 과정은 흔히 지저분하고 반복적이며, 수많은 실패와 좌절을 수반한다. 우리가 기술을 다듬고, 고유한 관점을 발전시키며, 가능성의 경계를 넓히는 것은 바로 이러한 (d)어려움을 통해서이다. 만약 AI가 즉각적인 해결책을 제공한다면, 그것은 시행착오를 통한 이 필수적인 학습 과정을 (e)강화하여(→약화시켜), 궁극적으로 진정한 창의적 재능의 발달을 억제할 수 있다.`,
+  grammar: [
+    { title:"It is ~ that ... (강조구문)", desc:"강조하려는 어구를 It is와 that 사이에 넣습니다.", ex:"It is through these challenges that we refine our skills. (우리가 기술을 다듬는 것은 바로 이러한 어려움을 통해서이다.)" },
+    { title:"the ease with which + 절", desc:"'~하는 그 용이함'이라는 뜻으로 전치사+관계대명사 구조입니다.", ex:"the ease with which AI can generate content (AI가 콘텐츠를 생성할 수 있는 그 용이함)" },
+    { title:"find oneself + 분사/형용사", desc:"'자신이 ~한 상태임을 발견하다'라는 뜻이에요.", ex:"They may find themselves trapped. (그들은 자신이 갇혀 있음을 발견할지도 모른다.)" }
+  ],
+  tips: [
+    "제목은 글 전체의 논조를 담아야 합니다. 이 글은 AI의 양면성(도구 vs 위협)을 다루므로 의문형 제목이 어울립니다.",
+    "어휘 문제는 문장의 논리 방향을 보세요. '억제한다(inhibiting)'로 끝나는데 앞에서 '강화한다(enhance)'는 모순입니다.",
+    "(a)~(e)를 각각 반의어로 바꿔 읽어보고 더 자연스러운 것을 찾으면 빠르게 정답이 보입니다."
+  ],
+  questions: [
+    { qNum:41, question:"윗글의 제목으로 가장 적절한 것은?",
+      choices:["How to Regulate AI Art and Protect Artists","Is AI a Help or Threat to Human Creativity?","Professions That AI Will Replace in the Future","Unlocking AI Creativity Through Trial and Error","A Battle between Humans and AI: Winner Takes All"],
+      answer:1,
+      explanation:"AI가 창의적 작업의 강력한 도구가 될 수 있지만 동시에 독창성을 제한할 위험도 있다는 양면을 다루므로, 의문형 제목인 ②번이 가장 적절합니다." },
+    { qNum:42, question:"밑줄 친 (a)~(e) 중에서 문맥상 낱말의 쓰임이 적절하지 않은 것은?",
+      choices:["(a) carries","(b) existing","(c) trapped","(d) challenges","(e) enhance"],
+      answer:4,
+      explanation:"AI가 즉각적 해결책을 주면 시행착오 학습 과정을 '약화시켜(undermine)' 결국 재능 발달을 억제한다는 흐름이어야 하는데 'enhance(강화하다)'는 정반대이므로 ⑤번이 적절하지 않습니다." }
+  ]
+},
+{
+  num: "43-45", label: "43~45번", type: "장문 (순서 · 지칭 · 내용일치)",
+  vocab: {
+    billionaire: { word:"billionaire", pron:"[빌리어네어]", meaning:"억만장자", ex:"billionaire James Walker", exko:"억만장자 James Walker" },
+    broke: { word:"broke", pron:"[브로크]", meaning:"빈털터리인", ex:"James was broke and stuck at the airport.", exko:"James는 빈털터리로 공항에 발이 묶였다." },
+    killing_time: { word:"killing time", pron:"[킬링 타임]", meaning:"시간을 때우는 것", ex:"killing time reading headlines", exko:"기사 제목을 읽으며 시간을 때우는 것" },
+    newsstand: { word:"newsstand", pron:"[뉴스스탠드]", meaning:"신문 가판대", ex:"He worked at the newsstand.", exko:"그는 신문 가판대에서 일했다." },
+    hesitated: { word:"hesitated", pron:"[헤지테이티드]", meaning:"망설였다", ex:"James hesitated, saying he had no money.", exko:"James는 돈이 없다며 망설였다." },
+    wealthy: { word:"wealthy", pron:"[웰씨]", meaning:"부유한", ex:"James became a wealthy businessman.", exko:"James는 부유한 사업가가 되었다." },
+    compensate: { word:"compensate", pron:"[캄펀세이트]", meaning:"보상하다", ex:"You can't truly compensate me.", exko:"당신은 나에게 진정으로 보상할 수 없다." },
+    generosity: { word:"generosity", pron:"[제너로서티]", meaning:"관대함", ex:"That's just generosity at convenience.", exko:"그건 그저 편할 때의 관대함일 뿐이다." }
+  },
+  passage: `(A) When [[billionaire::billionaire]] James Walker was once asked by a journalist, "Is there anyone richer than you?", he replied, "Yes, there is one young man I'll never forget." He told the story of when he first met David at a New York airport. Years ago, James was [[broke::broke]] and stuck at the airport, [[killing_time::killing time]] reading newspaper headlines at the [[newsstand::newsstand]]. One headline caught (a) his eye, but he had no money to buy the paper.
+
+(B) Years passed and James became a [[wealthy::wealthy]] businessman, but he never forgot the young man he had met at the airport. He found David running a small bookstore and visited him there. (b) He introduced himself, saying, "David, you helped me twice when you had almost nothing. I want to give you anything you wish." He looked at (c) him and said, "You can't truly [[compensate::compensate]] me."
+
+(C) James asked, "Why not?" David replied, "Because I gave to you when I had almost nothing. You're offering me something now that you have everything. That's just [[generosity::generosity]] at convenience. So, I can't accept your offer." James realized that money doesn't make someone rich. Remembering that moment, (d) he said to the journalist, "It's the willingness to give even when you have very little that makes you wealthy. And so, David is the richest person I have ever met."
+
+(D) Just then, David, working at the newsstand noticed James. (e) He asked, "Would you like to buy this, sir?" But, James [[hesitated::hesitated]], saying he had no money. David smiled and said, "Me, too. But I have enough for this. Take it as a gift." Three months later, James, still broke, met him at the newsstand once more. Again, David gave him a newspaper without expecting anything in return.`,
+  translation: `(A) 억만장자 James Walker가 언젠가 한 기자에게 "당신보다 더 부유한 사람이 있습니까?"라는 질문을 받았을 때, 그는 "네, 제가 결코 잊지 못할 젊은이가 한 명 있습니다."라고 답했다. 그는 뉴욕의 한 공항에서 David를 처음 만났을 때의 이야기를 들려주었다. 몇 년 전, James는 빈털터리로 공항에 발이 묶여 신문 가판대에서 신문 기사 제목을 읽으며 시간을 때우고 있었다. 한 기사 제목이 (a)그의 눈길을 사로잡았지만, 그는 신문을 살 돈이 없었다.
+
+(B) 세월이 흘러 James는 부유한 사업가가 되었지만, 공항에서 만났던 그 젊은이를 결코 잊지 않았다. 그는 David가 작은 서점을 운영하고 있다는 것을 알아내고 그곳으로 그를 찾아갔다. (b)그는 자신을 소개하며 말했다. "David, 당신은 거의 아무것도 없을 때 나를 두 번이나 도와주었습니다. 당신이 원하는 것은 무엇이든 드리고 싶습니다." 그는 (c)그를 바라보며 말했다. "당신은 나에게 진정으로 보상할 수 없습니다."
+
+(C) James가 물었다. "왜 안 되죠?" David가 답했다. "제가 거의 아무것도 없을 때 당신에게 주었기 때문입니다. 당신은 모든 것을 가진 지금에서야 저에게 무언가를 제안하고 있습니다. 그건 그저 편할 때의 관대함일 뿐입니다. 그래서 저는 당신의 제안을 받아들일 수 없습니다." James는 돈이 사람을 부유하게 만드는 것이 아니라는 것을 깨달았다. 그 순간을 회상하며, (d)그는 기자에게 말했다. "아주 적게 가졌을 때조차 기꺼이 베풀려는 마음, 그것이 당신을 부유하게 만듭니다. 그래서 David는 제가 만나본 사람 중 가장 부유한 사람입니다."
+
+(D) 바로 그때, 신문 가판대에서 일하던 David가 James를 알아차렸다. (e)그가 물었다. "이거 사시겠어요, 손님?" 하지만 James는 돈이 없다며 망설였다. David는 미소 지으며 말했다. "저도요. 하지만 이건 살 만큼은 있어요. 선물로 받으세요." 세 달 후, 여전히 빈털터리였던 James는 신문 가판대에서 그를 다시 한번 만났다. 다시 한번, David는 아무런 대가도 바라지 않고 그에게 신문을 주었다.`,
+  grammar: [
+    { title:"It is ~ that ... (강조구문)", desc:"강조하려는 부분을 It is와 that 사이에 둡니다.", ex:"It's the willingness to give that makes you wealthy. (당신을 부유하게 만드는 것은 바로 베풀려는 마음이다.)" },
+    { title:"without ~ing (~하지 않고)", desc:"'~함이 없이'라는 뜻으로 뒤에 동명사가 옵니다.", ex:"without expecting anything in return (아무런 대가도 바라지 않고)" },
+    { title:"분사구문 (Remembering ~)", desc:"'~하면서, ~을 회상하며'라는 뜻으로 동시 상황을 나타냅니다.", ex:"Remembering that moment, he said... (그 순간을 회상하며 그는 말했다...)" }
+  ],
+  tips: [
+    "순서 배열은 사건의 시간 흐름을 따라가세요. 공항에서 만남 → 신문 선물 → 세월 후 재회 → 거절과 깨달음.",
+    "지칭 문제는 각 대명사가 나온 문장에서 '말하는 사람'과 '듣는 사람'을 구별해 표시하며 읽으세요.",
+    "내용 일치는 결말의 반전(David가 제안을 거절함)이 자주 정답 근거가 됩니다."
+  ],
+  questions: [
+    { qNum:43, question:"주어진 글 (A)에 이어질 내용을 순서에 맞게 배열한 것으로 가장 적절한 것은?",
+      choices:["(B) - (D) - (C)","(C) - (B) - (D)","(C) - (D) - (B)","(D) - (B) - (C)","(D) - (C) - (B)"],
+      answer:3,
+      explanation:"(A)에서 James가 신문을 살 돈이 없었고, (D)에서 David가 신문을 선물로 주며 세 달 뒤에도 도와주었고, (B)에서 세월이 흘러 부유해진 James가 David를 찾아가 보답하려 하자, (C)에서 David가 이를 거절하며 깨달음을 주므로 (D)-(B)-(C)인 ④번이 정답입니다." },
+    { qNum:44, question:"밑줄 친 (a)~(e) 중에서 가리키는 대상이 나머지 넷과 다른 것은?",
+      choices:["(a)","(b)","(c)","(d)","(e)"],
+      answer:4,
+      explanation:"(a) his eye, (b) He introduced himself, (c) him(보상받을 대상), (d) he said to the journalist는 모두 James를 가리키지만, (e) He asked \"Would you like to buy this, sir?\"는 신문 가판대에서 일하던 David를 가리키므로 ⑤번이 다릅니다." },
+    { qNum:45, question:"윗글에 관한 내용으로 적절하지 않은 것은?",
+      choices:["James는 공항에서 David를 처음 만났다.","James는 부유한 사업가가 되었다.","James는 David의 서점을 방문했다.","David는 James의 제안을 받아들였다.","David는 James에게 신문을 선물로 주었다."],
+      answer:3,
+      explanation:"David는 'So, I can't accept your offer.'라며 James의 제안을 거절했으므로, 제안을 받아들였다는 ④번은 글의 내용과 일치하지 않습니다." }
+  ]
+}
+];
+
+let current = 0, activeVocabKey = null, currentSpeakWord = null, activeSheetWord = null;
+let currentSheetWordData = null, selectedChoice = null, answerChecked = false;
+
+function starKey(gid) { return 'vocabStar_' + gid; }
+function getStarred(gid) { try { return JSON.parse(localStorage.getItem(starKey(gid)) || '[]'); } catch(e) { return []; } }
+function setStarred(gid, list) { localStorage.setItem(starKey(gid), JSON.stringify(list)); }
+function gidOf() { return 'oct' + problems[current].num; }
+
+function updateSheetStarBtn() {
+  var btn = document.getElementById('sheet-star');
+  if (!currentSheetWordData) { btn.textContent = '☆'; btn.classList.remove('starred'); return; }
+  var starred = getStarred(gidOf());
+  var is = starred.some(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  btn.textContent = is ? '★' : '☆';
+  btn.classList.toggle('starred', is);
+}
+
+function toggleSheetStar() {
+  if (!currentSheetWordData) return;
+  var gid = gidOf(), starred = getStarred(gid);
+  var idx = starred.findIndex(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  if (idx >= 0) starred.splice(idx, 1);
+  else starred.push({ word: currentSheetWordData.word, pron: currentSheetWordData.pron || '', meaning: currentSheetWordData.meaning || '뜻 정보 없음', en: currentSheetWordData.en || '', ko: currentSheetWordData.ko || '' });
+  setStarred(gid, starred);
+  updateSheetStarBtn();
+}
+
+function renderPassage(text) {
+  return text.split('\n\n').map(function(para) {
+    var ph = [];
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+      ph.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
+      return '§' + (ph.length - 1) + '§';
+    });
+    html = html.replace(/^\(([A-D])\)/, function(m, letter) {
+      ph.push('<span class="plabel">(' + letter + ')</span>');
+      return '§' + (ph.length - 1) + '§';
+    });
+    html = html.replace(/[A-Za-z]+(?:['’][A-Za-z]+)*/g, function(w) {
+      return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
+    });
+    html = html.replace(/§(\d+)§/g, function(m, i) { return ph[i]; });
+    return '<p>' + html.replace(/\n/g, '<br>') + '</p>';
+  }).join('');
+}
+
+function buildTabs() {
+  document.getElementById('problem-tabs').innerHTML = problems.map(function(p, i) {
+    return '<div class="p-tab" onclick="selectProblem(' + i + ')">' + p.label + '</div>';
+  }).join('');
+}
+
+const circled = ['①','②','③','④','⑤'];
+function choiceLabel(c, i) { return /^[①②③④⑤]/.test(c) ? c : circled[i] + ' ' + c; }
+
+let quizState = [];
+
+function renderChoicesHtml(q, qi) {
+  return q.choices.map(function(c, i) {
+    return '<div class="quiz-choice" onclick="selectChoice(' + qi + ',' + i + ')"><span>' + choiceLabel(c, i) + '</span></div>';
+  }).join('');
+}
+
+function renderQuiz(p) {
+  quizState = p.questions.map(function() { return { selected: null, checked: false }; });
+  document.getElementById('quiz-container').innerHTML = p.questions.map(function(q, qi) {
+    return '<div class="quiz-card">' +
+      '<div class="quiz-q">' + q.qNum + '. ' + q.question + '</div>' +
+      '<div id="qchoices-' + qi + '">' + renderChoicesHtml(q, qi) + '</div>' +
+      '<button class="quiz-check-btn" id="qcheck-' + qi + '" onclick="checkAnswer(' + qi + ')">정답 확인</button>' +
+      '<div class="quiz-result" id="qresult-' + qi + '"></div>' +
+    '</div>';
+  }).join('');
+}
+
+function selectChoice(qi, i) {
+  if (quizState[qi].checked) return;
+  quizState[qi].selected = i;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    el.classList.toggle('selected', idx === i);
+  });
+}
+
+function checkAnswer(qi) {
+  var q = problems[current].questions[qi];
+  if (quizState[qi].checked) return;
+  if (quizState[qi].selected === null) {
+    document.getElementById('qchoices-' + qi).scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+  quizState[qi].checked = true;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    if (idx === q.answer) el.classList.add('correct');
+    else if (idx === quizState[qi].selected) el.classList.add('wrong');
+  });
+  var r = document.getElementById('qresult-' + qi);
+  var ok = quizState[qi].selected === q.answer;
+  r.classList.add('show', ok ? 'ok' : 'no');
+  r.innerHTML = '<b>' + (ok ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[q.answer] + '번이에요.') + '</b><br>' + q.explanation;
+  var b = document.getElementById('qcheck-' + qi);
+  b.textContent = '다시 풀기';
+  b.onclick = function() { retryQuestion(qi); };
+}
+
+function retryQuestion(qi) {
+  var p = problems[current];
+  quizState[qi] = { selected: null, checked: false };
+  document.getElementById('qchoices-' + qi).innerHTML = renderChoicesHtml(p.questions[qi], qi);
+  var r = document.getElementById('qresult-' + qi);
+  r.classList.remove('show','ok','no'); r.innerHTML = '';
+  var b = document.getElementById('qcheck-' + qi);
+  b.textContent = '정답 확인';
+  b.onclick = function() { checkAnswer(qi); };
+}
+
+function render() {
+  closeWord();
+  var p = problems[current];
+  document.getElementById('prog-text').textContent = (current + 1) + ' / ' + problems.length;
+  document.getElementById('prog-fill').style.width = ((current + 1) / problems.length * 100) + '%';
+  document.getElementById('type-badge').textContent = p.label + ' · ' + p.type;
+  var gc = document.getElementById('given-card');
+  if (p.image) { gc.classList.add('show'); gc.innerHTML = '<img src="' + p.image + '" alt="문제 자료">'; }
+  else { gc.classList.remove('show'); gc.innerHTML = ''; }
+  var ic = document.getElementById('insert-card');
+  if (p.insertSentence) {
+    ic.classList.add('show');
+    document.getElementById('insert-text').textContent = p.insertSentence;
+    document.getElementById('insert-text-ko').textContent = p.insertSentenceKo || '';
+  } else { ic.classList.remove('show'); }
+  document.getElementById('passage-text').innerHTML = renderPassage(p.passage);
+  renderQuiz(p);
+  document.getElementById('translation-box').textContent = p.translation;
+  document.getElementById('translation-box').classList.remove('show');
+  document.getElementById('btn-trans').classList.remove('on');
+  document.getElementById('btn-trans').textContent = '🇰🇷 전체 해석 보기';
+
+  var vg = document.getElementById('vocab-grid');
+  vg.innerHTML = Object.keys(p.vocab).map(function(k) {
+    var v = p.vocab[k];
+    return '<div class="vocab-chip" onclick="showWord(\'' + k + '\')"><b>' + v.word + '</b><span>' + v.meaning + '</span></div>';
+  }).join('');
+  vg.classList.remove('show');
+  document.getElementById('btn-vocab').classList.remove('on');
+  document.getElementById('btn-vocab').textContent = '📖 핵심 단어 목록';
+
+  document.getElementById('grammar-list').innerHTML = p.grammar.map(function(g) {
+    return '<div class="grammar-item"><div class="grammar-title">' + g.title + '</div><div class="grammar-desc">' + g.desc + '</div><div class="grammar-ex">' + g.ex + '</div></div>';
+  }).join('');
+  document.getElementById('tip-list').innerHTML = p.tips.map(function(t) { return '<div class="tip-item"><p>' + t + '</p></div>'; }).join('');
+
+  document.querySelectorAll('.p-tab').forEach(function(t, i) { t.classList.toggle('active', i === current); });
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === problems.length - 1;
+  document.getElementById('btn-next').textContent = current === problems.length - 1 ? '처음으로' : '다음 문제 →';
+  switchTab('grammar');
+}
+
+function selectProblem(i) { current = i; render(); window.scrollTo({top:0, behavior:'smooth'}); }
+function go(d) {
+  if (current === problems.length - 1 && d === 1) current = 0;
+  else current = Math.max(0, Math.min(problems.length - 1, current + d));
+  render(); window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleTranslation() {
+  var box = document.getElementById('translation-box'), btn = document.getElementById('btn-trans');
+  var s = !box.classList.contains('show');
+  box.classList.toggle('show', s); btn.classList.toggle('on', s);
+  btn.textContent = s ? '🇰🇷 해석 숨기기' : '🇰🇷 전체 해석 보기';
+}
+
+function toggleVocabGrid() {
+  var g = document.getElementById('vocab-grid'), btn = document.getElementById('btn-vocab');
+  var s = !g.classList.contains('show');
+  g.classList.toggle('show', s); btn.classList.toggle('on', s);
+  btn.textContent = s ? '📖 목록 숨기기' : '📖 핵심 단어 목록';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.toggle('active', t.getAttribute('data-t') === name); });
+  document.getElementById('tab-grammar').classList.toggle('active', name === 'grammar');
+  document.getElementById('tab-tip').classList.toggle('active', name === 'tip');
+}
+
+function showWord(key) {
+  var v = problems[current].vocab[key];
+  if (!v) return;
+  activeVocabKey = key; activeSheetWord = null; currentSpeakWord = v.word;
+  currentSheetWordData = { word:v.word, pron:v.pron, meaning:v.meaning, en:v.ex, ko:v.exko };
+  document.getElementById('sheet-word').textContent = v.word;
+  document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-meaning').textContent = v.meaning;
+  document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+}
+
+function showPlain(raw) {
+  var clean = raw.replace(/[^A-Za-z']/g, '');
+  if (!clean) return;
+  var lower = clean.toLowerCase(), p = problems[current];
+  for (var k in p.vocab) { if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; } }
+  activeVocabKey = null; currentSpeakWord = clean; activeSheetWord = lower;
+  currentSheetWordData = { word:clean, pron:'', meaning:'뜻을 찾는 중...', en:'', ko:'' };
+  document.getElementById('sheet-word').textContent = clean;
+  document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
+  document.getElementById('sheet-example').innerHTML = '';
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+  lookupWord(lower);
+}
+
+function lookupWord(lower) {
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(lower))
+    .then(function(r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function(d) {
+      if (activeSheetWord !== lower) return;
+      var e = d[0], ph = e.phonetic || '';
+      if (!ph && e.phonetics) for (var i=0;i<e.phonetics.length;i++) if (e.phonetics[i].text) { ph = e.phonetics[i].text; break; }
+      if (ph) document.getElementById('sheet-pron').textContent = ph;
+      if (currentSheetWordData) currentSheetWordData.pron = ph;
+      var m = e.meanings && e.meanings[0], def = m && m.definitions && m.definitions[0];
+      if (def) {
+        document.getElementById('sheet-example').innerHTML = (def.example ? def.example + '<br>' : '') + '(영영풀이) ' + def.definition;
+        if (currentSheetWordData && def.example) currentSheetWordData.en = def.example;
+      }
+    }).catch(function(){});
+
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(lower) + '&langpair=en|ko')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (activeSheetWord !== lower) return;
+      var ko = d && d.responseData && d.responseData.translatedText;
+      var t = ko ? ko : '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+      document.getElementById('sheet-meaning').textContent = t;
+      if (currentSheetWordData) { currentSheetWordData.meaning = t; currentSheetWordData.ko = ko || ''; }
+    }).catch(function() {
+      if (activeSheetWord !== lower) return;
+      var t = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
+      document.getElementById('sheet-meaning').textContent = t;
+      if (currentSheetWordData) currentSheetWordData.meaning = t;
+    });
+}
+
+function closeWord() {
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('sheet').classList.remove('show');
+  activeSheetWord = null;
+}
+
+function speakCurrent() { if (currentSpeakWord) speak(currentSpeakWord); }
+
+var ttsVoices = [];
+if ('speechSynthesis' in window) {
+  var lv = function() { ttsVoices = window.speechSynthesis.getVoices(); };
+  lv(); window.speechSynthesis.onvoiceschanged = lv;
+}
+
+function speak(text) {
+  if (!text || !('speechSynthesis' in window)) return;
+  var s = window.speechSynthesis, u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.9;
+  var vs = (ttsVoices && ttsVoices.length) ? ttsVoices : s.getVoices();
+  if (vs && vs.length) {
+    var v = vs.find(function(x) { return x.lang === 'en-US'; }) || vs.find(function(x) { return x.lang && x.lang.indexOf('en') === 0; });
+    if (v) u.voice = v;
+  }
+  s.cancel();
+  setTimeout(function() { s.speak(u); }, 80);
+}
+
+buildTabs();
+render();
+</script>
+</body>
+</html>

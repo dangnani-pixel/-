@@ -51,8 +51,8 @@ h1 { font-size: 21px; margin-bottom: 22px; line-height: 1.4; }
 <script>
 const data = {
   2025: {
-    months: ["9월", "11월"],
-    available: ["9월"]
+    months: ["9월", "10월"],
+    available: ["9월", "10월"]
   },
   2026: {
     months: ["3월", "6월", "9월", "11월"],
@@ -104,11 +104,23 @@ function renderMonths() {
   }).join('');
 }
 
+const octCardsHtml = '<div class="cards">' +
+  '<a class="card" href="oct-listening1-17.html">' +
+    '<div class="card-main"><div class="card-title">🎧 1~17번 듣기평가</div><div class="card-sub">대본·해석, 문제 풀이, 핵심 단어</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+'</div>' +
+'<div class="soon-card" style="margin-top:12px;">📖 10월 18~45번 지문 학습지는<br>순서대로 만들고 있어요. 조금만 기다려주세요!</div>';
+
 function renderContent() {
   var isAvailable = data[year].available.indexOf(month) !== -1;
-  document.getElementById('content-area').innerHTML = isAvailable
-    ? cardsHtml
-    : '<div class="soon-card">📚 ' + year + '년 ' + month + ' 모의고사 학습지는<br>아직 준비 중이에요.<br>조금만 기다려주세요!</div>';
+  if (!isAvailable) {
+    document.getElementById('content-area').innerHTML =
+      '<div class="soon-card">📚 ' + year + '년 ' + month + ' 모의고사 학습지는<br>아직 준비 중이에요.<br>조금만 기다려주세요!</div>';
+    return;
+  }
+  document.getElementById('content-area').innerHTML =
+    (year === 2025 && month === '10월') ? octCardsHtml : cardsHtml;
 }
 
 function selectYear(y) {

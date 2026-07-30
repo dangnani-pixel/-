@@ -344,6 +344,7 @@ function toggleSheetStar() {
     });
   }
   setStarred(gid, starred);
+  if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
   updateSheetStarBtn();
 }
 
@@ -649,5 +650,6 @@ function speak(text) {
 buildTabs();
 render();
 </script>
+<script type="module" src="firebase-sync.js"></script>
 </body>
 </html>

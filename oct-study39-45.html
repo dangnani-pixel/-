@@ -339,6 +339,7 @@ function toggleSheetStar() {
   if (idx >= 0) starred.splice(idx, 1);
   else starred.push({ word: currentSheetWordData.word, pron: currentSheetWordData.pron || '', meaning: currentSheetWordData.meaning || '뜻 정보 없음', en: currentSheetWordData.en || '', ko: currentSheetWordData.ko || '' });
   setStarred(gid, starred);
+  if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
   updateSheetStarBtn();
 }
 
@@ -593,5 +594,6 @@ function speak(text) {
 buildTabs();
 render();
 </script>
+<script type="module" src="firebase-sync.js"></script>
 </body>
 </html>

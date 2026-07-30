@@ -38,6 +38,14 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .select-item.checked { background: #7F77DD; color: #fff; font-weight: 700; }
 .select-item input { display: none; }
 
+.count-row { display: none; align-items: center; justify-content: space-between; gap: 10px; background: #F8F7FF; border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; }
+.count-row.show { display: flex; }
+.count-label { font-size: 12.5px; color: #4b3fc4; font-weight: 600; }
+.count-stepper { display: flex; align-items: center; gap: 8px; }
+.count-btn { width: 30px; height: 30px; border: none; border-radius: 8px; background: #7F77DD; color: #fff; font-size: 17px; font-weight: 700; cursor: pointer; line-height: 1; -webkit-tap-highlight-color: transparent; }
+.count-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.count-input { width: 52px; text-align: center; font-size: 15px; font-weight: 700; color: #1a1a1a; border: 1.5px solid #E0DED8; border-radius: 8px; padding: 5px 2px; -moz-appearance: textfield; }
+
 .quiz-wrap { display: none; }
 .quiz-wrap.show { display: block; }
 .browse-wrap.hide { display: none; }
@@ -94,6 +102,14 @@ h1 { font-size: 18px; margin-bottom: 4px; }
       <button class="mini-btn" onclick="clearAllGroups()">전체 해제</button>
     </div>
     <div class="select-grid" id="select-grid"></div>
+    <div class="count-row" id="count-row">
+      <span class="count-label">📝 풀 문항 수</span>
+      <div class="count-stepper">
+        <button type="button" class="count-btn" onclick="adjustQuestionCount(-5)">−</button>
+        <input type="number" id="question-count-input" class="count-input" min="2" value="20" oninput="updateMultiStartBtn()">
+        <button type="button" class="count-btn" onclick="adjustQuestionCount(5)">+</button>
+      </div>
+    </div>
     <button class="start-btn" id="multi-start-btn" onclick="startMultiQuiz()" disabled>문제를 선택해주세요</button>
   </div>
 </div>
@@ -466,23 +482,7 @@ function clearAllGroups() {
   updateMultiStartBtn();
 }
 
-function updateMultiStartBtn() {
-  var btn = document.getElementById('multi-start-btn');
-  if (selectedGroupIds.size === 0) {
-    btn.textContent = '문제를 선택해주세요';
-    btn.disabled = true;
-    return;
-  }
-  var total = 0;
-  groups.forEach(function(g) {
-    if (selectedGroupIds.has(g.id)) total += g.words.length + getStarred(g.id).length;
-  });
-  btn.textContent = '🎯 선택한 ' + selectedGroupIds.size + '개 문제로 퀴즈 시작 (' + total + '문제)';
-  btn.disabled = total < 2;
-}
-
-function startMultiQuiz() {
-  if (selectedGroupIds.size === 0) return;
+function buildSelectedPool() {
   var pool = [];
   var seen = {};
   groups.forEach(function(g) {
@@ -492,9 +492,60 @@ function startMultiQuiz() {
       if (!seen[key]) { seen[key] = true; pool.push(w); }
     });
   });
+  return pool;
+}
+
+function adjustQuestionCount(delta) {
+  var input = document.getElementById('question-count-input');
+  if (!input) return;
+  var max = Number(input.max) || 999;
+  var min = Number(input.min) || 2;
+  var next = (Number(input.value) || min) + delta;
+  input.value = Math.max(min, Math.min(max, next));
+  updateMultiStartBtn();
+}
+
+function updateMultiStartBtn() {
+  var btn = document.getElementById('multi-start-btn');
+  var countRow = document.getElementById('count-row');
+  if (selectedGroupIds.size === 0) {
+    btn.textContent = '문제를 선택해주세요';
+    btn.disabled = true;
+    if (countRow) countRow.classList.remove('show');
+    return;
+  }
+  var total = buildSelectedPool().length;
+  var input = document.getElementById('question-count-input');
+  var chosen = total;
+  if (total < 2) {
+    if (countRow) countRow.classList.remove('show');
+  } else {
+    if (countRow) countRow.classList.add('show');
+    if (input) {
+      input.min = Math.min(2, total);
+      input.max = total;
+      var v = Number(input.value) || total;
+      if (v > total) v = total;
+      if (v < Number(input.min)) v = Number(input.min);
+      input.value = v;
+      chosen = v;
+    }
+  }
+  btn.textContent = '🎯 선택한 ' + selectedGroupIds.size + '개 문제 중 ' + chosen + '문제로 퀴즈 시작';
+  btn.disabled = total < 2;
+}
+
+function startMultiQuiz() {
+  if (selectedGroupIds.size === 0) return;
+  var pool = buildSelectedPool();
   if (pool.length < 2) return;
+  var input = document.getElementById('question-count-input');
+  var count = pool.length;
+  if (input) {
+    count = Math.min(Math.max(Number(input.value) || pool.length, 2), pool.length);
+  }
   quizMode = 'multi';
-  beginQuiz(pool);
+  beginQuiz(shuffle(pool).slice(0, count));
 }
 
 function retryQuiz() {
@@ -520,7 +571,7 @@ function beginQuiz(pool) {
 }
 
 function buildDistractorPool(currentGroupWords, exclude) {
-  var localPool = currentGroupWords.filter(function(w) { return w.word !== exclude.word; });
+  var localPool = shuffle(currentGroupWords.filter(function(w) { return w.word !== exclude.word; }));
   var pool = localPool.length >= 3 ? localPool : localPool.concat(shuffle(allWords.filter(function(w) { return w.word !== exclude.word; })));
   return pool;
 }

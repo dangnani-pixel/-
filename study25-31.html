@@ -716,6 +716,23 @@ function showWord(key) {
   updateSheetStarBtn();
 }
 
+function splitSentences(text) {
+  var flat = text.replace(/\s+/g, ' ').trim();
+  var parts = flat.match(/[^.!?]+[.!?]+(?=\s|$)|[^.!?]+$/g) || [flat];
+  return parts.map(function(s) { return s.trim(); }).filter(Boolean);
+}
+
+function findSentenceForWord(word) {
+  var p = problems[current];
+  var plain = p.passage.replace(/\[\[(.+?)::(.+?)\]\]/g, '$2');
+  var sentences = splitSentences(plain);
+  var re = new RegExp('\\b' + word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+  for (var i = 0; i < sentences.length; i++) {
+    if (re.test(sentences[i])) return sentences[i];
+  }
+  return null;
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -727,18 +744,19 @@ function showPlain(rawWord) {
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
-  currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: '', ko: '' };
+  var sentence = findSentenceForWord(clean);
+  currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
-  document.getElementById('sheet-example').innerHTML = '';
+  document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>해석을 불러오는 중...') : '';
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
-  lookupWord(lower);
+  lookupWord(lower, sentence);
 }
 
-function lookupWord(lower) {
+function lookupWord(lower, sentence) {
   fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(lower))
     .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
     .then(function(data) {
@@ -752,13 +770,6 @@ function lookupWord(lower) {
       }
       if (phonetic) document.getElementById('sheet-pron').textContent = phonetic;
       if (currentSheetWordData) currentSheetWordData.pron = phonetic;
-      var meaning = entry.meanings && entry.meanings[0];
-      var def = meaning && meaning.definitions && meaning.definitions[0];
-      if (def) {
-        var exHtml = def.example ? def.example + '<br>' : '';
-        document.getElementById('sheet-example').innerHTML = exHtml + '(영영풀이) ' + def.definition;
-        if (currentSheetWordData && def.example) currentSheetWordData.en = def.example;
-      }
     })
     .catch(function() {});
 
@@ -769,7 +780,7 @@ function lookupWord(lower) {
       var ko = data && data.responseData && data.responseData.translatedText;
       var meaningText = ko ? ko : '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
       document.getElementById('sheet-meaning').textContent = meaningText;
-      if (currentSheetWordData) { currentSheetWordData.meaning = meaningText; currentSheetWordData.ko = ko || ''; }
+      if (currentSheetWordData) currentSheetWordData.meaning = meaningText;
     })
     .catch(function() {
       if (activeSheetWord !== lower) return;
@@ -777,6 +788,21 @@ function lookupWord(lower) {
       document.getElementById('sheet-meaning').textContent = meaningText;
       if (currentSheetWordData) currentSheetWordData.meaning = meaningText;
     });
+
+  if (sentence) {
+    fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(sentence) + '&langpair=en|ko')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (activeSheetWord !== lower) return;
+        var ko = data && data.responseData && data.responseData.translatedText;
+        document.getElementById('sheet-example').innerHTML = sentence + (ko ? ('<br>' + ko) : '');
+        if (currentSheetWordData) { currentSheetWordData.en = sentence; currentSheetWordData.ko = ko || ''; }
+      })
+      .catch(function() {
+        if (activeSheetWord !== lower) return;
+        document.getElementById('sheet-example').innerHTML = sentence;
+      });
+  }
 }
 
 function closeWord() {

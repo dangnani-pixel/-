@@ -56,7 +56,7 @@ const data = {
   },
   2026: {
     months: ["3월", "6월", "9월", "11월"],
-    available: []
+    available: ["3월"]
   }
 };
 
@@ -131,6 +131,18 @@ const octCardsHtml = '<div class="cards">' +
   '</a>' +
 '</div>';
 
+const marCardsHtml = '<div class="cards">' +
+  '<a class="card" href="mar-listening1-17.html">' +
+    '<div class="card-main"><div class="card-title">🎧 1~17번 듣기평가</div><div class="card-sub">대본·해석, 문제 풀이, 핵심 단어</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="mar-study18-24.html">' +
+    '<div class="card-main"><div class="card-title">18~24번 지문 완전정복</div><div class="card-sub">단어 클릭 뜻·발음, 전체 해석, 문법, 실전 문제</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+'</div>' +
+'<div class="soon-card" style="margin-top:12px;">📖 3월 25~45번 지문 학습지는<br>순서대로 만들고 있어요. 조금만 기다려주세요!</div>';
+
 function renderContent() {
   var isAvailable = data[year].available.indexOf(month) !== -1;
   if (!isAvailable) {
@@ -138,8 +150,10 @@ function renderContent() {
       '<div class="soon-card">📚 ' + year + '년 ' + month + ' 모의고사 학습지는<br>아직 준비 중이에요.<br>조금만 기다려주세요!</div>';
     return;
   }
-  document.getElementById('content-area').innerHTML =
-    (year === 2025 && month === '10월') ? octCardsHtml : cardsHtml;
+  var html = cardsHtml;
+  if (year === 2025 && month === '10월') html = octCardsHtml;
+  else if (year === 2026 && month === '3월') html = marCardsHtml;
+  document.getElementById('content-area').innerHTML = html;
 }
 
 function selectYear(y) {

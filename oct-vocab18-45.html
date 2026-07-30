@@ -424,6 +424,7 @@ function removeStar(i) {
   var removedWord = starred[i] ? starred[i].word : null;
   starred.splice(i, 1);
   setStarred(g.id, starred);
+  if (window.starSync) window.starSync.notifyStarChange(starKey(g.id));
   if (removedWord) removeWrongWord(removedWord);
   renderBrowse();
 }

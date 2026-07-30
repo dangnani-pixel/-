@@ -88,6 +88,8 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
 .sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
 .sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; color: #1a1a1a; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
@@ -179,6 +181,14 @@ const problems = [
     consider: { word:"consider", pron:"[컨시더]", meaning:"고려하다", ex:"Please consider my proposal.", exko:"제 제안을 고려해 주세요." },
     proposal: { word:"proposal", pron:"[프러포절]", meaning:"제안", ex:"The board accepted the proposal.", exko:"이사회는 그 제안을 받아들였다." },
     supporting: { word:"supporting", pron:"[서포팅]", meaning:"지원하는, 뒷받침하는", ex:"This data is supporting evidence.", exko:"이 자료는 뒷받침하는 증거이다." }
+  },
+  funcWords: {
+    which: { word:"which", tag:"[관계대명사 · 계속적 용법]", meaning:"콤마(,) 뒤에 오는 which는 앞 문장 전체 내용을 받아 '그런데 그것이 ~하다'라고 덧붙여 설명하는 계속적 용법의 관계대명사예요. 여기서는 '도서관이 5시에 문을 닫는다는 사실'을 받아서, 그것이 학생들의 자료 이용 능력을 제한한다고 이어주고 있어요.", ex:"At present, the library closes at 5 p.m., which many students feel limits their ability to fully use its resources for study and research after regular class hours.", exko:"현재 도서관은 오후 5시에 문을 닫는데, 많은 학생들은 이것이 정규 수업 시간 이후에 학습과 연구를 위해 도서관 자료를 충분히 활용하는 능력을 제한한다고 느끼고 있습니다." },
+    that: { word:"that", tag:"[관계대명사 · 주격]", meaning:"여기서 that은 academic projects를 선행사로 받는 주격 관계대명사예요. 'that demand a quiet and resourceful environment'가 뒤에서 academic projects를 꾸며주면서 '조용하고 자료가 풍부한 환경을 필요로 하는 (학업 프로젝트)'라고 해석돼요.", ex:"This is particularly challenging for those preparing for college entrance exams or working on academic projects that demand a quiet and resourceful environment.", exko:"이는 대학 입학시험을 준비하거나 조용하고 자료가 풍부한 환경을 필요로 하는 학업 프로젝트를 수행하는 학생들에게 특히 힘든 문제입니다." },
+    to: { word:"to", tag:"[to부정사]", meaning:"동사원형 앞의 to는 to부정사예요. 'reaching out to discuss'에서는 '논의하기 위해(목적)'로 해석되고, 'ability to fully use'에서는 앞의 명사 ability를 꾸며주는 형용사적 용법으로 쓰여 '충분히 활용할 능력'이라는 뜻이 돼요. 문맥에 따라 '~하기 위해' 또는 '~할'로 자연스럽게 해석하면 돼요.", ex:"As student council president, I am reaching out to discuss an important matter regarding our school library's current operating hours.", exko:"학생회장으로서, 저는 우리 학교 도서관의 현재 운영 시간에 관한 중요한 사안을 논의하기 위해 연락드립니다." },
+    as: { word:"as", tag:"[전치사 as]", meaning:"as는 문장 맨 앞 'As student council president'에서는 '~로서(자격·신분)'라는 뜻이고, 뒤쪽의 'consider this proposal as a step'에서는 'consider A as B(A를 B로 여기다)' 구문에 쓰여 '~로(서)'라고 해석돼요. 같은 단어지만 위치에 따라 뜻이 달라지니 문맥으로 구분하세요.", ex:"As student council president, I am reaching out to discuss an important matter regarding our school library's current operating hours.", exko:"학생회장으로서, 저는 우리 학교 도서관의 현재 운영 시간에 관한 중요한 사안을 논의하기 위해 연락드립니다." },
+    those: { word:"those", tag:"[대명사 those]", meaning:"'those preparing for college entrance exams'에서 those는 '사람들'을 뜻하는 대명사이고, 바로 뒤에 온 현재분사 preparing이 those를 꾸며서 '대학 입학시험을 준비하는 사람들'이라는 뜻이 돼요. (= those who are preparing ~)", ex:"This is particularly challenging for those preparing for college entrance exams or working on academic projects that demand a quiet and resourceful environment.", exko:"이는 대학 입학시험을 준비하거나 조용하고 자료가 풍부한 환경을 필요로 하는 학업 프로젝트를 수행하는 학생들에게 특히 힘든 문제입니다." },
+    by: { word:"by", tag:"[전치사 by · 수단]", meaning:"'by providing additional time'에서 by는 '~함으로써(수단)'를 나타내는 전치사예요. by 뒤에 동명사(providing)가 와서 '추가 시간을 제공함으로써'라고 해석돼요.", ex:"This change would greatly benefit students by providing additional time to focus on their academic goals.", exko:"이러한 변화는 학생들이 학업 목표에 집중할 수 있는 추가 시간을 제공함으로써 큰 도움이 될 것입니다." }
   },
   passage: `Dear Principal Jones,
 
@@ -613,6 +623,8 @@ function showWord(key) {
   currentSheetWordData = { word: v.word, pron: v.pron, meaning: v.meaning, en: v.ex, ko: v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
   document.getElementById('overlay').classList.add('show');
@@ -658,6 +670,21 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -666,6 +693,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
@@ -675,6 +703,8 @@ function showPlain(rawWord) {
   currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
   document.getElementById('overlay').classList.add('show');

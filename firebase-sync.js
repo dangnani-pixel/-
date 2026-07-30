@@ -137,8 +137,6 @@ onAuthStateChanged(auth, function (user) {
         sessionStorage.setItem(RELOAD_FLAG, '1');
         showToast('다른 기기에서 저장한 단어를 불러왔어요. 새로고침할게요...');
         setTimeout(function () { location.reload(); }, 900);
-      } else {
-        showToast('⭐ 별표한 단어가 구글 계정에 동기화되고 있어요');
       }
     }).catch(function (e) { console.error('Firebase sync error', e); });
   } else {

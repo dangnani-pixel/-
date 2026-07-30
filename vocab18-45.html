@@ -408,6 +408,32 @@ function canBlank(item) {
   return item.en && item.word && item.en.toLowerCase().indexOf(item.word.toLowerCase()) !== -1;
 }
 
+const WRONG_KEY = 'vocabWrongWords';
+function getWrongWords() { try { return JSON.parse(localStorage.getItem(WRONG_KEY) || '[]'); } catch (e) { return []; } }
+function setWrongWords(list) { localStorage.setItem(WRONG_KEY, JSON.stringify(list)); }
+function addWrongWord(item) {
+  var list = getWrongWords();
+  var key = item.word.toLowerCase();
+  if (!list.some(function(w) { return w.word.toLowerCase() === key; })) {
+    list.push({ word: item.word, pron: item.pron || '', meaning: item.meaning || '', en: item.en || '', ko: item.ko || '' });
+    setWrongWords(list);
+  }
+}
+function removeWrongWord(word) {
+  var key = word.toLowerCase();
+  var list = getWrongWords();
+  var next = list.filter(function(w) { return w.word.toLowerCase() !== key; });
+  if (next.length !== list.length) setWrongWords(next);
+}
+function mergeWrongWords(pool) {
+  var wrong = getWrongWords();
+  if (!wrong.length) return pool;
+  var seen = {};
+  pool.forEach(function(w) { if (w && w.word) seen[w.word.toLowerCase()] = true; });
+  var extra = wrong.filter(function(w) { return w && w.word && !seen[w.word.toLowerCase()]; });
+  return pool.concat(extra);
+}
+
 function startQuiz() {
   var g = groups[currentGroupIdx];
   var pool = g.words.concat(getStarred(g.id));
@@ -519,6 +545,7 @@ function retryQuiz() {
 }
 
 function beginQuiz(pool) {
+  pool = mergeWrongWords(pool);
   activeQuizPool = pool;
   quizQueue = shuffle(pool).map(function(item) {
     var types = ['en2ko', 'ko2en'];
@@ -606,7 +633,9 @@ function selectAnswer(btn, chosenEnc, correctEnc) {
   var chosen = decodeURIComponent(chosenEnc);
   var correct = decodeURIComponent(correctEnc);
   var isCorrect = chosen === correct;
-  if (isCorrect) quizScore++;
+  var currentItem = quizQueue[quizIdx].item;
+  if (isCorrect) { quizScore++; removeWrongWord(currentItem.word); }
+  else { addWrongWord(currentItem); }
 
   document.querySelectorAll('.q-choice').forEach(function(el) {
     el.disabled = true;

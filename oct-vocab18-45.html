@@ -421,8 +421,10 @@ function renderBrowse() {
 function removeStar(i) {
   var g = groups[currentGroupIdx];
   var starred = getStarred(g.id);
+  var removedWord = starred[i] ? starred[i].word : null;
   starred.splice(i, 1);
   setStarred(g.id, starred);
+  if (removedWord) removeWrongWord(removedWord);
   renderBrowse();
 }
 

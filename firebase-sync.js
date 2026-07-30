@@ -118,7 +118,7 @@ function renderWidget() {
       '</button>';
     document.getElementById('fb-logout-btn').onclick = function () { signOut(auth); };
   } else {
-    el.innerHTML = '<button class="fb-btn" id="fb-login-btn">🔗 로그인하고 동기화</button>';
+    el.innerHTML = '<button class="fb-btn" id="fb-login-btn">로그인</button>';
     document.getElementById('fb-login-btn').onclick = function () {
       signInWithPopup(auth, provider).catch(function (e) {
         alert('로그인에 실패했어요: ' + e.message);

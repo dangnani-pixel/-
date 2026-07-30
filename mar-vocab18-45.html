@@ -362,6 +362,7 @@ let currentGroupIdx = 0;
 let quizQueue = [];
 let quizIdx = 0;
 let quizScore = 0;
+let quizAnswers = [];
 let answered = false;
 let selectedGroupIds = new Set();
 let activeQuizPool = [];
@@ -592,6 +593,7 @@ function beginQuiz(pool) {
   });
   quizIdx = 0;
   quizScore = 0;
+  quizAnswers = [];
 
   document.getElementById('browse-wrap').classList.add('hide');
   document.getElementById('result-wrap').classList.remove('show');
@@ -673,7 +675,7 @@ function selectAnswer(btn, chosenEnc, correctEnc) {
   var currentItem = quizQueue[quizIdx].item;
   if (isCorrect) { quizScore++; removeWrongWord(currentItem.word); }
   else { addWrongWord(currentItem); }
-  if (window.studyStats) window.studyStats.record('vocab', isCorrect);
+  quizAnswers.push(isCorrect);
 
   document.querySelectorAll('.q-choice').forEach(function(el) {
     el.disabled = true;
@@ -697,6 +699,7 @@ function nextQuestion() {
 }
 
 function showResult() {
+  if (window.studyStats) quizAnswers.forEach(function(correct) { window.studyStats.record('vocab', correct); });
   document.getElementById('quiz-wrap').classList.remove('show');
   document.getElementById('result-wrap').classList.add('show');
   document.getElementById('result-score').textContent = quizScore + ' / ' + quizQueue.length;

@@ -9,7 +9,7 @@
     { xp: 800, title: '모의고사 고수', icon: '🏅' },
     { xp: 1200, title: '영어 마스터', icon: '👑' }
   ];
-  var XP_RULES = { quiz: [10, 2], vocab: [5, 1], star: [2, 2] };
+  var XP_RULES = { quiz: [10, 0], vocab: [5, 0], star: [2, 2] };
 
   function load() {
     try {

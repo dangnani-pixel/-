@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고1 3월 영어 단어장 퀴즈 (18~45번)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+
+.group-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.group-tabs::-webkit-scrollbar { height: 4px; }
+.g-tab { flex: 0 0 auto; padding: 9px 15px; font-size: 13.5px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.g-tab.active { background: #7F77DD; color: #fff; }
+
+.card { background: #fff; border-radius: 16px; padding: 18px 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.card-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; font-weight: 700; }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.chip { background: #F8F7FF; border-radius: 99px; padding: 7px 12px; font-size: 12.5px; color: #4b3fc4; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.chip .x { color: #b7b0f0; font-weight: 700; }
+.chip.plain { background: #F5F4F0; color: #555; cursor: default; }
+.empty-note { font-size: 12.5px; color: #aaa; margin-top: 8px; }
+
+.start-btn { width: 100%; padding: 16px; border: none; border-radius: 14px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 16px; cursor: pointer; margin-top: 4px; -webkit-tap-highlight-color: transparent; }
+.start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.multi-card { border: 1.5px solid #EEEDFE; }
+.select-actions { display: flex; gap: 8px; margin-bottom: 10px; }
+.mini-btn { font-size: 12.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 6px 12px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.select-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; max-height: 260px; overflow-y: auto; padding: 2px; }
+.select-item { display: flex; align-items: center; justify-content: center; gap: 6px; background: #F8F7FF; border-radius: 8px; padding: 9px 4px; font-size: 12.5px; color: #4b3fc4; cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent; }
+.select-item.checked { background: #7F77DD; color: #fff; font-weight: 700; }
+.select-item input { display: none; }
+
+.quiz-wrap { display: none; }
+.quiz-wrap.show { display: block; }
+.browse-wrap.hide { display: none; }
+
+.q-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.q-prog-text { font-size: 13px; color: #888; white-space: nowrap; }
+.q-progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.q-progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.25s ease; }
+.q-type-badge { display: inline-block; font-size: 11.5px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 12px; }
+.q-prompt { font-size: 20px; font-weight: 700; line-height: 1.5; margin-bottom: 4px; }
+.q-prompt-sub { font-size: 13px; color: #aaa; margin-bottom: 16px; }
+.q-choice { display: block; width: 100%; text-align: left; padding: 14px 16px; border-radius: 12px; background: #F8F7FF; margin-bottom: 10px; cursor: pointer; font-size: 15px; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.q-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 700; }
+.q-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.q-choice:disabled { cursor: default; }
+.q-next-btn { width: 100%; padding: 15px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 6px; display: none; -webkit-tap-highlight-color: transparent; }
+.q-next-btn.show { display: block; }
+
+.result-wrap { display: none; text-align: center; padding: 30px 10px; }
+.result-wrap.show { display: block; }
+.result-score { font-size: 42px; font-weight: 700; color: #7F77DD; margin-bottom: 6px; }
+.result-label { font-size: 14px; color: #888; margin-bottom: 26px; }
+.result-btn { padding: 14px 22px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; margin: 0 6px; -webkit-tap-highlight-color: transparent; }
+.result-btn.primary { background: #7F77DD; color: #fff; }
+.result-btn.secondary { background: #E0DED8; color: #555; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">📝 2026 고1 3월 모의고사 · 영어 단어장 18~45번</div>
+<h1>핵심 단어 퀴즈</h1>
+<p class="subtitle">문제별 핵심 단어로 퀴즈를 풀어보세요. 18~45번 지문 완전정복 페이지에서 단어를 클릭한 뒤 ⭐로 저장하면 그 단어도 여기서 함께 퀴즈에 나와요. 아래에서 여러 문제 번호를 골라 한 번에 시험볼 수도 있어요.<br><a class="home-link" href="grade1.html">← 고1 학습 홈</a></p>
+
+<div class="group-tabs" id="group-tabs"></div>
+
+<div class="browse-wrap" id="browse-wrap">
+  <div class="card">
+    <div class="card-label">⭐ 내가 저장한 단어</div>
+    <div class="chip-row" id="starred-chips"></div>
+    <div class="empty-note" id="starred-empty">아직 저장한 단어가 없어요. 18~24번·25~31번 지문 학습지에서 단어를 클릭하고 별표를 눌러보세요.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">📖 이 문제의 핵심 단어 (<span id="core-count"></span>개)</div>
+    <div class="chip-row" id="core-chips"></div>
+  </div>
+
+  <button class="start-btn" id="start-btn" onclick="startQuiz()">🎯 퀴즈 시작하기 (<span id="pool-count"></span>문제)</button>
+
+  <div class="card multi-card">
+    <div class="card-label">🔢 여러 문제 번호 골라서 시험보기 (18~45번)</div>
+    <div class="select-actions">
+      <button class="mini-btn" onclick="selectAllGroups()">전체 선택</button>
+      <button class="mini-btn" onclick="clearAllGroups()">전체 해제</button>
+    </div>
+    <div class="select-grid" id="select-grid"></div>
+    <button class="start-btn" id="multi-start-btn" onclick="startMultiQuiz()" disabled>문제를 선택해주세요</button>
+  </div>
+</div>
+
+<div class="quiz-wrap" id="quiz-wrap">
+  <div class="card">
+    <div class="q-top">
+      <span class="q-prog-text" id="q-prog-text"></span>
+      <div class="q-progress-bar"><div class="q-progress-fill" id="q-progress-fill"></div></div>
+    </div>
+    <div class="q-type-badge" id="q-type-badge"></div>
+    <div class="q-prompt" id="q-prompt"></div>
+    <div class="q-prompt-sub" id="q-prompt-sub"></div>
+    <div id="q-choices"></div>
+    <button class="q-next-btn" id="q-next-btn" onclick="nextQuestion()">다음 →</button>
+  </div>
+</div>
+
+<div class="result-wrap" id="result-wrap">
+  <div class="result-score" id="result-score"></div>
+  <div class="result-label" id="result-label"></div>
+  <button class="result-btn secondary" onclick="backToBrowse()">단어 목록으로</button>
+  <button class="result-btn primary" onclick="retryQuiz()">다시 풀기</button>
+</div>
+
+</div>
+<script>
+const groups = [
+{ id:"mar18", label:"18번", words:[
+  { word:"upcoming", pron:"[업커밍]", meaning:"다가오는", en:"the upcoming reopening of the center", ko:"다가오는 센터의 재개장" },
+  { word:"reopening", pron:"[리오프닝]", meaning:"재개장", en:"The center's reopening must be delayed.", ko:"센터의 재개장이 연기되어야 합니다." },
+  { word:"unexpected", pron:"[언익스펙티드]", meaning:"예상치 못한", en:"unexpected electrical issues were discovered", ko:"예상치 못한 전기 문제가 발견되었다" },
+  { word:"regret to inform", pron:"[리그렛 투 인폼]", meaning:"유감스럽게도 알리다", en:"We regret to inform you of the delay.", ko:"유감스럽게도 지연을 알려드립니다." },
+  { word:"delayed", pron:"[딜레이드]", meaning:"연기된", en:"The reopening must be delayed.", ko:"재개장이 연기되어야 한다." },
+  { word:"originally", pron:"[오리지널리]", meaning:"원래", en:"It was originally scheduled to reopen on April 1st.", ko:"원래 4월 1일에 재개장할 예정이었다." },
+  { word:"patience", pron:"[페이션스]", meaning:"인내, 양해", en:"Thank you for your patience.", ko:"양해해 주셔서 감사합니다." }
+]},
+{ id:"mar19", label:"19번", words:[
+  { word:"carnival", pron:"[카니벌]", meaning:"축제, 카니발", en:"It was her first carnival.", ko:"그것은 그녀의 첫 축제였다." },
+  { word:"imagining", pron:"[이매지닝]", meaning:"상상하는 것", en:"She had been imagining colorful balloons.", ko:"그녀는 알록달록한 풍선을 상상해 왔다." },
+  { word:"twinkling", pron:"[트윙클링]", meaning:"반짝이는", en:"the twinkling lights and music", ko:"반짝이는 조명과 음악" },
+  { word:"jump with joy", pron:"[점프 위드 조이]", meaning:"기뻐서 뛰다", en:"They made her jump with joy.", ko:"그것들은 그녀를 기뻐서 뛰게 만들었다." },
+  { word:"magician", pron:"[머지션]", meaning:"마술사", en:"The magician showed his tricks.", ko:"마술사가 마술을 보여주었다." },
+  { word:"parade", pron:"[퍼레이드]", meaning:"행진, 퍼레이드", en:"huge balloons in the parade", ko:"퍼레이드에 있는 거대한 풍선들" },
+  { word:"froze", pron:"[프로즈]", meaning:"얼어붙었다", en:"Cassie froze and dropped her candy.", ko:"Cassie는 얼어붙어서 사탕을 떨어뜨렸다." }
+]},
+{ id:"mar20", label:"20번", words:[
+  { word:"stir", pron:"[스터]", meaning:"(마음을) 움직이다", en:"no better way to influence or stir an audience", ko:"청중의 마음을 움직이는 더 나은 방법은 없다" },
+  { word:"anecdote", pron:"[애닉도트]", meaning:"일화", en:"open up with a personal story or anecdote", ko:"개인적인 이야기나 일화로 마음을 열다" },
+  { word:"biographical", pron:"[바이오그래피컬]", meaning:"자전적인, 신상의", en:"share a key biographical detail", ko:"핵심적인 신상의 세부 내용을 공유하다" },
+  { word:"self-deprecating", pron:"[셀프 데프러케이팅]", meaning:"자기 비하의", en:"a self-deprecating joke", ko:"자기 비하적인 농담" },
+  { word:"tried-and-tested", pron:"[트라이드 앤 테스티드]", meaning:"검증된", en:"It is a tried-and-tested way of bonding.", ko:"그것은 검증된 유대 형성 방법이다." },
+  { word:"groundwork", pron:"[그라운드워크]", meaning:"기반, 토대", en:"laying the groundwork for persuasion", ko:"설득을 위한 기반을 놓는 것" },
+  { word:"identify with", pron:"[아이덴티파이 위드]", meaning:"~에 공감하다", en:"a way to identify with you", ko:"당신에게 공감할 수 있는 방법" }
+]},
+{ id:"mar21", label:"21번", words:[
+  { word:"unprecedented", pron:"[언프레시덴티드]", meaning:"전례 없는", en:"a point of unprecedented power", ko:"전례 없는 힘의 시점" },
+  { word:"far-reaching", pron:"[파 리칭]", meaning:"광범위한, 멀리 미치는", en:"Our decisions have far-reaching impacts.", ko:"우리의 결정은 멀리 미치는 영향을 갖는다." },
+  { word:"ancestors", pron:"[앤세스터즈]", meaning:"조상", en:"a responsibility to become good ancestors", ko:"좋은 조상이 될 책임" },
+  { word:"take the long view", pron:"[테이크 더 롱 뷰]", meaning:"장기적으로 보다", en:"We must take the long view.", ko:"우리는 장기적으로 봐야 한다." },
+  { word:"stewardship", pron:"[스튜어드십]", meaning:"관리, 책임 있는 돌봄", en:"seven generation stewardship", ko:"일곱 세대 관리 원칙" },
+  { word:"descendants", pron:"[디센던츠]", meaning:"후손", en:"We must not steal from our descendants.", ko:"우리는 후손에게서 빼앗아서는 안 된다." },
+  { word:"embodied", pron:"[임바디드]", meaning:"육신을 가진", en:"We are embodied individuals.", ko:"우리는 육신을 가진 개인들이다." }
+]},
+{ id:"mar22", label:"22번", words:[
+  { word:"inborn", pron:"[인본]", meaning:"타고난", en:"inborn biological differences", ko:"타고난 생물학적 차이" },
+  { word:"preferences", pron:"[프레퍼런시스]", meaning:"선호", en:"Taste preferences can be changed.", ko:"미각 선호는 바뀔 수 있다." },
+  { word:"neuroplasticity", pron:"[뉴로플라스티시티]", meaning:"신경 가소성", en:"due to neuroplasticity", ko:"신경 가소성 덕분에" },
+  { word:"adaptability", pron:"[어댑터빌리티]", meaning:"적응력", en:"our brain's amazing adaptability", ko:"우리 뇌의 놀라운 적응력" },
+  { word:"adventurous", pron:"[어드벤처러스]", meaning:"모험을 즐기는", en:"terrific news for adventurous eaters", ko:"모험적인 식성을 가진 사람들에게 좋은 소식" },
+  { word:"readjust", pron:"[리어저스트]", meaning:"다시 조정하다", en:"Adults can readjust their taste.", ko:"성인도 미각을 다시 조정할 수 있다." },
+  { word:"exposure", pron:"[익스포저]", meaning:"노출", en:"Repeated exposure is the key.", ko:"반복된 노출이 핵심이다." }
+]},
+{ id:"mar23", label:"23번", words:[
+  { word:"conformity", pron:"[컨포미티]", meaning:"동조", en:"Conformity in the teenage years has been studied.", ko:"청소년기의 동조가 연구되어 왔다." },
+  { word:"go against", pron:"[고 어게인스트]", meaning:"~에 반하다", en:"a choice that appears to go against the group", ko:"집단에 반하는 것으로 보이는 선택" },
+  { word:"willingness", pron:"[윌링니스]", meaning:"의향, 기꺼이 함", en:"the willingness to go along with others", ko:"다른 사람들을 따르려는 의향" },
+  { word:"peak", pron:"[피크]", meaning:"정점", en:"It reaches a peak around the age of 14.", ko:"그것은 14세 무렵 정점에 이른다." },
+  { word:"stand up for", pron:"[스탠드 업 포]", meaning:"~을 옹호하다", en:"stand up for their own opinion", ko:"자신의 의견을 옹호하다" },
+  { word:"resilient", pron:"[리질리언트]", meaning:"회복 탄력적인", en:"They become more resilient.", ko:"그들은 더 회복 탄력적이 된다." }
+]},
+{ id:"mar24", label:"24번", words:[
+  { word:"break a habit", pron:"[브레이크 어 해빗]", meaning:"습관을 끊다", en:"Are you trying to break a habit?", ko:"습관을 끊으려고 하고 있나요?" },
+  { word:"temptation bundling", pron:"[템테이션 번들링]", meaning:"유혹 묶기", en:"This is known as temptation bundling.", ko:"이것은 유혹 묶기로 알려져 있다." },
+  { word:"hostage", pron:"[하스티지]", meaning:"볼모, 인질", en:"Their devices were held hostage.", ko:"그들의 기기는 볼모로 잡혀 있었다." },
+  { word:"put off", pron:"[풋 오프]", meaning:"미루다", en:"a habit people feel forced to put off", ko:"사람들이 미루게 되는 습관" },
+  { word:"opted to", pron:"[옵티드 투]", meaning:"~하기로 선택했다", en:"Two-thirds opted to pay for it.", ko:"3분의 2가 그것에 돈을 내기로 선택했다." },
+  { word:"essential", pron:"[이센셜]", meaning:"필수적인", en:"Understanding habits is essential for business.", ko:"습관을 이해하는 것은 사업에 필수적이다." }
+]},
+{ id:"mar25", label:"25번", words:[
+  { word:"benefits", pron:"[베너핏츠]", meaning:"이점, 혜택", en:"the top benefits of working from home", ko:"재택근무의 가장 큰 이점들" },
+  { word:"commute", pron:"[커뮤트]", meaning:"통근", en:"The biggest benefit was No Commute.", ko:"가장 큰 이점은 통근이 없다는 것이었다." },
+  { word:"respondents", pron:"[리스판던츠]", meaning:"응답자", en:"chosen by 60 percent of respondents", ko:"응답자의 60퍼센트가 선택한" },
+  { word:"ranked", pron:"[랭크트]", meaning:"순위를 차지했다", en:"It ranked third.", ko:"그것은 3위를 차지했다." },
+  { word:"citing", pron:"[사이팅]", meaning:"언급하는", en:"respondents citing Individual Quiet Time", ko:"개인적인 조용한 시간을 언급한 응답자들" },
+  { word:"flexibility", pron:"[플렉서빌리티]", meaning:"유연성", en:"Flexibility over When I Work ranked third.", ko:"근무 시간에 대한 유연성이 3위였다." }
+]},
+{ id:"mar26", label:"26번", words:[
+  { word:"entered", pron:"[엔터드]", meaning:"입학했다", en:"He entered the Curtis Institute of Music.", ko:"그는 Curtis 음악원에 입학했다." },
+  { word:"laid the foundation", pron:"[레이드 더 파운데이션]", meaning:"토대를 놓았다", en:"training that laid the foundation for his career", ko:"그의 경력의 토대를 놓은 훈련" },
+  { word:"gave up", pron:"[게이브 업]", meaning:"포기했다", en:"He never gave up playing the piano.", ko:"그는 결코 피아노 연주를 포기하지 않았다." },
+  { word:"reconsidering", pron:"[리컨시더링]", meaning:"재고하는 것", en:"Reconsidering the traditional convention", ko:"전통적인 관습을 다시 생각하며" },
+  { word:"convention", pron:"[컨벤션]", meaning:"관습", en:"the traditional piano performance convention", ko:"전통적인 피아노 연주 관습" },
+  { word:"faculty", pron:"[패컬티]", meaning:"교수진", en:"as a member of the piano faculty", ko:"피아노과 교수진의 일원으로" },
+  { word:"commitment", pron:"[커미트먼트]", meaning:"헌신", en:"his lifelong commitment to music", ko:"음악에 대한 그의 평생에 걸친 헌신" }
+]},
+{ id:"mar27", label:"27번", words:[
+  { word:"convenient", pron:"[컨비니언트]", meaning:"편리한", en:"a convenient parking option", ko:"편리한 주차 선택지" },
+  { word:"public parking lots", pron:"[퍼블릭 파킹 랏츠]", meaning:"공영 주차장", en:"All public parking lots in the city", ko:"시의 모든 공영 주차장" },
+  { word:"reserved", pron:"[리저브드]", meaning:"예약된, 전용의", en:"reserved parking space", ko:"전용 주차 공간" },
+  { word:"purchased", pron:"[퍼처스트]", meaning:"구매되는", en:"The pass can be purchased online.", ko:"그 이용권은 온라인으로 구매할 수 있다." },
+  { word:"at any time", pron:"[앳 애니 타임]", meaning:"언제든지", en:"You can park at any time.", ko:"언제든지 주차할 수 있다." },
+  { word:"check out", pron:"[체크 아웃]", meaning:"살펴보다, 확인하다", en:"Check out the Green Parking Pass!", ko:"Green Parking Pass를 확인해 보세요!" }
+]},
+{ id:"mar28", label:"28번", words:[
+  { word:"direct", pron:"[디렉트]", meaning:"연출하다", en:"You'll write, direct, shoot, and edit.", ko:"쓰고, 연출하고, 촬영하고, 편집할 것입니다." },
+  { word:"shoot", pron:"[슛]", meaning:"촬영하다", en:"You'll shoot your own project.", ko:"자신의 작품을 촬영하게 됩니다." },
+  { word:"no experience required", pron:"[노 익스피리언스 리콰이어드]", meaning:"경험 불필요", en:"Ages 14-17 (no experience required)", ko:"14~17세 (경험 불필요)" },
+  { word:"interactive", pron:"[인터랙티브]", meaning:"상호작용하는", en:"online interactive classes", ko:"온라인 쌍방향 수업" },
+  { word:"real-time instruction", pron:"[리얼타임 인스트럭션]", meaning:"실시간 강의", en:"classes with real-time instruction", ko:"실시간 강의가 있는 수업" },
+  { word:"screened", pron:"[스크린드]", meaning:"상영되는", en:"to be screened at the end of the camp", ko:"캠프 마지막에 상영될" }
+]},
+{ id:"mar29", label:"29번", words:[
+  { word:"conceptual model", pron:"[컨셉추얼 모델]", meaning:"개념 모형", en:"A conceptual model is an explanation.", ko:"개념 모형은 하나의 설명이다." },
+  { word:"simplified", pron:"[심플리파이드]", meaning:"단순화된", en:"usually highly simplified", ko:"보통 매우 단순화된" },
+  { word:"accurate", pron:"[애큐럿]", meaning:"정확한", en:"It doesn't have to be accurate.", ko:"그것이 정확할 필요는 없다." },
+  { word:"conceptualizations", pron:"[컨셉추얼라이제이션즈]", meaning:"개념화한 것", en:"those are effective conceptualizations", ko:"그것들은 효과적으로 개념화한 것이다" },
+  { word:"depictions", pron:"[디픽션즈]", meaning:"묘사", en:"These depictions can add to the confusion.", ko:"이러한 묘사는 혼란을 더할 수 있다." },
+  { word:"coherent", pron:"[코히런트]", meaning:"일관된", en:"one, coherent image", ko:"하나의 일관된 이미지" },
+  { word:"consist of", pron:"[컨시스트 오브]", meaning:"~로 구성되다", en:"It may consist of parts.", ko:"그것은 부분들로 구성되어 있을 수 있다." }
+]},
+{ id:"mar30", label:"30번", words:[
+  { word:"principal", pron:"[프린서플]", meaning:"주요한", en:"the principal transportation mode", ko:"주요한 교통 수단" },
+  { word:"constraints", pron:"[컨스트레인츠]", meaning:"제약", en:"because of constraints on the resources", ko:"자원에 대한 제약 때문에" },
+  { word:"extensive", pron:"[익스텐시브]", meaning:"광범위한", en:"extensive transit systems", ko:"광범위한 대중교통 체계" },
+  { word:"expend", pron:"[익스펜드]", meaning:"소비하다, 쓰다", en:"They expend human energy.", ko:"그들은 인간의 에너지를 소비한다." },
+  { word:"spare", pron:"[스페어]", meaning:"할애하다, 내주다", en:"energy that they can hardly spare", ko:"그들이 거의 내줄 수 없는 에너지" },
+  { word:"unavoidable", pron:"[언어보이더블]", meaning:"피할 수 없는", en:"an unavoidable burden", ko:"피할 수 없는 부담" },
+  { word:"simulate", pron:"[시뮬레이트]", meaning:"흉내 내다", en:"treadmills that simulate walking", ko:"걷기를 흉내 내는 러닝머신" }
+]},
+{ id:"mar31", label:"31번", words:[
+  { word:"anxiety", pron:"[앵자이어티]", meaning:"불안", en:"Other rooms can cause anxiety.", ko:"다른 방들도 불안을 유발할 수 있다." },
+  { word:"houses", pron:"[하우지스]", meaning:"수용하다, 보관하다", en:"If the play space houses every single toy", ko:"놀이 공간이 모든 장난감을 수용한다면" },
+  { word:"overwhelmed", pron:"[오버웰름드]", meaning:"압도된", en:"They can feel overwhelmed by so much stuff.", ko:"너무 많은 물건에 압도당한 기분이 들 수 있다." },
+  { word:"packed full of", pron:"[팩트 풀 오브]", meaning:"~로 가득 찬", en:"closets packed full of clothes", ko:"옷으로 가득 찬 옷장" },
+  { word:"streamlining", pron:"[스트림라이닝]", meaning:"간소화하는 것", en:"Streamlining a play space is so important.", ko:"놀이 공간을 간소화하는 것은 매우 중요하다." },
+  { word:"indecision", pron:"[인디시전]", meaning:"결정 장애, 우유부단", en:"not overcome with indecision", ko:"결정을 못 내려 압도되지 않도록" }
+]},
+{ id:"mar32", label:"32번", words:[
+  { word:"familiarity", pron:"[퍼밀리애러티]", meaning:"익숙함", en:"Students mistake familiarity with true mastery.", ko:"학생들은 익숙함을 진정한 숙달로 착각한다." },
+  { word:"mastery", pron:"[매스터리]", meaning:"숙달", en:"true mastery of the subject", ko:"그 과목에 대한 진정한 숙달" },
+  { word:"competence", pron:"[캄피턴스]", meaning:"능력", en:"a dangerous illusion of competence", ko:"위험한 능력의 착각" },
+  { word:"recall", pron:"[리콜]", meaning:"기억해 내다", en:"when asked to recall or apply it", ko:"그것을 기억해 내거나 적용하라고 요구받을 때" },
+  { word:"cognitive bias", pron:"[코그니티브 바이어스]", meaning:"인지 편향", en:"This cognitive bias leads learners astray.", ko:"이 인지 편향은 학습자를 잘못 이끈다." },
+  { word:"overestimate", pron:"[오버에스티메이트]", meaning:"과대평가하다", en:"Learners overestimate their understanding.", ko:"학습자들은 자신의 이해를 과대평가한다." },
+  { word:"counters", pron:"[카운터즈]", meaning:"맞서다, 반박하다", en:"Teaching actively counters this illusion.", ko:"가르치는 것은 이 착각에 적극적으로 맞선다." }
+]},
+{ id:"mar33", label:"33번", words:[
+  { word:"officials", pron:"[어피셜즈]", meaning:"관리, 공무원", en:"the Sumerian officials", ko:"수메르의 관리들" },
+  { word:"clay tablets", pron:"[클레이 태블릿츠]", meaning:"점토판", en:"They marked lists on clay tablets.", ko:"그들은 점토판에 목록을 표시했다." },
+  { word:"intellectual leap", pron:"[인털렉추얼 리프]", meaning:"지적 도약", en:"Their first great intellectual leap", ko:"그들의 첫 번째 위대한 지적 도약" },
+  { word:"numeral", pron:"[뉴머럴]", meaning:"숫자", en:"a numeral for the number five", ko:"숫자 5를 나타내는 기호" },
+  { word:"emancipated", pron:"[이맨서페이티드]", meaning:"해방된", en:"the idea of an emancipated number", ko:"해방된 수라는 개념" },
+  { word:"in its own right", pron:"[인 잇츠 오운 라이트]", meaning:"그 자체로", en:"existing in its own right", ko:"그 자체로 존재하는" },
+  { word:"take for granted", pron:"[테이크 포 그랜티드]", meaning:"당연하게 여기다", en:"It is easy to take it for granted.", ko:"그것을 당연하게 여기기 쉽다." }
+]},
+{ id:"mar34", label:"34번", words:[
+  { word:"ingroup", pron:"[인그룹]", meaning:"내집단", en:"We still copy our ingroup.", ko:"우리는 여전히 내집단을 모방한다." },
+  { word:"take account of", pron:"[테이크 어카운트 오브]", meaning:"~을 고려하다", en:"It takes little account of individuals.", ko:"그것은 개인을 거의 고려하지 않는다." },
+  { word:"distinguished", pron:"[디스팅귀시트]", meaning:"구별된", en:"Ingroups were distinguished in a minimal way.", ko:"내집단은 최소한의 방식으로 구별되었다." },
+  { word:"antisocial", pron:"[안티소셜]", meaning:"반사회적인", en:"those who behaved in an antisocial fashion", ko:"반사회적인 방식으로 행동한 사람들" },
+  { word:"prosocial", pron:"[프로소셜]", meaning:"친사회적인", en:"the prosocial members of an outgroup", ko:"외집단의 친사회적인 구성원들" },
+  { word:"overimitation", pron:"[오버이미테이션]", meaning:"과잉 모방", en:"This overimitation reveals something.", ko:"이 과잉 모방은 무언가를 드러낸다." },
+  { word:"conventions", pron:"[컨벤션즈]", meaning:"관습", en:"the rules and conventions of the ingroup", ko:"내집단의 규칙과 관습" }
+]},
+{ id:"mar35", label:"35번", words:[
+  { word:"set point theory", pron:"[셋 포인트 씨어리]", meaning:"설정점 이론", en:"The set point theory concept is simple.", ko:"설정점 이론의 개념은 단순하다." },
+  { word:"stable", pron:"[스테이블]", meaning:"안정적인", en:"Your body has a stable quantity of fat cells.", ko:"몸은 안정적인 양의 지방세포를 갖고 있다." },
+  { word:"trigger", pron:"[트리거]", meaning:"방아쇠, 유발 요인", en:"The set point is the trigger in these cells.", ko:"설정점은 이 세포들 안의 방아쇠이다." },
+  { word:"affected by", pron:"[어펙티드 바이]", meaning:"~에 영향을 받는", en:"The strength is affected by the number of cells.", ko:"그 강도는 세포의 수에 영향을 받는다." },
+  { word:"release", pron:"[릴리스]", meaning:"방출하다", en:"Fat cells can release hormones.", ko:"지방세포는 호르몬을 방출할 수 있다." },
+  { word:"battle with", pron:"[배틀 위드]", meaning:"~와 싸우다", en:"They will battle with a strong desire for food.", ko:"그들은 강한 식욕과 싸우게 될 것이다." }
+]},
+{ id:"mar36", label:"36번", words:[
+  { word:"catchphrase", pron:"[캐치프레이즈]", meaning:"표어, 유행어", en:"the catchphrase less is more", ko:"'적을수록 좋다'라는 표어" },
+  { word:"tangled", pron:"[탱글드]", meaning:"뒤엉킨, 복잡한", en:"better than the complex and tangled", ko:"복잡하고 뒤엉킨 것보다 나은" },
+  { word:"extinguishes", pron:"[익스팅귀시스]", meaning:"소멸시키다", en:"It slowly extinguishes certain habits.", ko:"그것은 특정 습관들을 서서히 소멸시킨다." },
+  { word:"massive", pron:"[매시브]", meaning:"거대한", en:"heavy, massive radio receivers", ko:"무겁고 거대한 라디오 수신기" },
+  { word:"reduction", pron:"[리덕션]", meaning:"축소, 감소", en:"with each reduction", ko:"각각의 축소와 함께" },
+  { word:"multilayered", pron:"[멀티레이어드]", meaning:"여러 겹의", en:"multilayered folders of our phones", ko:"우리 휴대폰의 여러 겹으로 된 폴더들" }
+]},
+{ id:"mar37", label:"37번", words:[
+  { word:"rooted in", pron:"[루티드 인]", meaning:"~에 뿌리내린", en:"how it became deeply rooted in our daily lives", ko:"그것이 어떻게 우리 일상에 깊이 뿌리내렸는지" },
+  { word:"sustainably", pron:"[서스테이너블리]", meaning:"지속 가능하게", en:"People lived more sustainably.", ko:"사람들은 더 지속 가능하게 살았다." },
+  { word:"counter", pron:"[카운터]", meaning:"대응하다, 반박하다", en:"The industry was quick to counter these concerns.", ko:"업계는 이런 우려에 빠르게 대응했다." },
+  { word:"corporations", pron:"[코퍼레이션즈]", meaning:"기업들", en:"not the corporations flooding the market", ko:"시장을 넘치게 한 기업들이 아니라" },
+  { word:"adoption", pron:"[어답션]", meaning:"채택, 도입", en:"its rapid adoption during World War II", ko:"2차 세계대전 중의 급속한 도입" },
+  { word:"prosperity", pron:"[프로스페러티]", meaning:"번영", en:"the convenience and prosperity of the American dream", ko:"아메리칸 드림의 편리함과 번영" }
+]},
+{ id:"mar38", label:"38번", words:[
+  { word:"propositions", pron:"[프라퍼지션즈]", meaning:"명제", en:"our propositions about the world", ko:"세계에 대한 우리의 명제들" },
+  { word:"embedded", pron:"[임베디드]", meaning:"깊이 박힌", en:"embedded within paradigms", ko:"패러다임 안에 깊이 박힌" },
+  { word:"interrelated", pron:"[인터릴레이티드]", meaning:"상호 연관된", en:"a network of interrelated commitments", ko:"상호 연관된 신념들의 연결망" },
+  { word:"conception", pron:"[컨셉션]", meaning:"개념, 이해", en:"a conception of a subject matter", ko:"주제에 대한 개념" },
+  { word:"undertake", pron:"[언더테이크]", meaning:"착수하다", en:"when scientists undertake research", ko:"과학자들이 연구에 착수할 때" },
+  { word:"exacting", pron:"[이그잭팅]", meaning:"엄밀한", en:"Even the most exacting measurements", ko:"가장 엄밀한 측정조차도" },
+  { word:"horizontal shift", pron:"[호리존털 시프트]", meaning:"수평적 이동", en:"It is a horizontal shift.", ko:"그것은 수평적 이동이다." }
+]},
+{ id:"mar39", label:"39번", words:[
+  { word:"greenhouses", pron:"[그린하우지스]", meaning:"온실", en:"two visits to one of our cold greenhouses", ko:"우리의 차가운 온실 중 한 곳으로의 두 번의 방문" },
+  { word:"dawn", pron:"[돈]", meaning:"새벽", en:"one at dawn after a below-zero night", ko:"영하의 밤을 지낸 새벽에 한 번" },
+  { word:"frozen solid", pron:"[프로즌 솔리드]", meaning:"꽁꽁 언", en:"All the crops are frozen solid.", ko:"모든 작물이 꽁꽁 얼어 있다." },
+  { word:"frost-coated", pron:"[프로스트 코티드]", meaning:"서리가 내려앉은", en:"hard, frost-coated leaves", ko:"딱딱하고 서리가 내려앉은 잎들" },
+  { word:"bleak", pron:"[블리크]", meaning:"황량한", en:"leaves bleak enough to convince anyone", ko:"누구든 납득시킬 만큼 황량한 잎들" },
+  { word:"vigorous", pron:"[비거러스]", meaning:"생기가 넘치는", en:"rows of vigorous, healthy leaves", ko:"생기 넘치고 건강한 잎들의 줄" }
+]},
+{ id:"mar40", label:"40번", words:[
+  { word:"independence", pron:"[인디펜던스]", meaning:"독립성", en:"Children need to learn independence.", ko:"아이들은 독립성을 배울 필요가 있다." },
+  { word:"resilience", pron:"[리질리언스]", meaning:"회복 탄력성", en:"Children need independence and resilience.", ko:"아이들은 독립성과 회복 탄력성이 필요하다." },
+  { word:"suburbs", pron:"[서버브즈]", meaning:"교외", en:"cities and suburbs don't offer safe routes", ko:"도시와 교외는 안전한 경로를 제공하지 않는다" },
+  { word:"navigate", pron:"[내비게이트]", meaning:"헤쳐 나가다", en:"They take more time or money to navigate.", ko:"그것들을 헤쳐 나가는 데 더 많은 시간이나 돈이 든다." },
+  { word:"structural", pron:"[스트럭처럴]", meaning:"구조적인", en:"It requires structural change.", ko:"그것은 구조적 변화를 요구한다." },
+  { word:"tolerance", pron:"[톨러런스]", meaning:"관용", en:"build back our tolerance for children", ko:"아이들에 대한 관용을 되살리다" },
+  { word:"supervised", pron:"[수퍼바이즈드]", meaning:"감독받는", en:"lightly supervised kids", ko:"가볍게 감독받는 아이들" }
+]},
+{ id:"mar41-42", label:"41~42번", words:[
+  { word:"prospect", pron:"[프라스펙트]", meaning:"전망, 가능성", en:"the prospect of doing anything", ko:"무언가를 한다는 전망" },
+  { word:"virtue", pron:"[버추]", meaning:"미덕", en:"the virtue urged upon housewives", ko:"주부들에게 권장된 미덕" },
+  { word:"self-effacing", pron:"[셀프 이페이싱]", meaning:"자기를 내세우지 않는", en:"The talented but self-effacing employee", ko:"재능 있지만 자신을 내세우지 않는 직원" },
+  { word:"trumpeting", pron:"[트럼피팅]", meaning:"널리 알리는 것", en:"She ought to be trumpeting her achievements.", ko:"그녀는 자신의 성과를 널리 알려야 한다." },
+  { word:"accommodating", pron:"[어카머데이팅]", meaning:"맞추는 것", en:"accommodating yourself to a lack of power", ko:"힘의 부재에 자신을 맞추는 것" },
+  { word:"resign yourself to", pron:"[리자인 유어셀프 투]", meaning:"~을 단념하고 받아들이다", en:"resign yourself to your lowly position", ko:"자신의 낮은 지위를 단념하고 받아들이다" },
+  { word:"geared for", pron:"[기어드 포]", meaning:"~에 맞춰진", en:"In a world geared for hurry", ko:"서두름에 맞춰진 세상에서" }
+]},
+{ id:"mar43-45", label:"43~45번", words:[
+  { word:"sage", pron:"[세이지]", meaning:"현자", en:"A sage was traveling with his disciple.", ko:"한 현자가 제자와 함께 여행하고 있었다." },
+  { word:"disciple", pron:"[디사이플]", meaning:"제자", en:"He told his disciple his hope.", ko:"그는 제자에게 자신의 바람을 말했다." },
+  { word:"prosperous", pron:"[프라스퍼러스]", meaning:"번영하는", en:"the capital of a prosperous kingdom", ko:"번영하는 왕국의 수도" },
+  { word:"genuine", pron:"[제뉴인]", meaning:"진정한", en:"no one in genuine need of the coin", ko:"그 동전이 진정으로 필요한 사람이 아무도 없는" },
+  { word:"puzzled", pron:"[퍼즐드]", meaning:"당황한", en:"The king, puzzled and slightly annoyed", ko:"당황하고 약간 불쾌해진 왕은" },
+  { word:"content", pron:"[컨텐트]", meaning:"만족한", en:"Everyone I met seemed content.", ko:"내가 만난 모든 사람이 만족해 보였다." },
+  { word:"blessing", pron:"[블레싱]", meaning:"축복", en:"He asked for a blessing.", ko:"그는 축복을 청했다." },
+  { word:"contentment", pron:"[컨텐트먼트]", meaning:"만족", en:"He forgot the value of contentment.", ko:"그는 만족의 가치를 잊었다." }
+]}
+];
+
+const allWords = groups.reduce(function(acc, g) { return acc.concat(g.words); }, []);
+
+let currentGroupIdx = 0;
+let quizQueue = [];
+let quizIdx = 0;
+let quizScore = 0;
+let answered = false;
+let selectedGroupIds = new Set();
+let activeQuizPool = [];
+let quizMode = 'single';
+
+function starKey(gid) { return 'vocabStar_' + gid; }
+
+function getStarred(gid) {
+  try { return JSON.parse(localStorage.getItem(starKey(gid)) || '[]'); } catch(e) { return []; }
+}
+
+function setStarred(gid, list) {
+  localStorage.setItem(starKey(gid), JSON.stringify(list));
+}
+
+function buildTabs() {
+  var el = document.getElementById('group-tabs');
+  el.innerHTML = groups.map(function(g, i) {
+    return '<div class="g-tab" data-i="' + i + '" onclick="selectGroup(' + i + ')">' + g.label + '</div>';
+  }).join('');
+}
+
+function selectGroup(i) {
+  currentGroupIdx = i;
+  backToBrowse();
+  renderBrowse();
+  document.querySelectorAll('.g-tab').forEach(function(t, idx) {
+    t.classList.toggle('active', idx === i);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderBrowse() {
+  var g = groups[currentGroupIdx];
+  var starred = getStarred(g.id);
+  var chipsEl = document.getElementById('starred-chips');
+  var emptyEl = document.getElementById('starred-empty');
+  if (starred.length === 0) {
+    chipsEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+  } else {
+    emptyEl.style.display = 'none';
+    chipsEl.innerHTML = starred.map(function(w, i) {
+      return '<div class="chip">⭐ ' + w.word + '<span class="x" onclick="removeStar(' + i + ')">✕</span></div>';
+    }).join('');
+  }
+
+  document.getElementById('core-count').textContent = g.words.length;
+  document.getElementById('core-chips').innerHTML = g.words.map(function(w) {
+    return '<div class="chip plain" onclick="speak(\'' + w.word.replace(/'/g,"\\'") + '\')">🔊 ' + w.word + '</div>';
+  }).join('');
+
+  var poolSize = g.words.length + starred.length;
+  document.getElementById('pool-count').textContent = poolSize;
+  document.getElementById('start-btn').disabled = poolSize < 2;
+
+  updateMultiStartBtn();
+}
+
+function removeStar(i) {
+  var g = groups[currentGroupIdx];
+  var starred = getStarred(g.id);
+  starred.splice(i, 1);
+  setStarred(g.id, starred);
+  renderBrowse();
+}
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function canBlank(item) {
+  return item.en && item.word && item.en.toLowerCase().indexOf(item.word.toLowerCase()) !== -1;
+}
+
+function startQuiz() {
+  var g = groups[currentGroupIdx];
+  var pool = g.words.concat(getStarred(g.id));
+  if (pool.length < 2) return;
+  quizMode = 'single';
+  beginQuiz(pool);
+}
+
+function buildSelectGrid() {
+  document.getElementById('select-grid').innerHTML = groups.map(function(g) {
+    return '<label class="select-item" id="sel-' + g.id + '"><input type="checkbox" onchange="toggleGroupSelect(\'' + g.id + '\')">' + g.label + '</label>';
+  }).join('');
+}
+
+function toggleGroupSelect(id) {
+  if (selectedGroupIds.has(id)) selectedGroupIds.delete(id); else selectedGroupIds.add(id);
+  var el = document.getElementById('sel-' + id);
+  el.classList.toggle('checked', selectedGroupIds.has(id));
+  el.querySelector('input').checked = selectedGroupIds.has(id);
+  updateMultiStartBtn();
+}
+
+function selectAllGroups() {
+  groups.forEach(function(g) { selectedGroupIds.add(g.id); });
+  document.querySelectorAll('.select-item').forEach(function(el) {
+    el.classList.add('checked');
+    el.querySelector('input').checked = true;
+  });
+  updateMultiStartBtn();
+}
+
+function clearAllGroups() {
+  selectedGroupIds.clear();
+  document.querySelectorAll('.select-item').forEach(function(el) {
+    el.classList.remove('checked');
+    el.querySelector('input').checked = false;
+  });
+  updateMultiStartBtn();
+}
+
+function updateMultiStartBtn() {
+  var btn = document.getElementById('multi-start-btn');
+  if (selectedGroupIds.size === 0) {
+    btn.textContent = '문제를 선택해주세요';
+    btn.disabled = true;
+    return;
+  }
+  var total = 0;
+  groups.forEach(function(g) {
+    if (selectedGroupIds.has(g.id)) total += g.words.length + getStarred(g.id).length;
+  });
+  btn.textContent = '🎯 선택한 ' + selectedGroupIds.size + '개 문제로 퀴즈 시작 (' + total + '문제)';
+  btn.disabled = total < 2;
+}
+
+function startMultiQuiz() {
+  if (selectedGroupIds.size === 0) return;
+  var pool = [];
+  var seen = {};
+  groups.forEach(function(g) {
+    if (!selectedGroupIds.has(g.id)) return;
+    g.words.concat(getStarred(g.id)).forEach(function(w) {
+      var key = w.word.toLowerCase();
+      if (!seen[key]) { seen[key] = true; pool.push(w); }
+    });
+  });
+  if (pool.length < 2) return;
+  quizMode = 'multi';
+  beginQuiz(pool);
+}
+
+function retryQuiz() {
+  if (quizMode === 'multi') startMultiQuiz(); else startQuiz();
+}
+
+function beginQuiz(pool) {
+  activeQuizPool = pool;
+  quizQueue = shuffle(pool).map(function(item) {
+    var types = ['en2ko', 'ko2en'];
+    if (canBlank(item)) types.push('blank');
+    var type = types[Math.floor(Math.random() * types.length)];
+    return { item: item, type: type };
+  });
+  quizIdx = 0;
+  quizScore = 0;
+
+  document.getElementById('browse-wrap').classList.add('hide');
+  document.getElementById('result-wrap').classList.remove('show');
+  document.getElementById('quiz-wrap').classList.add('show');
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildDistractorPool(currentGroupWords, exclude) {
+  var localPool = currentGroupWords.filter(function(w) { return w.word !== exclude.word; });
+  var pool = localPool.length >= 3 ? localPool : localPool.concat(shuffle(allWords.filter(function(w) { return w.word !== exclude.word; })));
+  return pool;
+}
+
+function renderQuestion() {
+  answered = false;
+  var total = quizQueue.length;
+  document.getElementById('q-prog-text').textContent = (quizIdx + 1) + ' / ' + total;
+  document.getElementById('q-progress-fill').style.width = ((quizIdx + 1) / total * 100) + '%';
+
+  var q = quizQueue[quizIdx];
+  var distractorSource = buildDistractorPool(activeQuizPool, q.item);
+
+  var badge = document.getElementById('q-type-badge');
+  var prompt = document.getElementById('q-prompt');
+  var sub = document.getElementById('q-prompt-sub');
+  var choicesEl = document.getElementById('q-choices');
+  var correctText, choiceTexts, seen;
+
+  if (q.type === 'en2ko') {
+    badge.textContent = '영어 → 한국어 뜻 찾기';
+    prompt.textContent = q.item.word;
+    sub.textContent = q.item.pron || '';
+    correctText = q.item.meaning;
+    seen = {}; seen[correctText] = true;
+    choiceTexts = [correctText];
+    for (var i = 0; i < distractorSource.length && choiceTexts.length < 4; i++) {
+      var m = distractorSource[i].meaning;
+      if (m && !seen[m]) { seen[m] = true; choiceTexts.push(m); }
+    }
+  } else if (q.type === 'ko2en') {
+    badge.textContent = '한국어 → 영어 단어 찾기';
+    prompt.textContent = q.item.meaning;
+    sub.textContent = '';
+    correctText = q.item.word;
+    seen = {}; seen[correctText] = true;
+    choiceTexts = [correctText];
+    for (var j = 0; j < distractorSource.length && choiceTexts.length < 4; j++) {
+      var w = distractorSource[j].word;
+      if (w && !seen[w]) { seen[w] = true; choiceTexts.push(w); }
+    }
+  } else {
+    badge.textContent = '빈칸에 알맞은 단어 찾기';
+    var re = new RegExp(q.item.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+    prompt.textContent = q.item.en.replace(re, '_____');
+    sub.textContent = q.item.ko || '';
+    correctText = q.item.word;
+    seen = {}; seen[correctText] = true;
+    choiceTexts = [correctText];
+    for (var k = 0; k < distractorSource.length && choiceTexts.length < 4; k++) {
+      var w2 = distractorSource[k].word;
+      if (w2 && !seen[w2]) { seen[w2] = true; choiceTexts.push(w2); }
+    }
+  }
+
+  choiceTexts = shuffle(choiceTexts);
+  choicesEl.innerHTML = choiceTexts.map(function(t, i) {
+    return '<button class="q-choice" data-t="' + encodeURIComponent(t) + '" onclick="selectAnswer(this,\'' + encodeURIComponent(t) + '\',\'' + encodeURIComponent(correctText) + '\')">' + t + '</button>';
+  }).join('');
+  document.getElementById('q-next-btn').classList.remove('show');
+}
+
+function selectAnswer(btn, chosenEnc, correctEnc) {
+  if (answered) return;
+  answered = true;
+  var chosen = decodeURIComponent(chosenEnc);
+  var correct = decodeURIComponent(correctEnc);
+  var isCorrect = chosen === correct;
+  if (isCorrect) quizScore++;
+
+  document.querySelectorAll('.q-choice').forEach(function(el) {
+    el.disabled = true;
+    var t = decodeURIComponent(el.getAttribute('data-t'));
+    if (t === correct) el.classList.add('correct');
+    else if (t === chosen) el.classList.add('wrong');
+  });
+
+  var nextBtn = document.getElementById('q-next-btn');
+  nextBtn.textContent = quizIdx === quizQueue.length - 1 ? '결과 보기' : '다음 →';
+  nextBtn.classList.add('show');
+}
+
+function nextQuestion() {
+  quizIdx++;
+  if (quizIdx >= quizQueue.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-wrap').classList.remove('show');
+  document.getElementById('result-wrap').classList.add('show');
+  document.getElementById('result-score').textContent = quizScore + ' / ' + quizQueue.length;
+  var pct = Math.round(quizScore / quizQueue.length * 100);
+  var label = pct === 100 ? '완벽해요! 🎉' : pct >= 70 ? '잘했어요! 👍' : '조금 더 복습해봐요 💪';
+  document.getElementById('result-label').textContent = label;
+}
+
+function backToBrowse() {
+  document.getElementById('quiz-wrap').classList.remove('show');
+  document.getElementById('result-wrap').classList.remove('show');
+  document.getElementById('browse-wrap').classList.remove('hide');
+  renderBrowse();
+}
+
+var ttsVoices = [];
+if ('speechSynthesis' in window) {
+  var loadTtsVoices = function() { ttsVoices = window.speechSynthesis.getVoices(); };
+  loadTtsVoices();
+  window.speechSynthesis.onvoiceschanged = loadTtsVoices;
+}
+
+function speak(text) {
+  if (!text || !('speechSynthesis' in window)) return;
+  var synth = window.speechSynthesis;
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  var voices = (ttsVoices && ttsVoices.length) ? ttsVoices : synth.getVoices();
+  if (voices && voices.length) {
+    var enVoice = voices.find(function(v) { return v.lang === 'en-US'; }) || voices.find(function(v) { return v.lang && v.lang.indexOf('en') === 0; });
+    if (enVoice) utter.voice = enVoice;
+  }
+  synth.cancel();
+  setTimeout(function() { synth.speak(utter); }, 80);
+}
+
+buildTabs();
+document.querySelector('.g-tab').classList.add('active');
+buildSelectGrid();
+renderBrowse();
+</script>
+</body>
+</html>

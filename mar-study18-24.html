@@ -87,6 +87,8 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
 .sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
 .sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
@@ -527,6 +529,8 @@ function showWord(key) {
   currentSheetWordData = { word:v.word, pron:v.pron, meaning:v.meaning, en:v.ex, ko:v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
   document.getElementById('overlay').classList.add('show');
@@ -572,6 +576,21 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -580,6 +599,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
@@ -589,6 +609,8 @@ function showPlain(rawWord) {
   currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
   document.getElementById('overlay').classList.add('show');

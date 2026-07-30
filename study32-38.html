@@ -450,6 +450,7 @@ function toggleSheetStar() {
   }
   setStarred(gid, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
+  if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
   updateSheetStarBtn();
 }
 
@@ -527,6 +528,7 @@ function checkAnswer() {
   });
   var result = document.getElementById('quiz-result');
   var isCorrect = selectedChoice === p.answer;
+  if (window.studyStats) window.studyStats.record('quiz', isCorrect);
   result.classList.add('show', isCorrect ? 'ok' : 'no');
   var head = isCorrect ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[p.answer] + '번이에요.';
   result.innerHTML = '<b>' + head + '</b><br>' + p.explanation;
@@ -801,6 +803,7 @@ function speak(text) {
 buildTabs();
 render();
 </script>
+<script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>
 </body>
 </html>

@@ -639,6 +639,7 @@ function selectAnswer(btn, chosenEnc, correctEnc) {
   var currentItem = quizQueue[quizIdx].item;
   if (isCorrect) { quizScore++; removeWrongWord(currentItem.word); }
   else { addWrongWord(currentItem); }
+  if (window.studyStats) window.studyStats.record('vocab', isCorrect);
 
   document.querySelectorAll('.q-choice').forEach(function(el) {
     el.disabled = true;
@@ -704,6 +705,7 @@ document.querySelector('.g-tab').classList.add('active');
 buildSelectGrid();
 renderBrowse();
 </script>
+<script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>
 </body>
 </html>

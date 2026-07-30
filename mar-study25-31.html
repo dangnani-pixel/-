@@ -441,6 +441,7 @@ function toggleSheetStar() {
   else starred.push({ word: currentSheetWordData.word, pron: currentSheetWordData.pron || '', meaning: currentSheetWordData.meaning || '뜻 정보 없음', en: currentSheetWordData.en || '', ko: currentSheetWordData.ko || '' });
   setStarred(gid, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
+  if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
   updateSheetStarBtn();
 }
 
@@ -497,6 +498,7 @@ function checkAnswer() {
   });
   var r = document.getElementById('quiz-result');
   var ok = selectedChoice === p.answer;
+  if (window.studyStats) window.studyStats.record('quiz', ok);
   r.classList.add('show', ok ? 'ok' : 'no');
   r.innerHTML = '<b>' + (ok ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[p.answer] + '번이에요.') + '</b><br>' + p.explanation;
   var b = document.getElementById('quiz-check-btn');
@@ -742,6 +744,7 @@ function speak(text) {
 buildTabs();
 render();
 </script>
+<script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>
 </body>
 </html>

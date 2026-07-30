@@ -575,6 +575,7 @@ function checkAnswer(qi) {
   });
   var result = document.getElementById('qresult-' + qi);
   var isCorrect = quizState[qi].selected === q.answer;
+  if (window.studyStats) window.studyStats.record('quiz', isCorrect);
   result.classList.add('show', isCorrect ? 'ok' : 'no');
   var head = isCorrect ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[q.answer] + '번이에요.';
   result.innerHTML = '<b>' + head + '</b><br>' + q.explanation;
@@ -707,5 +708,7 @@ buildRateRow();
 buildTabs();
 render();
 </script>
+<script src="study-stats.js"></script>
+<script type="module" src="firebase-sync.js"></script>
 </body>
 </html>

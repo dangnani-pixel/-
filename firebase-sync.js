@@ -42,6 +42,13 @@ function mergeArrays(a, b) {
   return order.map(function (k) { return map[k]; });
 }
 
+var STATS_KEY = 'studyStats';
+var STATS_FIELDS = ['xp', 'solved', 'correct', 'vocabSolved', 'vocabCorrect'];
+
+function readStats() {
+  try { return JSON.parse(localStorage.getItem(STATS_KEY) || '{}') || {}; } catch (e) { return {}; }
+}
+
 function pullAndMerge(uid) {
   return getDoc(doc(db, 'users', uid)).then(function (snap) {
     var cloud = snap.exists() ? snap.data() : {};
@@ -53,6 +60,15 @@ function pullAndMerge(uid) {
       if (merged.length !== local.length) changed = true;
       writeLocal(key, merged);
     });
+    if (cloud[STATS_KEY]) {
+      var localStats = readStats();
+      var mergedStats = {};
+      STATS_FIELDS.forEach(function (f) {
+        mergedStats[f] = Math.max(Number(localStats[f]) || 0, Number(cloud[STATS_KEY][f]) || 0);
+      });
+      localStorage.setItem(STATS_KEY, JSON.stringify(mergedStats));
+      if (window.studyStats && window.studyStats.refresh) window.studyStats.refresh();
+    }
     return changed;
   });
 }
@@ -60,6 +76,8 @@ function pullAndMerge(uid) {
 function pushAll(uid) {
   var data = {};
   allStarKeys().forEach(function (key) { data[key] = readLocal(key); });
+  var stats = readStats();
+  if (Object.keys(stats).length) data[STATS_KEY] = stats;
   if (Object.keys(data).length === 0) return Promise.resolve();
   return setDoc(doc(db, 'users', uid), data, { merge: true });
 }

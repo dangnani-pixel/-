@@ -627,10 +627,31 @@ function splitSentences(text) {
 function findSentenceForWord(word) {
   var p = problems[current];
   var plain = p.passage.replace(/\[\[(.+?)::(.+?)\]\]/g, '$2');
-  var sentences = splitSentences(plain);
+  var enSentences = splitSentences(plain);
   var re = new RegExp('\\b' + word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
-  for (var i = 0; i < sentences.length; i++) {
-    if (re.test(sentences[i])) return sentences[i];
+  for (var i = 0; i < enSentences.length; i++) {
+    if (re.test(enSentences[i])) {
+      var koSentences = splitSentences(p.translation || '');
+      var ko = (koSentences.length === enSentences.length) ? koSentences[i] : null;
+      return { en: enSentences[i], ko: ko };
+    }
+  }
+  return null;
+}
+
+var POS_KO = { noun:'명사', verb:'동사', adjective:'형용사', adverb:'부사', preposition:'전치사', conjunction:'접속사', pronoun:'대명사', interjection:'감탄사', determiner:'한정사', numeral:'수사', article:'관사', exclamation:'감탄사' };
+
+function cleanKoMeaning(data) {
+  var cands = [];
+  if (data && data.responseData && data.responseData.translatedText) cands.push(data.responseData.translatedText);
+  if (data && data.matches) for (var j = 0; j < data.matches.length; j++) { if (data.matches[j] && data.matches[j].translation) cands.push(data.matches[j].translation); }
+  for (var i = 0; i < cands.length; i++) {
+    var t = String(cands[i]).trim();
+    if (/[가-힣]/.test(t) && !/[一-鿿぀-ヿ]/.test(t) && t.length <= 40) return t;
+  }
+  for (var i2 = 0; i2 < cands.length; i2++) {
+    var t2 = String(cands[i2]).replace(/[一-鿿぀-ヿ]/g, '').replace(/\s+/g, ' ').trim();
+    if (/[가-힣]/.test(t2)) return t2;
   }
   return null;
 }
@@ -646,19 +667,30 @@ function showPlain(rawWord) {
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
-  var sentence = findSentenceForWord(clean);
-  currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: '' };
+  var found = findSentenceForWord(clean);
+  var sentence = found ? found.en : null;
+  var koSentence = found ? found.ko : null;
+  currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
-  document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>해석을 불러오는 중...') : '';
+  document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
-  lookupWord(lower, sentence);
+  lookupWord(lower, sentence, koSentence);
 }
 
-function lookupWord(lower, sentence) {
+function lookupWord(lower, sentence, koSentence) {
+  var posText = '';
+  var koMeaning = '';
+  function renderMeaning() {
+    if (!koMeaning) return;
+    var full = (posText ? '[' + posText + '] ' : '') + koMeaning;
+    document.getElementById('sheet-meaning').textContent = full;
+    if (currentSheetWordData) currentSheetWordData.meaning = full;
+  }
+
   fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(lower))
     .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
     .then(function(data) {
@@ -672,6 +704,15 @@ function lookupWord(lower, sentence) {
       }
       if (phonetic) document.getElementById('sheet-pron').textContent = phonetic;
       if (currentSheetWordData) currentSheetWordData.pron = phonetic;
+      if (entry.meanings) {
+        var seen = {};
+        var list = [];
+        for (var m = 0; m < entry.meanings.length; m++) {
+          var ko = POS_KO[entry.meanings[m].partOfSpeech];
+          if (ko && !seen[ko]) { seen[ko] = true; list.push(ko); }
+        }
+        if (list.length) { posText = list.slice(0, 2).join('·'); renderMeaning(); }
+      }
     })
     .catch(function() {});
 
@@ -679,19 +720,19 @@ function lookupWord(lower, sentence) {
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (activeSheetWord !== lower) return;
-      var ko = data && data.responseData && data.responseData.translatedText;
-      var meaningText = ko ? ko : '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
-      document.getElementById('sheet-meaning').textContent = meaningText;
-      if (currentSheetWordData) currentSheetWordData.meaning = meaningText;
+      var ko = cleanKoMeaning(data);
+      if (ko) { koMeaning = ko; renderMeaning(); }
+      else {
+        document.getElementById('sheet-meaning').textContent = '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+        if (currentSheetWordData) currentSheetWordData.meaning = '뜻 정보 없음';
+      }
     })
     .catch(function() {
       if (activeSheetWord !== lower) return;
-      var meaningText = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
-      document.getElementById('sheet-meaning').textContent = meaningText;
-      if (currentSheetWordData) currentSheetWordData.meaning = meaningText;
+      document.getElementById('sheet-meaning').textContent = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
     });
 
-  if (sentence) {
+  if (sentence && !koSentence) {
     fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(sentence) + '&langpair=en|ko')
       .then(function(r) { return r.json(); })
       .then(function(data) {

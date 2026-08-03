@@ -167,14 +167,14 @@ const problems = [
   answer: 2,
   explanation: "'I would like to kindly ask if you would be willing to share a few words about your experience.'에서 여행 경험을 광고에 담기 위해 후기를 공유해 달라고 요청하고 있으므로 정답은 ③번입니다.",
   vocab: {
-    appreciation: { word:"appreciation", pron:"[어프리시에이션]", meaning:"감사", ex:"I express our sincere appreciation.", exko:"진심 어린 감사를 표합니다." },
-    loyalty: { word:"loyalty", pron:"[로열티]", meaning:"충성, 애용", ex:"Thank you for your continued loyalty.", exko:"계속 애용해 주셔서 감사합니다." },
-    promotional: { word:"promotional", pron:"[프로모셔널]", meaning:"홍보의", ex:"This is part of a promotional campaign.", exko:"이것은 홍보 캠페인의 일부이다." },
+    appreciation: { word:"appreciation", pron:"[어프리시에이션]", meaning:"감사", ex:"I express our sincere appreciation.", exko:"진심 어린 감사를 표합니다.", etym:"ap-(ad-, ~에) + preci(=preti, price와 동근인 '가치') + -ation(명사형) → 가치를 알아보다 → 감사, 인정. 같은 preci 어근을 쓰는 다른 접두사 단어: depreciate(de-아래로 + preci → 가치를 낮추다 → 평가절하하다), appreciate(원형, ~쪽으로 가치를 두다 → 감사하다)." },
+    loyalty: { word:"loyalty", pron:"[로열티]", meaning:"충성, 애용", ex:"Thank you for your continued loyalty.", exko:"계속 애용해 주셔서 감사합니다.", etym:"loy(=leg, 법 lex의 변형) + -al(형용사형) + -ty(명사형) → 법을 잘 따르는 성질 → 충성심. 같은 leg 어근을 쓰는 다른 접두사 단어: illegal(il-(in-, 부정) + leg → 법에 어긋나는 → 불법의), legal(접두사 없이 leg 어근 그대로 → 법의)." },
+    promotional: { word:"promotional", pron:"[프로모셔널]", meaning:"홍보의", ex:"This is part of a promotional campaign.", exko:"이것은 홍보 캠페인의 일부이다.", etym:"pro-(앞으로) + mot(=movere, 움직이다) + -ion/-al(명사·형용사형) → 앞으로 움직이게 하다 → 촉진하다, 홍보하다. 같은 mot 어근을 쓰는 다른 접두사 단어: demote(de-아래로 + mote → 강등시키다), remote(re-멀리 + mote → 멀리 움직인 → 외딴)." },
     airing: { word:"airing", pron:"[에어링]", meaning:"방영하는", ex:"They will be airing an advertisement.", exko:"그들은 광고를 방영할 것이다." },
-    valued: { word:"valued", pron:"[밸류드]", meaning:"소중한", ex:"You are one of our most valued clients.", exko:"당신은 우리의 가장 소중한 고객 중 한 분입니다." },
+    valued: { word:"valued", pron:"[밸류드]", meaning:"소중한", ex:"You are one of our most valued clients.", exko:"당신은 우리의 가장 소중한 고객 중 한 분입니다.", etym:"val(=valere, 힘·가치가 있다) + -ue(명사형) + -d → 가치가 있는. 같은 val 어근을 쓰는 다른 접두사 단어: evaluate(e-밖으로 + val + ate → 가치를 끌어내다 → 평가하다), prevail(pre-먼저 + vail → 먼저 힘을 발휘하다 → 우세하다)." },
     willing: { word:"willing", pron:"[윌링]", meaning:"기꺼이 ~하는", ex:"Would you be willing to help?", exko:"기꺼이 도와주시겠어요?" },
-    invaluable: { word:"invaluable", pron:"[인밸류어블]", meaning:"매우 귀중한", ex:"Your feedback would be invaluable.", exko:"당신의 의견은 매우 귀중할 것입니다." },
-    contributions: { word:"contributions", pron:"[컨트리뷰션즈]", meaning:"기여, 도움", ex:"Thank you for your contributions.", exko:"도움을 주셔서 감사합니다." }
+    invaluable: { word:"invaluable", pron:"[인밸류어블]", meaning:"매우 귀중한", ex:"Your feedback would be invaluable.", exko:"당신의 의견은 매우 귀중할 것입니다.", etym:"in-(불가능) + valu(=val, 가치) + -able(~할 수 있는) → 가치를 매길 수 없을 만큼 (큰) → 매우 귀중한. in-이 '불가능'을 나타내는 다른 접두사 단어: incredible(in-불가능 + cred(믿다) → 믿을 수 없을 정도의), inevitable(in-불가능 + e-vit(피하다) → 피할 수 없는)." },
+    contributions: { word:"contributions", pron:"[컨트리뷰션즈]", meaning:"기여, 도움", ex:"Thank you for your contributions.", exko:"도움을 주셔서 감사합니다.", etym:"con-(함께) + tribute(=tribuere, 나누어 바치다) + -ion(명사형) → 함께 바치다 → 기여, 공헌. 같은 tribute 어근을 쓰는 다른 접두사 단어: distribute(dis-널리 + tribute → 나누어 분배하다), attribute(at-(ad-, ~에게) + tribute → ~탓으로 돌리다)." }
   },
   funcWords: {
     as: { word:"as", tag:"[전치사 as]", meaning:"'as part of a new promotional campaign'에서 as는 '~의 일환으로'라는 뜻의 전치사예요. 뒤에 명사구(part of ~)가 이어져 새로운 홍보 캠페인의 한 부분임을 나타내요.", ex:"Next year, as part of a new promotional campaign, Lomos Tours will be airing an advertisement.", exko:"내년에 새로운 홍보 캠페인의 일환으로 Lomos Tours는 광고를 방영할 예정입니다." },
@@ -254,14 +254,14 @@ Mark Smith 드림`,
   answer: 0,
   explanation: "'make a conscious effort to stay in touch'가 핵심 주장이고, 이어지는 내용도 꾸준한 연락으로 관계를 유지하는 방법이므로 정답은 ①번입니다.",
   vocab: {
-    sustaining: { word:"sustaining", pron:"[서스테이닝]", meaning:"지속하는", ex:"Sustaining relationships takes effort.", exko:"관계를 지속하는 것은 노력이 필요하다." },
+    sustaining: { word:"sustaining", pron:"[서스테이닝]", meaning:"지속하는", ex:"Sustaining relationships takes effort.", exko:"관계를 지속하는 것은 노력이 필요하다.", etym:"sus-(sub-, 아래에서 받쳐) + tain(=tenere, 잡다·유지하다) + -ing → 아래에서 붙들다 → 지속시키다. 같은 tain 어근을 쓰는 다른 접두사 단어: maintain(main-(manu-, 손) + tain → 손으로 붙잡다 → 유지하다), retain(re-계속 + tain → 계속 붙잡다 → 보유하다)." },
     stuck: { word:"stuck", pron:"[스턱]", meaning:"정체된, 막힌", ex:"The relationship got stuck.", exko:"그 관계는 정체되었다." },
     follow_up: { word:"follow-up", pron:"[팔로우 업]", meaning:"후속 조치, 후속 연락", ex:"A lack of follow-up hurts relationships.", exko:"후속 연락이 없으면 관계가 나빠진다." },
-    conscious: { word:"conscious", pron:"[컨셔스]", meaning:"의식적인", ex:"Make a conscious effort to stay in touch.", exko:"연락을 유지하려는 의식적인 노력을 기울여라." },
+    conscious: { word:"conscious", pron:"[컨셔스]", meaning:"의식적인", ex:"Make a conscious effort to stay in touch.", exko:"연락을 유지하려는 의식적인 노력을 기울여라.", etym:"con-(함께) + sci(=scire, 알다) + -ous(형용사형) → 자기 자신과 함께 알고 있는 → 의식하는. 같은 sci 어근을 쓰는 다른 단어: science(sci + -ence → 앎, 학문), unconscious(un-부정 + conscious → 의식하지 못하는)." },
     stay_in_touch: { word:"stay in touch", pron:"[스테이 인 터치]", meaning:"연락을 유지하다", ex:"Let's stay in touch.", exko:"연락하고 지내자." },
-    consistent: { word:"consistent", pron:"[컨시스턴트]", meaning:"꾸준한, 일관된", ex:"Keep a consistent line of communication.", exko:"꾸준한 소통 창구를 유지해라." },
-    reinforcing: { word:"reinforcing", pron:"[리인포싱]", meaning:"강화하는", ex:"It goes a long way in reinforcing your relationship.", exko:"그것은 관계를 강화하는 데 큰 도움이 된다." },
-    invested: { word:"invested", pron:"[인베스티드]", meaning:"공을 들이는, 관심을 쏟는", ex:"You're invested in the relationship.", exko:"당신은 그 관계에 공을 들이고 있다." }
+    consistent: { word:"consistent", pron:"[컨시스턴트]", meaning:"꾸준한, 일관된", ex:"Keep a consistent line of communication.", exko:"꾸준한 소통 창구를 유지해라.", etym:"con-(함께) + sist(=sistere, 서다) + -ent(형용사형) → 함께 흔들림 없이 서 있다 → 일관된, 꾸준한. 같은 sist 어근을 쓰는 다른 접두사 단어: resist(re-거슬러 + sist → 맞서 서다 → 저항하다), persist(per-끝까지 + sist → 끝까지 버티고 서다 → 지속하다)." },
+    reinforcing: { word:"reinforcing", pron:"[리인포싱]", meaning:"강화하는", ex:"It goes a long way in reinforcing your relationship.", exko:"그것은 관계를 강화하는 데 큰 도움이 된다.", etym:"re-(다시) + in-(안으로) + force(힘) + -ing → 다시 힘을 안으로 불어넣다 → 강화하다. 같은 force 어근을 쓰는 다른 접두사 단어: enforce(en-안으로 + force → 힘을 가하다 → (법을) 집행하다), force(접두사 없이 원형 → 힘)." },
+    invested: { word:"invested", pron:"[인베스티드]", meaning:"공을 들이는, 관심을 쏟는", ex:"You're invested in the relationship.", exko:"당신은 그 관계에 공을 들이고 있다.", etym:"in-(안으로) + vest(=vestire, 자금을 넣다) + -ed → 안에 (자금을) 넣다 → 투자하다, 공을 들이다. 같은 vest 어근을 쓰는 다른 접두사 단어: divest(di-(dis-, 떼어내다) + vest → (투자를) 회수하다), invest(원형, 안으로 넣다 → 투자하다)." }
   },
   funcWords: {
     to: { word:"to", tag:"[to부정사]", meaning:"이 문장에서 to는 모두 to부정사예요. 'To keep the connection alive'는 문장 맨 앞에서 '~하려면(목적)'이라는 뜻이고, 'effort to stay in touch'는 명사 effort를 꾸며주는 형용사적 용법으로 '연락을 유지하려는 (노력)'이라고 해석돼요.", ex:"To keep the connection alive, make a conscious effort to stay in touch.", exko:"그 연결을 살아 있게 하려면, 연락을 유지하려는 의식적인 노력을 기울여라." },
@@ -293,14 +293,14 @@ Mark Smith 드림`,
   answer: 1,
   explanation: "새 녹지 조성으로 동네가 매력적이 되면 집값이 올라, 정작 혜택을 받아야 할 저소득 주민들이 밀려난다(exclusion or displacement)는 역설이므로 ②번이 정답입니다.",
   vocab: {
-    regeneration: { word:"regeneration", pron:"[리제너레이션]", meaning:"재생, 재개발", ex:"Urban regeneration projects are common.", exko:"도시 재생 사업은 흔하다." },
-    degraded: { word:"degraded", pron:"[디그레이디드]", meaning:"낙후된, 황폐해진", ex:"They improved degraded areas.", exko:"그들은 낙후된 지역을 개선했다." },
-    injustice: { word:"injustice", pron:"[인저스티스]", meaning:"불평등, 부당함", ex:"They aim to solve environmental injustice.", exko:"그들은 환경 불평등을 해결하고자 한다." },
+    regeneration: { word:"regeneration", pron:"[리제너레이션]", meaning:"재생, 재개발", ex:"Urban regeneration projects are common.", exko:"도시 재생 사업은 흔하다.", etym:"re-(다시) + gener(=genus, 낳다) + -ation(명사형) → 다시 낳다 → 재생, 재개발. 같은 gener 어근을 쓰는 다른 접두사 단어: degenerate(de-아래로 + gener → 아래로 퇴화하다), generate(접두사 없이 원형 → 발생시키다)." },
+    degraded: { word:"degraded", pron:"[디그레이디드]", meaning:"낙후된, 황폐해진", ex:"They improved degraded areas.", exko:"그들은 낙후된 지역을 개선했다.", etym:"de-(아래로) + grad(=gradus, 걸음·단계) + -ed → 단계를 아래로 내리다 → 낙후된, 저하된. 같은 grad 어근을 쓰는 다른 접두사 단어: upgrade(up-위로 + grade → 등급을 올리다), progress(pro-앞으로 + gress(=grad) → 앞으로 나아가다)." },
+    injustice: { word:"injustice", pron:"[인저스티스]", meaning:"불평등, 부당함", ex:"They aim to solve environmental injustice.", exko:"그들은 환경 불평등을 해결하고자 한다.", etym:"in-(부정) + just(=justus, 정의로운) + -ice(명사형) → 정의롭지 않음 → 불평등, 부당함. 같은 just 어근을 쓰는 다른 접두사 단어: adjust(ad-~에 + just → ~에 맞게 조정하다), justice(접두사 없이 원형 → 정의)." },
     ethnic: { word:"ethnic", pron:"[에스닉]", meaning:"소수 민족의", ex:"improvements in ethnic communities", exko:"소수 민족 공동체의 개선" },
-    attractiveness: { word:"attractiveness", pron:"[어트랙티브니스]", meaning:"매력도", ex:"Green spaces increase attractiveness.", exko:"녹지 공간은 매력도를 높인다." },
+    attractiveness: { word:"attractiveness", pron:"[어트랙티브니스]", meaning:"매력도", ex:"Green spaces increase attractiveness.", exko:"녹지 공간은 매력도를 높인다.", etym:"at-(ad-, ~로) + tract(=trahere, 끌다) + -ive(형용사형) + -ness(명사형) → ~로 끌어당기는 성질 → 매력도. 같은 tract 어근을 쓰는 다른 접두사 단어: extract(ex-밖으로 + tract → 밖으로 끌어내다 → 추출하다), distract(dis-흩어지게 + tract → 주의를 산만하게 하다)." },
     afford: { word:"afford", pron:"[어포드]", meaning:"~할 형편이 되다", ex:"Residents may not be able to afford the rent.", exko:"주민들은 임대료를 감당하지 못할 수 있다." },
-    displacement: { word:"displacement", pron:"[디스플레이스먼트]", meaning:"쫓겨남, 이주", ex:"This results in the displacement of residents.", exko:"이것은 주민들이 쫓겨나는 결과를 낳는다." },
-    infrastructure: { word:"infrastructure", pron:"[인프라스트럭처]", meaning:"기반시설", ex:"They have low access to green infrastructure.", exko:"그들은 녹지 기반시설에 대한 접근성이 낮다." }
+    displacement: { word:"displacement", pron:"[디스플레이스먼트]", meaning:"쫓겨남, 이주", ex:"This results in the displacement of residents.", exko:"이것은 주민들이 쫓겨나는 결과를 낳는다.", etym:"dis-(떨어뜨려) + place(자리) + -ment(명사형) → 자리에서 떨어뜨림 → 쫓겨남, 이주. 같은 place 어근을 쓰는 다른 접두사 단어: replace(re-다시 + place → 다시 자리를 놓다 → 대체하다), misplace(mis-잘못 + place → 잘못 두다)." },
+    infrastructure: { word:"infrastructure", pron:"[인프라스트럭처]", meaning:"기반시설", ex:"They have low access to green infrastructure.", exko:"그들은 녹지 기반시설에 대한 접근성이 낮다.", etym:"infra-(아래에) + struct(=struere, 짓다) + -ure(명사형) → 아래에 세워진 것 → 기반시설. 같은 struct 어근을 쓰는 다른 접두사 단어: construct(con-함께 + struct → 함께 짓다 → 건설하다), instruct(in-안으로 + struct → 안으로 세우다 → 가르치다)." }
   },
   funcWords: {
     as: { word:"as", tag:"[전치사 as]", meaning:"'be promoted as -ing'에서 as는 '~하는 것으로(서)'라는 뜻이에요. promote A as B(A를 B로 홍보하다)의 수동태로, '주민의 웰빙을 향상시키는 것으로 홍보되다'라고 해석돼요.", ex:"Currently, urban regeneration projects in degraded areas have been promoted as improving the wellbeing of residents and solving environmental injustice problems.", exko:"현재, 낙후된 지역의 도시 재생 사업은 주민들의 웰빙을 향상시키고 환경 불평등 문제를 해결하는 것으로 홍보되어 왔다." },
@@ -331,12 +331,12 @@ Mark Smith 드림`,
   vocab: {
     awareness: { word:"awareness", pron:"[어웨어니스]", meaning:"인식", ex:"An increasing awareness is growing.", exko:"인식이 점점 커지고 있다." },
     seeping: { word:"seeping", pron:"[시핑]", meaning:"스며드는", ex:"It is slowly seeping into the public agenda.", exko:"그것은 서서히 대중의 관심사로 스며들고 있다." },
-    overdue: { word:"overdue", pron:"[오버듀]", meaning:"이미 늦은, 기한이 지난", ex:"The conversation is decades overdue.", exko:"그 논의는 수십 년이나 늦었다." },
-    obstacle: { word:"obstacle", pron:"[아브스터클]", meaning:"장애물", ex:"This faces a massive obstacle.", exko:"이것은 거대한 장애물에 직면한다." },
-    vague: { word:"vague", pron:"[베이그]", meaning:"막연한, 어렴풋한", ex:"They have a vague idea about it.", exko:"그들은 그것에 대해 막연한 개념을 가지고 있다." },
+    overdue: { word:"overdue", pron:"[오버듀]", meaning:"이미 늦은, 기한이 지난", ex:"The conversation is decades overdue.", exko:"그 논의는 수십 년이나 늦었다.", etym:"over-(지나쳐) + due(=debere, 빚지다·마땅히 해야 할) → 마땅히 해야 할 때를 지나쳐 버린 → 이미 늦은, 기한이 지난. 같은 due 어근을 쓰는 다른 단어: duty(due의 파생어 → 의무), due(접두사 없이 원형 → 마땅한)." },
+    obstacle: { word:"obstacle", pron:"[아브스터클]", meaning:"장애물", ex:"This faces a massive obstacle.", exko:"이것은 거대한 장애물에 직면한다.", etym:"ob-(맞서서) + sta(=stare, 서다) + -cle(명사형) → 맞서 서 있는 것 → 장애물. 같은 sta 어근을 쓰는 다른 접두사 단어: substance(sub-아래에 + sta → 밑에 서 있는 것 → 물질), obstruct(ob-맞서 + struct → 가로막다)." },
+    vague: { word:"vague", pron:"[베이그]", meaning:"막연한, 어렴풋한", ex:"They have a vague idea about it.", exko:"그들은 그것에 대해 막연한 개념을 가지고 있다.", etym:"vague(접두사 없이 원형, =vagus, 라틴어로 '떠도는') → 막연한, 어렴풋한. 같은 vag 어근을 쓰는 다른 접두사 단어: extravagant(extra-정도를 벗어나 + vag(=vagari, 떠돌다) + -ant → 벗어나 떠도는 → 낭비가 심한)." },
     kidneys: { word:"kidneys", pron:"[키드니즈]", meaning:"신장, 콩팥", ex:"They have a problem with their kidneys.", exko:"그들은 신장에 문제가 있다." },
-    decline: { word:"decline", pron:"[디클라인]", meaning:"감소", ex:"the long-term decline in the numbers of krill", exko:"크릴 개체수의 장기적인 감소" },
-    context: { word:"context", pron:"[컨텍스트]", meaning:"맥락, 배경", ex:"We need to understand the context.", exko:"우리는 맥락을 이해할 필요가 있다." }
+    decline: { word:"decline", pron:"[디클라인]", meaning:"감소", ex:"the long-term decline in the numbers of krill", exko:"크릴 개체수의 장기적인 감소", etym:"de-(아래로) + cline(=clinare, 기울다) → 아래로 기울다 → 감소, 쇠퇴. 같은 clin 어근을 쓰는 다른 접두사 단어: incline(in-안으로 + cline → 안쪽으로 기울다 → ~하고 싶어지다), recline(re-뒤로 + cline → 뒤로 기울다 → 눕다)." },
+    context: { word:"context", pron:"[컨텍스트]", meaning:"맥락, 배경", ex:"We need to understand the context.", exko:"우리는 맥락을 이해할 필요가 있다.", etym:"con-(함께) + text(=texere, 짜다) → 함께 엮인 것 → 맥락, 배경. 같은 text 어근을 쓰는 다른 단어: text(접두사 없이 원형 → 짜여진 것, 글), textile(text + -ile → 짜여진 것, 직물)." }
   },
   funcWords: {
     what: { word:"what", tag:"[의문사/관계대명사 what]", meaning:"'what to do'는 '무엇을 해야 할지'라는 뜻으로, discuss의 목적어로 쓰인 명사구예요. 뒤에 나오는 'what they're up to'의 what도 마찬가지로 '무엇을'이라는 의문사로, 문장 속 목적어나 보어 역할을 해요.", ex:"It's almost impossible to discuss what to do about something changing if you don't initially know how it works.", exko:"어떤 것이 어떻게 작동하는지 애초에 알지 못한다면, 변화하고 있는 그것에 대해 무엇을 해야 할지 논의하는 것은 거의 불가능하다." },
@@ -369,13 +369,13 @@ Mark Smith 드림`,
   explanation: "'It was this initial openness, Livy asserts, that laid the foundations for the later strength and success of the city.'가 핵심이며, 이민자 수용과 문화적 개방성이 로마 성장의 토대였다는 내용이므로 ①번이 정답입니다.",
   vocab: {
     melting_pot: { word:"melting pot", pron:"[멜팅 팟]", meaning:"용광로(다문화 사회)", ex:"Rome was a melting pot from the start.", exko:"로마는 처음부터 용광로였다." },
-    comprised: { word:"comprised of", pron:"[컴프라이즈드 오브]", meaning:"~로 구성된", ex:"The population was comprised of immigrants.", exko:"인구는 이민자들로 구성되어 있었다." },
-    deliberate: { word:"deliberate", pron:"[딜리버럿]", meaning:"의도적인", ex:"a deliberate policy of nondiscrimination", exko:"의도적인 무차별 정책" },
-    nondiscrimination: { word:"nondiscrimination", pron:"[논디스크리미네이션]", meaning:"차별하지 않음", ex:"His policy of nondiscrimination attracted people.", exko:"그의 무차별 정책은 사람들을 끌어들였다." },
-    asserts: { word:"asserts", pron:"[어서츠]", meaning:"주장하다", ex:"Livy asserts that openness mattered.", exko:"Livy는 개방성이 중요했다고 주장한다." },
+    comprised: { word:"comprised of", pron:"[컴프라이즈드 오브]", meaning:"~로 구성된", ex:"The population was comprised of immigrants.", exko:"인구는 이민자들로 구성되어 있었다.", etym:"com-(함께) + prise(=prehendere, 붙잡다) → 함께 붙잡아 이루다 → ~로 구성되다. 같은 prehendere 어근을 쓰는 다른 접두사 단어: surprise(sur-위에서 + prise → 위에서 덮쳐 잡다 → 놀라게 하다), comprehend(com-함께 + prehend → 함께 붙잡다 → 이해하다)." },
+    deliberate: { word:"deliberate", pron:"[딜리버럿]", meaning:"의도적인", ex:"a deliberate policy of nondiscrimination", exko:"의도적인 무차별 정책", etym:"de-(강조) + liber(=libra, 저울) + -ate(동사형) → 저울질하듯 신중히 따져보다 → 의도적인, 신중한. 같은 libr 어근을 쓰는 다른 단어: equilibrium(equi-동등한 + libr(저울) + -ium → 저울이 평형을 이룬 상태 → 균형)." },
+    nondiscrimination: { word:"nondiscrimination", pron:"[논디스크리미네이션]", meaning:"차별하지 않음", ex:"His policy of nondiscrimination attracted people.", exko:"그의 무차별 정책은 사람들을 끌어들였다.", etym:"non-(부정) + dis-(따로) + crimin(=cernere, 구별하다) + -ation(명사형) → 따로 구별하지 않음 → 차별하지 않음. 같은 cern/crimin 어근을 쓰는 다른 단어: discriminate(접두사 dis-만 쓴 원형 → 구별하다, 차별하다), discern(dis-따로 + cern → 구별하다)." },
+    asserts: { word:"asserts", pron:"[어서츠]", meaning:"주장하다", ex:"Livy asserts that openness mattered.", exko:"Livy는 개방성이 중요했다고 주장한다.", etym:"as-(ad-, ~에게) + sert(=serere, 결합하다·주장하다) + -s → ~에 대해 주장을 펼치다 → 주장하다. 같은 sert 어근을 쓰는 다른 접두사 단어: insert(in-안으로 + sert → 안에 끼워넣다), exert(ex-밖으로 + sert → 힘을 밖으로 내다 → 행사하다)." },
     virtues: { word:"virtues", pron:"[버추즈]", meaning:"미덕", ex:"They were chosen for their virtues.", exko:"그들은 미덕 때문에 선택되었다." },
-    merits: { word:"merits", pron:"[메리츠]", meaning:"장점, 공로", ex:"chosen for their virtues and merits", exko:"미덕과 공로로 선택된" },
-    absorbed: { word:"absorbed", pron:"[업소브드]", meaning:"흡수했다, 받아들였다", ex:"Rome absorbed incoming groups.", exko:"로마는 유입되는 집단들을 받아들였다." }
+    merits: { word:"merits", pron:"[메리츠]", meaning:"장점, 공로", ex:"chosen for their virtues and merits", exko:"미덕과 공로로 선택된", etym:"mer(=merere, 받을 자격이 있다) + -it(명사형) + -s → 받을 만한 것 → 장점, 공로. 같은 mer 어근을 쓰는 다른 접두사 단어: demerit(de-부정 + merit → 결점, 단점), emeritus(e-밖으로 + mer + -itus → 공로를 다하고 물러난 → 명예직의)." },
+    absorbed: { word:"absorbed", pron:"[업소브드]", meaning:"흡수했다, 받아들였다", ex:"Rome absorbed incoming groups.", exko:"로마는 유입되는 집단들을 받아들였다.", etym:"ab-(~로부터) + sorb(=sorbere, 빨아들이다) + -ed → 빨아들이다 → 흡수하다, 받아들이다. 같은 sorb 어근을 쓰는 다른 단어: absorption(같은 뿌리에 명사형 -tion → 흡수), absorbent(같은 뿌리에 형용사형 -ent → 흡수력이 있는)." }
   },
   funcWords: {
     as: { word:"as", tag:"[전치사/접속사 as]", meaning:"as는 이 글에서 여러 뜻으로 쓰여요. 'described their city as multicultural'에서는 'A를 B로 묘사하다(describe A as B)' 구문으로 '~로'라는 뜻이고, 'arriving as immigrants'에서는 '~로서(자격)', 'As the empire expanded'에서는 '~함에 따라(접속사)'라는 뜻이에요. 문맥에 따라 뜻이 달라지니 주의하세요.", ex:"Romans described their city as multicultural in the generations after its foundation.", exko:"로마인들은 건국 이후 여러 세대에 걸쳐 자신들의 도시를 다문화적이라고 묘사했다." },
@@ -406,14 +406,14 @@ Mark Smith 드림`,
   answer: 0,
   explanation: "물리 법칙과 상수가 아주 조금만 달랐어도 생명이 불가능했지만, 우주가 우리를 위해 설계된 것은 아니라고(not designed for us) 했으므로 '우연한 정밀함'을 담은 ①번이 정답입니다.",
   vocab: {
-    constants: { word:"constants", pron:"[컨스턴츠]", meaning:"상수", ex:"The laws and constants of physics are precise.", exko:"물리학의 법칙과 상수는 정밀하다." },
-    fundamental: { word:"fundamental", pron:"[펀더멘털]", meaning:"기본적인, 근본적인", ex:"the fundamental forces in our universe", exko:"우리 우주의 기본적인 힘들" },
-    precise: { word:"precise", pron:"[프리사이스]", meaning:"정밀한", ex:"They have very precise values.", exko:"그것들은 매우 정밀한 값을 가진다." },
-    gravity: { word:"gravity", pron:"[그래비티]", meaning:"중력", ex:"the precise value of gravity", exko:"중력의 정밀한 값" },
-    permitting: { word:"permitting", pron:"[퍼미팅]", meaning:"허용하는", ex:"by permitting the aggregation of dust", exko:"먼지의 응집을 허용함으로써" },
-    orbit: { word:"orbit", pron:"[오빗]", meaning:"궤도를 돌다", ex:"Planets came to orbit the star.", exko:"행성들이 그 별의 궤도를 돌게 되었다." },
-    electron: { word:"electron", pron:"[일렉트론]", meaning:"전자", ex:"the value of the electron", exko:"전자의 값" },
-    privileged: { word:"privileged", pron:"[프리빌리지드]", meaning:"특권적인, 특별한", ex:"We have no privileged position in the universe.", exko:"우리는 우주에서 특별한 위치를 갖고 있지 않다." }
+    constants: { word:"constants", pron:"[컨스턴츠]", meaning:"상수", ex:"The laws and constants of physics are precise.", exko:"물리학의 법칙과 상수는 정밀하다.", etym:"con-(함께) + stant(=stare, 서다) + -s → 변함없이 함께 서 있는 것 → 상수. 같은 stant 어근을 쓰는 다른 접두사 단어: distant(di-(dis-, 멀리) + stant → 멀리 서 있는 → 먼), instant(in-그 안에 + stant → 그 순간에 서 있는 → 즉각적인)." },
+    fundamental: { word:"fundamental", pron:"[펀더멘털]", meaning:"기본적인, 근본적인", ex:"the fundamental forces in our universe", exko:"우리 우주의 기본적인 힘들", etym:"fund(=fundus, 바닥·기초) + -a + -ment + -al → 바닥이 되는 → 기본적인, 근본적인. 같은 fund 어근을 쓰는 다른 단어: foundation(fund + -ation → 기초, 토대), found(접두사 없이 원형 → (바닥을 세워) 설립하다)." },
+    precise: { word:"precise", pron:"[프리사이스]", meaning:"정밀한", ex:"They have very precise values.", exko:"그것들은 매우 정밀한 값을 가진다.", etym:"pre-(미리) + cise(=caedere, 자르다) → 미리 잘라내어 다듬은 → 정밀한, 정확한. 같은 cise 어근을 쓰는 다른 접두사 단어: concise(con-함께 + cise → 잘라서 함께 모은 → 간결한), excise(ex-밖으로 + cise → 잘라내다)." },
+    gravity: { word:"gravity", pron:"[그래비티]", meaning:"중력", ex:"the precise value of gravity", exko:"중력의 정밀한 값", etym:"grav(=gravis, 무거운) + -ity(명사형) → 무거움 → 중력. 같은 grav 어근을 쓰는 다른 접두사 단어: aggravate(ag-(ad-, ~에) + grav + -ate → 더 무겁게 하다 → 악화시키다), gravitate(접두사 없이 원형 → (중력처럼) 끌리다)." },
+    permitting: { word:"permitting", pron:"[퍼미팅]", meaning:"허용하는", ex:"by permitting the aggregation of dust", exko:"먼지의 응집을 허용함으로써", etym:"per-(끝까지·통하여) + mit(=mittere, 보내다) + -ing → 통과하도록 보내다 → 허용하다. 같은 mit 어근을 쓰는 다른 접두사 단어: submit(sub-아래로 + mit → 아래로 보내다 → 제출하다), transmit(trans-가로질러 + mit → 건너 보내다 → 전송하다)." },
+    orbit: { word:"orbit", pron:"[오빗]", meaning:"궤도를 돌다", ex:"Planets came to orbit the star.", exko:"행성들이 그 별의 궤도를 돌게 되었다.", etym:"orb(=orbis, 원·궤도) + -it → 둥근 길을 도는 것 → 궤도(를 돌다). 같은 orb 어근을 쓰는 다른 접두사 단어: exorbitant(ex-벗어나 + orbit → 정해진 궤도를 벗어난 → (가격이) 터무니없는)." },
+    electron: { word:"electron", pron:"[일렉트론]", meaning:"전자", ex:"the value of the electron", exko:"전자의 값", etym:"electr(=elektron, 그리스어로 '호박'—문지르면 정전기가 생긴 데서 유래) + -on(입자를 나타내는 접미사) → 전자. 같은 -on 접미사를 쓰는 다른 입자 이름: proton(양성자), neutron(중성자)." },
+    privileged: { word:"privileged", pron:"[프리빌리지드]", meaning:"특권적인, 특별한", ex:"We have no privileged position in the universe.", exko:"우리는 우주에서 특별한 위치를 갖고 있지 않다.", etym:"privi-(=privus, 개인적인) + leg(=lex, 법) + -ed → 개인에게만 적용되는 법을 지닌 → 특권을 가진. 같은 leg 어근을 쓰는 다른 접두사 단어: illegal(il-(in-, 부정) + leg → 불법의), legal(접두사 없이 원형 → 법의)." }
   },
   funcWords: {
     as: { word:"as", tag:"[as we know it]", meaning:"'chemistry, as we know it'에서 as we know it은 '우리가 아는 (바로 그) 화학'이라는 뜻으로 앞의 명사를 삽입구처럼 보충 설명해요. as를 '~로서'라고 기계적으로 해석하지 말고 '우리가 알고 있는 대로의'라고 자연스럽게 풀어주세요.", ex:"If the value of the electron had been ever so slightly larger or smaller, chemistry, as we know it, would not have been possible and life, which is based on organic chemistry, could not have started.", exko:"만약 전자의 값이 아주 조금이라도 더 크거나 작았다면, 우리가 아는 화학은 가능하지 않았을 것이고, 유기화학에 기반한 생명은 시작될 수 없었을 것이다." },

@@ -184,14 +184,14 @@ const problems = [
   answer: 0,
   explanation: "수가 커질수록 구별이 부정확해지고(원숭이는 5 이상부터 실패, 쥐는 수가 커질수록 부정확), 이는 모든 종에서 동일하게 나타나므로 '수의 크기가 중요하다'는 ①번이 정답입니다.",
   vocab: {
-    approximate: { word:"approximate number system", pron:"[어프락시밋 넘버 시스템]", meaning:"근사 수 체계", ex:"Animals use an approximate number system.", exko:"동물들은 근사 수 체계를 사용한다." },
-    precision: { word:"precision", pron:"[프리시전]", meaning:"정밀함, 정확성", ex:"What it does not provide is precision.", exko:"그것이 제공하지 못하는 것은 정밀함이다." },
-    discrimination: { word:"discrimination", pron:"[디스크리미네이션]", meaning:"구별, 식별", ex:"Discrimination becomes less accurate.", exko:"구별이 덜 정확해진다." },
-    quantities: { word:"quantities", pron:"[콴터티즈]", meaning:"양, 수량", ex:"as the quantities get bigger", exko:"수량이 커질수록" },
-    lever: { word:"lever", pron:"[레버]", meaning:"레버, 손잡이", ex:"Rats learned to press a lever.", exko:"쥐들은 레버 누르는 법을 배웠다." },
+    approximate: { word:"approximate number system", pron:"[어프락시밋 넘버 시스템]", meaning:"근사 수 체계", ex:"Animals use an approximate number system.", exko:"동물들은 근사 수 체계를 사용한다.", etym:"ap-(ad-, ~에) + proxim(=proximus, 가까운) + -ate(형용사형) → ~에 가까이 다가간 → 근사한, 대략의. 같은 proxim 어근을 쓰는 단어: approach(ap-+proch(proximare에서) → 가까이 다가가다), proximity(proxim+ity → 근접함)." },
+    precision: { word:"precision", pron:"[프리시전]", meaning:"정밀함, 정확성", ex:"What it does not provide is precision.", exko:"그것이 제공하지 못하는 것은 정밀함이다.", etym:"pre-(미리, 앞서) + cis(=caedere, 자르다) + -ion(명사형) → 미리 잘라내어 다듬음 → 정밀함. 같은 cis 어근을 쓰는 다른 접두사 단어: incisive(in-안으로 + cis + ive → 안으로 파고드는 → 예리한), concise(con-함께 + cis → 잘라서 함께 모은 → 간결한)." },
+    discrimination: { word:"discrimination", pron:"[디스크리미네이션]", meaning:"구별, 식별", ex:"Discrimination becomes less accurate.", exko:"구별이 덜 정확해진다.", etym:"dis-(따로) + crimin(=cernere, 구별하다) + -ation(명사형) → 따로따로 구별함 → 구별, 식별. 같은 cern/crimin 어근을 쓰는 다른 접두사 단어: discern(dis-따로 + cern → 구별하다), incriminate(in-안으로 + crimin + ate → 죄를 안으로 씌우다 → 유죄를 암시하다)." },
+    quantities: { word:"quantities", pron:"[콴터티즈]", meaning:"양, 수량", ex:"as the quantities get bigger", exko:"수량이 커질수록", etym:"quant(=quantus, 라틴어 '얼마나 많은') + -ity + -es(명사·복수형) → 얼마만큼 되는 것 → 양, 수량. 같은 어근을 쓰는 단어: quantify(quant + ify → 수량화하다), quantum(같은 어근 → 양자)." },
+    lever: { word:"lever", pron:"[레버]", meaning:"레버, 손잡이", ex:"Rats learned to press a lever.", exko:"쥐들은 레버 누르는 법을 배웠다.", etym:"lev(=levare, 들어올리다) → 들어올리는 도구 → 레버, 지렛대. 같은 lev 어근을 쓰는 다른 접두사 단어: elevate(e-밖으로 + lev + ate → 위로 들어올리다 → 높이다), relieve(re-다시 + lieve(=lev) → 짐을 다시 가볍게 하다 → 완화하다)." },
     markedly: { word:"markedly", pron:"[마크드리]", meaning:"현저하게", ex:"They became markedly less precise.", exko:"그것들은 현저하게 덜 정확해졌다." },
     spread: { word:"spread", pron:"[스프레드]", meaning:"분포, 퍼짐", ex:"They produce a spread of numbers.", exko:"그것들은 수의 분포를 만들어낸다." },
-    accuracy: { word:"accuracy", pron:"[애큐러시]", meaning:"정확도", ex:"when testing the accuracy of number sense", exko:"수 감각의 정확도를 시험할 때" }
+    accuracy: { word:"accuracy", pron:"[애큐러시]", meaning:"정확도", ex:"when testing the accuracy of number sense", exko:"수 감각의 정확도를 시험할 때", etym:"ac-(ad-, ~에) + cur(=cura, 주의·돌봄) + -acy(명사형) → 세심히 주의를 기울인 상태 → 정확도. 같은 cur 어근을 쓰는 다른 단어: curious(cur + ious → 호기심 있는), secure(se-떨어져(근심이) + cure → 근심 없는 → 안전한)." }
   },
   funcWords: {
     what: { word:"what", tag:"[관계대명사 what]", meaning:"'What it does not provide'는 '그것이 제공하지 못하는 것'이라는 뜻으로, 관계대명사 what이 이끄는 명사절이 문장의 주어 역할을 해요. what절은 '~하는 것'으로 해석하면 됩니다.", ex:"What it does not provide is precision.", exko:"그것이 제공하지 못하는 것은 정밀함이다." },
@@ -221,13 +221,13 @@ const problems = [
   explanation: "생각이 감정을 만들고 그 감정이 다시 생각에 영향을 주는 순환을 설명한 뒤 'This bi-directionality of cognition and emotion'이라고 했으므로, 감정과 인지는 떼어놓을 수 없다는 ②번이 정답입니다.",
   vocab: {
     trope: { word:"trope", pron:"[트로프]", meaning:"비유적 표현, 통념", ex:"the cultural trope depicting emotions", exko:"감정을 묘사하는 문화적 통념" },
-    depicting: { word:"depicting", pron:"[디픽팅]", meaning:"묘사하는", ex:"a trope depicting emotions as irrational", exko:"감정을 비이성적으로 묘사하는 통념" },
-    rational: { word:"rational", pron:"[래셔널]", meaning:"이성적인", ex:"the opposite of rational thought", exko:"이성적 사고의 반대" },
-    cognition: { word:"cognition", pron:"[코그니션]", meaning:"인지", ex:"Cognition is a building block of emotion.", exko:"인지는 감정의 구성 요소이다." },
+    depicting: { word:"depicting", pron:"[디픽팅]", meaning:"묘사하는", ex:"a trope depicting emotions as irrational", exko:"감정을 비이성적으로 묘사하는 통념", etym:"de-(강조, 완전히) + pict(=pingere, 그리다) + -ing → 완전히 그려내다 → 묘사하는. 같은 pict 어근을 쓰는 단어: picture(접두사 없이 원형 → 그림), picturesque(그림 같은 → 그림처럼 아름다운)." },
+    rational: { word:"rational", pron:"[래셔널]", meaning:"이성적인", ex:"the opposite of rational thought", exko:"이성적 사고의 반대", etym:"rat(=ratio, 계산·이성) + -ion + -al(형용사형) → 이성적으로 계산하는 → 이성적인. 같은 rat 어근을 쓰는 다른 접두사 단어: irrational(ir-(in-, 부정) + rational → 비이성적인), ratio(접두사 없이 원형 → 비율)." },
+    cognition: { word:"cognition", pron:"[코그니션]", meaning:"인지", ex:"Cognition is a building block of emotion.", exko:"인지는 감정의 구성 요소이다.", etym:"co-(con-, 함께) + gni(=gnoscere, 알다) + -tion(명사형) → 함께 알게 됨 → 인지. 같은 gno/gni 어근을 쓰는 다른 접두사 단어: recognize(re-다시 + co-함께 + gnize → 다시 알아보다 → 인식하다), ignore(i-(in-, 부정) + gnore(=gnoscere) → 알지 못한 체하다 → 무시하다)." },
     echo_back: { word:"echo back", pron:"[에코 백]", meaning:"되돌아 영향을 주다", ex:"Those emotions echo back to influence how we think.", exko:"그 감정들은 우리의 사고방식에 되돌아 영향을 준다." },
-    anxiety: { word:"anxiety", pron:"[앵자이어티]", meaning:"불안", ex:"Your anxiety will be increased.", exko:"당신의 불안이 증가할 것이다." },
-    bi_directionality: { word:"bi-directionality", pron:"[바이 디렉셔낼리티]", meaning:"양방향성", ex:"the bi-directionality of cognition and emotion", exko:"인지와 감정의 양방향성" },
-    anticipation: { word:"anticipation", pron:"[앤티시페이션]", meaning:"기대", ex:"That feeling is just excitement and anticipation.", exko:"그 느낌은 그저 흥분과 기대이다." }
+    anxiety: { word:"anxiety", pron:"[앵자이어티]", meaning:"불안", ex:"Your anxiety will be increased.", exko:"당신의 불안이 증가할 것이다.", etym:"anxi(=angere, 라틴어 '조이다, 괴롭히다') + -ety(명사형) → 마음이 조여드는 상태 → 불안. 같은 어근을 쓰는 단어: anguish(같은 angere 어근 → 괴로움)." },
+    bi_directionality: { word:"bi-directionality", pron:"[바이 디렉셔낼리티]", meaning:"양방향성", ex:"the bi-directionality of cognition and emotion", exko:"인지와 감정의 양방향성", etym:"bi-(둘) + direction + -al + -ity(명사형) → 양쪽 방향으로 향하는 성질 → 양방향성. bi-가 쓰인 다른 단어: bilingual(bi-둘 + lingual(언어의) → 두 언어를 구사하는), biannual(bi-둘 + annual → 일 년에 두 번의)." },
+    anticipation: { word:"anticipation", pron:"[앤티시페이션]", meaning:"기대", ex:"That feeling is just excitement and anticipation.", exko:"그 느낌은 그저 흥분과 기대이다.", etym:"ante-(미리) + cip(=capere, 잡다) + -ation(명사형) → 미리 붙잡음 → 기대. 같은 cap/cip 어근을 쓰는 다른 접두사 단어: accept(ac-(ad-, ~에게) + cept(=capere) → 받아들이다), except(ex-밖으로 + cept → 밖으로 빼내다 → 제외하다)." }
   },
   funcWords: {
     as: { word:"as", tag:"[전치사 as]", meaning:"as는 이 문장에서 두 번 쓰였어요. 'depicting emotions as the opposite'에서는 'A를 B로 묘사하다(depict A as B)' 구문으로 '~로'라는 뜻이고, 'refer to as thinking'에서는 'refer to A as B(A를 B라고 부르다)' 구문으로 '~라고'라는 뜻이에요.", ex:"Despite the cultural trope depicting emotions as the opposite of rational thought, cognition — what we commonly refer to as thinking — is actually a key building block of emotion.", exko:"감정을 이성적 사고의 반대로 묘사하는 문화적 통념에도 불구하고, 인지 — 우리가 흔히 사고라고 부르는 것 — 는 사실 감정의 핵심 구성 요소이다." },
@@ -259,13 +259,13 @@ const problems = [
   explanation: "역량 접근법(CA)은 인간과의 유사성으로 동물의 순위를 매기지 않고 '각 동물 고유의 삶의 형태(their own forms of life)'가 중요하다고 했으므로, 그 생명체 고유의 삶의 형태로 번성해야 한다는 ⑤번이 정답입니다.",
   vocab: {
     capabilities: { word:"Capabilities Approach", pron:"[케이퍼빌리티즈 어프로치]", meaning:"역량 접근법", ex:"What is the Capabilities Approach?", exko:"역량 접근법이란 무엇인가?" },
-    passionate: { word:"passionate", pron:"[패셔닛]", meaning:"열정적인", ex:"lawyers passionate about animal justice", exko:"동물 정의에 열정적인 변호사들" },
+    passionate: { word:"passionate", pron:"[패셔닛]", meaning:"열정적인", ex:"lawyers passionate about animal justice", exko:"동물 정의에 열정적인 변호사들", etym:"pass(=pati, 겪다·고통받다) + -ion + -ate(형용사형) → 겪어낸 감정이 넘치는 → 열정적인. 같은 pat/pass 어근을 쓰는 다른 접두사 단어: compassion(com-함께 + pass(pati) → 함께 아파함 → 연민), patient(pati + ent → 참고 견디는 → 인내심 있는, 환자)." },
     rank: { word:"rank", pron:"[랭크]", meaning:"순위를 매기다", ex:"The CA does not rank animals by likeness to humans.", exko:"CA는 인간과의 유사성으로 동물의 순위를 매기지 않는다." },
     likeness: { word:"likeness", pron:"[라이크니스]", meaning:"유사성, 닮음", ex:"likeness to humans", exko:"인간과의 유사성" },
-    privileges: { word:"privileges", pron:"[프리빌리지스]", meaning:"특권", ex:"They do not seek special privileges.", exko:"그들은 특별한 특권을 추구하지 않는다." },
-    irrelevant: { word:"irrelevant", pron:"[이렐러번트]", meaning:"무관한", ex:"The human form of life is simply irrelevant.", exko:"인간의 삶의 형태는 전혀 무관하다." },
-    deserves: { word:"deserves", pron:"[디저브즈]", meaning:"받을 자격이 있다", ex:"what each type of animal needs and deserves", exko:"각 종류의 동물이 필요로 하고 받을 자격이 있는 것" },
-    flourish: { word:"flourish", pron:"[플러리시]", meaning:"번성하다", ex:"Each creature should have the opportunity to flourish.", exko:"각 생명체는 번성할 기회를 가져야 한다." }
+    privileges: { word:"privileges", pron:"[프리빌리지스]", meaning:"특권", ex:"They do not seek special privileges.", exko:"그들은 특별한 특권을 추구하지 않는다.", etym:"privi(=privus, 개인의) + leg(=lex, 법) + -es(명사·복수형) → 개인에게만 적용되는 법 → 특권. 같은 leg 어근을 쓰는 다른 접두사 단어: illegal(il-(in-, 부정) + leg → 불법의), legal(접두사 없이 원형 → 법의)." },
+    irrelevant: { word:"irrelevant", pron:"[이렐러번트]", meaning:"무관한", ex:"The human form of life is simply irrelevant.", exko:"인간의 삶의 형태는 전혀 무관하다.", etym:"ir-(in-, 부정) + relev(=relevare, 들어올리다·관련짓다) + -ant(형용사형) → 관련되어 들어올려지지 않는 → 무관한. 같은 lev 어근을 쓰는 다른 단어: relevant(부정 접두사가 빠진 원형 → 관련 있는), elevate(e-밖으로 + lev + ate → 위로 들어올리다 → 높이다)." },
+    deserves: { word:"deserves", pron:"[디저브즈]", meaning:"받을 자격이 있다", ex:"what each type of animal needs and deserves", exko:"각 종류의 동물이 필요로 하고 받을 자격이 있는 것", etym:"de-(완전히) + serve(=servire, 섬기다) + -s → 완전히 섬겨서 받을 만하다 → ~할 자격이 있다. 같은 serve 어근을 쓰는 단어: service(같은 어근의 명사형 → 봉사, 서비스), servant(같은 어근 → 하인, 종)." },
+    flourish: { word:"flourish", pron:"[플러리시]", meaning:"번성하다", ex:"Each creature should have the opportunity to flourish.", exko:"각 생명체는 번성할 기회를 가져야 한다.", etym:"flor(=florere, '꽃피다', flos '꽃'에서 유래) + -ish(동사형) → 꽃처럼 활짝 피어나다 → 번성하다. 같은 어근을 쓰는 단어: floral(flor + al → 꽃의), flora(flor → 식물군)." }
   },
   funcWords: {
     as: { word:"as", tag:"[접속사 as / 전치사 as]", meaning:"'as do some other popular theoretical approaches'에서 as는 '~하듯이'라는 뜻의 접속사이고, 뒤에서 주어(some other approaches)와 동사(do)가 도치되어 있어요. do는 앞의 'rank animals by likeness ~'를 대신하는 대동사예요. 뒤에 나오는 'picture animals as lesser humans'의 as는 다른 용법으로 '~로(서)'라는 뜻이에요.", ex:"The CA does not rank animals by likeness to humans or seek special privileges for those considered most \"like us,\" as do some other popular theoretical approaches.", exko:"CA는 다른 몇몇 인기 있는 이론적 접근법들이 그러하듯 인간과의 유사성으로 동물의 순위를 매기거나 가장 '우리와 비슷하다'고 여겨지는 동물에게 특별한 특권을 추구하지 않는다." },
@@ -301,14 +301,14 @@ const problems = [
   answer: 3,
   explanation: "글 전체는 소셜미디어가 자전적 기억을 돕는다는 내용인데, ④번은 상향 사회 비교가 자존감 낮은 사람에게 해롭다는 내용으로 기억이라는 주제에서 벗어나므로 정답은 ④번입니다.",
   vocab: {
-    facilitate: { word:"facilitate", pron:"[퍼실리테이트]", meaning:"촉진하다", ex:"It helps facilitate remembering.", exko:"그것은 기억하는 것을 촉진하도록 돕는다." },
-    autobiographical: { word:"autobiographical", pron:"[오토바이오그래피컬]", meaning:"자전적인", ex:"autobiographical remembering", exko:"자전적 기억" },
-    independent_of: { word:"independent of", pron:"[인디펜던트 오브]", meaning:"~와 무관하게", ex:"independent of the characteristics of the events", exko:"사건의 특성과 무관하게" },
-    rehearse: { word:"rehearse", pron:"[리허스]", meaning:"되풀이해 떠올리다", ex:"Sharing allows individuals to rehearse memories.", exko:"공유는 개인이 기억을 되풀이해 떠올리게 해준다." },
-    retention: { word:"retention", pron:"[리텐션]", meaning:"유지, 보유", ex:"facilitating long-term memory retention", exko:"장기 기억 유지를 촉진하는" },
+    facilitate: { word:"facilitate", pron:"[퍼실리테이트]", meaning:"촉진하다", ex:"It helps facilitate remembering.", exko:"그것은 기억하는 것을 촉진하도록 돕는다.", etym:"facil(=facilis, 쉬운, facere '하다'에서 유래) + -itate(동사형) → 쉽게 만들다 → 촉진하다. 같은 fac 어근을 쓰는 다른 단어: factory(fac + tory → 만드는 곳), manufacture(manu-손 + fac + ture → 손으로 만들다 → 제조하다)." },
+    autobiographical: { word:"autobiographical", pron:"[오토바이오그래피컬]", meaning:"자전적인", ex:"autobiographical remembering", exko:"자전적 기억", etym:"auto-(스스로) + bio(생명) + graph(=graphein, 쓰다) + -ical(형용사형) → 스스로의 삶을 쓴 → 자전적인. 같은 graph 어근을 쓰는 다른 단어: biography(bio + graph → 삶에 대한 기록), photograph(photo-빛 + graph → 빛으로 쓰다 → 사진)." },
+    independent_of: { word:"independent of", pron:"[인디펜던트 오브]", meaning:"~와 무관하게", ex:"independent of the characteristics of the events", exko:"사건의 특성과 무관하게", etym:"in-(부정) + de-(아래로) + pend(=pendere, 매달리다) + -ent(형용사형) → 무언가에 매달려 있지 않은 → 독립적인, ~와 무관한. 같은 pend 어근을 쓰는 다른 접두사 단어: depend(de-아래로 + pend → 아래에 매달리다 → 의존하다), suspend(sus-(sub-, 아래에) + pend → 매달아 놓다 → 유예하다)." },
+    rehearse: { word:"rehearse", pron:"[리허스]", meaning:"되풀이해 떠올리다", ex:"Sharing allows individuals to rehearse memories.", exko:"공유는 개인이 기억을 되풀이해 떠올리게 해준다.", etym:"re-(다시) + hearse(고대 프랑스어 '써레질하다'에서, 반복 작업을 뜻하게 됨) → 다시 되풀이하다 → 기억을 되풀이해 떠올리다." },
+    retention: { word:"retention", pron:"[리텐션]", meaning:"유지, 보유", ex:"facilitating long-term memory retention", exko:"장기 기억 유지를 촉진하는", etym:"re-(계속) + tent(=tenere, 잡다) + -ion(명사형) → 계속 붙잡고 있음 → 유지, 보유. 같은 ten/tent 어근을 쓰는 다른 접두사 단어: retain(re-계속 + tain → 계속 붙잡다 → 보유하다), content(con-함께 + tent → 함께 담아 만족한)." },
     cues: { word:"cues", pron:"[큐즈]", meaning:"단서", ex:"They serve as memory cues.", exko:"그것들은 기억의 단서 역할을 한다." },
-    self_esteem: { word:"self-esteem", pron:"[셀프 이스팀]", meaning:"자존감", ex:"harmful for low self-esteem individuals", exko:"자존감이 낮은 사람들에게 해로운" },
-    inaccessible: { word:"inaccessible", pron:"[인액세서블]", meaning:"접근할 수 없는", ex:"They may become inaccessible or forgotten.", exko:"그것들은 접근 불가능해지거나 잊힐 수 있다." }
+    self_esteem: { word:"self-esteem", pron:"[셀프 이스팀]", meaning:"자존감", ex:"harmful for low self-esteem individuals", exko:"자존감이 낮은 사람들에게 해로운", etym:"self-(자기) + esteem(=aestimare, 평가하다) → 자기 자신을 높이 평가함 → 자존감. 같은 esteem 어근을 쓰는 단어: estimate(같은 어근 → 추정하다, 평가하다)." },
+    inaccessible: { word:"inaccessible", pron:"[인액세서블]", meaning:"접근할 수 없는", ex:"They may become inaccessible or forgotten.", exko:"그것들은 접근 불가능해지거나 잊힐 수 있다.", etym:"in-(부정) + ac-(ad-, ~로) + cess(=cedere, 가다) + -ible(~할 수 있는) → ~로 갈 수 없는 → 접근할 수 없는. 같은 cess/ced 어근을 쓰는 다른 접두사 단어: access(ac-+cess → 다가가다), exceed(ex-넘어서 + ceed → 넘어서 가다 → 초과하다)." }
   },
   funcWords: {
     those: { word:"those", tag:"[대명사 those]", meaning:"those는 앞에 나온 personal events를 대신하는 대명사예요. 'those not posted'는 'events that are not posted(게시되지 않은 사건들)'라는 뜻으로, those 뒤에 형용사(not posted)가 바로 붙어 명사를 대신해요.", ex:"Personal events posted on social media platforms are better remembered and less forgotten than those not posted, independent of the characteristics of the events.", exko:"소셜미디어 플랫폼에 게시된 개인적 사건들은 사건의 특성과 무관하게, 게시되지 않은 사건들보다 더 잘 기억되고 덜 잊힌다." },
@@ -337,14 +337,14 @@ const problems = [
   answer: 2,
   explanation: "당연하게 여긴다는 주어진 글 뒤에 (B)에서 'However'로 반전하며 식사 경험을 예로 들고, (C)에서 그 식사가 감각의 융합임을 설명한 뒤, (A)에서 'And it does not stop there'로 소리까지 덧붙이므로 (B)-(C)-(A)인 ③번이 정답입니다.",
   vocab: {
-    multisensory: { word:"multisensory", pron:"[멀티센서리]", meaning:"다감각의", ex:"Multisensory experiences are common.", exko:"다감각 경험은 흔하다." },
+    multisensory: { word:"multisensory", pron:"[멀티센서리]", meaning:"다감각의", ex:"Multisensory experiences are common.", exko:"다감각 경험은 흔하다.", etym:"multi-(많은) + sens(=sentire, 느끼다) + -ory(형용사형) → 많은 감각과 관련된 → 다감각의. 같은 sens/sent 어근을 쓰는 다른 접두사 단어: consent(con-함께 + sent → 함께 느끼다 → 동의하다), sensitive(sens + itive → 민감한)." },
     take_for_granted: { word:"take for granted", pron:"[테이크 포 그랜티드]", meaning:"당연하게 여기다", ex:"We often take them for granted.", exko:"우리는 종종 그것들을 당연하게 여긴다." },
     aids: { word:"aids", pron:"[에이즈]", meaning:"보조 도구", ex:"corrected to normal with aids like glasses", exko:"안경 같은 보조 도구로 정상으로 교정된" },
-    inspection: { word:"inspection", pron:"[인스펙션]", meaning:"관찰, 조사", ex:"Closer inspection reveals the truth.", exko:"더 자세히 관찰하면 진실이 드러난다." },
+    inspection: { word:"inspection", pron:"[인스펙션]", meaning:"관찰, 조사", ex:"Closer inspection reveals the truth.", exko:"더 자세히 관찰하면 진실이 드러난다.", etym:"in-(안으로) + spect(=specere, 보다) + -ion(명사형) → 안을 들여다봄 → 관찰, 조사. 같은 spect 어근을 쓰는 다른 접두사 단어: respect(re-다시 + spect → 다시 봄 → 존중하다), suspect(sus-(sub-, 아래에서) + spect → 아래에서 몰래 보다 → 의심하다)." },
     remarkable: { word:"remarkable", pron:"[리마커블]", meaning:"놀라운", ex:"the remarkable multisensory world", exko:"놀라운 다감각 세계" },
-    fusion: { word:"fusion", pron:"[퓨전]", meaning:"융합", ex:"It is actually a fusion of the senses.", exko:"그것은 사실 감각들의 융합이다." },
+    fusion: { word:"fusion", pron:"[퓨전]", meaning:"융합", ex:"It is actually a fusion of the senses.", exko:"그것은 사실 감각들의 융합이다.", etym:"fus(=fundere, 녹이다·붓다) + -ion(명사형) → 녹여서 하나로 합침 → 융합. 같은 fus 어근을 쓰는 다른 접두사 단어: confuse(con-함께 + fuse → 함께 녹여 섞다 → 혼란시키다), infuse(in-안으로 + fuse → 안에 부어넣다 → 주입하다)." },
     countless: { word:"countless", pron:"[카운트리스]", meaning:"수많은", ex:"exposed to countless sensory signals", exko:"수많은 감각 신호에 노출된" },
-    textures: { word:"textures", pron:"[텍스처스]", meaning:"질감", ex:"food textures, tastes, and smells", exko:"음식의 질감, 맛, 냄새" }
+    textures: { word:"textures", pron:"[텍스처스]", meaning:"질감", ex:"food textures, tastes, and smells", exko:"음식의 질감, 맛, 냄새", etym:"text(=texere, 짜다) + -ure + -s(명사·복수형) → 짜여진 결 → 질감. 같은 texere 어근을 쓰는 다른 단어: context(con-함께 + text → 함께 짜인 것 → 맥락), textile(text + ile → 짜여진 것 → 직물)." }
   },
   funcWords: {
     yet: { word:"yet", tag:"[접속사 yet]", meaning:"yet은 여기서 '아직'이라는 뜻의 부사가 아니라 but과 같이 '그러나, 하지만'이라는 뜻으로 문장을 이어주는 접속사예요. 앞 내용과 대조되는 내용이 뒤에 나올 때 쓰여요.", ex:"Multisensory experiences are a central part of our everyday lives, yet we often take them for granted, especially when our senses function normally or are corrected to normal with aids like glasses.", exko:"다감각 경험은 우리 일상생활의 중심적인 부분이지만, 우리는 종종 그것을 당연하게 여긴다. 특히 우리의 감각이 정상적으로 기능하거나 안경 같은 보조 도구로 정상으로 교정되었을 때 더욱 그렇다." },
@@ -385,14 +385,14 @@ const problems = [
   answer: 1,
   explanation: "아이들이 반대 개념을 이해하지 못한다는 주어진 글 뒤에 (B)에서 'for instance'로 왼쪽/오른쪽 예를 들고, (A)에서 'The same applies'로 예/아니오 예시를 이어가며 혼란을 언급한 뒤, (C)에서 'Our confusion'으로 그 혼란을 받으므로 (B)-(A)-(C)인 ②번이 정답입니다.",
   vocab: {
-    principle: { word:"principle", pron:"[프린서플]", meaning:"원리, 원칙", ex:"the principle of opposites", exko:"반대 개념의 원리" },
-    opposites: { word:"opposites", pron:"[아퍼짓츠]", meaning:"반대되는 것들", ex:"The principle of opposites is foreign to children.", exko:"반대 개념의 원리는 아이들에게 낯설다." },
+    principle: { word:"principle", pron:"[프린서플]", meaning:"원리, 원칙", ex:"the principle of opposites", exko:"반대 개념의 원리", etym:"prin(=primus, 첫 번째) + cip(=capere, 잡다) + -le(명사형) → 맨 처음 붙잡아야 할 것 → 원리, 원칙. 같은 prim/cap 어근을 쓰는 단어: principal(같은 어근 → 주요한, 교장), participate(par-부분 + cip(capere) + ate → 부분을 잡다 → 참여하다)." },
+    opposites: { word:"opposites", pron:"[아퍼짓츠]", meaning:"반대되는 것들", ex:"The principle of opposites is foreign to children.", exko:"반대 개념의 원리는 아이들에게 낯설다.", etym:"op-(ob-, 맞서) + pos(=ponere, 놓다) + -ite + -s(명사·복수형) → 맞서 놓인 것 → 반대되는 것들. 같은 pos/pon 어근을 쓰는 다른 접두사 단어: propose(pro-앞에 + pose → 앞에 내놓다 → 제안하다), suppose(sup-(sub-, 아래에) + pose → 아래에 놓아 가정하다 → 추정하다)." },
     foreign: { word:"foreign", pron:"[포린]", meaning:"낯선, 생소한", ex:"The idea is foreign to them.", exko:"그 개념은 그들에게 낯설다." },
-    perceive: { word:"perceive", pron:"[퍼시브]", meaning:"인식하다", ex:"Children perceive words separately.", exko:"아이들은 단어를 따로따로 인식한다." },
-    applies: { word:"applies to", pron:"[어플라이즈 투]", meaning:"~에 적용되다", ex:"The same applies to Yes and No.", exko:"같은 것이 '예'와 '아니오'에도 적용된다." },
-    vivid: { word:"vivid", pron:"[비비드]", meaning:"생생한", ex:"A vivid example can be seen here.", exko:"생생한 예를 여기서 볼 수 있다." },
-    confusion: { word:"confusion", pron:"[컨퓨전]", meaning:"혼란", ex:"Our confusion was about eating.", exko:"우리의 혼란은 먹는 것에 관한 것이었다." },
-    recognize: { word:"recognize", pron:"[레커그나이즈]", meaning:"인식하다, 알아차리다", ex:"Only later did we recognize the connection.", exko:"나중에서야 우리는 그 연결을 알아차렸다." }
+    perceive: { word:"perceive", pron:"[퍼시브]", meaning:"인식하다", ex:"Children perceive words separately.", exko:"아이들은 단어를 따로따로 인식한다.", etym:"per-(완전히, 통하여) + ceive(=capere, 잡다) → 완전히 붙잡다 → 인식하다. 같은 cap/ceive 어근을 쓰는 다른 접두사 단어: receive(re-다시 + ceive → 다시 받다), conceive(con-함께 + ceive → 함께 붙잡다 → 생각을 품다)." },
+    applies: { word:"applies to", pron:"[어플라이즈 투]", meaning:"~에 적용되다", ex:"The same applies to Yes and No.", exko:"같은 것이 '예'와 '아니오'에도 적용된다.", etym:"ap-(ad-, ~에) + ply(=plicare, 접다) → ~에 겹쳐 접어 붙이다 → 적용되다. 같은 plic/ply 어근을 쓰는 다른 접두사 단어: imply(im-(in-, 안으로) + ply → 안에 접어 넣다 → 암시하다), reply(re-다시 + ply → 다시 접어 보내다 → 답장하다)." },
+    vivid: { word:"vivid", pron:"[비비드]", meaning:"생생한", ex:"A vivid example can be seen here.", exko:"생생한 예를 여기서 볼 수 있다.", etym:"viv(=vivere, 살다) + -id(형용사형) → 생생히 살아있는 → 생생한. 같은 viv 어근을 쓰는 다른 접두사 단어: survive(sur-넘어서 + vive → 넘어서 살다 → 생존하다), revive(re-다시 + vive → 다시 살아나다 → 부활시키다)." },
+    confusion: { word:"confusion", pron:"[컨퓨전]", meaning:"혼란", ex:"Our confusion was about eating.", exko:"우리의 혼란은 먹는 것에 관한 것이었다.", etym:"con-(함께) + fus(=fundere, 녹이다·붓다) + -ion(명사형) → 함께 뒤섞음 → 혼란. 같은 fus 어근을 쓰는 다른 접두사 단어: diffuse(dif-(dis-, 흩어지게) + fuse → 흩어져 퍼지다), refuse(re-되돌려 + fuse → 도로 쏟아붓다 → 거절하다)." },
+    recognize: { word:"recognize", pron:"[레커그나이즈]", meaning:"인식하다, 알아차리다", ex:"Only later did we recognize the connection.", exko:"나중에서야 우리는 그 연결을 알아차렸다.", etym:"re-(다시) + co-(con-, 함께) + gni(=gnoscere, 알다) + -ize → 다시 알아보다 → 인식하다, 알아차리다. 같은 gno/gni 어근을 쓰는 다른 접두사 단어: ignore(i-(in-, 부정) + gnore → 알지 못한 체하다 → 무시하다), incognito(in-부정 + cognito(알려진) → 신분을 숨긴)." }
   },
   funcWords: {
     as: { word:"as", tag:"[as perceived by ~]", meaning:"'as perceived by parents'에서 as는 '~듯이, ~하는 대로'라는 뜻으로, '부모가 인식하는 대로(의)'라고 해석돼요. as perceived by는 수동형으로 '~에 의해 인식되는 대로'라는 뜻이 됩니다.", ex:"The same applies to the logical connection between 'Yes' and 'No' as perceived by parents.", exko:"부모가 인식하는 '예'와 '아니오' 사이의 논리적 연결에도 똑같은 것이 적용된다." },
@@ -433,14 +433,14 @@ const problems = [
   insertSentence: "These patterns recur predictably because they are tightly programmed genetically and propelled pheromonally.",
   insertSentenceKo: "이러한 패턴들은 유전적으로 단단히 프로그램되어 있고 페로몬에 의해 추동되기 때문에 예측 가능하게 반복된다.",
   vocab: {
-    recur: { word:"recur", pron:"[리커]", meaning:"반복되다", ex:"These patterns recur predictably.", exko:"이러한 패턴들은 예측 가능하게 반복된다." },
-    propelled: { word:"propelled", pron:"[프러펠드]", meaning:"추동되는, 나아가게 되는", ex:"They are propelled pheromonally.", exko:"그것들은 페로몬에 의해 추동된다." },
-    metrics: { word:"metrics", pron:"[메트릭스]", meaning:"측정 기준", ex:"on many metrics of sociality", exko:"사회성의 많은 측정 기준에서" },
-    sociality: { word:"sociality", pron:"[소셜리티]", meaning:"사회성", ex:"Ants put humanity to shame on sociality.", exko:"개미는 사회성에서 인류를 무색하게 만든다." },
-    harmonious: { word:"harmonious", pron:"[하모니어스]", meaning:"조화로운", ex:"perfectly harmonious behavior", exko:"완벽하게 조화로운 행동" },
-    colonies: { word:"colonies", pron:"[콜로니즈]", meaning:"군집", ex:"Insect colonies are social places.", exko:"곤충 군집은 사회적인 공간이다." },
-    hexagonal: { word:"hexagonal", pron:"[헥사고널]", meaning:"육각형의", ex:"Bees always build hexagonal hives.", exko:"벌은 항상 육각형 벌집을 짓는다." },
-    nurture: { word:"nurture", pron:"[너처]", meaning:"양육, 후천적 환경", ex:"shaped by nurture, not just nature", exko:"본성만이 아니라 양육에 의해 형성된" }
+    recur: { word:"recur", pron:"[리커]", meaning:"반복되다", ex:"These patterns recur predictably.", exko:"이러한 패턴들은 예측 가능하게 반복된다.", etym:"re-(다시) + cur(=currere, 달리다) → 다시 돌아 달리다 → 반복되다. 같은 cur(rere) 어근을 쓰는 다른 접두사 단어: occur(oc-(ob-, ~을 향해) + cur → ~쪽으로 일어나다 → 발생하다), current(cur + rent → 흐르는 → 현재의, 흐름)." },
+    propelled: { word:"propelled", pron:"[프러펠드]", meaning:"추동되는, 나아가게 되는", ex:"They are propelled pheromonally.", exko:"그것들은 페로몬에 의해 추동된다.", etym:"pro-(앞으로) + pel(=pellere, 밀다) + -ed → 앞으로 밀다 → 추동되는. 같은 pel 어근을 쓰는 다른 접두사 단어: expel(ex-밖으로 + pel → 밖으로 밀어내다 → 추방하다), compel(com-강하게 + pel → 강제로 밀다 → 강요하다)." },
+    metrics: { word:"metrics", pron:"[메트릭스]", meaning:"측정 기준", ex:"on many metrics of sociality", exko:"사회성의 많은 측정 기준에서", etym:"metr(=metron, 그리스어 '측정') + -ics(명사형) → 측정에 관한 것 → 측정 기준. 같은 metr 어근을 쓰는 다른 단어: thermometer(thermo-열 + meter → 열을 재는 도구), symmetry(sym-함께 + metry → 함께 잰 듯 균형잡힌 → 대칭)." },
+    sociality: { word:"sociality", pron:"[소셜리티]", meaning:"사회성", ex:"Ants put humanity to shame on sociality.", exko:"개미는 사회성에서 인류를 무색하게 만든다.", etym:"soci(=socius, 동료·친구) + -al + -ity(명사형) → 동료와 어울리는 성질 → 사회성. 같은 soci 어근을 쓰는 다른 접두사 단어: associate(as-(ad-, ~에) + soci + ate → 동료로 결합하다 → 연관짓다), social(접두사 없이 원형 → 사회적인)." },
+    harmonious: { word:"harmonious", pron:"[하모니어스]", meaning:"조화로운", ex:"perfectly harmonious behavior", exko:"완벽하게 조화로운 행동", etym:"harmon(=harmonia, 그리스어 '조화') + -ious(형용사형) → 조화로운. 같은 어근을 쓰는 단어: harmony(원형, 조화), philharmonic(phil-사랑 + harmonic → 음악을 사랑하는 → 교향악단의)." },
+    colonies: { word:"colonies", pron:"[콜로니즈]", meaning:"군집", ex:"Insect colonies are social places.", exko:"곤충 군집은 사회적인 공간이다.", etym:"col(=colere, 경작하다·거주하다) + -ony + -ies(명사·복수형) → 경작하며 정착한 곳 → 군집, 식민지. 같은 col 어근을 쓰는 다른 단어: cultivate(cult(colere) + ivate → 경작하다), agriculture(agri-농지 + culture(colere) → 농업)." },
+    hexagonal: { word:"hexagonal", pron:"[헥사고널]", meaning:"육각형의", ex:"Bees always build hexagonal hives.", exko:"벌은 항상 육각형 벌집을 짓는다.", etym:"hex(그리스어 '여섯') + agon(=gonia, 각) + -al(형용사형) → 여섯 개의 각을 가진 → 육각형의. 같은 그리스어 수사+gon 어근을 쓰는 다른 단어: pentagon(penta-다섯 + gon → 오각형), triangle(tri-셋 + angle(=gonia의 라틴화) → 삼각형)." },
+    nurture: { word:"nurture", pron:"[너처]", meaning:"양육, 후천적 환경", ex:"shaped by nurture, not just nature", exko:"본성만이 아니라 양육에 의해 형성된", etym:"nur(=nutrire, 기르다·양분을 주다) + -ture(명사형) → 길러냄 → 양육, 후천적 환경. 같은 어근을 쓰는 단어: nutrition(같은 nutrire 어근 → 영양), nourish(같은 어근 → 영양분을 주다)." }
   },
   funcWords: {
     while: { word:"while", tag:"[접속사 while · 양보]", meaning:"while은 '~하는 동안'이라는 시간의 뜻이 아니라 '~이기는 하지만'이라는 양보의 뜻으로 쓰였어요. 뒤에 대조되는 내용(그것은 우리 방식이 아니다)이 이어져요.", ex:"But while insect colonies are impressively social places, it's not our kind of social life.", exko:"하지만 곤충 군집이 인상적으로 사회적인 공간이기는 하지만, 그것은 우리 방식의 사회생활은 아니다." },

@@ -430,6 +430,7 @@ function removeStar(i) {
   setStarred(g.id, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(g.id));
   if (removedWord) removeWrongWord(removedWord);
+  if (removedWord && window.studyStats) window.studyStats.unrecord('star');
   renderBrowse();
 }
 

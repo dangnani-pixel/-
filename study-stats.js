@@ -183,6 +183,17 @@
       }
       scheduleSync();
     },
+    unrecord: function (type) {
+      var rule = XP_RULES[type];
+      if (!rule) return;
+      var s = load();
+      var loss = rule[0];
+      s.xp = Math.max(0, s.xp - loss);
+      save(s);
+      updateBadge();
+      showXpToast('-' + loss + ' XP');
+      scheduleSync();
+    },
     refresh: updateBadge
   };
 

@@ -177,14 +177,14 @@ const problems = [
   noteKo: "항상 해를 막으려 하지만 결코 그렇게 하지 못하는 사람은 일반적으로 도덕적으로 선하다고 여겨지지 않는다.",
   noteLabel: "📌 삽입할 문장",
   vocab: {
-    morally: { word:"morally", pron:"[모럴리]", meaning:"도덕적으로", ex:"Act morally in all situations.", exko:"모든 상황에서 도덕적으로 행동해라." },
-    significantly: { word:"significantly", pron:"[시그니피컨틀리]", meaning:"훨씬, 상당히", ex:"Prices increased significantly.", exko:"가격이 상당히 올랐다." },
-    intentions: { word:"intentions", pron:"[인텐션즈]", meaning:"의도들", ex:"Good intentions are important.", exko:"좋은 의도가 중요하다." },
-    motives: { word:"motives", pron:"[모티브즈]", meaning:"동기", ex:"Her motives were unclear.", exko:"그녀의 동기는 불분명했다." },
-    relevant: { word:"relevant", pron:"[렐러번트]", meaning:"관련 있는", ex:"That information is not relevant.", exko:"그 정보는 관련이 없다." },
-    unintentionally: { word:"unintentionally", pron:"[언인텐셔널리]", meaning:"의도치 않게", ex:"He unintentionally offended her.", exko:"그는 의도치 않게 그녀를 기분 상하게 했다." },
-    consequences: { word:"consequences", pron:"[컨시퀀시즈]", meaning:"결과", ex:"Actions have consequences.", exko:"행동에는 결과가 따른다." },
-    regarded: { word:"regarded as", pron:"[리가딛 애즈]", meaning:"~로 여겨지는", ex:"She is regarded as an expert.", exko:"그녀는 전문가로 여겨진다." }
+    morally: { word:"morally", pron:"[모럴리]", meaning:"도덕적으로", ex:"Act morally in all situations.", exko:"모든 상황에서 도덕적으로 행동해라.", etym:"mor(관습, 도덕; Latin mos/moralis) + ally → '도덕에 따라' → '도덕적으로'. 관련 단어: moral(도덕적인), morale(사기), demoralize(de-떨어뜨려 + moral → 사기를 꺾다)." },
+    significantly: { word:"significantly", pron:"[시그니피컨틀리]", meaning:"훨씬, 상당히", ex:"Prices increased significantly.", exko:"가격이 상당히 올랐다.", etym:"sign(표시; Latin signum) + ific + ant + ly → '표시할 만큼 두드러지게' → '훨씬, 상당히'. 같은 sign 어근: signal(신호), signify(sign + fy → 의미하다), design(de-+sign → 설계하다)." },
+    intentions: { word:"intentions", pron:"[인텐션즈]", meaning:"의도들", ex:"Good intentions are important.", exko:"좋은 의도가 중요하다.", etym:"in-(안으로) + tend(뻗다; Latin tendere) + ion → '마음을 안으로 뻗음' → '의도'. 같은 tend 어근: attend(참석하다), extend(연장하다), pretend(pre-미리 + tend → ~인 척하다)." },
+    motives: { word:"motives", pron:"[모티브즈]", meaning:"동기", ex:"Her motives were unclear.", exko:"그녀의 동기는 불분명했다.", etym:"mot(움직이다; Latin movere) + ive → '움직이게 하는 것' → '동기'. 같은 mot/mov 어근: motion(움직임), promote(pro-앞으로 + mot → 촉진하다), remove(re-다시 + mov → 제거하다)." },
+    relevant: { word:"relevant", pron:"[렐러번트]", meaning:"관련 있는", ex:"That information is not relevant.", exko:"그 정보는 관련이 없다.", etym:"re-(다시) + lev(들어올리다; Latin levare) + ant → '다시 들어 관련짓는' → '관련 있는'. 같은 lev 어근: elevate(e-위로 + lev → 끌어올리다), alleviate(al-~쪽으로 + lev → 가볍게 하다, 완화하다)." },
+    unintentionally: { word:"unintentionally", pron:"[언인텐셔널리]", meaning:"의도치 않게", ex:"He unintentionally offended her.", exko:"그는 의도치 않게 그녀를 기분 상하게 했다.", etym:"un-(부정) + in-(안으로) + tend(뻗다; Latin tendere) + ionally → '의도를 뻗지 않은 채로' → '의도치 않게'. 같은 tend 어근: extend(연장하다), attend(참석하다), intend(의도하다)." },
+    consequences: { word:"consequences", pron:"[컨시퀀시즈]", meaning:"결과", ex:"Actions have consequences.", exko:"행동에는 결과가 따른다.", etym:"con-(함께) + sequ(따르다; Latin sequi) + ence → '뒤따라오는 것' → '결과'. 같은 sequ 어근: subsequent(sub-바로 뒤에 + sequ → 그 다음의), sequence(순서), pursue(pro-앞으로 + sequ → 추구하다)." },
+    regarded: { word:"regarded as", pron:"[리가딛 애즈]", meaning:"~로 여겨지는", ex:"She is regarded as an expert.", exko:"그녀는 전문가로 여겨진다.", etym:"re-(다시) + gard(보다, 지키다; 고대 프랑스어 garder) → '되돌아보다' → '~로 여기다'. 같은 gard 어근: regard(여기다, 존중하다), guard(지키다), reward(re-다시 + ward(보다) → 보상하다)." }
   },
   funcWords: {
     one: { word:"one", tag:"[대명사 one · 사람]", meaning:"one은 숫자 '하나'가 아니라 앞에 나온 person을 대신하는 대명사로 '사람'이라는 뜻이에요. is one who does는 '~하는 사람이다'라고 해석해요.", ex:"A morally good person is one who does morally bad actions significantly less often than most and does morally good ones significantly more often than most.", exko:"도덕적으로 좋은 사람은 대부분의 사람들보다 훨씬 드물게 도덕적으로 나쁜 행동을 하고, 대부분의 사람들보다 훨씬 자주 도덕적으로 좋은 행동을 하는 사람이다." },
@@ -216,14 +216,14 @@ const problems = [
   noteKo: "우리의 시각적 지각은 기능적 관계에 기반한 확립된 위계에 의해 형성되는데, 이는 카메라의 (B) 관점과 달리 사물을 있는 그대로 보는 우리의 능력을 (A).",
   noteLabel: "📝 요약문 (빈칸 A, B를 채우세요)",
   vocab: {
-    preconceptions: { word:"preconceptions", pron:"[프리컨셉션즈]", meaning:"선입견", ex:"Try to set aside your preconceptions.", exko:"당신의 선입견을 제쳐두려고 노력해라." },
-    hierarchies: { word:"hierarchies", pron:"[하이어라키즈]", meaning:"위계, 계층", ex:"Companies often have strict hierarchies.", exko:"회사는 종종 엄격한 위계를 가진다." },
-    priorities: { word:"priorities", pron:"[프라이오리티즈]", meaning:"우선순위", ex:"Set your priorities straight.", exko:"우선순위를 명확히 해라." },
-    interfere: { word:"interfere", pron:"[인터피어]", meaning:"방해하다", ex:"Noise can interfere with focus.", exko:"소음은 집중을 방해할 수 있다." },
-    impartially: { word:"impartially", pron:"[임파셜리]", meaning:"공정하게", ex:"The judge must act impartially.", exko:"판사는 공정하게 행동해야 한다." },
-    indifference: { word:"indifference", pron:"[인디퍼런스]", meaning:"무관심", ex:"She treated the news with indifference.", exko:"그녀는 그 소식을 무관심하게 대했다." },
+    preconceptions: { word:"preconceptions", pron:"[프리컨셉션즈]", meaning:"선입견", ex:"Try to set aside your preconceptions.", exko:"당신의 선입견을 제쳐두려고 노력해라.", etym:"pre-(미리) + con-(함께) + cept(잡다; Latin capere) + ion → '미리 마음속에 잡아둔 것' → '선입견'. 같은 cept 어근: concept(con-함께 + cept → 개념), accept(ac-~로 + cept → 받아들이다), except(ex-밖으로 + cept → 제외하다)." },
+    hierarchies: { word:"hierarchies", pron:"[하이어라키즈]", meaning:"위계, 계층", ex:"Companies often have strict hierarchies.", exko:"회사는 종종 엄격한 위계를 가진다.", etym:"hier(신성한; Greek hieros) + arch(통치, 지배; Greek arkhein) + y → '신성한 것들의 지배 순서' → '위계, 계층'. 같은 arch 어근: monarchy(mono-하나 + arch → 군주제), anarchy(an-없는 + arch → 무정부상태)." },
+    priorities: { word:"priorities", pron:"[프라이오리티즈]", meaning:"우선순위", ex:"Set your priorities straight.", exko:"우선순위를 명확히 해라.", etym:"prior(더 먼저인; Latin prior) + ity → '먼저인 상태' → '우선순위'. 관련 단어: prior(이전의, 우선하는), prioritize(우선순위를 매기다)." },
+    interfere: { word:"interfere", pron:"[인터피어]", meaning:"방해하다", ex:"Noise can interfere with focus.", exko:"소음은 집중을 방해할 수 있다.", etym:"inter-(사이에) + fere(치다, 부딪히다; Latin ferire) → '사이에 끼어들어 부딪히다' → '방해하다'. 관련 단어: interference(간섭, 방해)." },
+    impartially: { word:"impartially", pron:"[임파셜리]", meaning:"공정하게", ex:"The judge must act impartially.", exko:"판사는 공정하게 행동해야 한다.", etym:"im-(부정) + part(부분; Latin pars) + ially → '한쪽 부분에 치우치지 않게' → '공정하게'. 같은 part 어근: partial(부분적인, 편파적인), participate(part-부분을 + cip(잡다) → 참여하다), apart(a-떨어져 + part → 따로 떨어져)." },
+    indifference: { word:"indifference", pron:"[인디퍼런스]", meaning:"무관심", ex:"She treated the news with indifference.", exko:"그녀는 그 소식을 무관심하게 대했다.", etym:"in-(부정) + differ(다르다; Latin differre, dis-+ferre) + ence → '차이를 두지 않음' → '무관심'. 관련 단어: different(다른), differentiate(구별하다)." },
     flatness: { word:"flatness", pron:"[플랫니스]", meaning:"평면성", ex:"The flatness of the image surprised us.", exko:"이미지의 평면성이 우리를 놀라게 했다." },
-    unrecognizable: { word:"unrecognizable", pron:"[언레커그나이저블]", meaning:"인식할 수 없는", ex:"The old photo was almost unrecognizable.", exko:"그 오래된 사진은 거의 알아볼 수 없었다." }
+    unrecognizable: { word:"unrecognizable", pron:"[언레커그나이저블]", meaning:"인식할 수 없는", ex:"The old photo was almost unrecognizable.", exko:"그 오래된 사진은 거의 알아볼 수 없었다.", etym:"un-(부정) + re-(다시) + cogn(알다; Latin cognoscere) + izable → '다시 알아볼 수 없는' → '인식할 수 없는'. 같은 cogn 어근: recognize(다시 알아보다), cognitive(인지의), incognito(in-부정 + cogn → 신분을 숨긴)." }
   },
   funcWords: {
     that: { word:"that", tag:"[관계대명사 that · 주격]", meaning:"that은 hierarchies를 선행사로 받는 주격 관계대명사예요. hierarchies that reflect ~는 '~을 반영하는 위계'라고 해석해요. 이 지문에는 that이 여러 번 나오는데(expectations that interfere, a lens that is similar, areas that appear), 모두 바로 앞 명사를 꾸며주는 관계대명사예요.", ex:"In viewing a scene, we establish unconscious hierarchies that reflect our functional relationship to objects and our momentary priorities.", exko:"한 장면을 볼 때, 우리는 대상과의 기능적 관계와 순간적인 우선순위를 반영하는 무의식적인 위계를 확립한다." },
@@ -253,13 +253,13 @@ const problems = [
 {
   num: "41-42", label: "41~42번", type: "장문 (제목 · 어휘)",
   vocab: {
-    retail: { word:"retail", pron:"[리테일]", meaning:"소매의", ex:"She works in retail.", exko:"그녀는 소매업에 종사한다." },
+    retail: { word:"retail", pron:"[리테일]", meaning:"소매의", ex:"She works in retail.", exko:"그녀는 소매업에 종사한다.", etym:"re-(다시) + tail(자르다; Old French tailler, Latin taliare) → '큰 것을 잘라 다시 파는 것' → '소매의'. 같은 tail 어근: detail(de-+tail → 세부사항, 잘게 자른 것), tailor(재단사), entail(en-+tail → 수반하다)." },
     utter: { word:"utter", pron:"[어터]", meaning:"말하다, 발화하다", ex:"He didn't utter a word.", exko:"그는 한마디도 하지 않았다." },
-    encourage: { word:"encourage", pron:"[인커리지]", meaning:"격려하다, 유도하다", ex:"Encourage students to speak up.", exko:"학생들이 발언하도록 유도해라." },
+    encourage: { word:"encourage", pron:"[인커리지]", meaning:"격려하다, 유도하다", ex:"Encourage students to speak up.", exko:"학생들이 발언하도록 유도해라.", etym:"en-(만들다) + cour(심장, 마음; Latin cor) + age → '마음(용기)을 갖게 하다' → '격려하다'. 같은 cor 어근: courage(용기), discourage(dis-반대 + cour → 낙담시키다), courageous(용감한)." },
     shudder: { word:"shudder", pron:"[셔더]", meaning:"몸서리치다", ex:"I shudder to think about it.", exko:"그것을 생각하면 몸서리가 쳐진다." },
-    subconscious: { word:"subconscious", pron:"[서브컨셔스]", meaning:"잠재의식의", ex:"That was a subconscious reaction.", exko:"그것은 잠재의식적인 반응이었다." },
+    subconscious: { word:"subconscious", pron:"[서브컨셔스]", meaning:"잠재의식의", ex:"That was a subconscious reaction.", exko:"그것은 잠재의식적인 반응이었다.", etym:"sub-(아래에) + con-(함께) + sci(알다; Latin scire) + ous → '의식 아래에서 함께 아는' → '잠재의식의'. 같은 sci 어근: conscious(의식하는), science(학문), unconscious(무의식의)." },
     cornered: { word:"cornered", pron:"[코너드]", meaning:"궁지에 몰린", ex:"He felt cornered by the questions.", exko:"그는 질문들에 궁지에 몰린 느낌이었다." },
-    promote: { word:"promote", pron:"[프러모트]", meaning:"촉진하다, 조성하다", ex:"The approach should promote comfort.", exko:"그 접근법은 편안함을 조성해야 한다." },
+    promote: { word:"promote", pron:"[프러모트]", meaning:"촉진하다, 조성하다", ex:"The approach should promote comfort.", exko:"그 접근법은 편안함을 조성해야 한다.", etym:"pro-(앞으로) + mot(움직이다; Latin movere) → '앞으로 움직이게 하다' → '촉진하다, 조성하다'. 같은 mot/mov 어근: motive(동기), remove(re-다시 + mov → 제거하다), demote(de-아래로 + mot → 강등시키다)." },
     rote: { word:"rote", pron:"[로트]", meaning:"기계적인, 반복 암기의", ex:"It's just a rote answer.", exko:"그것은 그냥 기계적인 대답이다." }
   },
   funcWords: {
@@ -297,11 +297,11 @@ If customers feel pressured or [[cornered::cornered]], then salespeople won't ma
   vocab: {
     cafeteria: { word:"cafeteria", pron:"[캐프테리아]", meaning:"구내식당", ex:"We ate lunch in the cafeteria.", exko:"우리는 구내식당에서 점심을 먹었다." },
     thirsty: { word:"thirsty", pron:"[써스티]", meaning:"목마른", ex:"He was thirsty after running.", exko:"그는 달린 후 목이 말랐다." },
-    determined: { word:"determined", pron:"[디터민드]", meaning:"단호한, 결연한", ex:"She had a determined look on her face.", exko:"그녀의 얼굴에는 단호한 표정이 있었다." },
+    determined: { word:"determined", pron:"[디터민드]", meaning:"단호한, 결연한", ex:"She had a determined look on her face.", exko:"그녀의 얼굴에는 단호한 표정이 있었다.", etym:"de-(완전히) + termine(경계를 정하다; Latin terminus) → '경계를 확실히 정한' → '단호한, 결연한'. 같은 termin 어근: terminate(끝내다), terminal(종점의), exterminate(ex-밖으로 + termin → 몰살시키다)." },
     aimlessly: { word:"aimlessly", pron:"[에임리슬리]", meaning:"목적 없이", ex:"He wandered aimlessly around the town.", exko:"그는 마을을 목적 없이 돌아다녔다." },
     fumbling: { word:"fumbling", pron:"[펌블링]", meaning:"더듬어 찾는", ex:"She was fumbling for her keys.", exko:"그녀는 열쇠를 더듬어 찾고 있었다." },
     wrinkled: { word:"wrinkled", pron:"[링클드]", meaning:"구겨진, 주름진", ex:"He pulled out a wrinkled bill.", exko:"그는 구겨진 지폐를 꺼냈다." },
-    nervously: { word:"nervously", pron:"[너버슬리]", meaning:"불안하게, 초조하게", ex:"She glanced nervously at the door.", exko:"그녀는 불안하게 문 쪽을 흘끗 보았다." },
+    nervously: { word:"nervously", pron:"[너버슬리]", meaning:"불안하게, 초조하게", ex:"She glanced nervously at the door.", exko:"그녀는 불안하게 문 쪽을 흘끗 보았다.", etym:"nerv(신경, 힘줄; Latin nervus) + ously → '신경이 곤두선 채로' → '불안하게, 초조하게'. 관련 단어: nerve(신경), enervate(e-밖으로 + nerv → 기력을 빼앗다)." },
     given_up: { word:"given up", pron:"[기븐 업]", meaning:"포기한", ex:"He looked like he had given up.", exko:"그는 포기한 것처럼 보였다." }
   },
   funcWords: {

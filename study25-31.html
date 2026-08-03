@@ -111,6 +111,9 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
 .sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
 .sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
 </style>
 </head>
 <body>
@@ -181,6 +184,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="sheet-pron" id="sheet-pron"></div>
   <div class="sheet-meaning" id="sheet-meaning"></div>
   <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
 </div>
 
 <script>
@@ -770,6 +774,9 @@ function showWord(key) {
   document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
@@ -824,6 +831,8 @@ function showFuncWord(displayWord, entry) {
   document.getElementById('sheet-star').classList.add('hide');
   document.getElementById('sheet-meaning').textContent = entry.meaning;
   document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
 }
@@ -850,6 +859,8 @@ function showPlain(rawWord) {
   document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();

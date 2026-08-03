@@ -96,6 +96,9 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
 .sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
 .sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
 </style>
 </head>
 <body>
@@ -156,6 +159,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="sheet-pron" id="sheet-pron"></div>
   <div class="sheet-meaning" id="sheet-meaning"></div>
   <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
 </div>
 
 <script>
@@ -176,7 +180,7 @@ const problems = [
     challenging: { word:"challenging", pron:"[챌린징]", meaning:"힘든, 도전적인", ex:"The exam was very challenging.", exko:"그 시험은 매우 어려웠다." },
     entrance_exams: { word:"entrance exams", pron:"[엔트런스 이그잼즈]", meaning:"입학시험", ex:"She is preparing for college entrance exams.", exko:"그녀는 대학 입학시험을 준비하고 있다." },
     demand: { word:"demand", pron:"[디맨드]", meaning:"요구하다, 필요로 하다", ex:"This project demands a lot of time.", exko:"이 프로젝트는 많은 시간을 필요로 한다." },
-    extend: { word:"extend", pron:"[익스텐드]", meaning:"연장하다, 늘리다", ex:"Can you extend the deadline?", exko:"마감을 연장해 주실 수 있나요?" },
+    extend: { word:"extend", pron:"[익스텐드]", meaning:"연장하다, 늘리다", ex:"Can you extend the deadline?", exko:"마감을 연장해 주실 수 있나요?", etym:"ex-(밖으로) + tend(뻗다) → '밖으로 뻗다' → '늘리다, 연장하다'. 같은 tend 어근을 쓰는 다른 접두사 단어: intend(in-안으로 + tend → 마음을 안으로 뻗다 → 의도하다), attend(at-~쪽으로 + tend → ~쪽으로 뻗다 → 참석하다), contend(con-함께 + tend → 함께 뻗대다 → 다투다)." },
     additional: { word:"additional", pron:"[어디셔널]", meaning:"추가의", ex:"We need additional time to finish.", exko:"끝내려면 추가 시간이 필요하다." },
     consider: { word:"consider", pron:"[컨시더]", meaning:"고려하다", ex:"Please consider my proposal.", exko:"제 제안을 고려해 주세요." },
     proposal: { word:"proposal", pron:"[프러포절]", meaning:"제안", ex:"The board accepted the proposal.", exko:"이사회는 그 제안을 받아들였다." },
@@ -689,6 +693,9 @@ function showWord(key) {
   document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
@@ -743,6 +750,8 @@ function showFuncWord(displayWord, entry) {
   document.getElementById('sheet-star').classList.add('hide');
   document.getElementById('sheet-meaning').textContent = entry.meaning;
   document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
 }
@@ -769,6 +778,8 @@ function showPlain(rawWord) {
   document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();

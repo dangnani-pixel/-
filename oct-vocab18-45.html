@@ -446,7 +446,7 @@ function canBlank(item) {
 
 const WRONG_KEY = 'vocabWrongWords';
 function getWrongWords() { try { return JSON.parse(localStorage.getItem(WRONG_KEY) || '[]'); } catch (e) { return []; } }
-function setWrongWords(list) { localStorage.setItem(WRONG_KEY, JSON.stringify(list)); }
+function setWrongWords(list) { localStorage.setItem(WRONG_KEY, JSON.stringify(list)); if (window.starSync) window.starSync.notifyStarChange(WRONG_KEY); }
 function addWrongWord(item) {
   var list = getWrongWords();
   var key = item.word.toLowerCase();

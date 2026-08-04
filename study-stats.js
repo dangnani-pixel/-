@@ -36,16 +36,47 @@
     for (var i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
       if (k && k.indexOf('vocabStar_') === 0) {
-        try { list = list.concat(JSON.parse(localStorage.getItem(k) || '[]') || []); } catch (e) {}
+        try {
+          (JSON.parse(localStorage.getItem(k) || '[]') || []).forEach(function (w) {
+            var copy = {}; for (var p in w) copy[p] = w[p];
+            copy._srcKey = k;
+            list.push(copy);
+          });
+        } catch (e) {}
       }
     }
     return list;
   }
   function countStarred() { return getStarredWords().length; }
+  var WRONG_KEY = 'vocabWrongWords';
   function getWrongWords() {
-    try { return JSON.parse(localStorage.getItem('vocabWrongWords') || '[]') || []; } catch (e) { return []; }
+    try { return JSON.parse(localStorage.getItem(WRONG_KEY) || '[]') || []; } catch (e) { return []; }
   }
   function countWrong() { return getWrongWords().length; }
+
+  function deleteStarredWordAt(idx) {
+    var words = getStarredWords();
+    var target = words[idx];
+    if (!target) return;
+    try {
+      var arr = JSON.parse(localStorage.getItem(target._srcKey) || '[]') || [];
+      var next = arr.filter(function (w) { return w.word.toLowerCase() !== target.word.toLowerCase(); });
+      localStorage.setItem(target._srcKey, JSON.stringify(next));
+      if (window.starSync) window.starSync.notifyStarChange(target._srcKey);
+      if (window.studyStats) window.studyStats.unrecord('star');
+    } catch (e) {}
+    openStarredList();
+  }
+
+  function deleteWrongWordAt(idx) {
+    var words = getWrongWords();
+    var target = words[idx];
+    if (!target) return;
+    var next = words.filter(function (w) { return w.word.toLowerCase() !== target.word.toLowerCase(); });
+    localStorage.setItem(WRONG_KEY, JSON.stringify(next));
+    if (window.starSync) window.starSync.notifyStarChange(WRONG_KEY);
+    openWrongList();
+  }
 
   function ensureStyles() {
     if (document.getElementById('study-stats-style')) return;
@@ -75,10 +106,12 @@
       '#stats-panel .sp-back-btn { position: absolute; top: 14px; left: 16px; font-size: 12.5px; color: #534AB7; background: none; border: none; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }' +
       '#stats-panel .sp-wrong-title { font-size: 15px; font-weight: 800; text-align: center; margin: 18px 0 14px; }' +
       '#stats-panel .sp-wrong-list { max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }' +
-      '#stats-panel .sp-wrong-item { background: #F8F7FF; border-radius: 12px; padding: 10px 14px; text-align: left; }' +
+      '#stats-panel .sp-wrong-item { background: #F8F7FF; border-radius: 12px; padding: 10px 14px; text-align: left; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }' +
       '#stats-panel .sp-wrong-word { font-size: 14.5px; font-weight: 700; color: #1a1a1a; }' +
       '#stats-panel .sp-wrong-pron { font-size: 11.5px; color: #aaa; margin-left: 6px; font-weight: 400; }' +
       '#stats-panel .sp-wrong-meaning { font-size: 12.5px; color: #534AB7; margin-top: 2px; }' +
+      '#stats-panel .sp-item-del { flex: 0 0 auto; background: none; border: none; color: #ccc; font-size: 15px; cursor: pointer; padding: 2px 4px; line-height: 1; -webkit-tap-highlight-color: transparent; }' +
+      '#stats-panel .sp-item-del:active { color: #e0524d; }' +
       '#stats-panel .sp-empty { text-align: center; font-size: 13px; color: #aaa; padding: 30px 10px; }';
     document.head.appendChild(st);
   }
@@ -144,14 +177,15 @@
   }
 
   function wordListHtml(words) {
-    return words.map(function (w) {
-      return '<div class="sp-wrong-item"><div class="sp-wrong-word">' + w.word +
+    return words.map(function (w, i) {
+      return '<div class="sp-wrong-item"><div><div class="sp-wrong-word">' + w.word +
         (w.pron ? '<span class="sp-wrong-pron">' + w.pron + '</span>' : '') + '</div>' +
-        (w.meaning ? '<div class="sp-wrong-meaning">' + w.meaning + '</div>' : '') + '</div>';
+        (w.meaning ? '<div class="sp-wrong-meaning">' + w.meaning + '</div>' : '') + '</div>' +
+        '<button class="sp-item-del" data-idx="' + i + '" title="삭제">✕</button></div>';
     }).join('');
   }
 
-  function openWordList(title, words, emptyMsg) {
+  function openWordList(title, words, emptyMsg, onDelete) {
     var pn = ensureShell();
     var listHtml = words.length ? wordListHtml(words) : ('<div class="sp-empty">' + emptyMsg + '</div>');
     pn.innerHTML =
@@ -161,14 +195,20 @@
       '<div class="sp-wrong-list">' + listHtml + '</div>';
     document.getElementById('sp-close-btn').onclick = closePanel;
     document.getElementById('sp-back-btn').onclick = openPanel;
+    var delBtns = pn.querySelectorAll('.sp-item-del');
+    for (var i = 0; i < delBtns.length; i++) {
+      delBtns[i].onclick = (function (idx) {
+        return function (e) { e.stopPropagation(); onDelete(idx); };
+      })(Number(delBtns[i].getAttribute('data-idx')));
+    }
   }
 
   function openWrongList() {
-    openWordList('📝 복습할 오답 단어', getWrongWords(), '아직 복습할 오답 단어가 없어요.<br>단어장 퀴즈에서 틀린 단어가 여기 모여요.');
+    openWordList('📝 복습할 오답 단어', getWrongWords(), '아직 복습할 오답 단어가 없어요.<br>단어장 퀴즈에서 틀린 단어가 여기 모여요.', deleteWrongWordAt);
   }
 
   function openStarredList() {
-    openWordList('⭐ 저장한 단어', getStarredWords(), '아직 저장한 단어가 없어요.<br>지문에서 단어를 클릭하고 별표를 눌러보세요.');
+    openWordList('⭐ 저장한 단어', getStarredWords(), '아직 저장한 단어가 없어요.<br>지문에서 단어를 클릭하고 별표를 눌러보세요.', deleteStarredWordAt);
   }
 
   function closePanel() {

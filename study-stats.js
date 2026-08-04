@@ -31,16 +31,17 @@
     for (var i = 0; i < LEVELS.length; i++) if (xp >= LEVELS[i].xp) lv = i;
     return lv;
   }
-  function countStarred() {
-    var n = 0;
+  function getStarredWords() {
+    var list = [];
     for (var i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
       if (k && k.indexOf('vocabStar_') === 0) {
-        try { n += (JSON.parse(localStorage.getItem(k) || '[]') || []).length; } catch (e) {}
+        try { list = list.concat(JSON.parse(localStorage.getItem(k) || '[]') || []); } catch (e) {}
       }
     }
-    return n;
+    return list;
   }
+  function countStarred() { return getStarredWords().length; }
   function getWrongWords() {
     try { return JSON.parse(localStorage.getItem('vocabWrongWords') || '[]') || []; } catch (e) { return []; }
   }
@@ -132,32 +133,42 @@
         '<div class="sp-cell"><div class="sp-num">' + pct(s.correct, s.solved) + '</div><div class="sp-label">문제 정답률</div></div>' +
         '<div class="sp-cell"><div class="sp-num">' + s.vocabSolved + '</div><div class="sp-label">단어 퀴즈 수</div></div>' +
         '<div class="sp-cell"><div class="sp-num">' + pct(s.vocabCorrect, s.vocabSolved) + '</div><div class="sp-label">단어 정답률</div></div>' +
-        '<div class="sp-cell"><div class="sp-num">' + countStarred() + '</div><div class="sp-label">저장한 단어</div></div>' +
+        '<div class="sp-cell clickable" id="sp-starred-cell"><div class="sp-num">' + countStarred() + '</div><div class="sp-label">저장한 단어 ›</div></div>' +
         '<div class="sp-cell clickable" id="sp-wrong-cell"><div class="sp-num">' + countWrong() + '</div><div class="sp-label">복습할 오답 단어 ›</div></div>' +
       '</div>';
     document.getElementById('sp-close-btn').onclick = closePanel;
+    document.getElementById('sp-starred-cell').onclick = openStarredList;
     document.getElementById('sp-wrong-cell').onclick = openWrongList;
     document.getElementById('stats-overlay').classList.add('show');
     pn.classList.add('show');
   }
 
-  function openWrongList() {
+  function wordListHtml(words) {
+    return words.map(function (w) {
+      return '<div class="sp-wrong-item"><div class="sp-wrong-word">' + w.word +
+        (w.pron ? '<span class="sp-wrong-pron">' + w.pron + '</span>' : '') + '</div>' +
+        (w.meaning ? '<div class="sp-wrong-meaning">' + w.meaning + '</div>' : '') + '</div>';
+    }).join('');
+  }
+
+  function openWordList(title, words, emptyMsg) {
     var pn = ensureShell();
-    var words = getWrongWords();
-    var listHtml = words.length
-      ? words.map(function (w) {
-          return '<div class="sp-wrong-item"><div class="sp-wrong-word">' + w.word +
-            (w.pron ? '<span class="sp-wrong-pron">' + w.pron + '</span>' : '') + '</div>' +
-            (w.meaning ? '<div class="sp-wrong-meaning">' + w.meaning + '</div>' : '') + '</div>';
-        }).join('')
-      : '<div class="sp-empty">아직 복습할 오답 단어가 없어요.<br>단어장 퀴즈에서 틀린 단어가 여기 모여요.</div>';
+    var listHtml = words.length ? wordListHtml(words) : ('<div class="sp-empty">' + emptyMsg + '</div>');
     pn.innerHTML =
       '<button class="sp-close" id="sp-close-btn">✕</button>' +
       '<button class="sp-back-btn" id="sp-back-btn">← 뒤로</button>' +
-      '<div class="sp-wrong-title">📝 복습할 오답 단어 (' + words.length + '개)</div>' +
+      '<div class="sp-wrong-title">' + title + ' (' + words.length + '개)</div>' +
       '<div class="sp-wrong-list">' + listHtml + '</div>';
     document.getElementById('sp-close-btn').onclick = closePanel;
     document.getElementById('sp-back-btn').onclick = openPanel;
+  }
+
+  function openWrongList() {
+    openWordList('📝 복습할 오답 단어', getWrongWords(), '아직 복습할 오답 단어가 없어요.<br>단어장 퀴즈에서 틀린 단어가 여기 모여요.');
+  }
+
+  function openStarredList() {
+    openWordList('⭐ 저장한 단어', getStarredWords(), '아직 저장한 단어가 없어요.<br>지문에서 단어를 클릭하고 별표를 눌러보세요.');
   }
 
   function closePanel() {

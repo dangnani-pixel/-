@@ -41,9 +41,10 @@
     }
     return n;
   }
-  function countWrong() {
-    try { return (JSON.parse(localStorage.getItem('vocabWrongWords') || '[]') || []).length; } catch (e) { return 0; }
+  function getWrongWords() {
+    try { return JSON.parse(localStorage.getItem('vocabWrongWords') || '[]') || []; } catch (e) { return []; }
   }
+  function countWrong() { return getWrongWords().length; }
 
   function ensureStyles() {
     if (document.getElementById('study-stats-style')) return;
@@ -67,7 +68,17 @@
       '#stats-panel .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }' +
       '#stats-panel .sp-cell { background: #F8F7FF; border-radius: 12px; padding: 12px 10px; text-align: center; }' +
       '#stats-panel .sp-num { font-size: 19px; font-weight: 800; color: #534AB7; }' +
-      '#stats-panel .sp-label { font-size: 11px; color: #888; margin-top: 3px; }';
+      '#stats-panel .sp-label { font-size: 11px; color: #888; margin-top: 3px; }' +
+      '#stats-panel .sp-cell.clickable { cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background 0.1s ease; }' +
+      '#stats-panel .sp-cell.clickable:active { background: #EEEDFE; }' +
+      '#stats-panel .sp-back-btn { position: absolute; top: 14px; left: 16px; font-size: 12.5px; color: #534AB7; background: none; border: none; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }' +
+      '#stats-panel .sp-wrong-title { font-size: 15px; font-weight: 800; text-align: center; margin: 18px 0 14px; }' +
+      '#stats-panel .sp-wrong-list { max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }' +
+      '#stats-panel .sp-wrong-item { background: #F8F7FF; border-radius: 12px; padding: 10px 14px; text-align: left; }' +
+      '#stats-panel .sp-wrong-word { font-size: 14.5px; font-weight: 700; color: #1a1a1a; }' +
+      '#stats-panel .sp-wrong-pron { font-size: 11.5px; color: #aaa; margin-left: 6px; font-weight: 400; }' +
+      '#stats-panel .sp-wrong-meaning { font-size: 12.5px; color: #534AB7; margin-top: 2px; }' +
+      '#stats-panel .sp-empty { text-align: center; font-size: 13px; color: #aaa; padding: 30px 10px; }';
     document.head.appendChild(st);
   }
 
@@ -84,15 +95,8 @@
 
   function pct(c, t) { return t > 0 ? Math.round(c / t * 100) + '%' : '-'; }
 
-  function openPanel() {
+  function ensureShell() {
     ensureStyles();
-    var s = load();
-    var lv = levelOf(s.xp);
-    var cur = LEVELS[lv];
-    var next = LEVELS[lv + 1] || null;
-    var barPct = next ? Math.min(100, Math.round((s.xp - cur.xp) / (next.xp - cur.xp) * 100)) : 100;
-    var xpLine = next ? (s.xp + ' XP · 다음 레벨까지 ' + (next.xp - s.xp) + ' XP') : (s.xp + ' XP · 최고 레벨 달성!');
-
     var ov = document.getElementById('stats-overlay');
     var pn = document.getElementById('stats-panel');
     if (!ov) {
@@ -104,6 +108,18 @@
       pn = document.createElement('div'); pn.id = 'stats-panel';
       document.body.appendChild(pn);
     }
+    return pn;
+  }
+
+  function openPanel() {
+    var pn = ensureShell();
+    var s = load();
+    var lv = levelOf(s.xp);
+    var cur = LEVELS[lv];
+    var next = LEVELS[lv + 1] || null;
+    var barPct = next ? Math.min(100, Math.round((s.xp - cur.xp) / (next.xp - cur.xp) * 100)) : 100;
+    var xpLine = next ? (s.xp + ' XP · 다음 레벨까지 ' + (next.xp - s.xp) + ' XP') : (s.xp + ' XP · 최고 레벨 달성!');
+
     pn.innerHTML =
       '<button class="sp-close" id="sp-close-btn">✕</button>' +
       '<div class="sp-level">' + cur.icon + '</div>' +
@@ -117,11 +133,31 @@
         '<div class="sp-cell"><div class="sp-num">' + s.vocabSolved + '</div><div class="sp-label">단어 퀴즈 수</div></div>' +
         '<div class="sp-cell"><div class="sp-num">' + pct(s.vocabCorrect, s.vocabSolved) + '</div><div class="sp-label">단어 정답률</div></div>' +
         '<div class="sp-cell"><div class="sp-num">' + countStarred() + '</div><div class="sp-label">저장한 단어</div></div>' +
-        '<div class="sp-cell"><div class="sp-num">' + countWrong() + '</div><div class="sp-label">복습할 오답 단어</div></div>' +
+        '<div class="sp-cell clickable" id="sp-wrong-cell"><div class="sp-num">' + countWrong() + '</div><div class="sp-label">복습할 오답 단어 ›</div></div>' +
       '</div>';
     document.getElementById('sp-close-btn').onclick = closePanel;
-    ov.classList.add('show');
+    document.getElementById('sp-wrong-cell').onclick = openWrongList;
+    document.getElementById('stats-overlay').classList.add('show');
     pn.classList.add('show');
+  }
+
+  function openWrongList() {
+    var pn = ensureShell();
+    var words = getWrongWords();
+    var listHtml = words.length
+      ? words.map(function (w) {
+          return '<div class="sp-wrong-item"><div class="sp-wrong-word">' + w.word +
+            (w.pron ? '<span class="sp-wrong-pron">' + w.pron + '</span>' : '') + '</div>' +
+            (w.meaning ? '<div class="sp-wrong-meaning">' + w.meaning + '</div>' : '') + '</div>';
+        }).join('')
+      : '<div class="sp-empty">아직 복습할 오답 단어가 없어요.<br>단어장 퀴즈에서 틀린 단어가 여기 모여요.</div>';
+    pn.innerHTML =
+      '<button class="sp-close" id="sp-close-btn">✕</button>' +
+      '<button class="sp-back-btn" id="sp-back-btn">← 뒤로</button>' +
+      '<div class="sp-wrong-title">📝 복습할 오답 단어 (' + words.length + '개)</div>' +
+      '<div class="sp-wrong-list">' + listHtml + '</div>';
+    document.getElementById('sp-close-btn').onclick = closePanel;
+    document.getElementById('sp-back-btn').onclick = openPanel;
   }
 
   function closePanel() {

@@ -589,11 +589,14 @@ function render() {
   switchTab('grammar');
 }
 
-function selectProblem(i) { current = i; render(); window.scrollTo({top:0, behavior:'smooth'}); }
+function selectProblem(i, skipHistory) {
+  current = i; render(); window.scrollTo({top:0, behavior:'smooth'});
+  if (!skipHistory) { var h = '#p' + current; if (location.hash !== h) history.pushState({pIdx:current}, '', h); }
+}
 function go(d) {
   if (current === problems.length - 1 && d === 1) current = 0;
   else current = Math.max(0, Math.min(problems.length - 1, current + d));
-  render(); window.scrollTo({top:0, behavior:'smooth'});
+  selectProblem(current);
 }
 
 function toggleTranslation() {
@@ -815,7 +818,21 @@ function speak(text) {
 }
 
 buildTabs();
-render();
+(function() {
+  var m = /^#p(\d+)$/.exec(location.hash);
+  var idx = m ? parseInt(m[1], 10) : -1;
+  if (idx >= 0 && idx < problems.length) current = idx;
+  render();
+  history.replaceState({ pIdx: current }, '', '#p' + current);
+  window.addEventListener('popstate', function(e) {
+    var i = (e.state && typeof e.state.pIdx === 'number') ? e.state.pIdx : -1;
+    if (i < 0) {
+      var mm = /^#p(\d+)$/.exec(location.hash);
+      i = mm ? parseInt(mm[1], 10) : 0;
+    }
+    if (i >= 0 && i < problems.length && i !== current) selectProblem(i, true);
+  });
+})();
 </script>
 <script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>

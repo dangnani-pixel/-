@@ -91,12 +91,17 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
 .sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
 .sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
 .sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
 .sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
 .sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
 </style>
 </head>
 <body>
@@ -156,6 +161,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="sheet-pron" id="sheet-pron"></div>
   <div class="sheet-meaning" id="sheet-meaning"></div>
   <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
 </div>
 
 <script>
@@ -173,14 +179,23 @@ const problems = [
   answer: 3,
   explanation: "'Individual Quiet Time'은 35.27%이고 'Spending More Time with Family and Friends'는 28.55%입니다. 전자가 후자보다 더 높으므로 '더 낮았다'는 ④번 진술은 도표와 일치하지 않습니다.",
   vocab: {
-    benefits: { word:"benefits", pron:"[베너핏츠]", meaning:"이점, 혜택", ex:"the top benefits of working from home", exko:"재택근무의 가장 큰 이점들" },
-    commute: { word:"commute", pron:"[커뮤트]", meaning:"통근", ex:"The biggest benefit was No Commute.", exko:"가장 큰 이점은 통근이 없다는 것이었다." },
-    respondents: { word:"respondents", pron:"[리스판던츠]", meaning:"응답자", ex:"chosen by 60 percent of respondents", exko:"응답자의 60퍼센트가 선택한" },
+    benefits: { word:"benefits", pron:"[베너핏츠]", meaning:"이점, 혜택", ex:"the top benefits of working from home", exko:"재택근무의 가장 큰 이점들", etym:"bene-(좋게) + fit(만들다, 행하다, Latin facere) → '좋게 행하는 것' → '이점, 혜택'. 같은 fic/fect 어근을 쓰는 다른 접두사 단어: effect(ex-밖으로 + fect → 만들어낸 것 → 효과), perfect(per-완전히 + fect → 완전하게 만든), defect(de-잘못 + fect → 결함)." },
+    commute: { word:"commute", pron:"[커뮤트]", meaning:"통근", ex:"The biggest benefit was No Commute.", exko:"가장 큰 이점은 통근이 없다는 것이었다.", etym:"com-(완전히) + mute(바꾸다, Latin mutare) → '경로를 완전히 바꾸다' → '통근하다, 통근'. 같은 mut 어근을 쓰는 단어: mutual(mut + -ual → 서로 바뀌는 → 상호의), permute(per-완전히 + mute → 순서를 완전히 바꾸다)." },
+    respondents: { word:"respondents", pron:"[리스판던츠]", meaning:"응답자", ex:"chosen by 60 percent of respondents", exko:"응답자의 60퍼센트가 선택한", etym:"re-(다시) + spond(약속하다, 답하다, Latin spondere) + -ent → '다시 답하는 사람' → '응답자'. 같은 spond 어근을 쓰는 다른 접두사 단어: correspond(cor-함께 + spond → 서로 주고받다 → 일치하다), sponsor(spond → 보증하다 → 후원자)." },
     came_in: { word:"came in second place", pron:"[케임 인 세컨드 플레이스]", meaning:"2위를 차지했다", ex:"It came in second place.", exko:"그것은 2위를 차지했다." },
     ranked: { word:"ranked", pron:"[랭크트]", meaning:"순위를 차지했다", ex:"It ranked third.", exko:"그것은 3위를 차지했다." },
-    citing: { word:"citing", pron:"[사이팅]", meaning:"언급하는", ex:"respondents citing Individual Quiet Time", exko:"개인적인 조용한 시간을 언급한 응답자들" },
-    flexibility: { word:"flexibility", pron:"[플렉서빌리티]", meaning:"유연성", ex:"Flexibility over When I Work ranked third.", exko:"근무 시간에 대한 유연성이 3위였다." },
+    citing: { word:"citing", pron:"[사이팅]", meaning:"언급하는", ex:"respondents citing Individual Quiet Time", exko:"개인적인 조용한 시간을 언급한 응답자들", etym:"cite(부르다, 소환하다, Latin citare) + -ing → '불러서 언급하는 것' → '언급하는'. 같은 cit 어근을 쓰는 다른 접두사 단어: excite(ex-밖으로 + cite → 불러일으키다), recite(re-다시 + cite → 다시 부르다 → 암송하다), incite(in-안으로 + cite → 선동하다)." },
+    flexibility: { word:"flexibility", pron:"[플렉서빌리티]", meaning:"유연성", ex:"Flexibility over When I Work ranked third.", exko:"근무 시간에 대한 유연성이 3위였다.", etym:"flex(구부리다, Latin flectere) + -ibility → '구부러질 수 있는 성질' → '유연성'. 같은 flex 어근을 쓰는 다른 접두사 단어: reflex(re-다시 + flex → 다시 구부러짐 → 반사), inflexible(in-부정 + flex → 융통성 없는)." },
     gap: { word:"gap", pron:"[갭]", meaning:"격차, 차이", ex:"The gap was about 50 percentage points.", exko:"격차는 약 50퍼센트포인트였다." }
+  },
+  funcWords: {
+    top: { word:"top", tag:"[형용사 top · 가장 큰]", meaning:"top을 '꼭대기, 맨 위'라는 명사로만 알면 the top benefits가 어색해져요. 여기서는 명사 앞에서 '가장 큰, 최고의'라는 뜻으로 쓰인 형용사라서, the top benefits of working from home은 '재택근무의 가장 큰 이점들'로 해석돼요.", ex:"The above graph shows the top benefits of working from home, based on a 2023 global survey of over 20,000 workers.", exko:"위 도표는 2만 명이 넘는 근로자를 대상으로 한 2023년 국제 설문조사를 바탕으로 재택근무의 가장 큰 이점들을 보여준다." },
+    save: { word:"Save", tag:"[동사 save · 관용구 save on]", meaning:"save를 '구하다, 저장하다'로 보면 뜻이 통하지 않아요. 'save on ~'은 '~에 드는 돈을 절약하다'라는 뜻이라서, 'Save on Gas and Lunch Costs'는 '주유비와 점심값 절약'이라는 항목 이름이에요.", ex:"'Save on Gas and Lunch Costs' came in second place, and 'Flexibility over When I Work' ranked third.", exko:"'주유비와 점심값 절약'이 2위를 차지했고, '근무 시간에 대한 유연성'이 3위를 차지했다." },
+    getting: { word:"Getting", tag:"[동사 get · 관용구 get ready]", meaning:"Getting을 '얻는 것'으로 해석하면 엉뚱해져요. 'get ready for ~'는 '~을 위한 준비를 하다'라는 뜻의 관용 표현이라서, 'Less Time Getting Ready for Work'는 '출근 준비 시간 감소'로 해석돼요.", ex:"The percentage of respondents who selected 'Less Time Getting Ready for Work' was over 30 percent.", exko:"'출근 준비 시간 감소'를 선택한 응답자의 비율은 30퍼센트를 넘었다." },
+    that: { word:"that", tag:"[지시대명사 that · 비교 대상]", meaning:"that은 앞에 나온 the percentage of respondents의 반복을 피하기 위해 쓰인 지시대명사예요. lower than that of those who selected ~는 '~을 선택한 사람들의 그 비율(that)보다 낮았다'라고 해석돼요.", ex:"④ The percentage of respondents citing 'Individual Quiet Time' was lower than that of those who selected 'Spending More Time with Family and Friends.'", exko:"④ '개인적인 조용한 시간'을 언급한 응답자의 비율은 '가족 및 친구들과 더 많은 시간 보내기'를 선택한 사람들의 비율보다 더 낮았다." },
+    those: { word:"those", tag:"[대명사 those · ~하는 사람들]", meaning:"those는 '~하는 사람들'이라는 뜻의 대명사로, 뒤에 온 관계대명사 who selected ~가 those를 꾸며줘요. those who selected 'Spending More Time with Family and Friends'는 '가족 및 친구들과 더 많은 시간 보내기를 선택한 사람들'이라고 해석돼요.", ex:"④ The percentage of respondents citing 'Individual Quiet Time' was lower than that of those who selected 'Spending More Time with Family and Friends.'", exko:"④ '개인적인 조용한 시간'을 언급한 응답자의 비율은 '가족 및 친구들과 더 많은 시간 보내기'를 선택한 사람들의 비율보다 더 낮았다." },
+    just: { word:"just", tag:"[부사 just · 근사치]", meaning:"just는 '공정한'이 아니라 '겨우, 딱'이라는 뜻으로 수치 앞에서 근사치를 나타내는 부사예요. chosen by just under 60 percent는 '60퍼센트에 조금 못 미치는(59퍼센트대의) 사람들이 선택한'이라고 해석돼요.", ex:"① The biggest benefit was 'No Commute,' chosen by just under 60 percent of respondents.", exko:"① 가장 큰 이점은 '통근 없음'이었고, 응답자의 60퍼센트에 조금 못 미치는 사람들이 이를 선택했다." },
+    chosen: { word:"chosen", tag:"[과거분사 · 후치수식]", meaning:"chosen은 앞의 'No Commute'를 꾸며주는 과거분사로, '~에 의해 선택된'이라는 수동의 의미예요. chosen by just under 60 percent of respondents는 응답자의 60퍼센트에 조금 못 미치는 사람들에 의해 선택된 것을 뜻하는데, 자연스럽게는 '응답자의 60퍼센트에 조금 못 미치는 사람들이 이를 선택했다'로 해석해요.", ex:"① The biggest benefit was 'No Commute,' chosen by just under 60 percent of respondents.", exko:"① 가장 큰 이점은 '통근 없음'이었고, 응답자의 60퍼센트에 조금 못 미치는 사람들이 이를 선택했다." }
   },
   passage: `The above graph shows the top [[benefits::benefits]] of working from home, based on a 2023 global survey of over 20,000 workers. ① The biggest benefit was 'No [[commute::Commute]],' chosen by just under 60 percent of [[respondents::respondents]]. ② 'Save on Gas and Lunch Costs' [[came_in::came in second place]], and '[[flexibility::Flexibility]] over When I Work' [[ranked::ranked]] third. ③ The percentage of respondents who selected 'Less Time Getting Ready for Work' was over 30 percent. ④ The percentage of respondents [[citing::citing]] 'Individual Quiet Time' was lower than that of those who selected 'Spending More Time with Family and Friends.' ⑤ The [[gap::gap]] between the percentage of respondents who selected 'Fewer Meetings' and that of those who selected 'No Commute' was about 50 percentage points.`,
   translation: `위 도표는 2만 명이 넘는 근로자를 대상으로 한 2023년 국제 설문조사를 바탕으로 재택근무의 가장 큰 이점들을 보여준다. ① 가장 큰 이점은 '통근 없음'이었고, 응답자의 60퍼센트에 조금 못 미치는 사람들이 이를 선택했다. ② '주유비와 점심값 절약'이 2위를 차지했고, '근무 시간에 대한 유연성'이 3위를 차지했다. ③ '출근 준비 시간 감소'를 선택한 응답자의 비율은 30퍼센트를 넘었다. ④ '개인적인 조용한 시간'을 언급한 응답자의 비율은 '가족 및 친구들과 더 많은 시간 보내기'를 선택한 사람들의 비율보다 더 낮았다. ⑤ '회의 감소'를 선택한 응답자의 비율과 '통근 없음'을 선택한 사람들의 비율 사이의 격차는 약 50퍼센트포인트였다.`,
@@ -206,10 +221,20 @@ const problems = [
     laid_the_foundation: { word:"laid the foundation", pron:"[레이드 더 파운데이션]", meaning:"토대를 놓았다", ex:"training that laid the foundation for his career", exko:"그의 경력의 토대를 놓은 훈련" },
     worldwide: { word:"worldwide", pron:"[월드와이드]", meaning:"전 세계적으로", ex:"He played concerts worldwide.", exko:"그는 전 세계에서 연주회를 열었다." },
     gave_up: { word:"gave up", pron:"[게이브 업]", meaning:"포기했다", ex:"He never gave up playing the piano.", exko:"그는 결코 피아노 연주를 포기하지 않았다." },
-    reconsidering: { word:"reconsidering", pron:"[리컨시더링]", meaning:"재고하는 것", ex:"Reconsidering the traditional convention", exko:"전통적인 관습을 다시 생각하며" },
-    convention: { word:"convention", pron:"[컨벤션]", meaning:"관습", ex:"the traditional piano performance convention", exko:"전통적인 피아노 연주 관습" },
-    faculty: { word:"faculty", pron:"[패컬티]", meaning:"교수진", ex:"as a member of the piano faculty", exko:"피아노과 교수진의 일원으로" },
-    commitment: { word:"commitment", pron:"[커미트먼트]", meaning:"헌신", ex:"his lifelong commitment to music", exko:"음악에 대한 그의 평생에 걸친 헌신" }
+    reconsidering: { word:"reconsidering", pron:"[리컨시더링]", meaning:"재고하는 것", ex:"Reconsidering the traditional convention", exko:"전통적인 관습을 다시 생각하며", etym:"re-(다시) + con-(함께) + sider(별, Latin sidus) + -ing → '별을 함께 자세히 살피다' → '다시 숙고하는 것'. 같은 sider 어근을 쓰는 단어: desire(de-~로부터 + sider → 별에서 바라던 것을 원하다 → 열망하다), considerable(consider + -able → 상당한)." },
+    convention: { word:"convention", pron:"[컨벤션]", meaning:"관습", ex:"the traditional piano performance convention", exko:"전통적인 피아노 연주 관습", etym:"con-(함께) + vent(오다, Latin venire) + -ion → '함께 모여 정한 것' → '관습, 관행'. 같은 vent/ven 어근을 쓰는 다른 접두사 단어: invent(in-안으로 + vent → 안에서 만들어내다 → 발명하다), prevent(pre-미리 + vent → 미리 막다), convene(con-함께 + ven → 모이다)." },
+    faculty: { word:"faculty", pron:"[패컬티]", meaning:"교수진", ex:"as a member of the piano faculty", exko:"피아노과 교수진의 일원으로", etym:"fac(하다, 만들다, Latin facere) + -ulty(능력) → '할 수 있는 능력' → '교수진'. 같은 fac 어근을 쓰는 단어: factory(fac + -tory → 만드는 곳 → 공장), manufacture(manu-손 + fac → 손으로 만들다 → 제조하다)." },
+    commitment: { word:"commitment", pron:"[커미트먼트]", meaning:"헌신", ex:"his lifelong commitment to music", exko:"음악에 대한 그의 평생에 걸친 헌신", etym:"com-(강조) + mit(보내다, Latin mittere) + -ment → '자신을 그 일에 보내어 맡기는 것' → '헌신'. 같은 mit 어근을 쓰는 다른 접두사 단어: submit(sub-아래로 + mit → 제출하다), permit(per-통하여 + mit → 허락하다), transmit(trans-건너 + mit → 전달하다)." }
+  },
+  funcWords: {
+    won: { word:"won", tag:"[동사 win · 수상하다]", meaning:"won을 '(경기에서) 이겼다'로만 알면 뒤에 상 이름이 오는 이 문장이 어색해요. win은 상이나 상금을 목적어로 받으면 '~을 받다, 수상하다'라는 뜻이라서, he won the Leventritt Award는 '그는 Leventritt 상을 수상했다'로 해석돼요.", ex:"In 1949, he won the Leventritt Award and then played concerts worldwide.", exko:"1949년에 그는 Leventritt 상을 수상했고 그 후 전 세계에서 연주회를 열었다." },
+    played: { word:"played", tag:"[동사 play · 연주회를 열다]", meaning:"played를 '놀았다'로 해석하면 전혀 엉뚱한 뜻이 돼요. play a concert는 '연주회를 열다, 연주하다'라는 뜻이라서, played concerts worldwide는 '전 세계에서 연주회를 열었다'로 해석돼요.", ex:"In 1949, he won the Leventritt Award and then played concerts worldwide.", exko:"1949년에 그는 Leventritt 상을 수상했고 그 후 전 세계에서 연주회를 열었다." },
+    where: { word:"where", tag:"[관계부사 where · 계속적 용법]", meaning:"콤마 뒤 where는 앞의 장소(the Curtis Institute of Music)를 선행사로 받아 부연 설명하는 계속적 용법의 관계부사예요. '그런데 그곳에서 ~했다'라고 해석하면 자연스러워요.", ex:"When he was seven, he entered the Curtis Institute of Music, where he received training that laid the foundation for his career.", exko:"일곱 살 때 그는 Curtis 음악원에 입학했고, 그곳에서 그의 경력의 토대를 놓은 훈련을 받았다." },
+    that: { word:"that", tag:"[관계대명사 · 주격]", meaning:"that은 앞의 training을 선행사로 받는 주격 관계대명사예요. training that laid the foundation for his career는 '그의 경력의 토대를 놓은 훈련'이라고 해석돼요.", ex:"When he was seven, he entered the Curtis Institute of Music, where he received training that laid the foundation for his career.", exko:"일곱 살 때 그는 Curtis 음악원에 입학했고, 그곳에서 그의 경력의 토대를 놓은 훈련을 받았다." },
+    as: { word:"as", tag:"[전치사 as · 자격]", meaning:"as는 '~로서(자격)'라는 뜻의 전치사예요. as a member of the piano faculty는 '피아노과 교수진의 일원으로(서)'라고 해석돼요.", ex:"Graffman returned to the Curtis Institute of Music in 1980 as a member of the piano faculty.", exko:"Graffman은 1980년에 피아노과 교수진의 일원으로 Curtis 음악원에 돌아갔다." },
+    alone: { word:"alone", tag:"[부사 alone · 문맥 확인 필요]", meaning:"alone은 여기서 '혼자서'가 아니라 바로 앞의 명사구를 강조하는 '~만, ~뿐'이라는 뜻의 부사예요. works for the left hand alone은 '왼손만을 위한 작품'이라고 해석되며, '외로이 홀로'라는 뜻이 아니에요.", ex:"Reconsidering the traditional piano performance convention of using both hands, he focused on works for the left hand alone, such as Ravel's Piano Concerto for the Left Hand.", exko:"양손을 사용하는 전통적인 피아노 연주 관습을 다시 생각하면서, 그는 Ravel의 '왼손을 위한 피아노 협주곡'과 같은 왼손만을 위한 작품에 집중했다." },
+    there: { word:"There", tag:"[부사 There · 장소 지시]", meaning:"문장 맨 앞의 There는 'There is/are ~(~이 있다)' 구문이 아니라, 앞 문장에 나온 장소(the Curtis Institute of Music)를 가리키는 부사 '그곳에서'라는 뜻이에요. There he taught many outstanding young musicians는 '그곳에서 그는 많은 뛰어난 젊은 음악가들을 가르쳤다'라고 해석돼요.", ex:"There he taught many outstanding young musicians, including Lang Lang, and his lifelong commitment to music continues to inspire people today.", exko:"그곳에서 그는 Lang Lang을 포함해 많은 뛰어난 젊은 음악가들을 가르쳤고, 음악에 대한 그의 평생에 걸친 헌신은 오늘날에도 계속해서 사람들에게 영감을 준다." },
+    works: { word:"works", tag:"[명사 works · 품사 확인 필요]", meaning:"works는 동사 work(일하다)의 3인칭 단수형처럼 보이기 쉽지만, 여기 he focused on works for the left hand alone에서는 명사 work(작품)의 복수형으로 '작품들'이라는 뜻이에요. '왼손만을 위해 작동한다'가 아니라 '왼손만을 위한 작품들에 집중했다'라고 해석해야 자연스러워요.", ex:"Reconsidering the traditional piano performance convention of using both hands, he focused on works for the left hand alone, such as Ravel's Piano Concerto for the Left Hand.", exko:"양손을 사용하는 전통적인 피아노 연주 관습을 다시 생각하면서, 그는 Ravel의 '왼손을 위한 피아노 협주곡'과 같은 왼손만을 위한 작품에 집중했다." }
   },
   passage: `Gary Graffman was born in New York City in 1928 and began playing the piano at the age of three. When he was seven, he [[entered::entered]] the Curtis Institute of Music, where he received training that [[laid_the_foundation::laid the foundation]] for his career. In 1949, he won the Leventritt Award and then played concerts [[worldwide::worldwide]]. In the late 1970s, Graffman lost control of the fingers on his right hand, but he never [[gave_up::gave up]] playing the piano. [[reconsidering::Reconsidering]] the traditional piano performance [[convention::convention]] of using both hands, he focused on works for the left hand alone, such as Ravel's Piano Concerto for the Left Hand. Graffman returned to the Curtis Institute of Music in 1980 as a member of the piano [[faculty::faculty]]. There he taught many outstanding young musicians, including Lang Lang, and his lifelong [[commitment::commitment]] to music continues to inspire people today.`,
   translation: `Gary Graffman은 1928년 뉴욕시에서 태어나 세 살에 피아노를 치기 시작했다. 일곱 살 때 그는 Curtis 음악원에 입학했고, 그곳에서 그의 경력의 토대를 놓은 훈련을 받았다. 1949년에 그는 Leventritt 상을 수상했고 그 후 전 세계에서 연주회를 열었다. 1970년대 후반, Graffman은 오른손 손가락에 대한 제어력을 잃었지만, 결코 피아노 연주를 포기하지 않았다. 양손을 사용하는 전통적인 피아노 연주 관습을 다시 생각하면서, 그는 Ravel의 '왼손을 위한 피아노 협주곡'과 같은 왼손만을 위한 작품에 집중했다. Graffman은 1980년에 피아노과 교수진의 일원으로 Curtis 음악원에 돌아갔다. 그곳에서 그는 Lang Lang을 포함해 많은 뛰어난 젊은 음악가들을 가르쳤고, 음악에 대한 그의 평생에 걸친 헌신은 오늘날에도 계속해서 사람들에게 영감을 준다.`,
@@ -231,14 +256,23 @@ const problems = [
   answer: 3,
   explanation: "'The pass can be purchased online or at the city public parking offices.'라고 했으므로 시 공영 주차장 사무소에서도 구매할 수 있습니다. 따라서 ④번이 일치하지 않습니다.",
   vocab: {
-    convenient: { word:"convenient", pron:"[컨비니언트]", meaning:"편리한", ex:"a convenient parking option", exko:"편리한 주차 선택지" },
+    convenient: { word:"convenient", pron:"[컨비니언트]", meaning:"편리한", ex:"a convenient parking option", exko:"편리한 주차 선택지", etym:"con-(함께) + ven(오다, Latin venire) + -ient → '함께 잘 맞게 오는' → '편리한'. 같은 ven 어근을 쓰는 다른 접두사 단어: intervene(inter-사이에 + ven → 사이에 끼어들다), avenue(ad-~로 + ven → ~로 다가오는 길 → 대로)." },
     check_out: { word:"check out", pron:"[체크 아웃]", meaning:"살펴보다, 확인하다", ex:"Check out the Green Parking Pass!", exko:"Green Parking Pass를 확인해 보세요!" },
     public_parking: { word:"public parking lots", pron:"[퍼블릭 파킹 랏츠]", meaning:"공영 주차장", ex:"All public parking lots in the city", exko:"시의 모든 공영 주차장" },
     available: { word:"Available Time", pron:"[어베일러블 타임]", meaning:"이용 가능 시간", ex:"Available Time and Service", exko:"이용 가능 시간과 서비스" },
-    reserved: { word:"reserved", pron:"[리저브드]", meaning:"예약된, 전용의", ex:"reserved parking space", exko:"전용 주차 공간" },
+    reserved: { word:"reserved", pron:"[리저브드]", meaning:"예약된, 전용의", ex:"reserved parking space", exko:"전용 주차 공간", etym:"re-(뒤로, 따로) + serv(지키다, Latin servare) + -ed → '따로 떼어 지켜둔' → '예약된, 전용의'. 같은 serv 어근을 쓰는 다른 접두사 단어: preserve(pre-미리 + serve → 보존하다), conserve(con-함께 + serve → 보존하다), observe(ob-향해 + serve → 지켜보다, 관찰하다)." },
     purchased: { word:"purchased", pron:"[퍼처스트]", meaning:"구매되는", ex:"The pass can be purchased online.", exko:"그 이용권은 온라인으로 구매할 수 있다." },
     at_any_time: { word:"at any time", pron:"[앳 애니 타임]", meaning:"언제든지", ex:"You can park at any time.", exko:"언제든지 주차할 수 있다." },
     each_person: { word:"Each person", pron:"[이치 퍼슨]", meaning:"각 사람", ex:"Each person can purchase only one pass.", exko:"각 사람은 이용권을 하나만 구매할 수 있다." }
+  },
+  funcWords: {
+    park: { word:"park", tag:"[동사 park · 주차하다]", meaning:"park를 '공원'이라는 명사로만 알고 있으면 문장이 통하지 않아요. 여기서는 조동사 can 뒤에 온 동사로 '주차하다'라는 뜻이라서, You can park safely는 '안전하게 주차할 수 있습니다'로 해석돼요.", ex:"You can park safely and save money while using the pass in the city.", exko:"시내에서 이용권을 사용하면서 안전하게 주차하고 비용도 절약할 수 있습니다." },
+    save: { word:"save", tag:"[동사 save · 돈을 절약하다]", meaning:"save를 '구하다, 저장하다'로 해석하면 어색해요. 여기 save money는 '돈을 절약하다'라는 뜻이라서, 공식 해석도 '비용도 절약할 수 있습니다'로 옮기고 있어요.", ex:"You can park safely and save money while using the pass in the city.", exko:"시내에서 이용권을 사용하면서 안전하게 주차하고 비용도 절약할 수 있습니다." },
+    pass: { word:"pass", tag:"[명사 pass · 이용권]", meaning:"pass를 '지나가다, 합격하다'라는 동사로 보면 뜻이 통하지 않아요. 여기서는 the pass처럼 관사가 붙은 명사로, 일정 기간 동안 쓸 수 있는 '이용권, 정기권'을 뜻해요. The pass can be purchased ~는 '이용권은 ~에서 구매할 수 있습니다'로 해석돼요.", ex:"The pass can be purchased online or at the city public parking offices.", exko:"이용권은 온라인 또는 시 공영 주차장 사무소에서 구매할 수 있습니다." },
+    while: { word:"while", tag:"[접속사처럼 쓰인 while · 생략]", meaning:"while using the pass는 while you are using the pass에서 '주어+be동사'가 생략된 형태예요. '이용권을 사용하면서'라고 해석해요.", ex:"You can park safely and save money while using the pass in the city.", exko:"시내에서 이용권을 사용하면서 안전하게 주차하고 비용도 절약할 수 있습니다." },
+    to: { word:"to", tag:"[의문사+to부정사 · 명사구]", meaning:"Where to Use, When to Use는 '의문사+to부정사'가 합쳐져 하나의 명사구를 이루는 표현으로, 안내문에서 항목 제목으로 자주 쓰여요. 각각 '사용 장소(어디서 사용할지)', '사용 기간(언제 사용할지)'이라는 뜻이에요.", ex:"Where to Use: All public parking lots in the city", exko:"사용 장소: 시의 모든 공영 주차장" },
+    for: { word:"for", tag:"[전치사 for · look for]", meaning:"look for는 '~을 찾다'라는 뜻의 숙어로, for가 look과 함께 쓰였어요. If you are looking for a convenient parking option은 '편리한 주차 선택지를 찾고 계신다면'이라고 해석해요.", ex:"If you are looking for a convenient parking option in our city, check out the Green Parking Pass!", exko:"저희 시에서 편리한 주차 선택지를 찾고 계신다면, Green Parking Pass를 확인해 보세요!" },
+    plus: { word:"plus", tag:"[전치사/접속사 plus]", meaning:"plus는 수학의 '더하기'가 아니라 '~에 더하여, ~와 함께'라는 뜻으로 쓰였어요. at any time plus reserved parking space는 '언제든지 이용 가능함에 더해 전용 주차 공간까지'라는 뜻이에요.", ex:"Premium: 120 dollars, at any time plus reserved parking space", exko:"Premium: 120달러, 언제든지 + 전용 주차 공간" }
   },
   passage: `If you are looking for a [[convenient::convenient]] parking option in our city, [[check_out::check out]] the Green Parking Pass! You can park safely and save money while using the pass in the city.
 
@@ -284,14 +318,23 @@ Premium: 120달러, 언제든지 + 전용 주차 공간
   answer: 4,
   explanation: "'How to apply: Send us an e-mail at oneweek!@film.com'이라고 했으므로 이메일로 신청해야 합니다. 정답은 ⑤번입니다.",
   vocab: {
-    direct: { word:"direct", pron:"[디렉트]", meaning:"연출하다", ex:"You'll write, direct, shoot, and edit.", exko:"여러분이 쓰고, 연출하고, 촬영하고, 편집할 것입니다." },
+    direct: { word:"direct", pron:"[디렉트]", meaning:"연출하다", ex:"You'll write, direct, shoot, and edit.", exko:"여러분이 쓰고, 연출하고, 촬영하고, 편집할 것입니다.", etym:"di-(따로, dis-) + rect(곧은, 바로잡다, Latin regere) → '똑바로 이끌다' → '연출하다, 지시하다'. 같은 rect 어근을 쓰는 다른 접두사 단어: correct(cor-완전히 + rect → 바로잡다), erect(e-밖으로 + rect → 똑바로 세우다)." },
     shoot: { word:"shoot", pron:"[슛]", meaning:"촬영하다", ex:"You'll shoot your own project.", exko:"자신의 작품을 촬영하게 됩니다." },
-    edit: { word:"edit", pron:"[에딧]", meaning:"편집하다", ex:"You'll edit your own project.", exko:"자신의 작품을 편집하게 됩니다." },
+    edit: { word:"edit", pron:"[에딧]", meaning:"편집하다", ex:"You'll edit your own project.", exko:"자신의 작품을 편집하게 됩니다.", etym:"e-(밖으로) + dit(내다, Latin edere < dare-주다) → '세상 밖으로 내놓다' → '편집하다, 발행하다'." },
     no_experience: { word:"no experience required", pron:"[노 익스피리언스 리콰이어드]", meaning:"경험 불필요", ex:"Ages 14-17 (no experience required)", exko:"14~17세 (경험 불필요)" },
     weekdays: { word:"Weekdays", pron:"[윅데이즈]", meaning:"평일", ex:"Weekdays 5 p.m. to 9 p.m.", exko:"평일 오후 5시~9시" },
-    interactive: { word:"interactive", pron:"[인터랙티브]", meaning:"상호작용하는", ex:"online interactive classes", exko:"온라인 쌍방향 수업" },
+    interactive: { word:"interactive", pron:"[인터랙티브]", meaning:"상호작용하는", ex:"online interactive classes", exko:"온라인 쌍방향 수업", etym:"inter-(사이에) + act(행하다, Latin agere) + -ive → '서로 사이에서 행하는' → '상호작용하는'. 같은 act 어근을 쓰는 다른 접두사 단어: react(re-다시 + act → 반응하다), transact(trans-넘어서 + act → 거래하다), enact(en-안으로 + act → 제정하다)." },
     real_time: { word:"real-time instruction", pron:"[리얼타임 인스트럭션]", meaning:"실시간 강의", ex:"classes with real-time instruction", exko:"실시간 강의가 있는 수업" },
     screened: { word:"screened", pron:"[스크린드]", meaning:"상영되는", ex:"to be screened at the end of the camp", exko:"캠프 마지막에 상영될" }
+  },
+  funcWords: {
+    just: { word:"just", tag:"[부사 just · 단 ~ 만에]", meaning:"just를 '공정한'이라는 형용사로 보면 안 돼요. 수량 표현 앞에 온 just는 '단지, 겨우'라고 적은 양을 강조하는 부사라서, in just one week는 '단 일주일 만에'로 해석돼요.", ex:"Create your own short film in just one week!", exko:"단 일주일 만에 여러분만의 단편 영화를 만들어 보세요!" },
+    apply: { word:"apply", tag:"[동사 apply · 지원/신청하다]", meaning:"apply를 '적용하다'로만 알고 있으면 어색해요. 프로그램·모집 안내에서 apply는 '지원하다, 신청하다'라는 뜻이라서, How to apply는 '신청 방법'이라는 항목 제목이 돼요.", ex:"How to apply: Send us an e-mail at oneweek@film.com.", exko:"신청 방법: oneweek@film.com으로 이메일을 보내주세요." },
+    to: { word:"to", tag:"[의문사+to부정사 / to부정사 수동]", meaning:"How to apply는 '의문사+to부정사'가 합쳐진 명사구로 '신청 방법'이라는 뜻이에요. 한편 'your own film ... to be screened at the end of the camp'에서 to be screened는 앞의 명사 film을 꾸며주는 to부정사의 수동형으로 '상영될 (영화)'라고 해석돼요.", ex:"How to apply: Send us an e-mail at oneweek@film.com.", exko:"신청 방법: oneweek@film.com으로 이메일을 보내주세요." },
+    per: { word:"per", tag:"[전치사 per · ~당]", meaning:"per는 '완벽히'가 아니라 '~마다, ~당'이라는 뜻의 전치사예요. Fee: 200 dollars per person은 '요금: 1인당 200달러'라고 해석돼요.", ex:"Fee: 200 dollars per person", exko:"요금: 1인당 200달러" },
+    open: { word:"Open", tag:"[형용사 Open · 참가 자격]", meaning:"Open to는 '열려 있는'이라는 문자 그대로의 뜻이 아니라 '~에게 참가 자격이 있는'이라는 뜻으로, 안내문에서 참가 대상을 밝힐 때 쓰는 표현이에요. Open to: Ages 14-17은 '참가 대상: 14~17세'라고 해석돼요.", ex:"Open to: Ages 14-17 (no experience required)", exko:"참가 대상: 14~17세 (경험 불필요)" },
+    with: { word:"with", tag:"[전치사 with · 부대 상황]", meaning:"with는 '~와 함께'보다는 '~을 갖춘, ~이 딸린'이라는 부대 상황을 나타내요. online interactive classes with real-time instruction은 '실시간 강의가 있는(딸린) 온라인 쌍방향 수업'이라고 해석돼요.", ex:"You'll participate in online interactive classes with real-time instruction.", exko:"실시간 강의가 있는 온라인 쌍방향 수업에 참여하게 됩니다." },
+    complete: { word:"complete", tag:"[동사 complete · 품사 확인 필요]", meaning:"complete는 '완전한'이라는 형용사로 흔히 알려져 있지만, 여기 You'll complete your own film에서는 '완성하다'라는 뜻의 동사예요. '여러분은 완전할 것이다'가 아니라 '여러분만의 영화를 완성하게 될 것이다'라고 해석해야 자연스러워요.", ex:"You'll complete your own film (shorter than 5 minutes in length) to be screened at the end of the camp.", exko:"캠프 마지막에 상영될 여러분만의 영화(길이 5분 미만)를 완성하게 됩니다." }
   },
   passage: `Create your own short film in just one week! You'll write, [[direct::direct]], [[shoot::shoot]], and [[edit::edit]] your own project.
 
@@ -336,13 +379,24 @@ How to apply: Send us an e-mail at oneweek@film.com.`,
   explanation: "주어가 'The files, folders, and icons (you see displayed on a computer screen)'로 복수이므로 동사도 복수형 help가 되어야 합니다. 따라서 ②번이 정답입니다.",
   vocab: {
     conceptual: { word:"conceptual model", pron:"[컨셉추얼 모델]", meaning:"개념 모형", ex:"A conceptual model is an explanation.", exko:"개념 모형은 하나의 설명이다." },
-    simplified: { word:"simplified", pron:"[심플리파이드]", meaning:"단순화된", ex:"usually highly simplified", exko:"보통 매우 단순화된" },
-    accurate: { word:"accurate", pron:"[애큐럿]", meaning:"정확한", ex:"It doesn't have to be accurate.", exko:"그것이 정확할 필요는 없다." },
-    conceptualizations: { word:"conceptualizations", pron:"[컨셉추얼라이제이션즈]", meaning:"개념화한 것", ex:"those are effective conceptualizations", exko:"그것들은 효과적으로 개념화한 것이다" },
-    depictions: { word:"depictions", pron:"[디픽션즈]", meaning:"묘사", ex:"These depictions can add to the confusion.", exko:"이러한 묘사는 혼란을 더할 수 있다." },
-    confusion: { word:"confusion", pron:"[컨퓨전]", meaning:"혼란", ex:"They can add to the confusion.", exko:"그것들은 혼란을 더할 수 있다." },
-    coherent: { word:"coherent", pron:"[코히런트]", meaning:"일관된", ex:"one, coherent image", exko:"하나의 일관된 이미지" },
-    consist_of: { word:"consist of", pron:"[컨시스트 오브]", meaning:"~로 구성되다", ex:"It may consist of parts.", exko:"그것은 부분들로 구성되어 있을 수 있다." }
+    simplified: { word:"simplified", pron:"[심플리파이드]", meaning:"단순화된", ex:"usually highly simplified", exko:"보통 매우 단순화된", etym:"simpl(단순한, Latin simplex: sim-하나의 + plex-겹) + -ify + -ed → '한 겹으로 만든' → '단순화된'. 같은 plex/plic 어근을 쓰는 다른 접두사 단어: complex(com-함께 + plex → 여러 겹이 겹친 → 복잡한), duplicate(du-둘 + plic → 두 겹으로 하다 → 복제하다)." },
+    accurate: { word:"accurate", pron:"[애큐럿]", meaning:"정확한", ex:"It doesn't have to be accurate.", exko:"그것이 정확할 필요는 없다.", etym:"ac-(~에, ad-) + cur(정성, 주의, Latin cura) + -ate → '정성을 기울인' → '정확한'. 같은 cur 어근을 쓰는 다른 접두사 단어: secure(se-벗어나 + cur → 걱정에서 벗어난 → 안전한), curious(cur + -ious → 정성을 쏟는 → 호기심 있는)." },
+    conceptualizations: { word:"conceptualizations", pron:"[컨셉추얼라이제이션즈]", meaning:"개념화한 것", ex:"those are effective conceptualizations", exko:"그것들은 효과적으로 개념화한 것이다", etym:"con-(함께) + cept(붙잡다, Latin capere) + -ual + -ize + -ation → '개념을 붙잡아 형태로 만든 것' → '개념화한 것'. 같은 cept/cap 어근을 쓰는 다른 접두사 단어: accept(ac-~에게 + cept → 받아들이다), except(ex-밖으로 + cept → 예외로 하다), perceive(per-완전히 + cept → 완전히 붙잡다 → 지각하다)." },
+    depictions: { word:"depictions", pron:"[디픽션즈]", meaning:"묘사", ex:"These depictions can add to the confusion.", exko:"이러한 묘사는 혼란을 더할 수 있다.", etym:"de-(완전히) + pict(그리다, Latin pingere) + -ion → '완전히 그려낸 것' → '묘사'. 같은 pict 어근을 쓰는 단어: picture(pict + -ure → 그림), pictorial(pict + -orial → 그림으로 나타낸)." },
+    confusion: { word:"confusion", pron:"[컨퓨전]", meaning:"혼란", ex:"They can add to the confusion.", exko:"그것들은 혼란을 더할 수 있다.", etym:"con-(함께) + fus(붓다, 섞다, Latin fundere) + -ion → '함께 뒤섞인 상태' → '혼란'. 같은 fus 어근을 쓰는 다른 접두사 단어: refuse(re-뒤로 + fus → 도로 쏟아버리다 → 거절하다), infuse(in-안으로 + fus → 주입하다), diffuse(dis-흩어져 + fus → 퍼지다)." },
+    coherent: { word:"coherent", pron:"[코히런트]", meaning:"일관된", ex:"one, coherent image", exko:"하나의 일관된 이미지", etym:"co-(함께) + here(붙다, Latin haerere) + -ent → '함께 달라붙어 있는' → '일관된'. 같은 here 어근을 쓰는 다른 접두사 단어: adhere(ad-~에 + here → 달라붙다), inherent(in-안에 + here → 본래부터 붙어 있는 → 내재하는)." },
+    consist_of: { word:"consist of", pron:"[컨시스트 오브]", meaning:"~로 구성되다", ex:"It may consist of parts.", exko:"그것은 부분들로 구성되어 있을 수 있다.", etym:"con-(함께) + sist(서다, Latin sistere) → '함께 서서 이루어지다' → '~로 구성되다'. 같은 sist 어근을 쓰는 다른 접두사 단어: assist(as-~쪽으로 + sist → 도와서 서다 → 돕다), resist(re-반대로 + sist → 맞서 서다 → 저항하다), exist(ex-밖으로 + sist → 밖에 서 있다 → 존재하다)." }
+  },
+  funcWords: {
+    works: { word:"works", tag:"[동사 work · 작동하다]", meaning:"works를 '일한다'로 해석하면 어색해요. 사물이 주어일 때 work는 '작동하다, 기능하다'라는 뜻이라서, how something works는 '무언가가 어떻게 작동하는지'로 해석돼요.", ex:"A conceptual model is an explanation, usually highly simplified, of how something works.", exko:"개념 모형이란 무언가가 어떻게 작동하는지에 대한, 보통 매우 단순화된 설명이다." },
+    long: { word:"long", tag:"[접속사구 as long as · 조건]", meaning:"long을 '긴'이라는 형용사로 보면 뜻이 통하지 않아요. 'as long as'는 '~하기만 하면, ~하는 한'이라는 조건을 나타내는 접속사 표현이라서, as long as it is useful은 '그것이 유용하기만 하다면'으로 해석돼요.", ex:"accurate as long as it is useful.", exko:"그것이 유용하기만 하다면 완전하거나 심지어 정확할 필요도 없다." },
+    appears: { word:"appears", tag:"[동사 appear · ~인 것처럼 보이다]", meaning:"appears를 '나타나다'로 해석하면 어색해요. 뒤에 to부정사가 오는 'appear to ~'는 '~인 것처럼 보이다'라는 뜻이라서, the material appears to be on the device는 '그 자료는 기기 안에 있는 것처럼 보인다'로 해석돼요.", ex:"When reading e-mail or visiting a website, the material appears to be on the device, for that is", exko:"이메일을 읽거나 웹사이트를 방문할 때, 그 자료는 기기 안에 있는 것처럼 보이는데, 그곳이 그것이 표시되고 사용되는 곳이기 때문이다." },
+    material: { word:"material", tag:"[명사 material · 자료]", meaning:"material을 '재료, 물질'로만 알고 있으면 어색해요. 이메일이나 웹사이트를 볼 때의 the material은 화면에 담긴 '자료, 내용물'을 가리켜서, 공식 해석도 '그 자료'로 옮기고 있어요.", ex:"When reading e-mail or visiting a website, the material appears to be on the device, for that is", exko:"이메일을 읽거나 웹사이트를 방문할 때, 그 자료는 기기 안에 있는 것처럼 보이는데, 그곳이 그것이 표시되고 사용되는 곳이기 때문이다." },
+    helps: { word:"helps", tag:"[동사 help · 수 일치 오류 지점]", meaning:"이 문장의 진짜 주어는 The files, folders, and icons(복수)이고, 'you see displayed on a computer screen'은 주어를 꾸며주는 삽입된 관계사절(목적격 관계대명사 생략)이에요. 주어가 복수이므로 동사도 help가 되어야 하는데 ②는 helps로 잘못 쓰여 어법상 틀립니다.", ex:"The files, folders, and icons you see displayed on a computer screen ② helps people create the conceptual model of documents and folders inside the computer, or of apps or applications on the screen.", exko:"컴퓨터 화면에 표시되는 것으로 보이는 파일, 폴더, 아이콘들은 사람들이 컴퓨터 내부의 문서와 폴더에 대한, 또는 화면상의 앱이나 응용 프로그램에 대한 개념 모형을 만들도록 돕는다." },
+    designed: { word:"designed", tag:"[과거분사 · 후치수식]", meaning:"designed는 앞의 명사 conceptualizations를 꾸며주는 과거분사로 '~하도록 설계된'이라는 수동의 의미예요. effective conceptualizations designed to make them easier to use는 '사용하기 더 쉽게 만들도록 설계된 효과적으로 개념화한 것'이라고 해석되며, 어법상 올바르게 쓰였어요.", ex:"In fact, there are no folders inside the computer — those are effective conceptualizations ③ designed to make them easier to use.", exko:"사실, 컴퓨터 내부에는 폴더가 없다. 그것들은 사용하기 더 쉽게 만들도록 설계된, 효과적으로 개념화한 것이다." },
+    where: { word:"where", tag:"[관계부사 where · 보어절]", meaning:"where는 be동사(is)의 보어가 되는 절을 이끄는 관계부사로 '~하는 곳'이라는 뜻이에요. for that is ④ where it is displayed and used는 '그것이 표시되고 사용되는 곳이 바로 그곳이기 때문이다'라고 해석되며, 어법상 올바르게 쓰였어요.", ex:"When reading e-mail or visiting a website, the material appears to be on the device, for that is ④ where it is displayed and used.", exko:"이메일을 읽거나 웹사이트를 방문할 때, 그 자료는 기기 안에 있는 것처럼 보이는데, 그곳이 그것이 표시되고 사용되는 곳이기 때문이다." },
+    that: { word:"that", tag:"[관계대명사 that · 주격]", meaning:"that은 앞의 different machines를 선행사로 받는 주격 관계대명사예요. each located on different machines ⑤ that could be almost anywhere in the world는 '전 세계 거의 어디에나 있을 수 있는 서로 다른 기계에'라고 해석되며, 어법상 올바르게 쓰였어요.", ex:"The conceptual model is of one, coherent image, whereas it may actually consist of parts, each located on different machines ⑤ that could be almost anywhere in the world.", exko:"개념 모형은 하나의 일관된 이미지에 관한 것이지만, 실제로는 여러 부분으로 구성되어 있을 수 있으며, 각 부분은 전 세계 거의 어디에나 있을 수 있는 서로 다른 기계에 위치해 있다." },
+    for: { word:"for", tag:"[접속사 for · 이유]", meaning:"for는 '~을 위해'라는 전치사로 흔히 알려져 있지만, 여기 for that is ④ where it is displayed and used에서는 '왜냐하면(because)'이라는 뜻의 접속사예요. '그것을 위해 그곳이 표시되고 사용되는 곳이다'가 아니라 '그곳이 그것이 표시되고 사용되는 곳이기 때문이다'라고 해석해야 자연스러워요.", ex:"When reading e-mail or visiting a website, the material appears to be on the device, for that is ④ where it is displayed and used.", exko:"이메일을 읽거나 웹사이트를 방문할 때, 그 자료는 기기 안에 있는 것처럼 보이는데, 그곳이 그것이 표시되고 사용되는 곳이기 때문이다." }
   },
   passage: `A [[conceptual::conceptual model]] is an explanation, usually highly [[simplified::simplified]], of how something works. It doesn't have to be complete or even ① ‹[[accurate::accurate]]› as long as it is useful. The files, folders, and icons you see displayed on a computer screen ② ‹helps› people create the conceptual model of documents and folders inside the computer, or of apps or applications on the screen. In fact, there are no folders inside the computer — those are effective [[conceptualizations::conceptualizations]] ③ ‹designed› to make them easier to use. Sometimes these [[depictions::depictions]] can add to the [[confusion::confusion]], however. When reading e-mail or visiting a website, the material appears to be on the device, for that is ④ ‹where› it is displayed and used. But in fact, in many cases the actual material is "in the cloud," located on some distant machine. The conceptual model is of one, [[coherent::coherent]] image, whereas it may actually [[consist_of::consist of]] parts, each located on different machines ⑤ ‹that› could be almost anywhere in the world.`,
   translation: `개념 모형이란 무언가가 어떻게 작동하는지에 대한, 보통 매우 단순화된 설명이다. 그것이 유용하기만 하다면 완전하거나 심지어 정확할 필요도 없다. 컴퓨터 화면에 표시되는 것으로 보이는 파일, 폴더, 아이콘들은 사람들이 컴퓨터 내부의 문서와 폴더에 대한, 또는 화면상의 앱이나 응용 프로그램에 대한 개념 모형을 만들도록 돕는다. 사실, 컴퓨터 내부에는 폴더가 없다. 그것들은 사용하기 더 쉽게 만들도록 설계된, 효과적으로 개념화한 것이다. 그러나 때때로 이러한 묘사는 혼란을 더할 수 있다. 이메일을 읽거나 웹사이트를 방문할 때, 그 자료는 기기 안에 있는 것처럼 보이는데, 그곳이 그것이 표시되고 사용되는 곳이기 때문이다. 하지만 사실 많은 경우 실제 자료는 '클라우드에', 즉 어딘가 멀리 있는 기계에 위치해 있다. 개념 모형은 하나의 일관된 이미지에 관한 것이지만, 실제로는 여러 부분으로 구성되어 있을 수 있으며, 각 부분은 전 세계 거의 어디에나 있을 수 있는 서로 다른 기계에 위치해 있다.`,
@@ -364,14 +418,27 @@ How to apply: Send us an e-mail at oneweek@film.com.`,
   answer: 2,
   explanation: "개발도상국에서는 걷기가 피할 수 없는 부담인 반면, 'however'로 연결된 북미·서유럽에서는 걷기를 효율적이고 건강하다고 여기므로 태도와 정책이 '같은(same)'이 아니라 '반대(opposite)'여야 합니다. 따라서 ③번이 적절하지 않습니다.",
   vocab: {
-    principal: { word:"principal", pron:"[프린서플]", meaning:"주요한", ex:"the principal transportation mode", exko:"주요한 교통 수단" },
-    constraints: { word:"constraints", pron:"[컨스트레인츠]", meaning:"제약", ex:"because of constraints on the resources", exko:"자원에 대한 제약 때문에" },
-    extensive: { word:"extensive", pron:"[익스텐시브]", meaning:"광범위한", ex:"extensive transit systems", exko:"광범위한 대중교통 체계" },
-    expend: { word:"expend", pron:"[익스펜드]", meaning:"소비하다, 쓰다", ex:"They expend human energy.", exko:"그들은 인간의 에너지를 소비한다." },
+    principal: { word:"principal", pron:"[프린서플]", meaning:"주요한", ex:"the principal transportation mode", exko:"주요한 교통 수단", etym:"princ(첫째의, Latin princeps) + -al(형용사) → '첫째가는' → '주요한'. 같은 어원을 쓰는 단어: prince(princ + -e → 으뜸가는 사람 → 왕자), principle(princ + -iple → 원칙)." },
+    constraints: { word:"constraints", pron:"[컨스트레인츠]", meaning:"제약", ex:"because of constraints on the resources", exko:"자원에 대한 제약 때문에", etym:"con-(함께, 강조) + strain(조이다, Latin stringere) + -t → '단단히 죄는 것' → '제약'. 같은 strain/strict 어근을 쓰는 다른 접두사 단어: restrain(re-뒤로 + strain → 저지하다, 억제하다), restrict(re-뒤로 + strict → 제한하다)." },
+    extensive: { word:"extensive", pron:"[익스텐시브]", meaning:"광범위한", ex:"extensive transit systems", exko:"광범위한 대중교통 체계", etym:"ex-(밖으로) + tens(뻗다, Latin tendere) + -ive → '밖으로 넓게 뻗은' → '광범위한'. 같은 tend/tens 어근을 쓰는 다른 접두사 단어: intense(in-안으로 + tens → 안으로 세게 뻗은 → 강렬한), extend(ex-밖으로 + tend → 늘리다), pretend(pre-미리 + tend → 미리 내세우다 → ~인 척하다)." },
+    expend: { word:"expend", pron:"[익스펜드]", meaning:"소비하다, 쓰다", ex:"They expend human energy.", exko:"그들은 인간의 에너지를 소비한다.", etym:"ex-(밖으로) + pend(달다, 무게를 재다, Latin pendere) → '무게를 달아 밖으로 내놓다' → '소비하다'. 같은 pend 어근을 쓰는 다른 접두사 단어: depend(de-~에서 + pend → 매달리다 → 의존하다), suspend(sub-아래에 + pend → 매달다, 중단하다)." },
     spare: { word:"spare", pron:"[스페어]", meaning:"할애하다, 내주다", ex:"energy that they can hardly spare", exko:"그들이 거의 내줄 수 없는 에너지" },
-    unavoidable: { word:"unavoidable", pron:"[언어보이더블]", meaning:"피할 수 없는", ex:"an unavoidable burden", exko:"피할 수 없는 부담" },
+    unavoidable: { word:"unavoidable", pron:"[언어보이더블]", meaning:"피할 수 없는", ex:"an unavoidable burden", exko:"피할 수 없는 부담", etym:"un-(부정) + a-(밖으로, ex-) + void(빈, Latin vacuus/vacare) + -able → '피해서 비울 수 없는' → '피할 수 없는'. 같은 void/vac 어근을 쓰는 단어: void(vac → 빈, 무효의), vacant(vac + -ant → 비어 있는)." },
     ironically: { word:"Ironically", pron:"[아이라니컬리]", meaning:"아이러니하게도", ex:"Ironically, treadmills simulate walking.", exko:"아이러니하게도 러닝머신은 걷기를 흉내 낸다." },
-    simulate: { word:"simulate", pron:"[시뮬레이트]", meaning:"흉내 내다, 모의로 하다", ex:"treadmills that simulate walking", exko:"걷기를 흉내 내는 러닝머신" }
+    simulate: { word:"simulate", pron:"[시뮬레이트]", meaning:"흉내 내다, 모의로 하다", ex:"treadmills that simulate walking", exko:"걷기를 흉내 내는 러닝머신", etym:"simul(같은, 동시에, Latin similis) + -ate → '같게 만들다' → '흉내 내다, 모의로 하다'. 같은 simil/simul 어근을 쓰는 단어: similar(simil + -ar → 비슷한), assimilate(as-~에게 + simil → 같게 만들다 → 동화되다)." }
+  },
+  funcWords: {
+    mode: { word:"mode", tag:"[명사 mode · 방식, 수단]", meaning:"mode를 기기 설정의 '모드'로 생각하면 어색해요. mode는 '방식, 수단'이라는 뜻이고 transportation mode는 '교통 수단'을 가리켜서, The principal transportation mode는 '주된 교통 수단'으로 해석돼요.", ex:"The principal transportation mode in the developing world, even in large cities, is still walking because of constraints on the resources needed to operate extensive transit systems.", exko:"개발도상국에서는 대도시에서조차 주된 교통 수단이 여전히 걷기인데, 이는 광범위한 대중교통 체계를 운영하는 데 필요한 자원에 제약이 있기 때문이다." },
+    operate: { word:"operate", tag:"[동사 operate · 운영하다]", meaning:"operate를 '수술하다, (기계를) 조작하다'로만 알면 어색해요. 여기서는 체계·조직을 목적어로 받아 '운영하다'라는 뜻이라서, to operate extensive transit systems는 '광범위한 대중교통 체계를 운영하는 데'로 해석돼요.", ex:"The principal transportation mode in the developing world, even in large cities, is still walking because of constraints on the resources needed to operate extensive transit systems.", exko:"개발도상국에서는 대도시에서조차 주된 교통 수단이 여전히 걷기인데, 이는 광범위한 대중교통 체계를 운영하는 데 필요한 자원에 제약이 있기 때문이다." },
+    foot: { word:"foot", tag:"[명사 foot · 관용구 on foot]", meaning:"foot을 그냥 '발'로 보면 문장이 어색해요. 'on foot'은 '걸어서, 도보로'라는 뜻의 관용 표현이라서, cover long distances on foot은 '먼 거리를 걸어서 이동하다'로 해석돼요.", ex:"long distances on foot every day and expend human energy that they can hardly spare.", exko:"사람들은 매일 먼 거리를 걸어서 이동하고 좀처럼 내주기 어려운 인간의 에너지를 소비한다." },
+    hardly: { word:"hardly", tag:"[부사 hardly · 거의 ~않다]", meaning:"hardly를 hard(열심히, 힘들게)의 부사형으로 착각하기 쉽지만, hardly는 '거의 ~하지 않다'라는 부정의 뜻이에요. energy that they can hardly spare는 '좀처럼 내주기 어려운 에너지'로 해석돼요.", ex:"long distances on foot every day and expend human energy that they can hardly spare.", exko:"사람들은 매일 먼 거리를 걸어서 이동하고 좀처럼 내주기 어려운 인간의 에너지를 소비한다." },
+    just: { word:"just", tag:"[부사 just · 정확히]", meaning:"just를 '단지, 겨우'로만 알면 뜻이 약해져요. 여기 just the same의 just는 '정확히, 꼭'이라는 강조의 부사라서, 공식 해석도 '태도와 정책이 정확히 같다'로 옮기고 있어요.", ex:"In North America and Western Europe, however, the attitude and policies are just the", exko:"그러나 북미와 서유럽에서는 태도와 정책이 정확히 같다(→반대이다)." },
+    long: { word:"long", tag:"[형용사 long · 문맥상 적절]", meaning:"long distances는 '먼 거리'라는 뜻으로 문맥상 자연스럽게 쓰였어요. 자원이 부족해 대중교통이 부족한 개발도상국에서 사람들이 매일 먼 거리를 걸어야 한다는 내용과 잘 맞습니다.", ex:"People cover ① long distances on foot every day and expend human energy that they can hardly spare.", exko:"사람들은 매일 먼 거리를 걸어서 이동하고 좀처럼 내주기 어려운 인간의 에너지를 소비한다." },
+    consumes: { word:"consumes", tag:"[동사 consume · 문맥상 적절]", meaning:"consumes는 '소모시키다'라는 뜻으로, 개발도상국에서의 걷기가 생산 능력을 소모시키는 부담이라는 문맥에 자연스럽게 맞는 단어예요.", ex:"Walking under those conditions is an unavoidable burden that ② consumes productive capability.", exko:"그런 조건에서의 걷기는 생산 능력을 소모시키는 피할 수 없는 부담이다." },
+    same: { word:"same", tag:"[형용사 same · 문맥상 오류]", meaning:"however로 앞 내용(개발도상국)과 대조되는 문장이므로, 북미·서유럽의 태도와 정책은 '같은(same)' 것이 아니라 정반대(opposite)여야 문맥이 통해요. 개발도상국에서는 걷기가 피할 수 없는 부담이지만, 북미·서유럽에서는 걷기를 효율적이고 건강한 것으로 여기므로 same은 문맥상 적절하지 않은 낱말이에요.", ex:"In North America and Western Europe, however, the attitude and policies are just the ③ same: walking is efficient, healthful, and natural.", exko:"그러나 북미와 서유럽에서는 태도와 정책이 정확히 같다(→반대이다). 걷기는 효율적이고, 건강에 좋으며, 자연스럽다는 것이다." },
+    more: { word:"more", tag:"[부사 more · 문맥상 적절]", meaning:"more는 '더 많이'라는 뜻으로, 북미·서유럽에서는 걷기를 긍정적으로 여기므로 '우리는 걷기를 더 많이 해야 한다'는 흐름과 자연스럽게 맞아요.", ex:"We should do ④ more of it — almost everybody agrees — and some of the current trends should be reversed.", exko:"우리는 걷기를 더 많이 해야 하고 — 거의 모두가 이에 동의한다 — 현재의 몇몇 추세는 뒤집혀야 한다." },
+    accomplished: { word:"accomplished", tag:"[과거분사 accomplished · 문맥상 적절]", meaning:"accomplished는 '이루어지다, 달성되다'라는 뜻의 과거분사로, 러닝머신에서 흉내 내는 걷기가 실제로는 길에서 이동 목적으로 '이루어질' 수도 있다는 문맥에 자연스럽게 맞는 단어예요.", ex:"Ironically, among the most popular exercise machines in health clubs and in homes are tread-mills that simulate walking, which could be otherwise ⑤ accomplished with a transport purpose on the street.", exko:"아이러니하게도, 헬스클럽과 가정에서 가장 인기 있는 운동 기구 중에는 걷기를 흉내 내는 러닝머신이 있는데, 그 걷기는 달리 말하면 길에서 이동이라는 목적을 가지고 이루어질 수도 있는 것이다." },
+    cover: { word:"cover", tag:"[동사 cover · 의미 확인 필요]", meaning:"cover는 '덮다, 가리다'라는 뜻으로 흔히 알려져 있지만, 여기 People cover ① long distances on foot에서는 거리를 '이동하다, 나아가다'라는 뜻이에요. '사람들은 먼 거리를 덮는다'가 아니라 '사람들은 먼 거리를 걸어서 이동한다'라고 해석해야 자연스러워요.", ex:"People cover ① long distances on foot every day and expend human energy that they can hardly spare.", exko:"사람들은 매일 먼 거리를 걸어서 이동하고 좀처럼 내주기 어려운 인간의 에너지를 소비한다." }
   },
   passage: `The [[principal::principal]] transportation mode in the developing world, even in large cities, is still walking because of [[constraints::constraints]] on the resources needed to operate [[extensive::extensive]] transit systems. People cover ① ‹long› distances on foot every day and [[expend::expend]] human energy that they can hardly [[spare::spare]]. Walking under those conditions is an [[unavoidable::unavoidable]] burden that ② ‹consumes› productive capability. In North America and Western Europe, however, the attitude and policies are just the ③ ‹same›: walking is efficient, healthful, and natural. We should do ④ ‹more› of it — almost everybody agrees — and some of the current trends should be reversed. [[ironically::Ironically]], among the most popular exercise machines in health clubs and in homes are tread-mills that [[simulate::simulate]] walking, which could be otherwise ⑤ ‹accomplished› with a transport purpose on the street.`,
   translation: `개발도상국에서는 대도시에서조차 주된 교통 수단이 여전히 걷기인데, 이는 광범위한 대중교통 체계를 운영하는 데 필요한 자원에 제약이 있기 때문이다. 사람들은 매일 먼 거리를 걸어서 이동하고 좀처럼 내주기 어려운 인간의 에너지를 소비한다. 그런 조건에서의 걷기는 생산 능력을 소모시키는 피할 수 없는 부담이다. 그러나 북미와 서유럽에서는 태도와 정책이 정확히 같다(→반대이다). 걷기는 효율적이고, 건강에 좋으며, 자연스럽다는 것이다. 우리는 걷기를 더 많이 해야 하고 — 거의 모두가 이에 동의한다 — 현재의 몇몇 추세는 뒤집혀야 한다. 아이러니하게도, 헬스클럽과 가정에서 가장 인기 있는 운동 기구 중에는 걷기를 흉내 내는 러닝머신이 있는데, 그 걷기는 달리 말하면 길에서 이동이라는 목적을 가지고 이루어질 수도 있는 것이다.`,
@@ -393,14 +460,24 @@ How to apply: Send us an e-mail at oneweek@film.com.`,
   answer: 0,
   explanation: "물건이 너무 많으면 압도되므로, 가진 것을 다시 점검하고 덜어내는 '재정비(Revision)'가 자신이 가진 것을 보고 쓰게 해준다는 흐름입니다. 뒤에 이어지는 'Streamlining a play space is so important'가 결정적 단서이므로 ①번이 정답입니다.",
   vocab: {
-    anxiety: { word:"anxiety", pron:"[앵자이어티]", meaning:"불안", ex:"Other rooms can cause anxiety.", exko:"다른 방들도 불안을 유발할 수 있다." },
+    anxiety: { word:"anxiety", pron:"[앵자이어티]", meaning:"불안", ex:"Other rooms can cause anxiety.", exko:"다른 방들도 불안을 유발할 수 있다.", etym:"anxi(조이다, 불안해하다, Latin angere) + -ety(명사 접미사) → '마음이 조여드는 상태' → '불안'. 같은 ang 어근을 쓰는 단어: anguish(ang + -uish → 극심한 고통), anxious(anxi + -ous → 불안한)." },
     houses: { word:"houses", pron:"[하우지스]", meaning:"수용하다, 보관하다", ex:"If the play space houses every single toy", exko:"놀이 공간이 모든 장난감을 수용한다면" },
-    express: { word:"express", pron:"[익스프레스]", meaning:"표현하다", ex:"They may not be able to express their feelings.", exko:"그들은 감정을 표현하지 못할 수 있다." },
+    express: { word:"express", pron:"[익스프레스]", meaning:"표현하다", ex:"They may not be able to express their feelings.", exko:"그들은 감정을 표현하지 못할 수 있다.", etym:"ex-(밖으로) + press(누르다, Latin premere) → '눌러서 밖으로 짜내다' → '표현하다'. 같은 press 어근을 쓰는 다른 접두사 단어: impress(im-안으로 + press → 인상을 남기다, 감명을 주다), compress(com-함께 + press → 압축하다), suppress(sub-아래로 + press → 억누르다)." },
     overwhelmed: { word:"overwhelmed", pron:"[오버웰름드]", meaning:"압도된", ex:"They can feel overwhelmed by so much stuff.", exko:"그들은 너무 많은 물건에 압도당한 기분이 들 수 있다." },
     packed: { word:"packed full of", pron:"[팩트 풀 오브]", meaning:"~로 가득 찬", ex:"closets packed full of clothes", exko:"옷으로 가득 찬 옷장" },
     step_over: { word:"step over", pron:"[스텝 오버]", meaning:"넘어가다", ex:"too much to step over", exko:"넘어가야 할 것이 너무 많은" },
     streamlining: { word:"Streamlining", pron:"[스트림라이닝]", meaning:"간소화하는 것", ex:"Streamlining a play space is so important.", exko:"놀이 공간을 간소화하는 것은 매우 중요하다." },
-    indecision: { word:"indecision", pron:"[인디시전]", meaning:"결정 장애, 우유부단", ex:"not overcome with indecision", exko:"결정을 못 내려 압도되지 않도록" }
+    indecision: { word:"indecision", pron:"[인디시전]", meaning:"결정 장애, 우유부단", ex:"not overcome with indecision", exko:"결정을 못 내려 압도되지 않도록", etym:"in-(부정) + de-(분리) + cis(자르다, Latin caedere) + -ion → '잘라서 결정하지 못한 상태' → '결정 장애, 우유부단'. 같은 cis 어근을 쓰는 다른 접두사 단어: decide(de-잘라 + cide → 결정하다), precise(pre-미리 + cis → 미리 잘라낸 → 정확한), concise(con-함께 + cis → 간결한)." }
+  },
+  funcWords: {
+    true: { word:"true", tag:"[형용사 true · 관용구 be true for]", meaning:"true를 '진실인'으로만 옮기면 어색해요. 'the same is true for ~'는 '~에게도 똑같이 적용된다'라는 뜻의 관용 표현이라서, the same is true for kids는 '아이들에게도 똑같은 것이 적용된다'로 해석돼요.", ex:"Just like how other rooms in your home can cause anxiety when filled with too much stuff, the same is true for kids.", exko:"집 안의 다른 방들이 너무 많은 물건으로 가득 찼을 때 불안을 유발할 수 있는 것과 마찬가지로, 아이들에게도 똑같은 것이 적용된다." },
+    single: { word:"single", tag:"[형용사 single · every single]", meaning:"single을 '혼자의, 단 하나의'로만 보면 뜻이 약해져요. 'every single ~'은 every를 강조해 '~ 하나하나 모두'라는 뜻이라서, every single toy는 '모든 장난감을 다'로 해석돼요.", ex:"If the play space houses every single toy that has ever been purchased for them since birth, they may not be able to express their feelings, but they can feel overwhelmed by so much stuff.", exko:"만약 놀이 공간이 태어난 이후로 그들을 위해 구매된 모든 장난감을 다 수용하고 있다면, 아이들은 자기 감정을 표현하지 못할 수도 있고, 너무 많은 물건에 압도당한 기분을 느낄 수 있다." },
+    hard: { word:"hard", tag:"[형용사 hard · 관용구 have a hard time -ing]", meaning:"hard를 '단단한, 열심히'로 보면 뜻이 통하지 않아요. 'have a hard time -ing'는 '~하는 데 어려움을 겪다'라는 관용 표현이라서, kids have a hard time making a choice는 '아이들은 선택하는 데 어려움을 겪는다'로 해석돼요.", ex:"When there's too much to see, too much to step over, and too much input, kids have a hard time making a choice.", exko:"볼 것이 너무 많고, 넘어가야 할 것이 너무 많고, 들어오는 자극이 너무 많으면, 아이들은 선택하는 데 어려움을 겪는다." },
+    input: { word:"input", tag:"[명사 input · 들어오는 자극]", meaning:"input을 컴퓨터의 '입력'으로만 생각하면 어색해요. 여기서는 아이가 보고 듣고 받아들이는 '들어오는 정보, 자극'을 뜻해서, too much input은 '들어오는 자극이 너무 많으면'으로 해석돼요.", ex:"When there's too much to see, too much to step over, and too much input, kids have a hard time making a choice.", exko:"볼 것이 너무 많고, 넘어가야 할 것이 너무 많고, 들어오는 자극이 너무 많으면, 아이들은 선택하는 데 어려움을 겪는다." },
+    that: { word:"that", tag:"[관계대명사 · 주격]", meaning:"that은 every single toy를 선행사로 받는 주격 관계대명사예요. every single toy that has ever been purchased for them since birth는 '태어난 이후로 그들을 위해 구매된 모든 장난감'이라고 해석돼요.", ex:"If the play space houses every single toy that has ever been purchased for them since birth, they may not be able to express their feelings, but they can feel overwhelmed by so much stuff.", exko:"만약 놀이 공간이 태어난 이후로 그들을 위해 구매된 모든 장난감을 다 수용하고 있다면, 아이들은 자기 감정을 표현하지 못할 수도 있고, 너무 많은 물건에 압도당한 기분을 느낄 수 있다." },
+    what: { word:"what", tag:"[관계대명사 what · ~하는 것]", meaning:"what은 선행사를 포함한 관계대명사로 '~하는 것'이라고 해석해요. see what they have는 '그들이 가진 것을 보다', use what they own은 '그들이 소유한 것을 사용하다'라는 뜻이에요.", ex:"__________ helps everyone see what they have and use what they own.", exko:"__________은/는 모두가 자신이 가진 것을 보고 자신이 소유한 것을 사용하도록 도와준다." },
+    since: { word:"since", tag:"[전치사 since · 시간 vs 이유]", meaning:"since는 '~이기 때문에(이유)'로 자주 쓰이지만, 여기 since birth에서는 '~이후로(시간)'라는 뜻으로 쓰였어요. every toy ... purchased ... since birth는 '태어난 이후로 구매된 모든 장난감'이라고 해석돼요.", ex:"If the play space houses every single toy that has ever been purchased for them since birth, they may not be able to express their feelings, but they can feel overwhelmed by so much stuff.", exko:"만약 놀이 공간이 태어난 이후로 그들을 위해 구매된 모든 장난감을 다 수용하고 있다면, 아이들은 자기 감정을 표현하지 못할 수도 있고, 너무 많은 물건에 압도당한 기분을 느낄 수 있다." },
+    overcome: { word:"overcome", tag:"[과거분사 overcome · 문맥 확인 필요]", meaning:"overcome은 '극복하다'라는 동사로 많이 알고 있지만, 여기서는 be동사가 생략된 과거분사로 '압도된, 사로잡힌'이라는 뜻이에요. not overcome with indecision은 '결정을 내리지 못해 압도되지(사로잡히지) 않은'이라고 해석되며, feel inspired와 병렬 구조를 이뤄요 (= not feel overcome with indecision). 사전에서 overcome을 찾으면 '극복하다'가 먼저 나오지만 이 문맥에는 맞지 않으니 주의하세요.", ex:"You want your kids to feel inspired and imaginative in the room — not overcome with indecision.", exko:"여러분은 아이들이 그 방에서 영감을 받고 상상력이 풍부해지기를 바라지, 결정을 내리지 못해 압도되기를 바라지는 않을 것이다." }
   },
   passage: `Just like how other rooms in your home can cause [[anxiety::anxiety]] when filled with too much stuff, the same is true for kids. If the play space [[houses::houses]] every single toy that has ever been purchased for them since birth, they may not be able to [[express::express]] their feelings, but they can feel [[overwhelmed::overwhelmed]] by so much stuff. This reminds us of how women look in their closets [[packed::packed full of]] clothes and think, I have nothing to wear. __________ helps everyone see what they have and use what they own. When there's too much to see, too much to [[step_over::step over]], and too much input, kids have a hard time making a choice. [[streamlining::Streamlining]] a play space is so important. You want your kids to feel inspired and imaginative in the room — not overcome with [[indecision::indecision]].`,
   translation: `집 안의 다른 방들이 너무 많은 물건으로 가득 찼을 때 불안을 유발할 수 있는 것과 마찬가지로, 아이들에게도 똑같은 것이 적용된다. 만약 놀이 공간이 태어난 이후로 그들을 위해 구매된 모든 장난감을 다 수용하고 있다면, 아이들은 자기 감정을 표현하지 못할 수도 있고, 너무 많은 물건에 압도당한 기분을 느낄 수 있다. 이것은 여성들이 옷으로 가득 찬 옷장을 들여다보면서 '입을 옷이 하나도 없네'라고 생각하는 모습을 떠올리게 한다. __________은/는 모두가 자신이 가진 것을 보고 자신이 소유한 것을 사용하도록 도와준다. 볼 것이 너무 많고, 넘어가야 할 것이 너무 많고, 들어오는 자극이 너무 많으면, 아이들은 선택하는 데 어려움을 겪는다. 놀이 공간을 간소화하는 것은 매우 중요하다. 여러분은 아이들이 그 방에서 영감을 받고 상상력이 풍부해지기를 바라지, 결정을 내리지 못해 압도되기를 바라지는 않을 것이다.`,
@@ -443,6 +520,7 @@ function toggleSheetStar() {
   setStarred(gid, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
   if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
+  else if (idx >= 0 && window.studyStats) window.studyStats.unrecord('star');
   updateSheetStarBtn();
 }
 
@@ -579,8 +657,13 @@ function showWord(key) {
   currentSheetWordData = { word:v.word, pron:v.pron, meaning:v.meaning, en:v.ex, ko:v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
@@ -624,6 +707,23 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -632,6 +732,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
@@ -641,8 +742,12 @@ function showPlain(rawWord) {
   currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();

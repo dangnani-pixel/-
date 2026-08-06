@@ -95,12 +95,17 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
 .sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
 .sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; color: #1a1a1a; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
 .sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
 .sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
 .sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
 </style>
 </head>
 <body>
@@ -162,6 +167,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="sheet-pron" id="sheet-pron"></div>
   <div class="sheet-meaning" id="sheet-meaning"></div>
   <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
 </div>
 
 <script>
@@ -172,14 +178,25 @@ const problems = [
   noteKo: "항상 해를 막으려 하지만 결코 그렇게 하지 못하는 사람은 일반적으로 도덕적으로 선하다고 여겨지지 않는다.",
   noteLabel: "📌 삽입할 문장",
   vocab: {
-    morally: { word:"morally", pron:"[모럴리]", meaning:"도덕적으로", ex:"Act morally in all situations.", exko:"모든 상황에서 도덕적으로 행동해라." },
-    significantly: { word:"significantly", pron:"[시그니피컨틀리]", meaning:"훨씬, 상당히", ex:"Prices increased significantly.", exko:"가격이 상당히 올랐다." },
-    intentions: { word:"intentions", pron:"[인텐션즈]", meaning:"의도들", ex:"Good intentions are important.", exko:"좋은 의도가 중요하다." },
-    motives: { word:"motives", pron:"[모티브즈]", meaning:"동기", ex:"Her motives were unclear.", exko:"그녀의 동기는 불분명했다." },
-    relevant: { word:"relevant", pron:"[렐러번트]", meaning:"관련 있는", ex:"That information is not relevant.", exko:"그 정보는 관련이 없다." },
-    unintentionally: { word:"unintentionally", pron:"[언인텐셔널리]", meaning:"의도치 않게", ex:"He unintentionally offended her.", exko:"그는 의도치 않게 그녀를 기분 상하게 했다." },
-    consequences: { word:"consequences", pron:"[컨시퀀시즈]", meaning:"결과", ex:"Actions have consequences.", exko:"행동에는 결과가 따른다." },
-    regarded: { word:"regarded as", pron:"[리가딛 애즈]", meaning:"~로 여겨지는", ex:"She is regarded as an expert.", exko:"그녀는 전문가로 여겨진다." }
+    morally: { word:"morally", pron:"[모럴리]", meaning:"도덕적으로", ex:"Act morally in all situations.", exko:"모든 상황에서 도덕적으로 행동해라.", etym:"mor(관습, 도덕; Latin mos/moralis) + ally → '도덕에 따라' → '도덕적으로'. 관련 단어: moral(도덕적인), morale(사기), demoralize(de-떨어뜨려 + moral → 사기를 꺾다)." },
+    significantly: { word:"significantly", pron:"[시그니피컨틀리]", meaning:"훨씬, 상당히", ex:"Prices increased significantly.", exko:"가격이 상당히 올랐다.", etym:"sign(표시; Latin signum) + ific + ant + ly → '표시할 만큼 두드러지게' → '훨씬, 상당히'. 같은 sign 어근: signal(신호), signify(sign + fy → 의미하다), design(de-+sign → 설계하다)." },
+    intentions: { word:"intentions", pron:"[인텐션즈]", meaning:"의도들", ex:"Good intentions are important.", exko:"좋은 의도가 중요하다.", etym:"in-(안으로) + tend(뻗다; Latin tendere) + ion → '마음을 안으로 뻗음' → '의도'. 같은 tend 어근: attend(참석하다), extend(연장하다), pretend(pre-미리 + tend → ~인 척하다)." },
+    motives: { word:"motives", pron:"[모티브즈]", meaning:"동기", ex:"Her motives were unclear.", exko:"그녀의 동기는 불분명했다.", etym:"mot(움직이다; Latin movere) + ive → '움직이게 하는 것' → '동기'. 같은 mot/mov 어근: motion(움직임), promote(pro-앞으로 + mot → 촉진하다), remove(re-다시 + mov → 제거하다)." },
+    relevant: { word:"relevant", pron:"[렐러번트]", meaning:"관련 있는", ex:"That information is not relevant.", exko:"그 정보는 관련이 없다.", etym:"re-(다시) + lev(들어올리다; Latin levare) + ant → '다시 들어 관련짓는' → '관련 있는'. 같은 lev 어근: elevate(e-위로 + lev → 끌어올리다), alleviate(al-~쪽으로 + lev → 가볍게 하다, 완화하다)." },
+    unintentionally: { word:"unintentionally", pron:"[언인텐셔널리]", meaning:"의도치 않게", ex:"He unintentionally offended her.", exko:"그는 의도치 않게 그녀를 기분 상하게 했다.", etym:"un-(부정) + in-(안으로) + tend(뻗다; Latin tendere) + ionally → '의도를 뻗지 않은 채로' → '의도치 않게'. 같은 tend 어근: extend(연장하다), attend(참석하다), intend(의도하다)." },
+    consequences: { word:"consequences", pron:"[컨시퀀시즈]", meaning:"결과", ex:"Actions have consequences.", exko:"행동에는 결과가 따른다.", etym:"con-(함께) + sequ(따르다; Latin sequi) + ence → '뒤따라오는 것' → '결과'. 같은 sequ 어근: subsequent(sub-바로 뒤에 + sequ → 그 다음의), sequence(순서), pursue(pro-앞으로 + sequ → 추구하다)." },
+    regarded: { word:"regarded as", pron:"[리가딛 애즈]", meaning:"~로 여겨지는", ex:"She is regarded as an expert.", exko:"그녀는 전문가로 여겨진다.", etym:"re-(다시) + gard(보다, 지키다; 고대 프랑스어 garder) → '되돌아보다' → '~로 여기다'. 같은 gard 어근: regard(여기다, 존중하다), guard(지키다), reward(re-다시 + ward(보다) → 보상하다)." }
+  },
+  funcWords: {
+    one: { word:"one", tag:"[대명사 one · 사람]", meaning:"one은 숫자 '하나'가 아니라 앞에 나온 person을 대신하는 대명사로 '사람'이라는 뜻이에요. is one who does는 '~하는 사람이다'라고 해석해요.", ex:"A morally good person is one who does morally bad actions significantly less often than most and does morally good ones significantly more often than most.", exko:"도덕적으로 좋은 사람은 대부분의 사람들보다 훨씬 드물게 도덕적으로 나쁜 행동을 하고, 대부분의 사람들보다 훨씬 자주 도덕적으로 좋은 행동을 하는 사람이다." },
+    who: { word:"who", tag:"[관계대명사 who · 주격]", meaning:"who는 A person을 선행사로 받는 주격 관계대명사예요. A person who unintentionally prevents harm ~은 '의도치 않게 해를 막는 사람'이라고 해석해요.", ex:"A person who unintentionally prevents harm to others and does not harm them simply because things do not turn out as she intends is not morally good.", exko:"의도치 않게 다른 사람에게 해를 끼치는 것을 막고, 단지 자신이 의도한 대로 일이 되지 않아서 그들에게 해를 끼치지 않는 사람은 도덕적으로 선한 것이 아니다." },
+    as: { word:"as", tag:"[접속사 as · ~하는 대로]", meaning:"as she intends는 '그녀가 의도하는 대로'라는 뜻이에요. as가 '~로서'가 아니라 '~하는 대로, ~한 것처럼'이라는 양태를 나타내는 접속사로 쓰였어요.", ex:"A person who unintentionally prevents harm to others and does not harm them simply because things do not turn out as she intends is not morally good.", exko:"의도치 않게 다른 사람에게 해를 끼치는 것을 막고, 단지 자신이 의도한 대로 일이 되지 않아서 그들에게 해를 끼치지 않는 사람은 도덕적으로 선한 것이 아니다." },
+    that: { word:"that", tag:"[명사절 접속사 that / it ~ that 강조구문]", meaning:"이 문장에는 that이 두 번 나와요. 첫 번째 that(impression that ~)은 impression의 내용을 설명하는 명사절 접속사이고, 두 번째 'it is the actual consequences ~ that count'는 'it is ~ that ...' 강조구문으로 'count하는 것은 바로 실제 결과이다'라고 강조해서 해석해요.", ex:"Although this kind of situation generally occurs only in slapstick movies, it is worth mentioning to avoid the false impression that it is the actual consequences of a person's actions that count toward her being judged morally good or bad.", exko:"이런 상황은 일반적으로 슬랩스틱 영화에서만 발생하지만, 어떤 사람이 도덕적으로 선하거나 나쁘다고 판단되는 데 있어 중요한 것이 그 사람 행동의 실제 결과라는 잘못된 인상을 피하기 위해 언급할 가치가 있다." },
+    means: { word:"means", tag:"[숙어 mean well · 선의를 가지다]", meaning:"mean well은 '의미하다'라는 뜻이 아니라 '선의를 가지다, 좋은 뜻으로 그러다'라는 관용 표현이에요. she means well은 '그녀는 선의를 가지고 있다'라고 해석해요.", ex:"Of such a person, it may be said that she means well; but, contrary to Kant, some results are necessary before she is regarded as morally good.", exko:"그런 사람에 대해, 그녀는 선의를 가지고 있다고 말할 수는 있지만, 칸트와는 달리, 그녀가 도덕적으로 선하다고 여겨지기 전에 일부 결과가 필요하다." },
+    count: { word:"count", tag:"[동사 · 의미 확인]", meaning:"count는 '(숫자를) 세다'라는 뜻이 먼저 떠오르지만, 'count toward'는 '~에 있어 중요하다, ~에 기여하다'라는 뜻으로 쓰여요. 'consequences that count toward her being judged'는 '그녀가 판단되는 데 있어 중요한 결과'로 해석되며, 숫자를 세는 것과는 관계가 없어요.", ex:"Although this kind of situation generally occurs only in slapstick movies, it is worth mentioning to avoid the false impression that it is the actual consequences of a person's actions that count toward her being judged morally good or bad.", exko:"이런 상황은 일반적으로 슬랩스틱 영화에서만 발생하지만, 어떤 사람이 도덕적으로 선하거나 나쁘다고 판단되는 데 있어 중요한 것이 그 사람 행동의 실제 결과라는 잘못된 인상을 피하기 위해 언급할 가치가 있다." },
+    most: { word:"most", tag:"[대명사 most · 대부분의 사람들]", meaning:"most를 '가장'이라는 최상급 표시로 읽으면 than most가 해석되지 않아요. 여기서 most는 '대부분의 사람들'을 뜻하는 대명사(most people)예요. less often than most는 '대부분의 사람들보다 덜 자주'라고 해석해요.", ex:"A morally good person is one who does morally bad actions significantly less often than most and does morally good ones significantly more often than most.", exko:"도덕적으로 좋은 사람은 대부분의 사람들보다 훨씬 드물게 도덕적으로 나쁜 행동을 하고, 대부분의 사람들보다 훨씬 자주 도덕적으로 좋은 행동을 하는 사람이다." },
+    turn: { word:"turn", tag:"[동사 turn · 관용구 turn out]", meaning:"turn을 '돌다, 돌리다'로 해석하면 뜻이 통하지 않아요. 'turn out'은 '(일이) ~로 되어가다, 결과가 ~로 나오다'라는 뜻의 관용 표현이에요. things do not turn out as she intends는 '일이 그녀가 의도한 대로 되지 않는다'라고 해석해요.", ex:"A person who unintentionally prevents harm to others and does not harm them simply because things do not turn out as she intends is not morally good.", exko:"의도치 않게 다른 사람에게 해를 끼치는 것을 막고, 단지 자신이 의도한 대로 일이 되지 않아서 그들에게 해를 끼치지 않는 사람은 도덕적으로 선한 것이 아니다." },
+    contrary: { word:"contrary", tag:"[숙어 contrary to · ~와는 달리]", meaning:"contrary를 '반대되는'이라는 형용사로만 보면 어색해요. 'contrary to + 명사'는 '~와는 달리, ~와는 반대로'라는 뜻의 숙어예요. contrary to Kant는 '칸트와는 달리'라고 해석해요.", ex:"Of such a person, it may be said that she means well; but, contrary to Kant, some results are necessary before she is regarded as morally good.", exko:"그런 사람에 대해, 그녀는 선의를 가지고 있다고 말할 수는 있지만, 칸트와는 달리, 그녀가 도덕적으로 선하다고 여겨지기 전에 일부 결과가 필요하다." },
   },
   passage: `A [[morally::morally]] good person is one who does morally bad actions [[significantly::significantly]] less often than most and does morally good ones significantly more often than most. In judging a person not only her actions but also her [[intentions::intentions]] and [[motives::motives]] are [[relevant::relevant]]. ① A morally good person must intend to do morally good actions and intend to avoid morally bad ones. ② A person who [[unintentionally::unintentionally]] prevents harm to others and does not harm them simply because things do not turn out as she intends is not morally good. ③ Although this kind of situation generally occurs only in slapstick movies, it is worth mentioning to avoid the false impression that it is the actual [[consequences::consequences]] of a person's actions that count toward her being judged morally good or bad. ④ But actual consequences are important. ⑤ Of such a person, it may be said that she means well; but, contrary to Kant, some results are necessary before she is [[regarded::regarded as]] morally good.`,
   translation: `도덕적으로 좋은 사람은 대부분의 사람들보다 훨씬 드물게 도덕적으로 나쁜 행동을 하고, 대부분의 사람들보다 훨씬 자주 도덕적으로 좋은 행동을 하는 사람이다. 어떤 사람을 판단할 때 그 사람의 행동뿐만 아니라 의도와 동기도 관련이 있다. ① 도덕적으로 좋은 사람은 도덕적으로 좋은 행동을 하려는 의도가 있어야 하고 도덕적으로 나쁜 행동을 피하려는 의도가 있어야 한다. ② 의도치 않게 다른 사람에게 해를 끼치는 것을 막고, 단지 자신이 의도한 대로 일이 되지 않아서 그들에게 해를 끼치지 않는 사람은 도덕적으로 선한 것이 아니다. ③ 이런 상황은 일반적으로 슬랩스틱 영화에서만 발생하지만, 어떤 사람이 도덕적으로 선하거나 나쁘다고 판단되는 데 있어 중요한 것이 그 사람 행동의 실제 결과라는 잘못된 인상을 피하기 위해 언급할 가치가 있다. ④ 하지만 실제 결과는 중요하다. ⑤ 그런 사람에 대해, 그녀는 선의를 가지고 있다고 말할 수는 있지만, 칸트와는 달리, 그녀가 도덕적으로 선하다고 여겨지기 전에 일부 결과가 필요하다.`,
@@ -203,14 +220,26 @@ const problems = [
   noteKo: "우리의 시각적 지각은 기능적 관계에 기반한 확립된 위계에 의해 형성되는데, 이는 카메라의 (B) 관점과 달리 사물을 있는 그대로 보는 우리의 능력을 (A).",
   noteLabel: "📝 요약문 (빈칸 A, B를 채우세요)",
   vocab: {
-    preconceptions: { word:"preconceptions", pron:"[프리컨셉션즈]", meaning:"선입견", ex:"Try to set aside your preconceptions.", exko:"당신의 선입견을 제쳐두려고 노력해라." },
-    hierarchies: { word:"hierarchies", pron:"[하이어라키즈]", meaning:"위계, 계층", ex:"Companies often have strict hierarchies.", exko:"회사는 종종 엄격한 위계를 가진다." },
-    priorities: { word:"priorities", pron:"[프라이오리티즈]", meaning:"우선순위", ex:"Set your priorities straight.", exko:"우선순위를 명확히 해라." },
-    interfere: { word:"interfere", pron:"[인터피어]", meaning:"방해하다", ex:"Noise can interfere with focus.", exko:"소음은 집중을 방해할 수 있다." },
-    impartially: { word:"impartially", pron:"[임파셜리]", meaning:"공정하게", ex:"The judge must act impartially.", exko:"판사는 공정하게 행동해야 한다." },
-    indifference: { word:"indifference", pron:"[인디퍼런스]", meaning:"무관심", ex:"She treated the news with indifference.", exko:"그녀는 그 소식을 무관심하게 대했다." },
+    preconceptions: { word:"preconceptions", pron:"[프리컨셉션즈]", meaning:"선입견", ex:"Try to set aside your preconceptions.", exko:"당신의 선입견을 제쳐두려고 노력해라.", etym:"pre-(미리) + con-(함께) + cept(잡다; Latin capere) + ion → '미리 마음속에 잡아둔 것' → '선입견'. 같은 cept 어근: concept(con-함께 + cept → 개념), accept(ac-~로 + cept → 받아들이다), except(ex-밖으로 + cept → 제외하다)." },
+    hierarchies: { word:"hierarchies", pron:"[하이어라키즈]", meaning:"위계, 계층", ex:"Companies often have strict hierarchies.", exko:"회사는 종종 엄격한 위계를 가진다.", etym:"hier(신성한; Greek hieros) + arch(통치, 지배; Greek arkhein) + y → '신성한 것들의 지배 순서' → '위계, 계층'. 같은 arch 어근: monarchy(mono-하나 + arch → 군주제), anarchy(an-없는 + arch → 무정부상태)." },
+    priorities: { word:"priorities", pron:"[프라이오리티즈]", meaning:"우선순위", ex:"Set your priorities straight.", exko:"우선순위를 명확히 해라.", etym:"prior(더 먼저인; Latin prior) + ity → '먼저인 상태' → '우선순위'. 관련 단어: prior(이전의, 우선하는), prioritize(우선순위를 매기다)." },
+    interfere: { word:"interfere", pron:"[인터피어]", meaning:"방해하다", ex:"Noise can interfere with focus.", exko:"소음은 집중을 방해할 수 있다.", etym:"inter-(사이에) + fere(치다, 부딪히다; Latin ferire) → '사이에 끼어들어 부딪히다' → '방해하다'. 관련 단어: interference(간섭, 방해)." },
+    impartially: { word:"impartially", pron:"[임파셜리]", meaning:"공정하게", ex:"The judge must act impartially.", exko:"판사는 공정하게 행동해야 한다.", etym:"im-(부정) + part(부분; Latin pars) + ially → '한쪽 부분에 치우치지 않게' → '공정하게'. 같은 part 어근: partial(부분적인, 편파적인), participate(part-부분을 + cip(잡다) → 참여하다), apart(a-떨어져 + part → 따로 떨어져)." },
+    indifference: { word:"indifference", pron:"[인디퍼런스]", meaning:"무관심", ex:"She treated the news with indifference.", exko:"그녀는 그 소식을 무관심하게 대했다.", etym:"in-(부정) + differ(다르다; Latin differre, dis-+ferre) + ence → '차이를 두지 않음' → '무관심'. 관련 단어: different(다른), differentiate(구별하다)." },
     flatness: { word:"flatness", pron:"[플랫니스]", meaning:"평면성", ex:"The flatness of the image surprised us.", exko:"이미지의 평면성이 우리를 놀라게 했다." },
-    unrecognizable: { word:"unrecognizable", pron:"[언레커그나이저블]", meaning:"인식할 수 없는", ex:"The old photo was almost unrecognizable.", exko:"그 오래된 사진은 거의 알아볼 수 없었다." }
+    unrecognizable: { word:"unrecognizable", pron:"[언레커그나이저블]", meaning:"인식할 수 없는", ex:"The old photo was almost unrecognizable.", exko:"그 오래된 사진은 거의 알아볼 수 없었다.", etym:"un-(부정) + re-(다시) + cogn(알다; Latin cognoscere) + izable → '다시 알아볼 수 없는' → '인식할 수 없는'. 같은 cogn 어근: recognize(다시 알아보다), cognitive(인지의), incognito(in-부정 + cogn → 신분을 숨긴)." }
+  },
+  funcWords: {
+    that: { word:"that", tag:"[관계대명사 that · 주격]", meaning:"that은 hierarchies를 선행사로 받는 주격 관계대명사예요. hierarchies that reflect ~는 '~을 반영하는 위계'라고 해석해요. 이 지문에는 that이 여러 번 나오는데(expectations that interfere, a lens that is similar, areas that appear), 모두 바로 앞 명사를 꾸며주는 관계대명사예요.", ex:"In viewing a scene, we establish unconscious hierarchies that reflect our functional relationship to objects and our momentary priorities.", exko:"한 장면을 볼 때, 우리는 대상과의 기능적 관계와 순간적인 우선순위를 반영하는 무의식적인 위계를 확립한다." },
+    one: { word:"one", tag:"[대명사 One · 일반인 지칭]", meaning:"문장 맨 앞의 One은 숫자가 아니라 '(일반적으로) 사람은, 누구나'라는 뜻의 총칭 대명사예요. One would probably not visualize는 '사람들은 아마 시각화하지 않을 것이다'라고 해석해요.", ex:"One would probably not visualize a hammer as seen from the top so that the handle is hidden by the hammer's head.", exko:"손잡이가 망치의 머리에 가려지도록 위에서 본 모습으로 망치를 시각화하지는 않을 것이다." },
+    like: { word:"like", tag:"[전치사 like · ~처럼]", meaning:"like는 '좋아하다'가 아니라 '~처럼'이라는 뜻의 전치사예요. like the human eye는 '인간의 눈처럼'이라고 해석해요. 앞부분의 'see \"like a camera\"'도 같은 뜻으로 쓰였어요.", ex:"The camera, like the human eye, sees only shapes and colors.", exko:"카메라는 인간의 눈처럼 오직 형태와 색깔만을 본다." },
+    serve: { word:"serve", tag:"[구동사 serve up · 제공하다]", meaning:"serve up은 '봉사하다'가 아니라 '(그대로) 제공하다, 내놓다'라는 뜻의 구동사예요. simply serve them up to us는 '단지 그것들을 우리에게 (그대로) 제공하다'라고 해석해요.", ex:"When we look at them carefully, photographs are often surprising because they don't interpret confusing details but simply serve them up to us with a mechanical indifference.", exko:"우리가 사진을 자세히 볼 때, 사진은 종종 놀라운데, 왜냐하면 사진은 혼란스러운 세부사항을 해석하지 않고 단지 기계적인 무관심으로 우리에게 그것을 제공하기 때문이다." },
+    so: { word:"so", tag:"[so that · 결과]", meaning:"so that은 '그래서 ~하도록'이라는 결과를 나타내요. so that the handle is hidden은 '그래서 손잡이가 가려지도록'이라고 해석해요.", ex:"One would probably not visualize a hammer as seen from the top so that the handle is hidden by the hammer's head.", exko:"손잡이가 망치의 머리에 가려지도록 위에서 본 모습으로 망치를 시각화하지는 않을 것이다." },
+    documents: { word:"documents", tag:"[동사 · 품사 확인]", meaning:"documents는 '문서들'이라는 명사의 복수형처럼 보이지만, 여기서는 주어 It(카메라)의 3인칭 단수 동사로 쓰여 '기록하다'라는 뜻이에요. 'It documents the world impartially'는 '그것은 세상을 공정하게 기록한다'로 해석돼요. needs, demands와 같은 유형의 단어이니 주의하세요.", ex:"It documents the world impartially through a lens that is similar to the eye.", exko:"그것은 눈과 비슷한 렌즈를 통해 세상을 공정하게 기록한다." },
+    profile: { word:"profile", tag:"[명사 · 의미 확인]", meaning:"profile은 '프로필, 개요'라는 뜻이 먼저 떠오르지만, 여기서는 '옆모습'이라는 뜻의 명사예요. 'see it in profile'은 '그것을 옆모습으로 보다'로 해석되며, SNS의 '프로필'과는 관계가 없어요.", ex:"For example, when visualizing a hammer in our mind's eye, we tend to \"see\" it in profile or at some other \"ready for use\" angle.", exko:"예를 들어, 마음속으로 망치를 시각화할 때, 우리는 그것을 옆모습이나 어떤 '사용할 준비가 된' 각도에서 '보는' 경향이 있다." },
+    reflect: { word:"reflect", tag:"[동사 reflect · 반영하다]", meaning:"reflect를 '반사하다'나 '숙고하다'로 옮기면 어색해요. 여기서는 '~을 반영하다, 보여주다'라는 뜻이에요. hierarchies that reflect our functional relationship은 '우리의 기능적 관계를 반영하는 위계'라고 해석해요.", ex:"In viewing a scene, we establish unconscious hierarchies that reflect our functional relationship to objects and our momentary priorities.", exko:"한 장면을 볼 때, 우리는 대상과의 기능적 관계와 순간적인 우선순위를 반영하는 무의식적인 위계를 확립한다." },
+    tend: { word:"tend", tag:"[동사 tend · tend to ~]", meaning:"tend를 '돌보다'로 옮기면 뜻이 통하지 않아요. 'tend to + 동사원형'은 '~하는 경향이 있다'라는 뜻으로 하나의 표현처럼 알아두어야 해요. we tend to \"see\" it in profile은 '우리는 그것을 옆모습으로 보는 경향이 있다'라고 해석해요.", ex:"For example, when visualizing a hammer in our mind's eye, we tend to \"see\" it in profile or at some other \"ready for use\" angle.", exko:"예를 들어, 마음속으로 망치를 시각화할 때, 우리는 그것을 옆모습이나 어떤 '사용할 준비가 된' 각도에서 '보는' 경향이 있다." },
+    eye: { word:"eye", tag:"[숙어 in one's mind's eye · 마음속으로]", meaning:"'in our mind's eye'를 '우리 마음의 눈 안에서'라고 직역하면 어색해요. '마음속으로, 머릿속에 그려서'라는 뜻의 관용 표현이에요. 뒷부분의 'the human eye(인간의 눈)'는 진짜 신체 기관인 눈을 가리키니 구분하세요.", ex:"For example, when visualizing a hammer in our mind's eye, we tend to \"see\" it in profile or at some other \"ready for use\" angle.", exko:"예를 들어, 마음속으로 망치를 시각화할 때, 우리는 그것을 옆모습이나 어떤 '사용할 준비가 된' 각도에서 '보는' 경향이 있다." },
   },
   passage: `Vision is influenced by our [[preconceptions::preconceptions]] about reality. In viewing a scene, we establish unconscious [[hierarchies::hierarchies]] that reflect our functional relationship to objects and our momentary [[priorities::priorities]]. For example, when visualizing a hammer in our mind's eye, we tend to "see" it in profile or at some other "ready for use" angle. One would probably not visualize a hammer as seen from the top so that the handle is hidden by the hammer's head. The functional relationship we have with objects creates visual expectations that [[interfere::interfere]] with our ability to see "like a camera." The camera, like the human eye, sees only shapes and colors. It documents the world [[impartially::impartially]] through a lens that is similar to the eye. When we look at them carefully, photographs are often surprising because they don't interpret confusing details but simply serve them up to us with a mechanical [[indifference::indifference]]. And because of their [[flatness::flatness]], photographs often contain areas that appear as [[unrecognizable::unrecognizable]] colors and shapes.`,
   translation: `시각은 현실에 대한 우리의 선입견에 영향을 받는다. 한 장면을 볼 때, 우리는 대상과의 기능적 관계와 순간적인 우선순위를 반영하는 무의식적인 위계를 확립한다. 예를 들어, 마음속으로 망치를 시각화할 때, 우리는 그것을 옆모습이나 어떤 '사용할 준비가 된' 각도에서 '보는' 경향이 있다. 손잡이가 망치의 머리에 가려지도록 위에서 본 모습으로 망치를 시각화하지는 않을 것이다. 우리가 사물과 맺는 기능적 관계는 우리가 '카메라처럼' 보는 능력을 방해하는 시각적 기대를 만들어낸다. 카메라는 인간의 눈처럼 오직 형태와 색깔만을 본다. 그것은 눈과 비슷한 렌즈를 통해 세상을 공정하게 기록한다. 우리가 사진을 자세히 볼 때, 사진은 종종 놀라운데, 왜냐하면 사진은 혼란스러운 세부사항을 해석하지 않고 단지 기계적인 무관심으로 우리에게 그것을 제공하기 때문이다. 그리고 그 평면성 때문에, 사진은 종종 인식할 수 없는 색깔과 형태로 나타나는 영역들을 포함한다.`,
@@ -231,14 +260,28 @@ const problems = [
 {
   num: "41-42", label: "41~42번", type: "장문 (제목 · 어휘)",
   vocab: {
-    retail: { word:"retail", pron:"[리테일]", meaning:"소매의", ex:"She works in retail.", exko:"그녀는 소매업에 종사한다." },
+    retail: { word:"retail", pron:"[리테일]", meaning:"소매의", ex:"She works in retail.", exko:"그녀는 소매업에 종사한다.", etym:"re-(다시) + tail(자르다; Old French tailler, Latin taliare) → '큰 것을 잘라 다시 파는 것' → '소매의'. 같은 tail 어근: detail(de-+tail → 세부사항, 잘게 자른 것), tailor(재단사), entail(en-+tail → 수반하다)." },
     utter: { word:"utter", pron:"[어터]", meaning:"말하다, 발화하다", ex:"He didn't utter a word.", exko:"그는 한마디도 하지 않았다." },
-    encourage: { word:"encourage", pron:"[인커리지]", meaning:"격려하다, 유도하다", ex:"Encourage students to speak up.", exko:"학생들이 발언하도록 유도해라." },
+    encourage: { word:"encourage", pron:"[인커리지]", meaning:"격려하다, 유도하다", ex:"Encourage students to speak up.", exko:"학생들이 발언하도록 유도해라.", etym:"en-(만들다) + cour(심장, 마음; Latin cor) + age → '마음(용기)을 갖게 하다' → '격려하다'. 같은 cor 어근: courage(용기), discourage(dis-반대 + cour → 낙담시키다), courageous(용감한)." },
     shudder: { word:"shudder", pron:"[셔더]", meaning:"몸서리치다", ex:"I shudder to think about it.", exko:"그것을 생각하면 몸서리가 쳐진다." },
-    subconscious: { word:"subconscious", pron:"[서브컨셔스]", meaning:"잠재의식의", ex:"That was a subconscious reaction.", exko:"그것은 잠재의식적인 반응이었다." },
+    subconscious: { word:"subconscious", pron:"[서브컨셔스]", meaning:"잠재의식의", ex:"That was a subconscious reaction.", exko:"그것은 잠재의식적인 반응이었다.", etym:"sub-(아래에) + con-(함께) + sci(알다; Latin scire) + ous → '의식 아래에서 함께 아는' → '잠재의식의'. 같은 sci 어근: conscious(의식하는), science(학문), unconscious(무의식의)." },
     cornered: { word:"cornered", pron:"[코너드]", meaning:"궁지에 몰린", ex:"He felt cornered by the questions.", exko:"그는 질문들에 궁지에 몰린 느낌이었다." },
-    promote: { word:"promote", pron:"[프러모트]", meaning:"촉진하다, 조성하다", ex:"The approach should promote comfort.", exko:"그 접근법은 편안함을 조성해야 한다." },
+    promote: { word:"promote", pron:"[프러모트]", meaning:"촉진하다, 조성하다", ex:"The approach should promote comfort.", exko:"그 접근법은 편안함을 조성해야 한다.", etym:"pro-(앞으로) + mot(움직이다; Latin movere) → '앞으로 움직이게 하다' → '촉진하다, 조성하다'. 같은 mot/mov 어근: motive(동기), remove(re-다시 + mov → 제거하다), demote(de-아래로 + mot → 강등시키다)." },
     rote: { word:"rote", pron:"[로트]", meaning:"기계적인, 반복 암기의", ex:"It's just a rote answer.", exko:"그것은 그냥 기계적인 대답이다." }
+  },
+  funcWords: {
+    that: { word:"that", tag:"[관계대명사 that · 주격]", meaning:"that은 the worst four words를 선행사로 받는 주격 관계대명사예요. words that a salesperson can utter는 '판매원이 할 수 있는 말들'이라고 해석해요.", ex:"\"May I help you?\" are the worst four words that a retail salesperson can utter because they don't encourage the customer to talk and put them on the defensive.", exko:"'도와드릴까요?'는 소매 판매원이 할 수 있는 최악의 네 단어인데, 이는 고객이 말을 하도록 유도하지 않고 그들을 방어적으로 만들기 때문이다." },
+    cold: { word:"cold", tag:"[부사 cold · 완전히, 딱]", meaning:"stop cold는 '차갑게 멈추다'가 아니라 '딱, 완전히 멈추다'라는 뜻의 관용 표현이에요. stops cold a sales transaction은 '판매 거래를 딱 멈추게 하다'라고 해석해요.", ex:"The four words usually draw out a negative response that stops cold a sales transaction.", exko:"이 네 단어는 대개 판매 거래를 딱 멈추게 하는 부정적인 반응을 이끌어낸다." },
+    chances: { word:"chances", tag:"[숙어 chances are · 아마 ~일 것이다]", meaning:"chances are는 '기회들'이 아니라 '아마 ~일 것이다'라는 뜻의 관용 표현이에요. chances are you would feel은 '아마 당신은 느낄 것이다'라고 해석해요.", ex:"If a fashion salesperson approached you with \"May I help you?\" chances are you would feel the salesperson didn't (b) care.", exko:"만약 패션 판매원이 당신에게 '도와드릴까요?'라고 다가온다면, 아마도 당신은 그 판매원이 신경 쓰지 (b)않는다고 느낄 것이다." },
+    rejects: { word:"rejects", tag:"[문맥상 낱말 쓰임 · 어휘 오류 포인트]", meaning:"rejects는 사전적으로 '거부하다'라는 뜻이지만, 이 자리는 문맥상 낱말 쓰임이 적절한지 묻는 42번 문제의 정답 포인트예요. '도와드릴까요?'라는 질문의 진짜 의미는 고객이 곤란에 처했다는 것을 '거부하는(rejects)' 것이 아니라 '암시하는(implies)' 것이 자연스러우므로, 이 자리에는 rejects가 아니라 implies가 와야 문맥이 맞아요.", ex:"The very meaning of the question \"May I help you?\" (c) rejects that the customer is in trouble of some sort and needs rescuing.", exko:"'도와드릴까요?'라는 질문의 진짜 의미는 고객이 어떤 종류의 곤란에 처해 있어서 구조가 필요하다는 것을 (c)거부한다." },
+    draw: { word:"draw", tag:"[구동사 draw out · 이끌어내다]", meaning:"draw out은 '꺼내다'를 넘어 '(반응 등을) 이끌어내다, 유도하다'라는 뜻의 구동사예요. draw out a negative response는 '부정적인 반응을 이끌어내다'라고 해석해요.", ex:"The four words usually draw out a negative response that stops cold a sales transaction.", exko:"이 네 단어는 대개 판매 거래를 딱 멈추게 하는 부정적인 반응을 이끌어낸다." },
+    care: { word:"care", tag:"[동사 care · 신경 쓰다]", meaning:"여기서 care는 '돌보다'가 아니라 '신경 쓰다, 관심을 가지다'라는 뜻이에요. didn't care는 '신경 쓰지 않았다'라고 해석해요.", ex:"If a fashion salesperson approached you with \"May I help you?\" chances are you would feel the salesperson didn't (b) care.", exko:"만약 패션 판매원이 당신에게 '도와드릴까요?'라고 다가온다면, 아마도 당신은 그 판매원이 신경 쓰지 (b)않는다고 느낄 것이다." },
+    line: { word:"line", tag:"[명사 · 의미 확인]", meaning:"line은 '선, 줄'이라는 뜻이 먼저 떠오르지만, 여기서는 '(정해진) 말, 문구, 대사'라는 뜻으로 쓰였어요. 'This line is a rote approach'는 '이 말은 기계적인 접근법이다'로 해석되며, 앞 문장의 'May I help you?'라는 표현 자체를 가리켜요.", ex:"This line is a rote approach that is so overused by untrained and uninterested salespeople.", exko:"이 말은 훈련받지 않고 무관심한 판매원들에게 너무 남용되는 기계적인 접근법이다." },
+    very: { word:"very", tag:"[형용사 very · 바로 그]", meaning:"very를 '매우'라는 부사로만 알면 The very meaning이 해석되지 않아요. 명사 앞에 오는 very는 '바로 그, 다름 아닌'이라는 뜻으로 명사를 강조하는 형용사예요. The very meaning of the question은 '그 질문이 지닌 바로 그(진짜) 의미'라고 해석해요.", ex:"The very meaning of the question \"May I help you?\" (c) rejects that the customer is in trouble of some sort and needs rescuing.", exko:"'도와드릴까요?'라는 질문의 진짜 의미는 고객이 어떤 종류의 곤란에 처해 있어서 구조가 필요하다는 것을 (c)거부한다." },
+    on: { word:"on", tag:"[전치사 on + 동명사 · ~하자마자]", meaning:"'on + 동명사'는 '~위에'가 아니라 '~하자마자, ~할 때'라는 뜻이에요. on hearing these words는 '이 말을 듣자마자(들으면)'라고 해석해요. 앞부분의 'put them on the defensive(그들을 방어적으로 만들다)'와는 쓰임이 다르니 뒤에 오는 형태를 확인하세요.", ex:"In fact, most of us shudder in horror on hearing these words.", exko:"실제로, 우리 대부분은 이 말을 들으면 몸서리를 친다." },
+    figure: { word:"figure", tag:"[구동사 figure out · 알아내다]", meaning:"figure를 '수치, 인물, 모양'이라는 명사로 보면 문장이 이해되지 않아요. 'figure out'은 '~을 알아내다, 이해하다'라는 뜻의 구동사예요. figure out what I want는 '내가 원하는 것을 알아내다'라고 해석해요.", ex:"The subconscious thought by the customer is often \"I'm smart enough to figure out what I want, and I don't need your help!\"", exko:"고객의 잠재의식적인 생각은 종종 '나는 내가 원하는 것을 알아낼 만큼 충분히 똑똑해요, 당신의 도움은 필요 없어요!'이다." },
+    make: { word:"make", tag:"[동사 make · 관용구 make a sale]", meaning:"'make sales'를 '판매를 만들다'로 직역하면 어색해요. make a sale은 '판매를 성사시키다, 물건을 팔다'라는 뜻의 표현이에요. won't make any sales는 '어떤 판매도 성사시키지 못할 것이다'라고 해석해요.", ex:"If customers feel pressured or cornered, then salespeople won't make any sales.", exko:"만약 고객이 압박감을 느끼거나 궁지에 몰린 느낌을 받으면, 판매원은 어떤 판매도 성사시키지 못할 것이다." },
+    rush: { word:"rush", tag:"[명사 rush · 서두름]", meaning:"rush를 '돌진하다'라는 동사나 '혼잡'으로 읽으면 어색해요. 'there is no rush'는 '서두를 필요 없다'라는 뜻의 관용 표현이에요. makes customers feel there is no rush는 '고객이 서두를 필요가 없다고 느끼게 만든다'라고 해석해요.", ex:"The approach has to promote a (d) comfortable environment that makes customers feel there is no rush.", exko:"그 접근법은 고객이 서두를 필요가 없다고 느끼게 만드는 (d)편안한 환경을 조성해야 한다." },
   },
   passage: `"May I help you?" are the worst four words that a [[retail::retail]] salesperson can [[utter::utter]] because they don't [[encourage::encourage]] the customer to talk and put them on the defensive. The four words usually draw out a negative response that stops cold a sales transaction. Examples of (a) ‹better› questions to use when approaching customers are "Is there anything in particular that you are looking for?" and "Are you shopping for a gift?" If a fashion salesperson approached you with "May I help you?" chances are you would feel the salesperson didn't (b) ‹care›. This line is a [[rote::rote]] approach that is so overused by untrained and uninterested salespeople. In fact, most of us [[shudder::shudder]] in horror on hearing these words. The very meaning of the question "May I help you?" (c) ‹rejects› that the customer is in trouble of some sort and needs rescuing. This almost always puts the customer on the defense. "No, thank you" is usually the immediate response, even if the customer is actually in need of assistance. The [[subconscious::subconscious]] thought by the customer is often "I'm smart enough to figure out what I want, and I don't need your help!"
 
@@ -266,12 +309,29 @@ If customers feel pressured or [[cornered::cornered]], then salespeople won't ma
   vocab: {
     cafeteria: { word:"cafeteria", pron:"[캐프테리아]", meaning:"구내식당", ex:"We ate lunch in the cafeteria.", exko:"우리는 구내식당에서 점심을 먹었다." },
     thirsty: { word:"thirsty", pron:"[써스티]", meaning:"목마른", ex:"He was thirsty after running.", exko:"그는 달린 후 목이 말랐다." },
-    determined: { word:"determined", pron:"[디터민드]", meaning:"단호한, 결연한", ex:"She had a determined look on her face.", exko:"그녀의 얼굴에는 단호한 표정이 있었다." },
+    determined: { word:"determined", pron:"[디터민드]", meaning:"단호한, 결연한", ex:"She had a determined look on her face.", exko:"그녀의 얼굴에는 단호한 표정이 있었다.", etym:"de-(완전히) + termine(경계를 정하다; Latin terminus) → '경계를 확실히 정한' → '단호한, 결연한'. 같은 termin 어근: terminate(끝내다), terminal(종점의), exterminate(ex-밖으로 + termin → 몰살시키다)." },
     aimlessly: { word:"aimlessly", pron:"[에임리슬리]", meaning:"목적 없이", ex:"He wandered aimlessly around the town.", exko:"그는 마을을 목적 없이 돌아다녔다." },
     fumbling: { word:"fumbling", pron:"[펌블링]", meaning:"더듬어 찾는", ex:"She was fumbling for her keys.", exko:"그녀는 열쇠를 더듬어 찾고 있었다." },
     wrinkled: { word:"wrinkled", pron:"[링클드]", meaning:"구겨진, 주름진", ex:"He pulled out a wrinkled bill.", exko:"그는 구겨진 지폐를 꺼냈다." },
-    nervously: { word:"nervously", pron:"[너버슬리]", meaning:"불안하게, 초조하게", ex:"She glanced nervously at the door.", exko:"그녀는 불안하게 문 쪽을 흘끗 보았다." },
+    nervously: { word:"nervously", pron:"[너버슬리]", meaning:"불안하게, 초조하게", ex:"She glanced nervously at the door.", exko:"그녀는 불안하게 문 쪽을 흘끗 보았다.", etym:"nerv(신경, 힘줄; Latin nervus) + ously → '신경이 곤두선 채로' → '불안하게, 초조하게'. 관련 단어: nerve(신경), enervate(e-밖으로 + nerv → 기력을 빼앗다)." },
     given_up: { word:"given up", pron:"[기븐 업]", meaning:"포기한", ex:"He looked like he had given up.", exko:"그는 포기한 것처럼 보였다." }
+  },
+  funcWords: {
+    yet: { word:"yet", tag:"[접속사 yet · 그러나]", meaning:"yet은 '아직'이 아니라 '그러나, ~이지만'이라는 뜻의 접속사로도 쓰여요. near yet away는 '가까이 있으면서도 멀리(떨어진)'라고 해석해요.", ex:"We sat near yet away from him, fixing our hair and worrying about the test next period we hadn't studied for.", exko:"우리는 그와 가까이 있으면서도 멀리 앉아, 머리를 매만지고 공부하지 못한 다음 시간 시험을 걱정하고 있었다." },
+    where: { word:"where", tag:"[관계부사 where]", meaning:"where는 '어디에'라는 의문사가 아니라, 장소를 나타내는 관계부사예요. accepted where the world said는 '세상이 말하는 그곳에서 받아들여지는'이라고 해석해요.", ex:"They both weren't accepted where the world said they were supposed to be.", exko:"그 둘 다 세상이 있어야 한다고 말하는 곳에서 받아들여지지 않았다." },
+    against: { word:"against", tag:"[전치사 against · decide against]", meaning:"decide against는 '~에 반대하여 결정하다' 즉 '~하지 않기로 결정하다'라는 뜻이에요. he decided against it은 '그는 그것을 하지 않기로(포기하지 않기로) 했다'라고 해석해요.", ex:"But for some reason, he decided against it.", exko:"하지만 어떤 이유에서인지, 그는 포기하지 않기로 했다." },
+    how: { word:"how", tag:"[접속사 how · ~라는 것을]", meaning:"여기서 how는 '어떻게'라고 방법을 묻는 것이 아니라, explain의 목적어로 쓰여 '~라는 것을, ~하다는 사실을'이라는 뜻에 가깝게 해석돼요. explained how the machine had trouble는 '기계에 문제가 있다는 것을 설명했다'라고 자연스럽게 해석해요.", ex:"He calmly explained how the machine often had trouble accepting dollar bills.", exko:"그는 그 기계가 종종 지폐를 받아들이는 데 문제가 있다고 차분하게 설명해 주었다." },
+    for: { word:"for", tag:"[전치사 for · 기간/이유]", meaning:"for one moment는 '한 순간을 위해'가 아니라 '잠깐 동안(기간)'이라는 뜻이에요. 뒤에 나오는 'for some reason(어떤 이유로)'에서도 for가 쓰였는데, 이때는 이유를 나타내요.", ex:"Although it was clear that they were from very different worlds, for one moment, they'd shared a real understanding.", exko:"그들이 매우 다른 세계에서 왔다는 것은 분명했지만, 잠깐 동안 그들은 진정한 이해를 공유했다." },
+    as: { word:"as", tag:"[접속사/전치사 as · 다의어]", meaning:"문장 맨 앞의 As는 '~하면서, ~할 때'라는 뜻의 접속사이고, 뒤에 나오는 'just as the dollar had found a place'에서 as는 '마치 ~처럼'이라는 뜻으로 쓰였어요.", ex:"As I walked away from my lunch table that day, I looked at Dave.", exko:"그날 점심 식탁에서 걸어 나오면서, 나는 Dave를 바라보았다." },
+    change: { word:"change", tag:"[명사 · 의미 확인]", meaning:"change는 '변화, 바꾸다'라는 뜻이 먼저 떠오르지만, 'some change'에서는 '잔돈'이라는 뜻의 명사예요. 'fumbling through his fake leather wallet for some change'는 '잔돈을 찾아 지갑 속을 더듬다'로 해석되며, '변화를 찾다'가 아니에요.", ex:"He stood at the drink machine with purpose, fumbling through his fake leather wallet for some change.", exko:"그는 목적을 가지고 음료수 기계 앞에 서서, 가짜 가죽 지갑 속을 더듬어 잔돈을 찾았다." },
+    came: { word:"came up with", tag:"[숙어 come up with · 의미 확인]", meaning:"come up with는 흔히 '(아이디어를) 생각해내다'라는 뜻으로 알려져 있지만, 여기서는 지갑 속에서 지폐를 '꺼내다, 찾아내다'라는 뜻으로 쓰였어요. 'He came up with a wrinkled dollar bill'은 '그는 구겨진 지폐 한 장을 꺼냈다'로 해석돼요.", ex:"He came up with a wrinkled dollar bill, and nervously glanced back at his table where other students in (e)his class were sitting.", exko:"그는 구겨진 지폐 한 장을 꺼냈고, (e)그의 반 학생들이 앉아 있는 테이블 쪽을 불안하게 흘끗 보았다." },
+    fixing: { word:"fixing", tag:"[동사 fix · (머리를) 매만지다]", meaning:"fix를 '고치다, 수리하다'로만 알면 fixing our hair가 어색해져요. 머리나 옷을 목적어로 하면 fix는 '매만지다, 다듬다, 매무새를 정리하다'라는 뜻이에요. 공식 해석도 '머리를 매만지고'로 옮기고 있어요.", ex:"We sat near yet away from him, fixing our hair and worrying about the test next period we hadn't studied for.", exko:"우리는 그와 가까이 있으면서도 멀리 앉아, 머리를 매만지고 공부하지 못한 다음 시간 시험을 걱정하고 있었다." },
+    period: { word:"period", tag:"[명사 period · 수업 시간, 교시]", meaning:"period를 '기간'이나 '마침표'로 읽으면 어색해요. 학교 이야기에서 period는 '수업 시간, 교시'를 뜻해요. the test next period는 '다음 시간(교시)에 있는 시험'이라고 해석해요.", ex:"We sat near yet away from him, fixing our hair and worrying about the test next period we hadn't studied for.", exko:"우리는 그와 가까이 있으면서도 멀리 앉아, 머리를 매만지고 공부하지 못한 다음 시간 시험을 걱정하고 있었다." },
+    supposed: { word:"supposed", tag:"[숙어 be supposed to · ~하기로 되어 있다]", meaning:"suppose를 '가정하다, 추측하다'로만 알면 이 문장이 이해되지 않아요. 'be supposed to + 동사원형'은 '~하기로 되어 있다, ~해야 한다'라는 뜻의 숙어예요. where they were supposed to be는 '그들이 있어야 한다고 (여겨지는) 곳'이라고 해석해요.", ex:"They both weren't accepted where the world said they were supposed to be.", exko:"그 둘 다 세상이 있어야 한다고 말하는 곳에서 받아들여지지 않았다." },
+    senior: { word:"senior", tag:"[명사 senior · 상급생]", meaning:"senior를 '노인, 연장자, 상사'로 읽으면 어색해요. 학교 이야기에서 senior는 '상급생(고학년 학생)'을 뜻해요. a popular senior boy는 '인기 많은 상급생 남학생'이라고 해석하며, 앞 단락의 'a warm-hearted senior's pocket'도 '마음씨 따뜻한 상급생의 주머니'예요.", ex:"Just then a popular senior boy stood up from his seat, and walked over to the boy.", exko:"바로 그때 인기 많은 상급생 남학생이 자리에서 일어나 그 소년에게 걸어갔다." },
+    expression: { word:"expression", tag:"[명사 expression · 표정]", meaning:"expression을 '표현, 표현법'으로만 알면 With a determined expression이 어색해져요. 얼굴에 대해 쓰이면 expression은 '표정'이라는 뜻이에요. 공식 해석도 '단호한 표정으로'로 옮기고 있어요.", ex:"With a determined expression, (c)he kept aimlessly pushing the dollar bill into the machine.", exko:"단호한 표정으로, (c)그는 계속 목적 없이 지폐를 기계에 밀어 넣었다." },
+    bill: { word:"bill", tag:"[명사 bill · 지폐]", meaning:"bill을 '청구서, 계산서'로 읽으면 자판기 이야기가 이해되지 않아요. 미국 영어에서 dollar bill은 '1달러짜리 지폐'를 뜻해요. pushing the dollar bill into the machine은 '지폐를 기계에 밀어 넣다'라고 해석해요.", ex:"With a determined expression, (c)he kept aimlessly pushing the dollar bill into the machine.", exko:"단호한 표정으로, (c)그는 계속 목적 없이 지폐를 기계에 밀어 넣었다." },
+    form: { word:"form", tag:"[동사 form · 맺히다, 생기다]", meaning:"form을 '형태'나 '양식(서류)'이라는 명사로 보면 문장의 동사를 찾지 못해요. 여기서는 '생기다, 맺히다'라는 뜻의 동사예요. tears began to form in his eyes는 '눈에 눈물이 맺히기 시작했다'라고 해석해요.", ex:"He started shaking, and tears began to form in his eyes.", exko:"그는 떨기 시작했고, 눈에 눈물이 맺히기 시작했다." },
   },
   passage: `(A) While the [[cafeteria::cafeteria]] was full of high school students on that afternoon, Dave was [[thirsty::thirsty]]. We sat near yet away from him, fixing our hair and worrying about the test next period we hadn't studied for. (a)‹He› was far away from our world, yet forced to be a part of it.
 
@@ -347,6 +407,7 @@ function toggleSheetStar() {
   setStarred(gid, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
   if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
+  else if (idx >= 0 && window.studyStats) window.studyStats.unrecord('star');
   updateSheetStarBtn();
 }
 
@@ -549,8 +610,13 @@ function showWord(key) {
   currentSheetWordData = { word: v.word, pron: v.pron, meaning: v.meaning, en: v.ex, ko: v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
@@ -594,6 +660,23 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -602,6 +685,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
@@ -611,8 +695,12 @@ function showPlain(rawWord) {
   currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();

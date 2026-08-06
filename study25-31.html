@@ -104,12 +104,17 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
 .sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
 .sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; color: #1a1a1a; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
 .sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
 .sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
 .sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
 </style>
 </head>
 <body>
@@ -180,6 +185,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="sheet-pron" id="sheet-pron"></div>
   <div class="sheet-meaning" id="sheet-meaning"></div>
   <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
 </div>
 
 <script>
@@ -208,14 +214,23 @@ const problems = [
     ]
   },
   vocab: {
-    consumption: { word:"consumption", pron:"[컨섬션]", meaning:"소비", ex:"News consumption habits are changing.", exko:"뉴스 소비 습관이 변화하고 있다." },
-    preferences: { word:"preferences", pron:"[프레퍼런시즈]", meaning:"선호(도)", ex:"The survey shows different preferences.", exko:"그 설문은 서로 다른 선호도를 보여준다." },
-    percentage: { word:"percentage", pron:"[퍼센티지]", meaning:"비율, 백분율", ex:"The percentage increased sharply.", exko:"그 비율이 급격히 증가했다." },
-    preferred: { word:"preferred", pron:"[프리퍼드]", meaning:"선호된", ex:"Reading was the preferred method.", exko:"읽기가 선호되는 방법이었다." },
+    consumption: { word:"consumption", pron:"[컨섬션]", meaning:"소비", ex:"News consumption habits are changing.", exko:"뉴스 소비 습관이 변화하고 있다.", etym:"con-(완전히) + sum(취하다, 쓰다; Latin sumere) + tion → '다 써버림' → '소비'. 같은 sum 어근: consume(다 써버리다), assume(as-~로 + sum → 취하다 → 가정하다), resume(re-다시 + sum → 다시 시작하다)." },
+    preferences: { word:"preferences", pron:"[프레퍼런시즈]", meaning:"선호(도)", ex:"The survey shows different preferences.", exko:"그 설문은 서로 다른 선호도를 보여준다.", etym:"pre-(먼저) + fer(나르다; Latin ferre) + ence → '먼저 갖다 놓는 것' → '선호(도)'. 같은 fer 어근: refer(re-다시 + fer → 언급하다), transfer(trans-건너 + fer → 옮기다), infer(in-안으로 + fer → 추론하다)." },
+    percentage: { word:"percentage", pron:"[퍼센티지]", meaning:"비율, 백분율", ex:"The percentage increased sharply.", exko:"그 비율이 급격히 증가했다.", etym:"per(~마다) + cent(백; Latin centum) + age → '100마다의 비율' → '백분율'. 같은 cent 어근: century(100년), centennial(100주년의), centimeter(cent + meter → 센티미터)." },
+    preferred: { word:"preferred", pron:"[프리퍼드]", meaning:"선호된", ex:"Reading was the preferred method.", exko:"읽기가 선호되는 방법이었다.", etym:"pre-(먼저) + fer(나르다; Latin ferre) + red → '먼저 갖다 놓은' → '선호된'. 같은 fer 어근: transfer(trans-건너 + fer → 옮기다), refer(re-다시 + fer → 언급하다), confer(con-함께 + fer → 상의하다)." },
     interesting_point: { word:"interesting point", pron:"[인터레스팅 포인트]", meaning:"흥미로운 점", ex:"The interesting point is the gap between countries.", exko:"흥미로운 점은 국가 간의 격차이다." },
     in_terms_of: { word:"in terms of", pron:"[인 텀즈 오브]", meaning:"~의 측면에서", ex:"In terms of cost, this option is better.", exko:"비용 측면에서 이 옵션이 더 낫다." },
     among: { word:"among", pron:"[어멍]", meaning:"~중에서, ~사이에서", ex:"Finland showed the lowest rate among six countries.", exko:"핀란드는 여섯 나라 중 가장 낮은 비율을 보였다." },
     least: { word:"least", pron:"[리스트]", meaning:"가장 적은", ex:"Listening was the least preferred way.", exko:"듣기는 가장 덜 선호되는 방법이었다." }
+  },
+  funcWords: {
+    that: { word:"that", tag:"[지시대명사 · that of]", meaning:"'that of Finland'의 that은 앞서 나온 명사(percentage)를 대신하는 지시대명사예요. '~의 것'이라고 해석하면 자연스러워요. 이 문장에서 'that percentage'는 '그 비율'이라는 지시형용사, 'that of Finland'는 '핀란드의 그것(비율)'이라는 지시대명사로 쓰였어요.", ex:"Four out of ten preferred to watch online news in both Thailand and India, and that percentage was more than three times as high as that of Finland.", exko:"태국과 인도 모두에서 10명 중 4명이 온라인 뉴스를 시청하는 것을 선호했으며, 그 비율은 핀란드의 세 배가 넘었다." },
+    for: { word:"for", tag:"[전치사 for · ~의 경우에는]", meaning:"문장 맨 앞의 For는 '~을 위해'가 아니라 '~의 경우에는, ~에 관해 말하자면'이라는 뜻으로 화제를 전환할 때 쓰는 전치사예요. For listening은 '청취의 경우'라고 해석돼요.", ex:"For listening, the least preferred way of consuming online news, the percentage of people who preferred it in Finland was a third of that of Thailand.", exko:"청취의 경우, 온라인 뉴스를 소비하는 가장 덜 선호되는 방식으로, 핀란드에서 그것을 선호하는 사람들의 비율은 태국의 3분의 1이었다." },
+    with: { word:"with", tag:"[전치사 with · 부대상황]", meaning:"with + 명사는 '~와 함께'가 아니라 '~하면서, ~한 채로'라는 부대상황을 나타낼 때가 많아요. 여기서는 '그 비율이 60%를 넘으면서'라고 해석하는 것이 자연스러워요.", ex:"In Germany, the UK and Finland, reading was the most preferred way of consuming online news, with its percentage over 60 percent across the three countries.", exko:"독일, 영국, 핀란드에서는 읽기가 온라인 뉴스를 소비하는 가장 선호되는 방식이었으며, 세 나라 모두에서 그 비율이 60퍼센트를 넘었다." },
+    across: { word:"across", tag:"[전치사 across · ~전역에 걸쳐]", meaning:"across는 '가로질러'라는 사전적 의미보다 '~전역에 걸쳐, ~모두에서'로 해석해야 자연스러운 경우가 많아요. across the three countries는 '세 나라 모두에서'라는 뜻이에요.", ex:"In Germany, the UK and Finland, reading was the most preferred way of consuming online news, with its percentage over 60 percent across the three countries.", exko:"독일, 영국, 핀란드에서는 읽기가 온라인 뉴스를 소비하는 가장 선호되는 방식이었으며, 세 나라 모두에서 그 비율이 60퍼센트를 넘었다." },
+    out: { word:"out", tag:"[숙어 out of · ~중에서]", meaning:"'out of + 숫자'는 '~중에서'라는 뜻의 숙어예요. Four out of ten은 '10명 중 4명'이라고 해석하며, out만 따로 떼어 '밖으로'라고 해석하면 안 돼요.", ex:"Four out of ten preferred to watch online news in both Thailand and India, and that percentage was more than three times as high as that of Finland.", exko:"태국과 인도 모두에서 10명 중 4명이 온라인 뉴스를 시청하는 것을 선호했으며, 그 비율은 핀란드의 세 배가 넘었다." },
+    third: { word:"third", tag:"[명사 third · 분수 표현 a third of]", meaning:"third를 '세 번째'라는 서수로 읽으면 문장이 완전히 달라져요. 'a third of ~'는 '~의 3분의 1'이라는 분수 표현이에요. 공식 해석도 '태국의 3분의 1이었다'로 되어 있어요. 분수는 '기수(분자) + 서수(분모)' 순서라서 a third는 1/3, two thirds는 2/3가 돼요.", ex:"For listening, the least preferred way of consuming online news, the percentage of people who preferred it in Finland was a third of that of Thailand.", exko:"청취의 경우, 온라인 뉴스를 소비하는 가장 덜 선호되는 방식으로, 핀란드에서 그것을 선호하는 사람들의 비율은 태국의 3분의 1이었다." },
+    times: { word:"times", tag:"[명사 times · 배수 표현]", meaning:"times를 '시간'이나 '번(횟수)'으로 해석하면 안 돼요. '숫자 + times as ~ as …'는 '…의 몇 배만큼 ~한'이라는 배수 비교 표현이에요. more than three times as high as that of Finland는 '핀란드의 세 배가 넘게 높은'이라는 뜻이라서, 공식 해석도 '핀란드의 세 배가 넘었다'로 되어 있어요.", ex:"Four out of ten preferred to watch online news in both Thailand and India, and that percentage was more than three times as high as that of Finland.", exko:"태국과 인도 모두에서 10명 중 4명이 온라인 뉴스를 시청하는 것을 선호했으며, 그 비율은 핀란드의 세 배가 넘었다." },
   },
   passage: `The graph above shows the [[consumption::percentage of online news consumption]] [[preferences::preferences]] in three ways for six countries in 2020. In Germany, the UK and Finland, reading was the most [[preferred::preferred]] way of consuming online news, with its [[percentage::percentage]] over 60 percent across the three countries. The [[interesting_point::interesting point]] is that the Philippines, Thailand and India all preferred to watch online news the most. [[in_terms_of::In terms of]] preference to watching online news, the Philippines showed the highest percentage and Finland showed the lowest preference [[among::among]] all six countries. Four out of ten preferred to watch online news in both Thailand and India, and that percentage was more than three times as high as that of Finland. For listening, the [[least::least]] preferred way of consuming online news, the percentage of people who preferred it in Finland was a third of that of Thailand.`,
   translation: `위 도표는 2020년 여섯 개 국가의 온라인 뉴스 소비 선호도를 세 가지 방식으로 보여준다. 독일, 영국, 핀란드에서는 읽기가 온라인 뉴스를 소비하는 가장 선호되는 방식이었으며, 세 나라 모두에서 그 비율이 60퍼센트를 넘었다. 흥미로운 점은 필리핀, 태국, 인도는 모두 온라인 뉴스를 시청하는 것을 가장 선호했다는 것이다. 시청 선호도 측면에서는 필리핀이 여섯 개 국가 중 가장 높은 비율을 보였고 핀란드가 가장 낮은 선호도를 보였다. 태국과 인도 모두에서 10명 중 4명이 온라인 뉴스를 시청하는 것을 선호했으며, 그 비율은 핀란드의 세 배가 넘었다. 청취의 경우, 온라인 뉴스를 소비하는 가장 덜 선호되는 방식으로, 핀란드에서 그것을 선호하는 사람들의 비율은 태국의 3분의 1이었다.`,
@@ -237,17 +252,29 @@ const problems = [
   answer: 2,
   explanation: "'he released an album Songs of the Humpback Whale, which became a surprise hit'라고 했으므로 앨범이 뜻밖의 히트를 기록했다는 것을 알 수 있습니다. 인기를 얻지 못했다는 ③번은 글의 내용과 일치하지 않습니다.",
   vocab: {
-    discovered: { word:"discovered", pron:"[디스커버드]", meaning:"발견했다", ex:"He discovered a new species.", exko:"그는 새로운 종을 발견했다." },
-    complex: { word:"complex", pron:"[컴플렉스]", meaning:"복잡한", ex:"Whales make complex sounds.", exko:"고래는 복잡한 소리를 낸다." },
-    communicate: { word:"communicate", pron:"[커뮤니케이트]", meaning:"의사소통하다", ex:"Whales communicate using songs.", exko:"고래는 노래를 이용해 의사소통한다." },
+    discovered: { word:"discovered", pron:"[디스커버드]", meaning:"발견했다", ex:"He discovered a new species.", exko:"그는 새로운 종을 발견했다.", etym:"dis-(반대, 제거) + cover(덮다; Latin cooperire) → '덮개를 벗기다' → '발견하다'. 같은 cover 어근: uncover(un-없애다 + cover → 드러내다), recover(re-다시 + cover → 회복하다)." },
+    complex: { word:"complex", pron:"[컴플렉스]", meaning:"복잡한", ex:"Whales make complex sounds.", exko:"고래는 복잡한 소리를 낸다.", etym:"com-(함께) + plex(엮다, 짜다; Latin plectere) → '여러 겹으로 엮인' → '복잡한'. 같은 plex/plic 어근: complicate(com-함께 + plic → 복잡하게 하다), duplex(duo-둘 + plex → 두 겹의), perplex(per-완전히 + plex → 당혹시키다)." },
+    communicate: { word:"communicate", pron:"[커뮤니케이트]", meaning:"의사소통하다", ex:"Whales communicate using songs.", exko:"고래는 노래를 이용해 의사소통한다.", etym:"com-(함께) + mun(공유하다; Latin communis) + icate → '함께 나누다' → '의사소통하다'. 같은 mun 어근: community(공동체), common(공통의), immune(in-부정 + mun → 의무에서 면제된)." },
     surprise_hit: { word:"surprise hit", pron:"[서프라이즈 힛]", meaning:"뜻밖의 히트작", ex:"The album became a surprise hit.", exko:"그 앨범은 뜻밖의 히트작이 되었다." },
-    founded: { word:"founded", pron:"[파운디드]", meaning:"설립했다", ex:"She founded a nonprofit organization.", exko:"그녀는 비영리 단체를 설립했다." },
+    founded: { word:"founded", pron:"[파운디드]", meaning:"설립했다", ex:"She founded a nonprofit organization.", exko:"그녀는 비영리 단체를 설립했다.", etym:"found(세우다, 바닥; Latin fundare/fundus) → '바닥을 놓다' → '설립하다'. 같은 found 어근: foundation(기초), profound(pro-앞으로 + found → 깊은), confound(con-함께 + found → 혼동시키다)." },
     harming: { word:"harming", pron:"[함잉]", meaning:"해를 끼치는 것", ex:"They studied whales without harming them.", exko:"그들은 고래에게 해를 끼치지 않으면서 연구했다." },
     research_trips: { word:"research trips", pron:"[리서치 트립스]", meaning:"연구 여행", ex:"He led many research trips.", exko:"그는 많은 연구 여행을 이끌었다." },
-    pollution: { word:"pollution", pron:"[폴루션]", meaning:"오염", ex:"The trip studied ocean pollution.", exko:"그 여행은 해양 오염을 연구했다." },
+    pollution: { word:"pollution", pron:"[폴루션]", meaning:"오염", ex:"The trip studied ocean pollution.", exko:"그 여행은 해양 오염을 연구했다.", etym:"pollut(더럽히다; Latin polluere) + ion → '더럽혀짐' → '오염'. 관련 단어: pollute(오염시키다), pollutant(오염 물질)." },
     marine_mammals: { word:"marine mammals", pron:"[머린 매멀즈]", meaning:"해양 포유류", ex:"Laws now protect marine mammals.", exko:"이제 법이 해양 포유류를 보호한다." },
     commercial_whaling: { word:"commercial whaling", pron:"[커머셜 웨일링]", meaning:"상업 포경", ex:"Commercial whaling was banned in 1986.", exko:"상업 포경은 1986년에 금지되었다." },
-    eventually: { word:"eventually", pron:"[이벤추얼리]", meaning:"결국, 마침내", ex:"He eventually earned his Ph.D.", exko:"그는 결국 박사 학위를 받았다." }
+    eventually: { word:"eventually", pron:"[이벤추얼리]", meaning:"결국, 마침내", ex:"He eventually earned his Ph.D.", exko:"그는 결국 박사 학위를 받았다.", etym:"e-(밖으로) + vent(오다; Latin venire) + ual + ly → '결과로 나오는' → '결국, 마침내'. 같은 vent 어근: prevent(pre-미리 + vent → 막다), invent(in-안으로 + vent → 발명하다), advent(ad-~로 + vent → 도래)." }
+  },
+  funcWords: {
+    which: { word:"which", tag:"[관계대명사 · 계속적 용법]", meaning:"콤마(,) 뒤에 오는 which는 바로 앞의 내용을 받아 '그런데 그것이 ~하다'라고 덧붙여 설명하는 계속적 용법의 관계대명사예요. 이 지문에는 세 번 나오는데, 각각 앨범, Voyage of the Odyssey, laws를 받아서 부연 설명을 이어주고 있어요.", ex:"Then in 1970, he released an album Songs of the Humpback Whale, which became a surprise hit and helped start the global \"Save the Whales\" movement.", exko:"그 후 1970년, 그는 앨범 Songs of the Humpback Whale을 발매했는데, 이는 뜻밖의 히트를 기록했고 전 세계적인 '고래를 구하자' 운동이 시작되는 데 도움을 주었다." },
+    that: { word:"that", tag:"[접속사/관계대명사 that]", meaning:"'discovered that ~'에서 that은 '~라는 것을'이라는 뜻의 명사절 접속사이고, 'laws that protect marine mammals'에서 that은 laws를 선행사로 받는 주격 관계대명사로 '해양 포유류를 보호하는 (법)'이라고 해석돼요.", ex:"His work helped make laws that protect marine mammals, which finally led to the global ban on commercial whaling in 1986.", exko:"그의 연구는 해양 포유류를 보호하는 법을 만드는 데 도움을 주었고, 이는 결국 1986년 상업 포경에 대한 전 세계적인 금지로 이어졌다." },
+    following: { word:"following", tag:"[형용사 following · 그 다음의]", meaning:"following은 '따르는'이 아니라 '그 다음의, 이듬해의'라는 뜻의 형용사예요. The following year는 '그 다음 해(이듬해)'라고 해석해요.", ex:"The following year, he founded Ocean Alliance to protect whales and the earth's oceans, and he used new, safe methods to study whales without harming them.", exko:"이듬해, 그는 고래와 지구의 해양을 보호하기 위해 Ocean Alliance를 설립했고, 고래에게 해를 끼치지 않으면서 연구하는 새롭고 안전한 방법들을 사용했다." },
+    over: { word:"over", tag:"[전치사 over · 기간]", meaning:"over는 '~위에'가 아니라 '~동안(기간 내내)'이라는 뜻으로 쓰였어요. Over his career는 '그의 경력 동안'이라고 해석해요.", ex:"Over his career, he led more than 100 research trips worldwide, including the Voyage of the Odyssey from 2000 to 2005, which studied ocean pollution.", exko:"그의 경력 동안, 그는 전 세계에서 100회가 넘는 연구 여행을 이끌었으며, 여기에는 해양 오염을 연구한 2000년부터 2005년까지의 Voyage of the Odyssey도 포함된다." },
+    without: { word:"without", tag:"[전치사 without · ~하지 않고]", meaning:"without + 동명사는 '~하지 않으면서, ~하지 않고'라는 뜻이에요. without harming them은 '그것들에게 해를 끼치지 않으면서'라고 해석해요.", ex:"The following year, he founded Ocean Alliance to protect whales and the earth's oceans, and he used new, safe methods to study whales without harming them.", exko:"이듬해, 그는 고래와 지구의 해양을 보호하기 위해 Ocean Alliance를 설립했고, 고래에게 해를 끼치지 않으면서 연구하는 새롭고 안전한 방법들을 사용했다." },
+    earned: { word:"earned", tag:"[동사 earn · 학위를 받다]", meaning:"earn을 '(돈을) 벌다'로만 알고 있으면 이 문장이 어색해져요. 학위·명성·신뢰처럼 노력해서 얻어내는 것에도 earn을 쓰며, earned his Ph.D.는 '박사 학위를 받았다(취득했다)'라는 뜻이에요.", ex:"He studied biology at Harvard University and eventually earned his Ph.D. from Cornell University in 1961.", exko:"그는 하버드 대학교에서 생물학을 공부했고 결국 1961년 코넬 대학교에서 박사 학위를 받았다." },
+    make: { word:"make", tag:"[동사 make · 소리를 내다]", meaning:"make sounds를 '소리를 만들다'로 옮기면 어색해요. make는 뒤에 오는 명사에 따라 뜻이 달라지는데, make a sound(소리)와 함께 쓰이면 '소리를 내다'예요. 공식 해석도 '소리를 낸다'로 되어 있어요. 마지막 문장의 make laws는 '법을 만들다'라는 또 다른 뜻이니 목적어를 보고 구분하세요.", ex:"In 1967, he discovered that humpback whales make long and complex sounds.", exko:"1967년, 그는 혹등고래가 길고 복잡한 소리를 낸다는 것을 발견했다." },
+    released: { word:"released", tag:"[동사 release · 발매하다]", meaning:"release를 '풀어주다, 석방하다'로만 알면 앨범 이야기가 이해되지 않아요. 음반·영화·제품을 세상에 내놓는다는 뜻으로 쓰이면 '발매하다, 공개하다'가 돼요. released an album은 '앨범을 발매했다'예요.", ex:"Then in 1970, he released an album Songs of the Humpback Whale, which became a surprise hit and helped start the global \"Save the Whales\" movement.", exko:"그 후 1970년, 그는 앨범 Songs of the Humpback Whale을 발매했는데, 이는 뜻밖의 히트를 기록했고 전 세계적인 '고래를 구하자' 운동이 시작되는 데 도움을 주었다." },
+    study: { word:"study", tag:"[동사 study · 연구하다]", meaning:"study를 '공부하다'로만 옮기면 '고래를 공부하다'라는 이상한 말이 돼요. 학문적 대상을 다룰 때 study는 '연구하다, 조사하다'라는 뜻이에요. to study whales는 '고래를 연구하기 위해'이고, 뒤 문장의 which studied ocean pollution도 '해양 오염을 연구한'이라는 뜻이에요.", ex:"The following year, he founded Ocean Alliance to protect whales and the earth's oceans, and he used new, safe methods to study whales without harming them.", exko:"이듬해, 그는 고래와 지구의 해양을 보호하기 위해 Ocean Alliance를 설립했고, 고래에게 해를 끼치지 않으면서 연구하는 새롭고 안전한 방법들을 사용했다." },
+    led: { word:"led", tag:"[동사 lead · 관용구 lead to]", meaning:"led는 lead의 과거형이지만, 'lead to + 명사'는 '~을 이끌다'가 아니라 '~로 이어지다, ~을 초래하다'라는 뜻이에요. led to the global ban은 '전 세계적인 금지로 이어졌다'예요. 앞 문장의 'he led more than 100 research trips'에는 to가 없어서 원래 뜻인 '이끌었다(인솔했다)'로 쓰였으니 to의 유무로 구분하세요.", ex:"His work helped make laws that protect marine mammals, which finally led to the global ban on commercial whaling in 1986.", exko:"그의 연구는 해양 포유류를 보호하는 법을 만드는 데 도움을 주었고, 이는 결국 1986년 상업 포경에 대한 전 세계적인 금지로 이어졌다." },
   },
   passage: `Roger Payne was born in Manhattan in 1935. He studied biology at Harvard University and [[eventually::eventually]] earned his Ph.D. from Cornell University in 1961. In 1967, he [[discovered::discovered]] that humpback whales make long and [[complex::complex]] sounds. They're known as "whale songs," and he showed that whales use them to [[communicate::communicate]]. Then in 1970, he released an album Songs of the Humpback Whale, which became a [[surprise_hit::surprise hit]] and helped start the global "Save the Whales" movement. The following year, he [[founded::founded]] Ocean Alliance to protect whales and the earth's oceans, and he used new, safe methods to study whales without [[harming::harming]] them. Over his career, he led more than 100 [[research_trips::research trips]] worldwide, including the Voyage of the Odyssey from 2000 to 2005, which studied ocean [[pollution::pollution]]. His work helped make laws that protect [[marine_mammals::marine mammals]], which finally led to the global ban on [[commercial_whaling::commercial whaling]] in 1986.`,
   translation: `Roger Payne은 1935년 맨해튼에서 태어났다. 그는 하버드 대학교에서 생물학을 공부했고 결국 1961년 코넬 대학교에서 박사 학위를 받았다. 1967년, 그는 혹등고래가 길고 복잡한 소리를 낸다는 것을 발견했다. 그것은 '고래의 노래'로 알려져 있으며, 그는 고래들이 그것을 이용해 의사소통한다는 것을 보여주었다. 그 후 1970년, 그는 앨범 Songs of the Humpback Whale을 발매했는데, 이는 뜻밖의 히트를 기록했고 전 세계적인 '고래를 구하자' 운동이 시작되는 데 도움을 주었다. 이듬해, 그는 고래와 지구의 해양을 보호하기 위해 Ocean Alliance를 설립했고, 고래에게 해를 끼치지 않으면서 연구하는 새롭고 안전한 방법들을 사용했다. 그의 경력 동안, 그는 전 세계에서 100회가 넘는 연구 여행을 이끌었으며, 여기에는 해양 오염을 연구한 2000년부터 2005년까지의 Voyage of the Odyssey도 포함된다. 그의 연구는 해양 포유류를 보호하는 법을 만드는 데 도움을 주었고, 이는 결국 1986년 상업 포경에 대한 전 세계적인 금지로 이어졌다.`,
@@ -269,15 +296,23 @@ const problems = [
   answer: 2,
   explanation: "안내문에 'No refund for cancellations on the day of the event'라고 명시되어 있어 행사 당일 취소 시 환불이 불가능합니다. 따라서 환불이 가능하다는 ③번은 내용과 일치하지 않습니다.",
   vocab: {
-    annual: { word:"annual", pron:"[애뉴얼]", meaning:"연례의, 매년의", ex:"This is our 5th annual event.", exko:"이것은 우리의 다섯 번째 연례 행사이다." },
-    incredibly: { word:"incredibly", pron:"[인크레더블리]", meaning:"믿을 수 없을 정도로", ex:"It was an incredibly special evening.", exko:"믿을 수 없을 정도로 특별한 저녁이었다." },
+    annual: { word:"annual", pron:"[애뉴얼]", meaning:"연례의, 매년의", ex:"This is our 5th annual event.", exko:"이것은 우리의 다섯 번째 연례 행사이다.", etym:"ann(해, 년; Latin annus) + ual → '해마다의' → '연례의'. 같은 ann 어근: anniversary(ann + vers(돌다) → 기념일), annuity(연금), biannual(bi-둘 + annual → 연 2회의)." },
+    incredibly: { word:"incredibly", pron:"[인크레더블리]", meaning:"믿을 수 없을 정도로", ex:"It was an incredibly special evening.", exko:"믿을 수 없을 정도로 특별한 저녁이었다.", etym:"in-(부정) + cred(믿다; Latin credere) + ibly → '믿을 수 없을 정도로'. 같은 cred 어근: credible(믿을 만한), credit(신용), discredit(dis-반대 + cred → 불신하다)." },
     participation_fee: { word:"participation fee", pron:"[파티시페이션 피]", meaning:"참가비", ex:"The participation fee is $25 per pair.", exko:"참가비는 한 쌍당 25달러이다." },
-    additional: { word:"additional", pron:"[어디셔널]", meaning:"추가의", ex:"$5 per each additional daughter.", exko:"추가되는 딸 한 명당 5달러이다." },
-    refund: { word:"refund", pron:"[리펀드]", meaning:"환불", ex:"There is no refund after the event starts.", exko:"행사가 시작된 후에는 환불이 없다." },
-    cancellations: { word:"cancellations", pron:"[캔슬레이션즈]", meaning:"취소", ex:"Cancellations must be made in advance.", exko:"취소는 미리 이루어져야 한다." },
-    notice: { word:"notice", pron:"[노티스]", meaning:"공지, 안내", ex:"Please read the notice carefully.", exko:"공지사항을 주의 깊게 읽어주세요." },
-    registration: { word:"registration", pron:"[레지스트레이션]", meaning:"등록", ex:"Registration is available online.", exko:"등록은 온라인으로 가능하다." },
-    register: { word:"register", pron:"[레지스터]", meaning:"등록하다", ex:"Register online before the deadline.", exko:"마감 전에 온라인으로 등록하세요." }
+    additional: { word:"additional", pron:"[어디셔널]", meaning:"추가의", ex:"$5 per each additional daughter.", exko:"추가되는 딸 한 명당 5달러이다.", etym:"ad-(~에게) + dit(주다; Latin dare) + ion + al → '더해 주는' → '추가의'. 같은 dit/dat 어근: edit(e-밖으로 + dit → 편집하다), tradition(trans-건너 + dit → 전통), date(주어진 시점 → 날짜)." },
+    refund: { word:"refund", pron:"[리펀드]", meaning:"환불", ex:"There is no refund after the event starts.", exko:"행사가 시작된 후에는 환불이 없다.", etym:"re-(다시) + fund(붓다, 돌려주다; Latin fundere) → '다시 부어주다' → '환불하다'. 같은 fund/fus 어근: confuse(con-함께 + fus → 뒤섞다), infuse(in-안으로 + fus → 주입하다), diffuse(dis-널리 + fus → 퍼지다)." },
+    cancellations: { word:"cancellations", pron:"[캔슬레이션즈]", meaning:"취소", ex:"Cancellations must be made in advance.", exko:"취소는 미리 이루어져야 한다.", etym:"cancel(격자 모양으로 줄을 긋다; Latin cancellare, cancelli '격자') + lation → '줄을 그어 지우다' → '취소'. 관련 단어: cancel(취소하다), chancel(교회의 성단, 같은 어원 cancelli)." },
+    notice: { word:"notice", pron:"[노티스]", meaning:"공지, 안내", ex:"Please read the notice carefully.", exko:"공지사항을 주의 깊게 읽어주세요.", etym:"not(알다; Latin noscere/notus) + ice → '알려진 것' → '공지, 안내'. 같은 not 어근: notify(not + fy → 알리다), notion(개념), notable(주목할 만한)." },
+    registration: { word:"registration", pron:"[레지스트레이션]", meaning:"등록", ex:"Registration is available online.", exko:"등록은 온라인으로 가능하다.", etym:"re-(뒤로) + gist(기록하다; Latin regerere) + ration → '기록해 두는 것' → '등록'. 같은 gest 어근: suggest(sub-아래로 + gest → 제안하다), digest(di-따로 + gest → 소화하다)." },
+    register: { word:"register", pron:"[레지스터]", meaning:"등록하다", ex:"Register online before the deadline.", exko:"마감 전에 온라인으로 등록하세요.", etym:"re-(뒤로) + gist(기록하다, 나르다; Latin regerere/gerere) → '뒤로(기록으로) 나르다' → '등록하다'. 같은 gest 어근: digest(di-따로 + gest → 소화하다), suggest(sub-아래로 + gest → 제안하다), congest(con-함께 + gest → 혼잡하게 하다)." }
+  },
+  funcWords: {
+    for: { word:"for", tag:"[전치사 for · 의미상 주어]", meaning:"'for + 명사 + to부정사'는 to부정사의 의미상 주어를 나타내요. 'for fathers and daughters to dance'는 '아버지와 딸이 춤을 추는'이라고 해석되며, 단순히 '~을 위해'로만 옮기면 어색해요.", ex:"We are excited to bring you the 5th annual Father-Daughter Sock Hop — an incredibly special evening for fathers and daughters to dance!", exko:"저희는 신나는 제5회 연례 Father-Daughter Sock Hop을 소개합니다 — 아버지와 딸이 함께 춤을 추는 믿을 수 없을 정도로 특별한 저녁입니다!" },
+    out: { word:"out", tag:"[구동사 give out]", meaning:"give out은 '나누어 주다, 지급하다'라는 뜻의 구동사예요. out만 따로 떼어 '밖으로'라고 해석하면 안 되고, give out 전체를 하나의 동사로 봐야 해요. 여기서는 수동태 be given out으로 쓰여 '지급되다, 제공되다'라는 뜻이 돼요.", ex:"A pair of socks will be given out as a gift to every participant.", exko:"모든 참가자에게 양말 한 켤레가 선물로 제공됩니다." },
+    per: { word:"per", tag:"[전치사 per · ~당]", meaning:"per는 '~당, ~마다'라는 뜻으로 단위별 수량이나 가격을 나타내는 전치사예요. per each additional daughter는 '추가되는 딸 한 명당'이라고 해석해요.", ex:"$5 per each additional daughter", exko:"추가되는 딸 한 명당 $5" },
+    bring: { word:"bring", tag:"[동사 bring · 선보이다]", meaning:"bring you를 '여러분에게 가져다주다'로 직역하면 어색해요. 행사·프로그램을 알릴 때 쓰는 'bring you + 행사'는 '~을 선보이다, 소개하다'라는 뜻이에요. 공식 해석도 '소개합니다'로 옮기고 있어요.", ex:"We are excited to bring you the 5th annual Father-Daughter Sock Hop — an incredibly special evening for fathers and daughters to dance!", exko:"저희는 신나는 제5회 연례 Father-Daughter Sock Hop을 소개합니다 — 아버지와 딸이 함께 춤을 추는 믿을 수 없을 정도로 특별한 저녁입니다!" },
+    take: { word:"Take", tag:"[동사 take · 관용구 take pictures]", meaning:"take를 '가져가다'로 해석하면 '사진을 가져가라'는 엉뚱한 뜻이 돼요. 'take a picture / take pictures'는 '사진을 찍다'라는 관용 표현이에요.", ex:"Take pictures at the photo zone.", exko:"포토존에서 사진을 찍으세요." },
+    pair: { word:"pair", tag:"[명사 pair · 문맥에 따라 다른 뜻]", meaning:"pair는 이 안내문에서 두 가지 뜻으로 쓰여요. 참가비의 '$25 per pair'에서는 아빠와 딸 '한 쌍(두 사람)당'이라는 뜻이고, 'A pair of socks'에서는 두 짝이 한 벌인 물건을 세는 단위로 '한 켤레'라는 뜻이에요.", ex:"A pair of socks will be given out as a gift to every participant.", exko:"모든 참가자에게 양말 한 켤레가 선물로 제공됩니다." },
   },
   passage: `We are excited to bring you the 5th [[annual::annual]] Father-Daughter Sock Hop — an [[incredibly::incredibly]] special evening for fathers and daughters to dance!
 
@@ -331,14 +366,22 @@ www.maplecreekcity.org에서 온라인으로 등록하세요.`,
   answer: 4,
   explanation: "'Winners' bookmarks will be printed and given to visitors.'라는 내용과 일치하므로 정답은 ⑤번입니다. 나머지는 각각 '6th annual'(8회 아님), 'ages of 5-12'(13세 이상 아님), 'Do not use commercialized character images'(사용 불가), 'Limit one entry per participant'(2개 아닌 1개)와 어긋납니다.",
   vocab: {
-    creativity: { word:"creativity", pron:"[크리에이티비티]", meaning:"창의성", ex:"Show your creativity in the design.", exko:"디자인에서 당신의 창의성을 보여주세요." },
+    creativity: { word:"creativity", pron:"[크리에이티비티]", meaning:"창의성", ex:"Show your creativity in the design.", exko:"디자인에서 당신의 창의성을 보여주세요.", etym:"cre(만들다; Latin creare) + ativity → '만들어내는 능력' → '창의성'. 같은 cre 어근: create(창조하다), recreate(re-다시 + create → 재창조하다, 기분전환하다), increase(in-안으로 + cre → 늘리다)." },
     guidelines: { word:"guidelines", pron:"[가이드라인즈]", meaning:"지침", ex:"Please follow the guidelines carefully.", exko:"지침을 주의 깊게 따라주세요." },
     slogan: { word:"slogan", pron:"[슬로건]", meaning:"슬로건, 표어", ex:"Designs must fit the slogan.", exko:"디자인은 슬로건에 맞아야 한다." },
-    commercialized: { word:"commercialized", pron:"[커머셜라이즈드]", meaning:"상업화된", ex:"Do not use commercialized images.", exko:"상업화된 이미지를 사용하지 마세요." },
-    submission: { word:"submission", pron:"[서브미션]", meaning:"제출", ex:"The submission deadline is October 4th.", exko:"제출 마감일은 10월 4일이다." },
-    entry: { word:"entry", pron:"[엔트리]", meaning:"출품작, 참가", ex:"Limit one entry per participant.", exko:"참가자당 출품작 하나로 제한된다." },
+    commercialized: { word:"commercialized", pron:"[커머셜라이즈드]", meaning:"상업화된", ex:"Do not use commercialized images.", exko:"상업화된 이미지를 사용하지 마세요.", etym:"com-(강조) + merc(상품; Latin merx/mercari) + ialized → '상품으로 만들어진' → '상업화된'. 같은 merc 어근: merchant(상인), commerce(상업), mercantile(상업의)." },
+    submission: { word:"submission", pron:"[서브미션]", meaning:"제출", ex:"The submission deadline is October 4th.", exko:"제출 마감일은 10월 4일이다.", etym:"sub-(아래로) + mit(보내다; Latin mittere) + sion → '아래로(윗사람에게) 보냄' → '제출'. 같은 mit/mis 어근: permit(per-완전히 + mit → 허용하다), transmit(trans-건너 + mit → 전송하다), emit(e-밖으로 + mit → 방출하다)." },
+    entry: { word:"entry", pron:"[엔트리]", meaning:"출품작, 참가", ex:"Limit one entry per participant.", exko:"참가자당 출품작 하나로 제한된다.", etym:"en-(안으로) + try(가다; Latin intrare) → '안으로 들어감' → '출품작, 참가'. 같은 어근: enter(들어가다), interior(in-안으로 + ter → 안쪽의)." },
     via_email: { word:"via email", pron:"[비아 이메일]", meaning:"이메일을 통해", ex:"Submit your work via email.", exko:"이메일을 통해 작품을 제출하세요." },
     prizes: { word:"prizes", pron:"[프라이지즈]", meaning:"상, 상품", ex:"There are great prizes for winners.", exko:"수상자를 위한 멋진 상품이 있다." }
+  },
+  funcWords: {
+    by: { word:"by", tag:"[전치사 by · 수단/기한]", meaning:"by는 이 지문에서 두 가지 뜻으로 쓰였어요. 'by hand'에서는 '손으로(수단)'라는 뜻이고, 뒤쪽의 'by October 4th'에서는 '10월 4일까지(기한)'라는 뜻이에요. 같은 전치사라도 위치와 문맥에 따라 '~로' 또는 '~까지'로 다르게 해석해야 해요.", ex:"Create a bookmark by hand using markers or crayons.", exko:"마커나 크레용을 사용해 손으로 책갈피를 만드세요." },
+    between: { word:"between", tag:"[전치사 between · 범위]", meaning:"between the ages of X-Y는 'X세에서 Y세 사이'라는 나이 범위를 나타내는 표현이에요.", ex:"Participants need to be between the ages of 5-12.", exko:"참가자는 5세에서 12세 사이여야 합니다." },
+    per: { word:"per", tag:"[전치사 per · ~당]", meaning:"per는 '~마다, ~당'이라는 뜻으로 단위별 수량을 나타내는 전치사예요. one entry per participant는 '참가자 한 명당 출품작 하나'라고 해석해요.", ex:"Limit one entry per participant.", exko:"참가자당 출품작 하나로 제한됩니다." },
+    given: { word:"given", tag:"[수동태 be given · ~에게 주어지다]", meaning:"'be given to'는 '~에게 주어지다, 제공되다'라는 뜻의 수동태 표현이에요. 여기서는 printed와 병렬로 연결되어 '인쇄되어 제공되다'로 해석돼요.", ex:"Winners' bookmarks will be printed and given to visitors.", exko:"수상자의 책갈피는 인쇄되어 방문객에게 제공될 것입니다." },
+    open: { word:"open", tag:"[형용사 open · 접수가 시작되다]", meaning:"is now open을 '지금 열려 있다'로만 읽으면 밋밋해요. 대회·모집·접수에 open을 쓰면 '지금 시작되었다, 참가 접수를 받고 있다'라는 뜻이에요. 공식 해석도 '지금 시작됩니다'로 되어 있어요.", ex:"The 6th annual Library Bookmark Design Contest is now open!", exko:"제6회 연례 Library Bookmark Design Contest가 지금 시작됩니다!" },
+    place: { word:"place", tag:"[명사 place · 등수]", meaning:"place를 '장소'로 해석하면 상품 안내가 이상해져요. 서수 뒤에 오는 place는 대회의 '등(등수)'을 뜻해서 1st place는 '1등', 2nd place는 '2등'이에요.", ex:"1st place: $50 gift card, 2nd place: $30 gift card", exko:"1등: $50 상품권, 2등: $30 상품권" },
   },
   passage: `The 6th annual Library Bookmark Design Contest is now open! Show your [[creativity::creativity]] and design skills.
 
@@ -393,18 +436,33 @@ Winners' bookmarks will be printed and given to visitors.`,
   explanation: "'If put into an enclosure'는 'If they are put into an enclosure'에서 주어(they)와 be동사가 생략된 분사구문이에요. 동물들이 우리에 '넣어지는' 것이므로 수동의 의미를 나타내는 과거분사 put이 와야 합니다. 현재분사 putting은 능동의 의미라서 어법상 틀렸으므로 정답은 ②번입니다.",
   vocab: {
     mammalian: { word:"mammalian", pron:"[매메일리언]", meaning:"포유류의", ex:"Mammalian species vary widely.", exko:"포유류 종은 매우 다양하다." },
-    herbivore: { word:"herbivore", pron:"[허비보어]", meaning:"초식동물", ex:"A herbivore eats only plants.", exko:"초식동물은 식물만 먹는다." },
-    predators: { word:"predators", pron:"[프레데터즈]", meaning:"포식자", ex:"Herbivores watch out for predators.", exko:"초식동물은 포식자를 경계한다." },
+    herbivore: { word:"herbivore", pron:"[허비보어]", meaning:"초식동물", ex:"A herbivore eats only plants.", exko:"초식동물은 식물만 먹는다.", etym:"herb(풀; Latin herba) + vor(먹다; Latin vorare) + e → '풀을 먹는 것' → '초식동물'. 같은 vor 어근: carnivore(carn-고기 + vor → 육식동물), omnivore(omni-모든 + vor → 잡식동물), devour(de-강조 + vor → 게걸스레 먹다)." },
+    predators: { word:"predators", pron:"[프레데터즈]", meaning:"포식자", ex:"Herbivores watch out for predators.", exko:"초식동물은 포식자를 경계한다.", etym:"prae-(앞서) + dat(약탈하다; Latin praedari, praeda '먹이'에서 유래) + or → '먹이를 노리는 자' → '포식자'. 관련 단어: prey(먹이), depredation(de-완전히 + praedari → 약탈)." },
     instant_flight: { word:"instant flight", pron:"[인스턴트 플라이트]", meaning:"즉각적인 도주", ex:"They are programmed for instant flight.", exko:"그것들은 즉각적으로 도주하도록 프로그램되어 있다." },
-    perceive: { word:"perceive", pron:"[퍼시브]", meaning:"감지하다, 인식하다", ex:"They perceive a threat quickly.", exko:"그것들은 위협을 빠르게 감지한다." },
+    perceive: { word:"perceive", pron:"[퍼시브]", meaning:"감지하다, 인식하다", ex:"They perceive a threat quickly.", exko:"그것들은 위협을 빠르게 감지한다.", etym:"per-(완전히, 통하여) + ceive(잡다; Latin capere) → '완전히 붙잡다' → '지각하다, 인식하다'. 같은 ceive/cept 어근: receive(re-다시 + ceive → 받다), conceive(con-함께 + ceive → 상상하다), deceive(de-멀리 + ceive → 속이다)." },
     threat: { word:"threat", pron:"[쓰레트]", meaning:"위협", ex:"A loud noise can be a threat.", exko:"큰 소음은 위협이 될 수 있다." },
-    captivity: { word:"captivity", pron:"[캡티비티]", meaning:"감금, 사육 상태", ex:"Some animals suffer in captivity.", exko:"어떤 동물들은 사육 상태에서 고통받는다." },
-    enclosure: { word:"enclosure", pron:"[인클로저]", meaning:"울타리, 우리", ex:"The animal panicked inside the enclosure.", exko:"그 동물은 우리 안에서 공황 상태에 빠졌다." },
+    captivity: { word:"captivity", pron:"[캡티비티]", meaning:"감금, 사육 상태", ex:"Some animals suffer in captivity.", exko:"어떤 동물들은 사육 상태에서 고통받는다.", etym:"cap(잡다; Latin capere) + tiv + ity → '붙잡힌 상태' → '감금, 사육 상태'. 같은 cap 어근: capture(붙잡다), captive(포로), capable(cap + able → 할 수 있는)." },
+    enclosure: { word:"enclosure", pron:"[인클로저]", meaning:"울타리, 우리", ex:"The animal panicked inside the enclosure.", exko:"그 동물은 우리 안에서 공황 상태에 빠졌다.", etym:"en-(안으로) + clos(닫다; Latin claudere) + ure → '안에 가두어 닫음' → '울타리, 우리'. 같은 clos/clud 어근: exclude(ex-밖으로 + clud → 배제하다), conclude(con-함께 + clud → 결론짓다), disclose(dis-반대 + clos → 드러내다)." },
     panic: { word:"panic", pron:"[패닉]", meaning:"공황 상태에 빠지다", ex:"They panic when trapped.", exko:"그것들은 갇히면 공황 상태에 빠진다." },
-    repeatedly: { word:"repeatedly", pron:"[리피티들리]", meaning:"반복적으로", ex:"It hit the fence repeatedly.", exko:"그것은 울타리에 반복적으로 부딪혔다." },
-    escape: { word:"escape", pron:"[이스케이프]", meaning:"탈출하다", ex:"They tried to escape the enclosure.", exko:"그것들은 우리에서 탈출하려고 했다." },
-    domesticate: { word:"domesticate", pron:"[도메스티케이트]", meaning:"길들이다, 가축화하다", ex:"Humans domesticated many animals.", exko:"인간은 많은 동물을 길들였다." },
+    repeatedly: { word:"repeatedly", pron:"[리피티들리]", meaning:"반복적으로", ex:"It hit the fence repeatedly.", exko:"그것은 울타리에 반복적으로 부딪혔다.", etym:"re-(다시) + peat(구하다, 향하다; Latin petere) + edly → '다시 구하다' → '반복적으로'. 같은 pet 어근: compete(com-함께 + pet → 경쟁하다), appetite(ad-~로 + pet → 식욕), petition(청원)." },
+    escape: { word:"escape", pron:"[이스케이프]", meaning:"탈출하다", ex:"They tried to escape the enclosure.", exko:"그것들은 우리에서 탈출하려고 했다.", etym:"es-(ex-, 밖으로) + cape(망토; Latin cappa) → '망토를 벗어 던지고 빠져나가다' → '탈출하다'. 같은 cap(망토/모자) 어근: cape(망토, 곶), cap(모자), escapade(일탈, 탈출 행각)." },
+    domesticate: { word:"domesticate", pron:"[도메스티케이트]", meaning:"길들이다, 가축화하다", ex:"Humans domesticated many animals.", exko:"인간은 많은 동물을 길들였다.", etym:"domus(집; Latin) + estic + ate → '집에 속하게 만들다' → '길들이다, 가축화하다'. 같은 domus 어근: domestic(가정의), domicile(주거지), dominate(dom-집주인 + ate → 지배하다)." },
     leap: { word:"leap", pron:"[리프]", meaning:"뛰어오르다", ex:"It can leap nearly 30 feet.", exko:"그것은 거의 30피트까지 뛰어오를 수 있다." }
+  },
+  funcWords: {
+    for: { word:"for", tag:"[전치사 for · 다의어]", meaning:"for는 이 문장에서 두 가지로 쓰였어요. 'for example'에서는 '예를 들어'라는 관용 표현이고, 'for thousands of years'에서는 '수천 년 동안(기간)'이라는 뜻이에요. '~을 위해'로 해석하면 둘 다 어색해지니 문맥으로 구분하세요.", ex:"That's true, for example, of gazelles, which for thousands of years were the most frequently hunted game species in some parts of the Fertile Crescent.", exko:"예를 들어 가젤이 그러한데, 가젤은 수천 년 동안 비옥한 초승달 지대의 일부 지역에서 가장 자주 사냥된 사냥감 종이었다." },
+    that: { word:"that", tag:"[관계대명사 · 목적격 / 지시형용사]", meaning:"첫 번째 that은 mammal species를 선행사로 받는 목적격 관계대명사예요('그 종을 길들일 기회'라는 의미). 두 번째 that(that area)은 앞에서 언급된 Fertile Crescent 지역을 가리키는 지시형용사로 '그 지역'이라는 뜻이에요. 관계대명사 that과 지시형용사 that을 헷갈리지 않도록 주의하세요.", ex:"There is no mammal species that the first settled peoples of that area had more opportunity to domesticate than gazelles.", exko:"그 지역의 초기 정착민들이 가젤보다 길들일 기회가 더 많았던 포유류 종은 없었다." },
+    which: { word:"which", tag:"[관계대명사 · 계속적 용법]", meaning:"콤마 뒤의 which는 바로 앞의 명사 gazelles를 부연 설명하는 계속적 용법의 관계대명사예요. '그런데 그것(가젤)은 ~했다'라고 이어서 해석하면 자연스러워요.", ex:"That's true, for example, of gazelles, which for thousands of years were the most frequently hunted game species in some parts of the Fertile Crescent.", exko:"예를 들어 가젤이 그러한데, 가젤은 수천 년 동안 비옥한 초승달 지대의 일부 지역에서 가장 자주 사냥된 사냥감 종이었다." },
+    itself: { word:"itself", tag:"[재귀대명사 · 수 일치]", meaning:"itself는 주어(an animal)가 단수이므로 그에 맞춰 쓰인 단수 재귀대명사예요. hits itself는 '스스로에게 부딪히다'라는 뜻으로, 주어와 재귀대명사의 수가 반드시 일치해야 해요(단수-itself, 복수-themselves).", ex:"Just imagine trying to herd an animal that runs away, blindly hits itself against walls, can leap up to nearly 30 feet, and can run at a speed of 50 miles per hour!", exko:"도망치고, 앞뒤 가리지 않고 벽에 스스로 부딪히며, 거의 30피트까지 뛰어오를 수 있고, 시속 50마일로 달릴 수 있는 동물을 몰고 다닌다고 상상해 보라!" },
+    to: { word:"to", tag:"[to부정사 · 형용사적 용법]", meaning:"opportunity 뒤에 오는 to부정사는 명사를 꾸며주는 형용사적 용법이에요. 'opportunity to domesticate'는 '길들일 기회'라고 해석돼요. 앞부분의 'attempts to escape'에서도 같은 방식으로 '탈출하려는 시도'라고 해석하면 됩니다.", ex:"There is no mammal species that the first settled peoples of that area had more opportunity to domesticate than gazelles.", exko:"그 지역의 초기 정착민들이 가젤보다 길들일 기회가 더 많았던 포유류 종은 없었다." },
+    game: { word:"game", tag:"[명사 · 의미 확인]", meaning:"game은 '게임, 경기'라는 뜻이 사전에 먼저 나오지만, 여기서는 사냥의 대상이 되는 '사냥감(야생동물)'이라는 뜻의 명사예요. 'the most frequently hunted game species'는 '가장 자주 사냥된 사냥감 종'으로 해석되며, '게임 종'이 아니에요.", ex:"That's true, for example, of gazelles, which for thousands of years were the most frequently hunted game species in some parts of the Fertile Crescent.", exko:"예를 들어 가젤이 그러한데, 가젤은 수천 년 동안 비옥한 초승달 지대의 일부 지역에서 가장 자주 사냥된 사냥감 종이었다." },
+    herd: { word:"herd", tag:"[동사 · 품사 확인]", meaning:"herd는 '무리, 떼'라는 명사로 가장 먼저 떠오르지만, 여기서는 'trying to herd an animal'의 형태로 쓰여 '(동물을) 몰다, 몰아넣다'라는 뜻의 동사로 쓰였어요. 명사로만 알고 있으면 문장 구조가 이해되지 않으니 주의하세요.", ex:"Just imagine trying to herd an animal that runs away, blindly hits itself against walls, can leap up to nearly 30 feet, and can run at a speed of 50 miles per hour!", exko:"도망치고, 앞뒤 가리지 않고 벽에 스스로 부딪히며, 거의 30피트까지 뛰어오를 수 있고, 시속 50마일로 달릴 수 있는 동물을 몰고 다닌다고 상상해 보라!" },
+    ground: { word:"ground", tag:"[명사 · 관용구 stand one's ground]", meaning:"ground는 '땅, 바닥'이라는 뜻이 먼저 떠오르지만, 'stand their ground'는 '물러서지 않고 자리를 지키다, 버티다'라는 뜻의 관용 표현이에요. '땅에 서다'로 직역하면 어색하니 표현 전체를 하나의 뜻으로 알아두세요.", ex:"Other species are slower, less nervous, seek protection in herds, stand their ground when threatened, and don't run until necessary.", exko:"다른 종들은 더 느리고, 덜 예민하며, 무리 지어 보호받고, 위협받을 때 자리를 지키며, 필요할 때까지 도망가지 않는다." },
+    nervous: { word:"nervous", tag:"[형용사 nervous · 예민한]", meaning:"nervous를 '긴장한, 불안한'이라는 사람의 감정으로만 옮기면 어색해요. 동물의 기질을 말할 때 nervous는 '예민한, 경계심이 강한'이라는 뜻이에요. 공식 해석도 '예민하고'로 옮기고 있어요.", ex:"Some species are nervous, fast, and programmed for instant flight when they perceive a threat.", exko:"어떤 종들은 예민하고, 빠르며, 위협을 감지하면 즉각 도주하도록 프로그램되어 있다." },
+    naturally: { word:"Naturally", tag:"[부사 naturally · 당연히]", meaning:"문장 맨 앞의 Naturally는 '자연스럽게(방법)'가 아니라 '당연히, 물론'이라는 뜻으로, 앞 내용에서 이어지는 당연한 결론을 이끌어요. 공식 해석도 '당연히'로 되어 있어요.", ex:"Naturally, the nervous species are difficult to keep in captivity.", exko:"당연히, 예민한 종들은 가두어 기르기 어렵다." },
+    keep: { word:"keep", tag:"[동사 keep · (동물을) 기르다]", meaning:"keep을 '유지하다, 보관하다'로 옮기면 어색해요. 동물이 목적어일 때 keep은 '기르다, 사육하다'라는 뜻이고, 'keep in captivity'는 '가두어 기르다'라는 표현이에요.", ex:"Naturally, the nervous species are difficult to keep in captivity.", exko:"당연히, 예민한 종들은 가두어 기르기 어렵다." },
+    true: { word:"true", tag:"[형용사 true · 관용구 be true of]", meaning:"'be true of ~'는 '~에게도 해당된다, ~의 경우가 그렇다'라는 관용 표현이에요. That's true of gazelles를 '그것은 가젤에 대해 진실이다'라고 직역하지 말고 '가젤이 바로 그런 경우다'라고 해석하세요. of 대신 to가 오면(be true to) '~에 충실하다'로 뜻이 달라져요.", ex:"That's true, for example, of gazelles, which for thousands of years were the most frequently hunted game species in some parts of the Fertile Crescent.", exko:"예를 들어 가젤이 그러한데, 가젤은 수천 년 동안 비옥한 초승달 지대의 일부 지역에서 가장 자주 사냥된 사냥감 종이었다." },
+    blindly: { word:"blindly", tag:"[부사 blindly · 앞뒤 가리지 않고]", meaning:"blindly를 '눈이 멀어서'라고 옮기면 어색해요. 여기서는 '앞뒤 가리지 않고, 마구잡이로'라는 뜻으로, 공황에 빠진 동물이 앞을 살피지도 않고 벽에 부딪히는 모습을 나타내요.", ex:"Just imagine trying to herd an animal that runs away, blindly hits itself against walls, can leap up to nearly 30 feet, and can run at a speed of 50 miles per hour!", exko:"도망치고, 앞뒤 가리지 않고 벽에 스스로 부딪히며, 거의 30피트까지 뛰어오를 수 있고, 시속 50마일로 달릴 수 있는 동물을 몰고 다닌다고 상상해 보라!" },
   },
   passage: `Big [[mammalian::mammalian]] [[herbivore::herbivore]] species react to danger from [[predators::predators]] or humans in different ways. Some species are nervous, fast, and programmed for [[instant_flight::instant flight]] when they [[perceive::perceive]] a [[threat::threat]]. Other species are slower, less nervous, seek protection in herds, ① ‹stand› their ground when threatened, and don't run until necessary. Naturally, the nervous species are difficult to keep in [[captivity::captivity]]. If ② ‹putting› into an [[enclosure::enclosure]], they are likely to [[panic::panic]], and either die of shock or hit themselves [[repeatedly::repeatedly]] to death against the fence in their attempts to [[escape::escape]]. That's true, for example, of gazelles, ③ ‹which› for thousands of years were the most frequently hunted game species in some parts of the Fertile Crescent. There is no mammal species that the first settled peoples of that area had more opportunity ④ ‹to [[domesticate::domesticate]]› than gazelles. But no gazelle species has ever been domesticated. Just imagine trying to herd an animal that runs away, blindly hits ⑤ ‹itself› against walls, can [[leap::leap]] up to nearly 30 feet, and can run at a speed of 50 miles per hour!`,
   translation: `대형 포유류 초식동물 종들은 포식자나 인간으로부터의 위험에 서로 다른 방식으로 반응한다. 어떤 종들은 예민하고, 빠르며, 위협을 감지하면 즉각 도주하도록 프로그램되어 있다. 다른 종들은 더 느리고, 덜 예민하며, 무리 지어 보호받고, 위협받을 때 자리를 지키며, 필요할 때까지 도망가지 않는다. 당연히, 예민한 종들은 가두어 기르기 어렵다. 만약 (그것들이) 우리에 넣어지면, 그것들은 공황 상태에 빠지기 쉬우며, 충격으로 죽거나 탈출을 시도하다가 울타리에 반복적으로 부딪혀 죽기도 한다. 예를 들어 가젤이 그러한데, 가젤은 수천 년 동안 비옥한 초승달 지대의 일부 지역에서 가장 자주 사냥된 사냥감 종이었다. 그 지역의 초기 정착민들이 가젤보다 길들일 기회가 더 많았던 포유류 종은 없었다. 하지만 어떤 가젤 종도 길들여진 적이 없다. 도망치고, 앞뒤 가리지 않고 벽에 스스로 부딪히며, 거의 30피트까지 뛰어오를 수 있고, 시속 50마일로 달릴 수 있는 동물을 몰고 다닌다고 상상해 보라!`,
@@ -428,15 +486,27 @@ Winners' bookmarks will be printed and given to visitors.`,
   answer: 4,
   explanation: "부유해질수록 '평범한 사람들'과의 물리적 접촉이 줄어들면서 현실과의 단절이 생긴다는 것이 문맥상 자연스러우므로, increased(증가된)가 아니라 decreased(감소된)가 되어야 합니다. 따라서 정답은 ⑤번입니다.",
   vocab: {
-    tendency: { word:"tendency", pron:"[텐던시]", meaning:"경향, 성향", ex:"We have a tendency to share.", exko:"우리는 나누려는 경향이 있다." },
-    cooperate: { word:"cooperate", pron:"[코오퍼레이트]", meaning:"협력하다", ex:"They cooperate to survive.", exko:"그들은 생존하기 위해 협력한다." },
+    tendency: { word:"tendency", pron:"[텐던시]", meaning:"경향, 성향", ex:"We have a tendency to share.", exko:"우리는 나누려는 경향이 있다.", etym:"tend(뻗다, 향하다; Latin tendere) + ency → '~쪽으로 뻗는 성질' → '경향, 성향'. 같은 tend 어근: attend(at-~쪽으로 + tend → 참석하다), extend(ex-밖으로 + tend → 연장하다), intend(in-안으로 + tend → 의도하다)." },
+    cooperate: { word:"cooperate", pron:"[코오퍼레이트]", meaning:"협력하다", ex:"They cooperate to survive.", exko:"그들은 생존하기 위해 협력한다.", etym:"co-(함께) + oper(일하다; Latin operari) + ate → '함께 일하다' → '협력하다'. 같은 oper 어근: operate(작동하다), inoperable(in-불가능 + oper → 작동 불가능한), cooperation(협력)." },
     nomadic_tribes: { word:"nomadic tribes", pron:"[노매딕 트라이브즈]", meaning:"유목 부족", ex:"Nomadic tribes move often.", exko:"유목 부족은 자주 이동한다." },
-    hospitality: { word:"hospitality", pron:"[하스피탤리티]", meaning:"환대", ex:"They showed great hospitality.", exko:"그들은 큰 환대를 보여주었다." },
-    ironically: { word:"ironically", pron:"[아이러니컬리]", meaning:"아이러니하게도", ex:"Ironically, richer people share less.", exko:"아이러니하게도, 더 부유한 사람들이 덜 나눈다." },
-    sophisticated: { word:"sophisticated", pron:"[서피스티케이티드]", meaning:"정교한", ex:"Their security became more sophisticated.", exko:"그들의 보안은 더 정교해졌다." },
-    combined_with: { word:"combined with", pron:"[컴바인드 위드]", meaning:"~와 결합되어", ex:"Desire combined with fear creates anxiety.", exko:"욕구가 두려움과 결합되어 불안을 만든다." },
-    disconnection: { word:"disconnection", pron:"[디스커넥션]", meaning:"단절", ex:"Wealth can cause disconnection.", exko:"부는 단절을 초래할 수 있다." },
+    hospitality: { word:"hospitality", pron:"[하스피탤리티]", meaning:"환대", ex:"They showed great hospitality.", exko:"그들은 큰 환대를 보여주었다.", etym:"hosp(손님을 접대하는 사람; Latin hospes) + ital + ity → '손님을 후하게 대접함' → '환대'. 같은 hosp 어근: hospital(원래 '나그네를 돌보는 곳' → 병원), hospitable(환대하는), hostel(숙소)." },
+    ironically: { word:"ironically", pron:"[아이러니컬리]", meaning:"아이러니하게도", ex:"Ironically, richer people share less.", exko:"아이러니하게도, 더 부유한 사람들이 덜 나눈다.", etym:"iron(위장, 짐짓 모르는 체하기; Greek eironeia) + ically → '겉과 속이 다르게' → '아이러니하게도'. 관련 단어: irony(아이러니), ironic(반어적인)." },
+    sophisticated: { word:"sophisticated", pron:"[서피스티케이티드]", meaning:"정교한", ex:"Their security became more sophisticated.", exko:"그들의 보안은 더 정교해졌다.", etym:"soph(지혜로운; Greek sophos) + isticated → '정교하게 다듬어진' → '정교한, 세련된'. 같은 soph 어근: philosophy(phil-사랑 + soph → 철학), sophomore(soph + moros → 아는 체하는 초보자)." },
+    combined_with: { word:"combined with", pron:"[컴바인드 위드]", meaning:"~와 결합되어", ex:"Desire combined with fear creates anxiety.", exko:"욕구가 두려움과 결합되어 불안을 만든다.", etym:"com-(함께) + bin(둘씩; Latin bini) + ed → '둘을 하나로 합친' → '결합된'. 같은 bin 어근: combination(조합), binary(이진의), binoculars(bin-둘 + ocul(눈) → 쌍안경)." },
+    disconnection: { word:"disconnection", pron:"[디스커넥션]", meaning:"단절", ex:"Wealth can cause disconnection.", exko:"부는 단절을 초래할 수 있다.", etym:"dis-(반대) + con-(함께) + nect(묶다; Latin nectere) + ion → '함께 묶인 것을 풀어냄' → '단절'. 같은 nect 어근: connect(con-함께 + nect → 연결하다), annex(ad-~에 + nect → 부속물을 붙이다)." },
     blindness: { word:"blindness", pron:"[블라인드니스]", meaning:"무지, 눈이 멂", ex:"It creates blindness to reality.", exko:"그것은 현실에 대한 무지를 만든다." }
+  },
+  funcWords: {
+    for: { word:"for", tag:"[전치사/접속사 for · 다의어]", meaning:"for는 이 지문에서 두 가지로 쓰여요. 문장 맨 앞 'For a species born in a time ~'에서는 '~에게 있어서(전치사)'라는 뜻이고, 뒤쪽 'for they know that ~'에서는 '왜냐하면(이유를 나타내는 접속사, because와 비슷)'이라는 뜻이에요.", ex:"For a species born in a time when resources were limited and dangers were great, our natural tendency to share and cooperate is complicated when resources are plenty and outside dangers are few.", exko:"자원이 한정되고 위험이 컸던 시대에 태어난 종에게 있어, 공유하고 협력하려는 우리의 타고난 성향은 자원이 풍부하고 외부의 위험이 적을 때 복잡해진다." },
+    more: { word:"more", tag:"[more의 여러 쓰임]", meaning:"more는 이 지문에서 여러 방식으로 쓰였어요. 'the more we have, the more sophisticated'에서는 'the 비교급, the 비교급(~할수록 더 …하다)' 구문의 일부이고, 뒤에 나오는 'our desire for more'에서는 '더 많은 것(명사)'이라는 뜻으로 쓰여요. 문맥에 따라 부사(더)인지 명사(더 많은 것)인지 구분해야 해요.", ex:"Ironically, the more we have, the bigger our fences, the more sophisticated our security to keep people away and the less we want to share.", exko:"아이러니하게도, 우리가 더 많이 가질수록, 우리의 울타리는 더 커지고, 사람들을 멀리하기 위한 보안은 더 정교해지며, 나누고 싶은 마음은 더 줄어든다." },
+    certain: { word:"certain", tag:"[형용사 certain · 문맥 확인 필요]", meaning:"certain은 명사 앞에서 '확실한'이 아니라 '어떤, 특정한'이라는 뜻으로 쓰일 때가 많아요. 여기서 'Certain nomadic tribes'는 '확실한 유목 부족들'이 아니라 '어떤(특정한) 유목 부족들'이라는 뜻이에요.", ex:"Certain nomadic tribes don't have much, yet they are happy to share because it is in their interest to do so.", exko:"어떤 유목 부족들은 가진 것이 많지 않지만, 그렇게 하는 것이 그들에게 이익이 되기 때문에 기꺼이 나눈다." },
+    open: { word:"open", tag:"[형용사 open · 문맥 확인 필요]", meaning:"be open to는 문을 연다는 뜻을 넘어 '~을 기꺼이 하다, ~에 수용적이다'라는 뜻으로 자주 쓰여요. more open to sharing은 '나누는 것에 더 기꺼이 응하는'이라고 해석돼요.", ex:"When we have less, we tend to be more open to sharing what we have.", exko:"우리는 가진 것이 적을 때 가진 것을 더 기꺼이 나누려는 경향이 있다." },
+    increased: { word:"increased", tag:"[문맥상 낱말 쓰임 · 어휘 오류 포인트]", meaning:"increased는 사전적으로 '증가된'이라는 뜻이지만, 이 문제는 문맥상 낱말 쓰임이 적절한지 묻는 유형이에요. 부유해질수록 '평범한 사람들'과의 물리적 접촉은 오히려 줄어드는 것이 자연스러운 흐름이므로, 이 자리에는 increased(증가된)가 아니라 decreased(감소된)가 와야 문맥이 맞아요. 그래서 해설과 번역문에도 '늘어난(→실제로는 줄어든)'이라고 표시되어 있어요.", ex:"Our desire for more, combined with our increased physical interaction with the \"common folk,\" starts to create a disconnection or blindness to reality.", exko:"더 많은 것을 원하는 우리의 욕구는 '평범한 사람들'과의 늘어난(→실제로는 줄어든) 물리적 접촉과 결합하여 현실과의 단절이나 무지를 만들어내기 시작한다." },
+    happen: { word:"happen", tag:"[동사 · 숙어 happen upon]", meaning:"happen은 보통 '(사건이) 일어나다'라는 뜻으로 알려져 있지만, 'happen upon'은 '~을 우연히 만나다, 우연히 마주치다'라는 뜻의 숙어예요. 'If you happen upon them in your travels'는 '만약 여행 중에 그들을 우연히 만난다면'으로 해석돼요.", ex:"If you happen upon them in your travels, they will open up their homes and give you their food and hospitality.", exko:"만약 여행 중에 그들을 우연히 만난다면, 그들은 자신의 집을 열어주고 음식과 환대를 베풀 것이다." },
+    yet: { word:"yet", tag:"[접속사 yet · 그렇지만]", meaning:"yet을 '아직'이라는 부사로만 알면 이 문장이 이어지지 않아요. 여기서는 두 절을 잇는 접속사로 but과 같은 '그렇지만, 그런데도'라는 뜻이에요. 공식 해석도 '가진 것이 많지 않지만'으로 옮기고 있어요.", ex:"Certain nomadic tribes don't have much, yet they are happy to share because it is in their interest to do so.", exko:"어떤 유목 부족들은 가진 것이 많지 않지만, 그렇게 하는 것이 그들에게 이익이 되기 때문에 기꺼이 나눈다." },
+    happy: { word:"happy", tag:"[형용사 happy · be happy to ~]", meaning:"'be happy to + 동사원형'은 '~해서 행복하다'가 아니라 '기꺼이 ~하다'라는 뜻으로 쓰일 때가 많아요. they are happy to share는 '그들은 기꺼이 나눈다'라고 해석해야 뒤의 이유 설명과 자연스럽게 이어져요.", ex:"Certain nomadic tribes don't have much, yet they are happy to share because it is in their interest to do so.", exko:"어떤 유목 부족들은 가진 것이 많지 않지만, 그렇게 하는 것이 그들에게 이익이 되기 때문에 기꺼이 나눈다." },
+    interest: { word:"interest", tag:"[명사 interest · 이익]", meaning:"interest를 '흥미, 관심'으로만 알면 뜻이 통하지 않아요. 'be in one's interest'는 '~에게 이익이 되다'라는 표현으로, 여기서 interest는 '이익, 이해관계'라는 뜻이에요. it is in their interest to do so는 '그렇게 하는 것이 그들에게 이익이 된다'예요.", ex:"Certain nomadic tribes don't have much, yet they are happy to share because it is in their interest to do so.", exko:"어떤 유목 부족들은 가진 것이 많지 않지만, 그렇게 하는 것이 그들에게 이익이 되기 때문에 기꺼이 나눈다." },
+    complicated: { word:"complicated", tag:"[동사 complicate · 복잡해지다]", meaning:"complicated를 '복잡한'이라는 형용사로만 보면 문장의 동사를 찾지 못해요. 여기서는 동사 complicate(복잡하게 만들다)의 수동태 is complicated로 쓰여 '복잡해진다'라는 뜻이에요. 주어는 our natural tendency to share and cooperate(공유하고 협력하려는 타고난 성향)예요.", ex:"For a species born in a time when resources were limited and dangers were great, our natural tendency to share and cooperate is complicated when resources are plenty and outside dangers are few.", exko:"자원이 한정되고 위험이 컸던 시대에 태어난 종에게 있어, 공유하고 협력하려는 우리의 타고난 성향은 자원이 풍부하고 외부의 위험이 적을 때 복잡해진다." },
   },
   passage: `For a species born in a time when resources were limited and dangers were great, our natural [[tendency::tendency]] to share and [[cooperate::cooperate]] is ① ‹complicated› when resources are plenty and outside dangers are few. When we have less, we tend to be more open to sharing what we have. Certain [[nomadic_tribes::nomadic tribes]] don't have much, yet they are happy to share because it is in their ② ‹interest› to do so. If you happen upon them in your travels, they will open up their homes and give you their food and [[hospitality::hospitality]]. It's not just because they are nice people; it's because their ③ ‹survival› depends on sharing, for they know that they may be the travelers in need of food and shelter another day. [[ironically::Ironically]], the more we have, the bigger our fences, the more [[sophisticated::sophisticated]] our security to keep people away and the less we want to share. Our desire for ④ ‹more›, [[combined_with::combined with]] our ⑤ ‹increased› physical interaction with the "common folk," starts to create a [[disconnection::disconnection]] or [[blindness::blindness]] to reality.`,
   translation: `자원이 한정되고 위험이 컸던 시대에 태어난 종에게 있어, 공유하고 협력하려는 우리의 타고난 성향은 자원이 풍부하고 외부의 위험이 적을 때 복잡해진다. 우리는 가진 것이 적을 때 가진 것을 더 기꺼이 나누려는 경향이 있다. 어떤 유목 부족들은 가진 것이 많지 않지만, 그렇게 하는 것이 그들에게 이익이 되기 때문에 기꺼이 나눈다. 만약 여행 중에 그들을 우연히 만난다면, 그들은 자신의 집을 열어주고 음식과 환대를 베풀 것이다. 그것은 단지 그들이 착한 사람들이기 때문만이 아니라, 그들의 생존이 나눔에 달려 있기 때문이다. 그들은 언젠가 자신들이 음식과 잠자리가 필요한 여행자가 될 수도 있다는 것을 알기 때문이다. 아이러니하게도, 우리가 더 많이 가질수록, 우리의 울타리는 더 커지고, 사람들을 멀리하기 위한 보안은 더 정교해지며, 나누고 싶은 마음은 더 줄어든다. 더 많은 것을 원하는 우리의 욕구는 '평범한 사람들'과의 늘어난(→실제로는 줄어든) 물리적 접촉과 결합하여 현실과의 단절이나 무지를 만들어내기 시작한다.`,
@@ -458,16 +528,27 @@ Winners' bookmarks will be printed and given to visitors.`,
   answer: 0,
   explanation: "글 전체가 좋은 일이든 나쁜 일이든 결국 원래의 행복 기준선(baseline)으로 돌아간다는 '쾌락 적응(hedonic adaptation)'을 설명하고 있어요. 앞서 나온 adjust(적응하다), return to our baseline(기준선으로 돌아가다)과 같은 의미이므로 빈칸에는 '적응하다'라는 뜻의 adapt가 들어가야 합니다. 정답은 ①번입니다.",
   vocab: {
-    content: { word:"content", pron:"[컨텐트]", meaning:"만족하는", ex:"She felt content with her life.", exko:"그녀는 자신의 삶에 만족했다." },
-    discontent: { word:"discontent", pron:"[디스컨텐트]", meaning:"불만족", ex:"There was some discontent among workers.", exko:"직원들 사이에 약간의 불만이 있었다." },
-    successive: { word:"successive", pron:"[석세시브]", meaning:"연속적인", ex:"Each successive moment brings change.", exko:"매 연속적인 순간은 변화를 가져온다." },
+    content: { word:"content", pron:"[컨텐트]", meaning:"만족하는", ex:"She felt content with her life.", exko:"그녀는 자신의 삶에 만족했다.", etym:"con-(함께) + tent(잡다, 담다; Latin tenere) → '담긴 것에 만족하는' → '만족하는'. 같은 tent/tain 어근: contain(con-함께 + tain → 담다), maintain(main-손으로 + tain → 유지하다), retain(re-다시 + tain → 보유하다)." },
+    discontent: { word:"discontent", pron:"[디스컨텐트]", meaning:"불만족", ex:"There was some discontent among workers.", exko:"직원들 사이에 약간의 불만이 있었다.", etym:"dis-(부정) + content(만족하는; con-함께 + tent(담다)) → '만족하지 못하는 상태' → '불만족'. 같은 tent 어근: contain(담다), maintain(유지하다)." },
+    successive: { word:"successive", pron:"[석세시브]", meaning:"연속적인", ex:"Each successive moment brings change.", exko:"매 연속적인 순간은 변화를 가져온다.", etym:"suc-(sub-, 아래에서) + cess(가다; Latin cedere) + ive → '뒤이어 이어지는' → '연속적인'. 같은 cess/ceed 어근: succeed(suc-아래에서 + ceed → 뒤를 잇다, 성공하다), process(pro-앞으로 + cess → 과정), access(ac-~로 + cess → 접근)." },
     gust_of_wind: { word:"gust of wind", pron:"[거스트 오브 윈드]", meaning:"한 줄기 바람", ex:"A gust of wind blew the papers away.", exko:"한 줄기 바람이 서류들을 날려버렸다." },
-    adjust: { word:"adjust", pron:"[어저스트]", meaning:"적응하다, 조정하다", ex:"We adjust to new situations.", exko:"우리는 새로운 상황에 적응한다." },
+    adjust: { word:"adjust", pron:"[어저스트]", meaning:"적응하다, 조정하다", ex:"We adjust to new situations.", exko:"우리는 새로운 상황에 적응한다.", etym:"ad-(~에) + just(올바른, 맞는; Latin justus) → '올바르게 맞추다' → '적응하다, 조정하다'. 같은 just 어근: justice(정의), justify(정당화하다), adjustment(조정)." },
     baseline: { word:"baseline", pron:"[베이스라인]", meaning:"기준선", ex:"We return to our baseline mood.", exko:"우리는 기준이 되는 기분으로 돌아간다." },
-    euphoria: { word:"euphoria", pron:"[유포리아]", meaning:"(극도의) 행복감", ex:"The euphoria of winning faded quickly.", exko:"승리의 행복감은 빠르게 사라졌다." },
-    despair: { word:"despair", pron:"[디스페어]", meaning:"절망", ex:"He felt despair after the loss.", exko:"그는 패배 후 절망을 느꼈다." },
+    euphoria: { word:"euphoria", pron:"[유포리아]", meaning:"(극도의) 행복감", ex:"The euphoria of winning faded quickly.", exko:"승리의 행복감은 빠르게 사라졌다.", etym:"eu-(좋은; Greek) + phor(나르다, 견디다; pherein) + ia → '잘 견디는 상태' → '행복감'. 같은 eu- 접두사: euphemism(eu-좋게 + phem(말) → 완곡어법), euphony(eu-좋은 + phon(소리) → 듣기 좋은 소리). 같은 phor 어근: metaphor(meta-넘어 + phor → 은유)." },
+    despair: { word:"despair", pron:"[디스페어]", meaning:"절망", ex:"He felt despair after the loss.", exko:"그는 패배 후 절망을 느꼈다.", etym:"de-(부정, 반대) + spair(바라다, 희망; Latin sperare) → '희망을 잃음' → '절망'. 같은 sper 어근: desperate(de-반대 + sper → 절망적인), prosper(pro-앞으로 + sper → 희망대로 잘되다 → 번영하다)." },
     break_up: { word:"break-up", pron:"[브레이크업]", meaning:"이별", ex:"The break-up was hard for both of them.", exko:"그 이별은 둘 모두에게 힘들었다." },
     longed_for: { word:"longed for", pron:"[롱드 포]", meaning:"간절히 바랐던", ex:"They finally got what they longed for.", exko:"그들은 마침내 간절히 바라던 것을 얻었다." }
+  },
+  funcWords: {
+    as: { word:"as", tag:"[전치사 as · 자격]", meaning:"문장 맨 앞의 As humans는 '~처럼'이 아니라 '인간으로서(자격·신분)'라는 뜻의 전치사예요.", ex:"As humans, we adjust — to new information and events both good and bad — and return to our personal default level of well-being.", exko:"인간으로서 우리는 좋고 나쁜 새로운 정보와 사건들에 적응하며, 우리 개인의 기본적인 행복 수준으로 되돌아간다." },
+    so: { word:"so", tag:"[so + 조동사 + 주어 · 도치]", meaning:"'so + does/is/조동사 + 주어'는 앞 문장과 같은 상황이 반복됨을 나타내는 도치 구문으로, '~도 그렇다, ~도 마찬가지다'라고 해석해요. so does the despair는 '절망감도 (첫사랑의 행복감처럼) 사라진다'라는 뜻이에요. '그래서'로 해석하면 틀려요.", ex:"The euphoria of first love fades, and so does the despair of a break-up.", exko:"첫사랑의 행복감은 사라지고, 이별의 절망감도 마찬가지로 사라진다." },
+    back: { word:"back", tag:"[부사 back · 다시]", meaning:"back up, back down에서 back은 '뒤로'가 아니라 '다시, 원래대로'라는 뜻의 부사예요. back up은 '(기분이) 다시 올라가다', back down은 '다시 내려오다'라고 해석돼요.", ex:"There will be highs and lows, but over time, like water seeking its own level, we are pulled toward our baseline — back up after bad news and back down after good.", exko:"오르내림은 있겠지만, 시간이 지나면 마치 물이 스스로 수평을 찾아가듯, 우리는 우리의 기준선으로 이끌려간다 — 나쁜 소식 후에는 다시 올라가고, 좋은 소식 후에는 다시 내려온다." },
+    like: { word:"like", tag:"[전치사 like · ~처럼]", meaning:"like는 여기서 동사(좋아하다)가 아니라 '~처럼, ~와 같이'라는 뜻의 전치사예요. like water seeking its own level은 '스스로 수평을 찾는 물처럼'이라고 해석하며, 문장 뒤쪽의 'like adults'도 같은 뜻으로 쓰였어요.", ex:"There will be highs and lows, but over time, like water seeking its own level, we are pulled toward our baseline — back up after bad news and back down after good.", exko:"오르내림은 있겠지만, 시간이 지나면 마치 물이 스스로 수평을 찾아가듯, 우리는 우리의 기준선으로 이끌려간다 — 나쁜 소식 후에는 다시 올라가고, 좋은 소식 후에는 다시 내려온다." },
+    over: { word:"over", tag:"[전치사 over · 시간의 경과]", meaning:"over time은 '~위에'가 아니라 '시간이 지나면서, 시간이 지남에 따라'라는 뜻이에요.", ex:"There will be highs and lows, but over time, like water seeking its own level, we are pulled toward our baseline — back up after bad news and back down after good.", exko:"오르내림은 있겠지만, 시간이 지나면 마치 물이 스스로 수평을 찾아가듯, 우리는 우리의 기준선으로 이끌려간다 — 나쁜 소식 후에는 다시 올라가고, 좋은 소식 후에는 다시 내려온다." },
+    default: { word:"default", tag:"[형용사 · 품사 확인]", meaning:"default는 명사로 '채무 불이행'이나 컴퓨터 '기본값'이라는 뜻이 먼저 떠오르지만, 여기서는 명사 level을 꾸미는 형용사로 쓰여 '기본의, 기본적인'이라는 뜻이에요. 'our personal default level of well-being'은 '우리 개인의 기본적인 행복 수준'으로 해석돼요.", ex:"As humans, we adjust — to new information and events both good and bad — and return to our personal default level of well-being.", exko:"인간으로서 우리는 좋고 나쁜 새로운 정보와 사건들에 적응하며, 우리 개인의 기본적인 행복 수준으로 되돌아간다." },
+    rest: { word:"rest", tag:"[명사 rest · 문맥 확인 필요]", meaning:"rest는 '휴식'이라는 뜻이 먼저 떠오르지만, 'the rest of + 명사'는 '~의 나머지'라는 뜻이에요. 'the rest of their lives'는 '그들의 남은 평생'으로 해석되며, 휴식과는 관계가 없어요.", ex:"When they get what they've longed for, they believe they will be happy for the rest of their lives.", exko:"아이들은 그토록 바라던 것을 얻으면, 남은 평생 행복할 것이라고 믿는다." },
+    highs: { word:"highs", tag:"[명사 highs and lows · 오르내림]", meaning:"high를 '높은'이라는 형용사로만 알면 There will be highs and lows가 해석되지 않아요. 여기서는 -s가 붙은 복수 명사로 '좋을 때(고점)'를 뜻하며, highs and lows는 '오르내림, 기복'이라는 짝 표현이에요.", ex:"There will be highs and lows, but over time, like water seeking its own level, we are pulled toward our baseline — back up after bad news and back down after good.", exko:"오르내림은 있겠지만, 시간이 지나면 마치 물이 스스로 수평을 찾아가듯, 우리는 우리의 기준선으로 이끌려간다 — 나쁜 소식 후에는 다시 올라가고, 좋은 소식 후에는 다시 내려온다." },
+    level: { word:"level", tag:"[명사 level · 수평, 수면]", meaning:"level을 '수준, 단계'로만 알면 'water seeking its own level'이 이해되지 않아요. 물에 대해 쓰인 level은 '수평, 수면'을 뜻해서 '물이 스스로 수평을 찾아가듯'이라는 비유가 돼요. 앞 문장의 'our personal default level of well-being'에서는 원래 알던 '수준'이라는 뜻으로 쓰였어요.", ex:"There will be highs and lows, but over time, like water seeking its own level, we are pulled toward our baseline — back up after bad news and back down after good.", exko:"오르내림은 있겠지만, 시간이 지나면 마치 물이 스스로 수평을 찾아가듯, 우리는 우리의 기준선으로 이끌려간다 — 나쁜 소식 후에는 다시 올라가고, 좋은 소식 후에는 다시 내려온다." },
   },
   passage: `Whether we feel happy or sad, [[content::content]] or [[discontent::discontent]], is not determined merely by each individual [[successive::successive]] moment of life experience — a good thing happens and I'm happy, a bad thing happens and I'm sad. While our experiences affect our mood, we are not blown in a completely new direction by each [[gust_of_wind::gust of wind]]. As humans, we [[adjust::adjust]] — to new information and events both good and bad — and return to our personal default level of well-being. There will be highs and lows, but over time, like water seeking its own level, we are pulled toward our [[baseline::baseline]] — back up after bad news and back down after good. The [[euphoria::euphoria]] of first love fades, and so does the [[despair::despair]] of a [[break_up::break-up]]. This tendency is best seen with little kids and their toy joy: When they get what they've [[longed_for::longed for]], they believe they will be happy for the rest of their lives. And for the first few minutes of the rest of their lives, they are. But then the kids — like adults — adapt.`,
   translation: `우리가 행복한지 슬픈지, 만족스러운지 불만족스러운지는 삶의 경험의 매 순간순간에 의해서만 결정되는 것이 아니다 — 좋은 일이 생기면 행복하고, 나쁜 일이 생기면 슬프다는 식으로만 결정되지 않는다는 것이다. 우리의 경험이 기분에 영향을 미치기는 하지만, 우리는 한 줄기 바람에 완전히 새로운 방향으로 날아가 버리지는 않는다. 인간으로서 우리는 좋고 나쁜 새로운 정보와 사건들에 적응하며, 우리 개인의 기본적인 행복 수준으로 되돌아간다. 오르내림은 있겠지만, 시간이 지나면 마치 물이 스스로 수평을 찾아가듯, 우리는 우리의 기준선으로 이끌려간다 — 나쁜 소식 후에는 다시 올라가고, 좋은 소식 후에는 다시 내려온다. 첫사랑의 행복감은 사라지고, 이별의 절망감도 마찬가지로 사라진다. 이러한 경향은 어린아이들과 그들의 장난감에 대한 기쁨에서 가장 잘 나타난다: 아이들은 그토록 바라던 것을 얻으면, 남은 평생 행복할 것이라고 믿는다. 그리고 남은 평생의 첫 몇 분 동안은, 실제로 그렇다. 하지만 그 후 아이들은 — 어른들처럼 — 적응한다.`,
@@ -527,6 +608,7 @@ function toggleSheetStar() {
   setStarred(gid, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
   if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
+  else if (idx >= 0 && window.studyStats) window.studyStats.unrecord('star');
   updateSheetStarBtn();
 }
 
@@ -713,8 +795,13 @@ function showWord(key) {
   currentSheetWordData = { word: v.word, pron: v.pron, meaning: v.meaning, en: v.ex, ko: v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
@@ -758,6 +845,23 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -766,6 +870,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
@@ -775,8 +880,12 @@ function showPlain(rawWord) {
   currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();

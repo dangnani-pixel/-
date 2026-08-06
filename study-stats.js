@@ -2,14 +2,14 @@
   var KEY = 'studyStats';
   var LEVELS = [
     { xp: 0, title: '영어 새싹', icon: '🌱' },
-    { xp: 50, title: '초보 학습자', icon: '✏️' },
-    { xp: 150, title: '문장 탐험가', icon: '📖' },
-    { xp: 300, title: '단어 사냥꾼', icon: '🔍' },
-    { xp: 500, title: '지문 정복자', icon: '🚀' },
-    { xp: 800, title: '모의고사 고수', icon: '🏅' },
-    { xp: 1200, title: '영어 마스터', icon: '👑' }
+    { xp: 100, title: '초보 학습자', icon: '✏️' },
+    { xp: 200, title: '문장 탐험가', icon: '📖' },
+    { xp: 400, title: '단어 사냥꾼', icon: '🔍' },
+    { xp: 800, title: '지문 정복자', icon: '🚀' },
+    { xp: 1800, title: '모의고사 고수', icon: '🏅' },
+    { xp: 3600, title: '영어 마스터', icon: '👑' }
   ];
-  var XP_RULES = { quiz: [10, 2], vocab: [5, 1], star: [2, 2] };
+  var XP_RULES = { quiz: [5, 0], vocab: [3, 0], star: [1, 1] };
 
   function load() {
     try {
@@ -31,18 +31,51 @@
     for (var i = 0; i < LEVELS.length; i++) if (xp >= LEVELS[i].xp) lv = i;
     return lv;
   }
-  function countStarred() {
-    var n = 0;
+  function getStarredWords() {
+    var list = [];
     for (var i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
       if (k && k.indexOf('vocabStar_') === 0) {
-        try { n += (JSON.parse(localStorage.getItem(k) || '[]') || []).length; } catch (e) {}
+        try {
+          (JSON.parse(localStorage.getItem(k) || '[]') || []).forEach(function (w) {
+            var copy = {}; for (var p in w) copy[p] = w[p];
+            copy._srcKey = k;
+            list.push(copy);
+          });
+        } catch (e) {}
       }
     }
-    return n;
+    return list;
   }
-  function countWrong() {
-    try { return (JSON.parse(localStorage.getItem('vocabWrongWords') || '[]') || []).length; } catch (e) { return 0; }
+  function countStarred() { return getStarredWords().length; }
+  var WRONG_KEY = 'vocabWrongWords';
+  function getWrongWords() {
+    try { return JSON.parse(localStorage.getItem(WRONG_KEY) || '[]') || []; } catch (e) { return []; }
+  }
+  function countWrong() { return getWrongWords().length; }
+
+  function deleteStarredWordAt(idx) {
+    var words = getStarredWords();
+    var target = words[idx];
+    if (!target) return;
+    try {
+      var arr = JSON.parse(localStorage.getItem(target._srcKey) || '[]') || [];
+      var next = arr.filter(function (w) { return w.word.toLowerCase() !== target.word.toLowerCase(); });
+      localStorage.setItem(target._srcKey, JSON.stringify(next));
+      if (window.starSync) window.starSync.notifyStarChange(target._srcKey);
+      if (window.studyStats) window.studyStats.unrecord('star');
+    } catch (e) {}
+    openStarredList();
+  }
+
+  function deleteWrongWordAt(idx) {
+    var words = getWrongWords();
+    var target = words[idx];
+    if (!target) return;
+    var next = words.filter(function (w) { return w.word.toLowerCase() !== target.word.toLowerCase(); });
+    localStorage.setItem(WRONG_KEY, JSON.stringify(next));
+    if (window.starSync) window.starSync.notifyStarChange(WRONG_KEY);
+    openWrongList();
   }
 
   function ensureStyles() {
@@ -67,7 +100,19 @@
       '#stats-panel .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }' +
       '#stats-panel .sp-cell { background: #F8F7FF; border-radius: 12px; padding: 12px 10px; text-align: center; }' +
       '#stats-panel .sp-num { font-size: 19px; font-weight: 800; color: #534AB7; }' +
-      '#stats-panel .sp-label { font-size: 11px; color: #888; margin-top: 3px; }';
+      '#stats-panel .sp-label { font-size: 11px; color: #888; margin-top: 3px; }' +
+      '#stats-panel .sp-cell.clickable { cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background 0.1s ease; }' +
+      '#stats-panel .sp-cell.clickable:active { background: #EEEDFE; }' +
+      '#stats-panel .sp-back-btn { position: absolute; top: 14px; left: 16px; font-size: 12.5px; color: #534AB7; background: none; border: none; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }' +
+      '#stats-panel .sp-wrong-title { font-size: 15px; font-weight: 800; text-align: center; margin: 18px 0 14px; }' +
+      '#stats-panel .sp-wrong-list { max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }' +
+      '#stats-panel .sp-wrong-item { background: #F8F7FF; border-radius: 12px; padding: 10px 14px; text-align: left; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }' +
+      '#stats-panel .sp-wrong-word { font-size: 14.5px; font-weight: 700; color: #1a1a1a; }' +
+      '#stats-panel .sp-wrong-pron { font-size: 11.5px; color: #aaa; margin-left: 6px; font-weight: 400; }' +
+      '#stats-panel .sp-wrong-meaning { font-size: 12.5px; color: #534AB7; margin-top: 2px; }' +
+      '#stats-panel .sp-item-del { flex: 0 0 auto; background: none; border: none; color: #ccc; font-size: 15px; cursor: pointer; padding: 2px 4px; line-height: 1; -webkit-tap-highlight-color: transparent; }' +
+      '#stats-panel .sp-item-del:active { color: #e0524d; }' +
+      '#stats-panel .sp-empty { text-align: center; font-size: 13px; color: #aaa; padding: 30px 10px; }';
     document.head.appendChild(st);
   }
 
@@ -84,15 +129,8 @@
 
   function pct(c, t) { return t > 0 ? Math.round(c / t * 100) + '%' : '-'; }
 
-  function openPanel() {
+  function ensureShell() {
     ensureStyles();
-    var s = load();
-    var lv = levelOf(s.xp);
-    var cur = LEVELS[lv];
-    var next = LEVELS[lv + 1] || null;
-    var barPct = next ? Math.min(100, Math.round((s.xp - cur.xp) / (next.xp - cur.xp) * 100)) : 100;
-    var xpLine = next ? (s.xp + ' XP · 다음 레벨까지 ' + (next.xp - s.xp) + ' XP') : (s.xp + ' XP · 최고 레벨 달성!');
-
     var ov = document.getElementById('stats-overlay');
     var pn = document.getElementById('stats-panel');
     if (!ov) {
@@ -104,6 +142,18 @@
       pn = document.createElement('div'); pn.id = 'stats-panel';
       document.body.appendChild(pn);
     }
+    return pn;
+  }
+
+  function openPanel() {
+    var pn = ensureShell();
+    var s = load();
+    var lv = levelOf(s.xp);
+    var cur = LEVELS[lv];
+    var next = LEVELS[lv + 1] || null;
+    var barPct = next ? Math.min(100, Math.round((s.xp - cur.xp) / (next.xp - cur.xp) * 100)) : 100;
+    var xpLine = next ? (s.xp + ' XP · 다음 레벨까지 ' + (next.xp - s.xp) + ' XP') : (s.xp + ' XP · 최고 레벨 달성!');
+
     pn.innerHTML =
       '<button class="sp-close" id="sp-close-btn">✕</button>' +
       '<div class="sp-level">' + cur.icon + '</div>' +
@@ -116,12 +166,49 @@
         '<div class="sp-cell"><div class="sp-num">' + pct(s.correct, s.solved) + '</div><div class="sp-label">문제 정답률</div></div>' +
         '<div class="sp-cell"><div class="sp-num">' + s.vocabSolved + '</div><div class="sp-label">단어 퀴즈 수</div></div>' +
         '<div class="sp-cell"><div class="sp-num">' + pct(s.vocabCorrect, s.vocabSolved) + '</div><div class="sp-label">단어 정답률</div></div>' +
-        '<div class="sp-cell"><div class="sp-num">' + countStarred() + '</div><div class="sp-label">저장한 단어</div></div>' +
-        '<div class="sp-cell"><div class="sp-num">' + countWrong() + '</div><div class="sp-label">복습할 오답 단어</div></div>' +
+        '<div class="sp-cell clickable" id="sp-starred-cell"><div class="sp-num">' + countStarred() + '</div><div class="sp-label">저장한 단어 ›</div></div>' +
+        '<div class="sp-cell clickable" id="sp-wrong-cell"><div class="sp-num">' + countWrong() + '</div><div class="sp-label">복습할 오답 단어 ›</div></div>' +
       '</div>';
     document.getElementById('sp-close-btn').onclick = closePanel;
-    ov.classList.add('show');
+    document.getElementById('sp-starred-cell').onclick = openStarredList;
+    document.getElementById('sp-wrong-cell').onclick = openWrongList;
+    document.getElementById('stats-overlay').classList.add('show');
     pn.classList.add('show');
+  }
+
+  function wordListHtml(words) {
+    return words.map(function (w, i) {
+      return '<div class="sp-wrong-item"><div><div class="sp-wrong-word">' + w.word +
+        (w.pron ? '<span class="sp-wrong-pron">' + w.pron + '</span>' : '') + '</div>' +
+        (w.meaning ? '<div class="sp-wrong-meaning">' + w.meaning + '</div>' : '') + '</div>' +
+        '<button class="sp-item-del" data-idx="' + i + '" title="삭제">✕</button></div>';
+    }).join('');
+  }
+
+  function openWordList(title, words, emptyMsg, onDelete) {
+    var pn = ensureShell();
+    var listHtml = words.length ? wordListHtml(words) : ('<div class="sp-empty">' + emptyMsg + '</div>');
+    pn.innerHTML =
+      '<button class="sp-close" id="sp-close-btn">✕</button>' +
+      '<button class="sp-back-btn" id="sp-back-btn">← 뒤로</button>' +
+      '<div class="sp-wrong-title">' + title + ' (' + words.length + '개)</div>' +
+      '<div class="sp-wrong-list">' + listHtml + '</div>';
+    document.getElementById('sp-close-btn').onclick = closePanel;
+    document.getElementById('sp-back-btn').onclick = openPanel;
+    var delBtns = pn.querySelectorAll('.sp-item-del');
+    for (var i = 0; i < delBtns.length; i++) {
+      delBtns[i].onclick = (function (idx) {
+        return function (e) { e.stopPropagation(); onDelete(idx); };
+      })(Number(delBtns[i].getAttribute('data-idx')));
+    }
+  }
+
+  function openWrongList() {
+    openWordList('📝 복습할 오답 단어', getWrongWords(), '아직 복습할 오답 단어가 없어요.<br>단어장 퀴즈에서 틀린 단어가 여기 모여요.', deleteWrongWordAt);
+  }
+
+  function openStarredList() {
+    openWordList('⭐ 저장한 단어', getStarredWords(), '아직 저장한 단어가 없어요.<br>지문에서 단어를 클릭하고 별표를 눌러보세요.', deleteStarredWordAt);
   }
 
   function closePanel() {
@@ -181,6 +268,17 @@
       } else {
         showXpToast('+' + gain + ' XP');
       }
+      scheduleSync();
+    },
+    unrecord: function (type) {
+      var rule = XP_RULES[type];
+      if (!rule) return;
+      var s = load();
+      var loss = rule[0];
+      s.xp = Math.max(0, s.xp - loss);
+      save(s);
+      updateBadge();
+      showXpToast('-' + loss + ' XP');
       scheduleSync();
     },
     refresh: updateBadge

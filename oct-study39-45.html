@@ -97,12 +97,17 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
 .sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
 .sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
 .sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
 .sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
 .sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
 </style>
 </head>
 <body>
@@ -163,6 +168,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="sheet-pron" id="sheet-pron"></div>
   <div class="sheet-meaning" id="sheet-meaning"></div>
   <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
 </div>
 
 <script>
@@ -172,14 +178,25 @@ const problems = [
   insertSentence: "But with more permanent things, companies must invent reasons for their customers to continue to consume them.",
   insertSentenceKo: "그러나 더 오래가는 물건의 경우, 기업은 고객이 그것을 계속 소비할 이유를 만들어내야 한다.",
   vocab: {
-    purchase: { word:"purchase", pron:"[퍼처스]", meaning:"구매하다", ex:"Those who purchase goods are called customers.", exko:"물건을 구매하는 사람들은 고객이라 불린다." },
-    consume: { word:"consume", pron:"[컨슘]", meaning:"소비하다", ex:"Individuals who consume goods are consumers.", exko:"물건을 소비하는 개인은 소비자이다." },
-    permanent: { word:"permanent", pron:"[퍼머넌트]", meaning:"영구적인, 오래가는", ex:"with more permanent things", exko:"더 오래가는 물건의 경우" },
-    quantities: { word:"quantities", pron:"[콴터티즈]", meaning:"양, 수량", ex:"in larger and larger quantities", exko:"점점 더 많은 양으로" },
-    literally: { word:"literally", pron:"[리터럴리]", meaning:"말 그대로", ex:"Food is literally consumed.", exko:"음식은 말 그대로 소비된다." },
+    purchase: { word:"purchase", pron:"[퍼처스]", meaning:"구매하다", ex:"Those who purchase goods are called customers.", exko:"물건을 구매하는 사람들은 고객이라 불린다.", etym:"pur-(pro-, 앞으로) + chase(=captiare, 뒤쫓다) → 원하는 것을 앞서 뒤쫓아 얻다 → 구매하다. 같은 chase 어근을 쓰는 단어: chase(접두사 없이 원형 → 뒤쫓다)." },
+    consume: { word:"consume", pron:"[컨슘]", meaning:"소비하다", ex:"Individuals who consume goods are consumers.", exko:"물건을 소비하는 개인은 소비자이다.", etym:"con-(완전히) + sum(=sumere, 취하다·쓰다) → 완전히 써버리다 → 소비하다. 같은 sum 어근을 쓰는 다른 접두사 단어: presume(pre-미리 + sum → 미리 취하다 → 추정하다), resume(re-다시 + sum → 다시 집어들다 → 재개하다)." },
+    permanent: { word:"permanent", pron:"[퍼머넌트]", meaning:"영구적인, 오래가는", ex:"with more permanent things", exko:"더 오래가는 물건의 경우", etym:"per-(끝까지, 통하여) + man(=manere, 머무르다) + -ent(형용사형) → 끝까지 머무르는 → 영구적인. 같은 man(ere) 어근을 쓰는 다른 접두사 단어: remain(re-다시 + main(manere) → 남아 있다), remnant(re- + man + ant → 남은 것)." },
+    quantities: { word:"quantities", pron:"[콴터티즈]", meaning:"양, 수량", ex:"in larger and larger quantities", exko:"점점 더 많은 양으로", etym:"quant(=quantus, 라틴어 '얼마나 많은') + -ity + -es(명사·복수형) → 얼마만큼 되는 것 → 양, 수량. 같은 어근을 쓰는 단어: quantify(quant + ify → 수량화하다), quantum(같은 어근 → 양자)." },
+    literally: { word:"literally", pron:"[리터럴리]", meaning:"말 그대로", ex:"Food is literally consumed.", exko:"음식은 말 그대로 소비된다.", etym:"liter(=littera, 문자) + -al + -ly(형용사·부사형) → 문자 그대로 → 말 그대로. 같은 liter 어근을 쓰는 단어: literature(liter + ature → 문자로 쓰인 것 → 문학), literacy(liter + acy → 글을 읽고 쓰는 능력)." },
     outdated: { word:"outdated", pron:"[아웃데이티드]", meaning:"구식의", ex:"make the stuff people have outdated", exko:"사람들이 가진 물건을 구식으로 만들다" },
-    functionable: { word:"functionable", pron:"[펑셔너블]", meaning:"쓸 수 있는", ex:"the old is still perfectly functionable", exko:"낡은 것도 여전히 완벽하게 쓸 수 있다" },
-    indefinitely: { word:"indefinitely", pron:"[인데퍼니틀리]", meaning:"무한정", ex:"The list is extended indefinitely.", exko:"그 목록은 무한정 늘어난다." }
+    functionable: { word:"functionable", pron:"[펑셔너블]", meaning:"쓸 수 있는", ex:"the old is still perfectly functionable", exko:"낡은 것도 여전히 완벽하게 쓸 수 있다", etym:"func(=fungi, 수행하다) + -tion + -able(~할 수 있는) → 기능을 수행할 수 있는 → 쓸 수 있는. 같은 func 어근을 쓰는 다른 단어: function(접두사 없이 원형 → 기능), defunct(de-완전히 + funct(fungi) → 수행을 다 마친 → 더 이상 기능하지 않는)." },
+    indefinitely: { word:"indefinitely", pron:"[인데퍼니틀리]", meaning:"무한정", ex:"The list is extended indefinitely.", exko:"그 목록은 무한정 늘어난다.", etym:"in-(부정) + de-(강조) + fin(=finis, 끝) + -ite + -ly → 끝이 정해지지 않게 → 무한정. 같은 fin 어근을 쓰는 다른 접두사 단어: define(de-완전히 + fine → 끝까지 경계를 정하다 → 정의하다), infinite(in-부정 + finite → 끝이 없는)." }
+  },
+  funcWords: {
+    those: { word:"those", tag:"[대명사 those]", meaning:"those는 '사람들'을 뜻하는 대명사이고, 뒤의 관계대명사 who와 함께 'Those who ~'는 '~하는 사람들'이라는 뜻이 돼요. 뒤에 나오는 'Those who sell food'도 같은 구조예요.", ex:"Those who purchase the goods of a company are called customers.", exko:"어떤 회사의 상품을 구매하는 사람들은 고객이라고 불린다." },
+    for: { word:"for", tag:"[등위접속사 for · 이유]", meaning:"여기서 for는 '~을 위해'라는 전치사가 아니라 '왜냐하면 ~이기 때문이다'라는 뜻의 등위접속사예요. because와 비슷하지만 문어체에서 앞 문장 뒤에 이유를 덧붙일 때 콤마와 함께 쓰여요.", ex:"Those who sell food have an easy time, for food is literally consumed, so there is always a need to purchase new food.", exko:"음식을 파는 사람들은 수월하다. 왜냐하면 음식은 말 그대로 소비되어서 새 음식을 구매할 필요가 항상 있기 때문이다." },
+    though: { word:"though", tag:"[even though]", meaning:"'even though'는 '비록 ~이지만, ~인데도'라는 뜻의 양보 접속사예요. though 하나만 있어도 비슷한 뜻이지만, even이 붙으면 그 양보의 의미가 더 강조돼요.", ex:"The entire fashion industry is built to convince people that fashion matters, so they must purchase new clothing, even though the old is still perfectly functionable.", exko:"패션 산업 전체는 패션이 중요하다고 사람들을 설득하도록 만들어져 있어서, 낡은 옷이 여전히 완벽하게 쓸 수 있는데도 사람들은 새 옷을 사야만 한다." },
+    by: { word:"by", tag:"[전치사 by · 수단]", meaning:"'by convincing them'에서 by는 '~함으로써(수단)'이라는 뜻의 전치사예요. by 뒤에 동명사(convincing)가 와서 '그들을 설득함으로써'라고 해석돼요.", ex:"One approach is to make the stuff that people already have outdated by convincing them that it is no longer fashionable.", exko:"한 가지 접근법은 사람들이 이미 가지고 있는 물건이 더 이상 유행하지 않는다고 설득함으로써 그것을 구식으로 만드는 것이다." },
+    matters: { word:"matters", tag:"[동사 · 품사 확인]", meaning:"matters는 '사안들, 문제들'이라는 명사의 복수형으로 보이기 쉽지만, 여기 'convince people that fashion matters'에서는 that절의 주어(fashion) 뒤에 오는 동사로 '중요하다'라는 뜻이에요. 명사가 아니라 동사로 해석하세요.", ex:"The entire fashion industry is built to convince people that fashion matters, so they must purchase new clothing, even though the old is still perfectly functionable.", exko:"패션 산업 전체는 패션이 중요하다고 사람들을 설득하도록 만들어져 있어서, 낡은 옷이 여전히 완벽하게 쓸 수 있는데도 사람들은 새 옷을 사야만 한다." },
+    goods: { word:"goods", tag:"[명사 goods · 의미 확인]", meaning:"goods를 good(좋은)의 복수처럼 보면 안 돼요. goods는 항상 복수형으로 쓰여 '상품, 물건'을 뜻하는 명사예요. 'purchase the goods of a company'는 '어떤 회사의 상품을 구매하다'로 해석하세요.", ex:"Those who purchase the goods of a company are called customers.", exko:"어떤 회사의 상품을 구매하는 사람들은 고객이라고 불린다." },
+    invented: { word:"invented", tag:"[동사 invent · 의미 확인]", meaning:"invent를 '(기계를) 발명하다'로만 알면 어색해요. 방법·구실 같은 말을 목적어로 쓰면 '고안하다, 만들어내다'라는 뜻이에요. 'have invented multiple ways'는 '여러 방법을 고안해 왔다'로 해석돼요.", ex:"Therefore, companies have invented multiple ways to ensure that their customers consume the produced items in larger and larger quantities and more and more frequently.", exko:"따라서 기업들은 고객이 생산된 물품을 점점 더 많은 양으로, 점점 더 자주 소비하도록 보장하기 위한 여러 방법을 고안해 왔다." },
+    time: { word:"time", tag:"[관용구 have an easy time]", meaning:"'have an easy time'을 '쉬운 시간을 갖다'로 직역하면 어색해요. '수월하다, 편하게 지내다'라는 뜻의 관용 표현이라서, 'Those who sell food have an easy time'은 '음식을 파는 사람들은 수월하다'로 해석돼요.", ex:"Those who sell food have an easy time, for food is literally consumed, so there is always a need to purchase new food.", exko:"음식을 파는 사람들은 수월하다. 왜냐하면 음식은 말 그대로 소비되어서 새 음식을 구매할 필요가 항상 있기 때문이다." },
+    divisions: { word:"divisions", tag:"[명사 division · 의미 확인]", meaning:"division을 '나눗셈, 분열'로 해석하면 어색해요. 회사 조직을 가리킬 때는 '부서, 사업부'라는 뜻이라서, 'the marketing divisions of companies'는 '기업의 마케팅 부서'로 해석돼요.", ex:"Fashion today extends to far more things than clothes: automobiles, mobile phones, computers — the list is extended indefinitely, limited only by the limits of the creative minds of the marketing divisions of companies.", exko:"오늘날 패션은 옷보다 훨씬 더 많은 것으로 확장된다. 자동차, 휴대전화, 컴퓨터 — 그 목록은 기업 마케팅 부서의 창의적인 두뇌의 한계에 의해서만 제한될 뿐 무한정 늘어난다." }
   },
   passage: `Those who [[purchase::purchase]] the goods of a company are called customers. Individuals who purchase goods for personal use are called consumers: beings who [[consume::consume]]. ( ① ) Therefore, companies have invented multiple ways to ensure that their customers consume the produced items in larger and larger [[quantities::quantities]] and more and more frequently. ( ② ) Those who sell food have an easy time, for food is [[literally::literally]] consumed, so there is always a need to purchase new food. ( ③ ) One approach is to make the stuff that people already have [[outdated::outdated]] by convincing them that it is no longer fashionable. ( ④ ) The entire fashion industry is built to convince people that fashion matters, so they must purchase new clothing, even though the old is still perfectly [[functionable::functionable]]. ( ⑤ ) Fashion today extends to far more things than clothes: automobiles, mobile phones, computers — the list is extended [[indefinitely::indefinitely]], limited only by the limits of the creative minds of the marketing divisions of companies.`,
   translation: `어떤 회사의 상품을 구매하는 사람들은 고객이라고 불린다. 개인적인 사용을 위해 물건을 구매하는 개인은 소비자라고 불리는데, 이는 소비하는 존재를 뜻한다. ( ① ) 따라서 기업들은 고객이 생산된 물품을 점점 더 많은 양으로, 점점 더 자주 소비하도록 보장하기 위한 여러 방법을 고안해 왔다. ( ② ) 음식을 파는 사람들은 수월하다. 왜냐하면 음식은 말 그대로 소비되어서 새 음식을 구매할 필요가 항상 있기 때문이다. ( ③ ) 한 가지 접근법은 사람들이 이미 가지고 있는 물건이 더 이상 유행하지 않는다고 설득함으로써 그것을 구식으로 만드는 것이다. ( ④ ) 패션 산업 전체는 패션이 중요하다고 사람들을 설득하도록 만들어져 있어서, 낡은 옷이 여전히 완벽하게 쓸 수 있는데도 사람들은 새 옷을 사야만 한다. ( ⑤ ) 오늘날 패션은 옷보다 훨씬 더 많은 것으로 확장된다. 자동차, 휴대전화, 컴퓨터 — 그 목록은 기업 마케팅 부서의 창의적인 두뇌의 한계에 의해서만 제한될 뿐 무한정 늘어난다.`,
@@ -202,14 +219,27 @@ const problems = [
   insertSentence: "According to the study above, customers were more driven to _____(A)_____ their goals when they perceived the reward as _____(B)_____.",
   insertSentenceKo: "위 연구에 따르면, 고객들은 보상이 (B)하다고 인식했을 때 목표를 (A)하려는 동기가 더 강했다.",
   vocab: {
-    illusory: { word:"illusory", pron:"[일루서리]", meaning:"착각의, 환상의", ex:"the motivating effect of illusory progress", exko:"착각된 진전이 주는 동기 부여 효과" },
+    illusory: { word:"illusory", pron:"[일루서리]", meaning:"착각의, 환상의", ex:"the motivating effect of illusory progress", exko:"착각된 진전이 주는 동기 부여 효과", etym:"il-(in-, 안으로) + lus(=ludere, 놀다·속이다) + -ory(형용사형) → 안에서 놀리듯 속이는 → 착각의, 환상의. 같은 lud/lus 어근을 쓰는 다른 접두사 단어: delude(de-완전히 + lude → 완전히 속이다), interlude(inter-사이에 + lude → 막간극)." },
     reward_card: { word:"reward card", pron:"[리워드 카드]", meaning:"적립 카드", ex:"Customers received a reward card.", exko:"고객들은 적립 카드를 받았다." },
     slots: { word:"slots", pron:"[슬랏츠]", meaning:"칸", ex:"a card with ten open slots", exko:"빈칸이 열 개 있는 카드" },
-    preexisting: { word:"preexisting", pron:"[프리이그지스팅]", meaning:"미리 있는", ex:"two preexisting bonus stamps", exko:"미리 찍혀 있는 보너스 도장 두 개" },
-    strictly: { word:"strictly speaking", pron:"[스트릭틀리 스피킹]", meaning:"엄밀히 말하면", ex:"Strictly speaking, these were identical.", exko:"엄밀히 말하면 이것들은 동일했다." },
-    identical: { word:"identical", pron:"[아이덴티컬]", meaning:"동일한", ex:"They were identical reward programs.", exko:"그것들은 동일한 적립 프로그램이었다." },
+    preexisting: { word:"preexisting", pron:"[프리이그지스팅]", meaning:"미리 있는", ex:"two preexisting bonus stamps", exko:"미리 찍혀 있는 보너스 도장 두 개", etym:"pre-(미리) + ex-(밖으로) + ist(=sistere/esse, 있다) + -ing → 미리 밖에 존재하고 있는 → 미리 있는. 같은 sist/exist 어근을 쓰는 다른 접두사 단어: coexist(co-함께 + exist → 함께 존재하다), consist(con-함께 + sist → 이루어져 있다)." },
+    strictly: { word:"strictly speaking", pron:"[스트릭틀리 스피킹]", meaning:"엄밀히 말하면", ex:"Strictly speaking, these were identical.", exko:"엄밀히 말하면 이것들은 동일했다.", etym:"string(=stringere, 조이다) + -ict + -ly(부사형) → 꽉 조인 → 엄격하게, 엄밀히. 같은 string 어근을 쓰는 다른 접두사 단어: restrict(re-다시 + strict → 다시 제한하다 → 제한하다), constrict(con-함께 + strict → 죄어들게 하다)." },
+    identical: { word:"identical", pron:"[아이덴티컬]", meaning:"동일한", ex:"They were identical reward programs.", exko:"그것들은 동일한 적립 프로그램이었다.", etym:"ident(=idem, 라틴어 '같은') + -ical(형용사형) → 동일한. 같은 ident 어근을 쓰는 단어: identity(같은 어근의 명사형 → 정체성), identify(ident + ify → 동일시하다, 확인하다)." },
     head_start: { word:"head start", pron:"[헤드 스타트]", meaning:"유리한 출발", ex:"People thought they'd gotten a head start.", exko:"사람들은 유리하게 출발했다고 생각했다." },
-    motivated: { word:"motivated", pron:"[모티베이티드]", meaning:"동기가 부여된", ex:"They were more motivated to reach the goal.", exko:"그들은 목표에 도달하려는 동기가 더 강했다." }
+    motivated: { word:"motivated", pron:"[모티베이티드]", meaning:"동기가 부여된", ex:"They were more motivated to reach the goal.", exko:"그들은 목표에 도달하려는 동기가 더 강했다.", etym:"mot(=movere, 움직이다) + -ivate + -ed → 움직이게 된 → 동기가 부여된. 같은 mot 어근을 쓰는 다른 접두사 단어: promote(pro-앞으로 + mote → 앞으로 움직이게 하다 → 촉진하다), remote(re-멀리 + mote → 멀리 움직인 → 외딴)." }
+  },
+  funcWords: {
+    while: { word:"while", tag:"[접속사 while · 대조]", meaning:"while은 '~하는 동안'이 아니라 '~인 반면'이라는 뜻으로 두 그룹을 대조할 때 쓰였어요. '절반은 ~한 반면, 나머지 절반은 ~했다'라고 해석하세요.", ex:"While half of the customers received a card with ten open slots, the other half got a card with twelve open slots.", exko:"고객의 절반은 빈칸이 열 개 있는 카드를 받았고, 나머지 절반은 빈칸이 열두 개 있는 카드를 받았다." },
+    like: { word:"like", tag:"[feel like]", meaning:"'felt like'에서 like는 '좋아하다'라는 동사가 아니라 '~처럼, ~인 것처럼'이라는 뜻의 접속사(전치사)예요. 'it felt to customers like they were finished'는 '고객들에게는 (그들이) 끝낸 것처럼 느껴졌다'라고 해석돼요.", ex:"When the card came with two out of twelve slots already filled, it felt to customers like they were already 16 percent finished with the goal before they'd even started.", exko:"카드에 열두 칸 중 두 칸이 이미 채워져 있을 때, 고객들은 시작도 하기 전에 이미 목표의 16퍼센트를 끝낸 것처럼 느꼈다." },
+    before: { word:"before", tag:"[before + even]", meaning:"'before they'd even started'에서 even은 before를 강조해서 '심지어 시작하기도 전에'라는 뜻이 돼요. before 하나만 있으면 단순히 '~하기 전에'지만, even이 더해지면 그 이르다는 느낌을 강조합니다.", ex:"When the card came with two out of twelve slots already filled, it felt to customers like they were already 16 percent finished with the goal before they'd even started.", exko:"카드에 열두 칸 중 두 칸이 이미 채워져 있을 때, 고객들은 시작도 하기 전에 이미 목표의 16퍼센트를 끝낸 것처럼 느꼈다." },
+    filling: { word:"filling", tag:"[분사구문 filling]", meaning:"filling in은 앞 절(came back to the café more often)에 동시에 일어나는 상황을 덧붙이는 분사구문이에요. '~해서, 카드를 채우면서'라는 뜻으로, '더 자주 돌아왔고, (그 결과) 적립 카드를 더 빠르게 채웠다'라고 이해하면 자연스러워요.", ex:"People who thought they'd gotten a head start came back to the café more often, filling in their reward card more quickly than the others.", exko:"유리하게 출발했다고 생각한 사람들은 카페에 더 자주 돌아왔고, 다른 사람들보다 더 빠르게 적립 카드를 채웠다." },
+    appeal: { word:"appeal", tag:"[명사 · 품사 확인]", meaning:"appeal은 '호소하다, 항소하다'라는 동사로도 잘 쓰이지만, 여기 'the appeal of the free stamps was high'에서는 앞에 관사 the가 붙은 명사로 '매력'이라는 뜻이에요. '무료 도장의 매력은 컸다'라고 해석하세요.", ex:"But the appeal of the free stamps was high.", exko:"하지만 무료 도장의 매력은 컸다." },
+    reach: { word:"reach", tag:"[동사 · 의미 확인]", meaning:"reach는 '(손이 닿는) 범위'라는 명사로도 쓰이지만, 여기 'motivated to reach the finish line'에서는 to부정사 뒤에 오는 동사로 '도달하다, 이르다'라는 뜻이에요. '결승선에 도달하다'라고 해석하세요.", ex:"Believing they were closer to the reward, they were more motivated to reach the finish line.", exko:"자신이 보상에 더 가까이 있다고 믿었기에, 그들은 결승선에 도달하려는 동기가 더 강했다." },
+    partnered: { word:"partnered", tag:"[동사 partner · 품사 확인]", meaning:"partner를 명사 '동업자, 짝'으로만 보면 이 문장의 동사가 사라져요. 여기서는 'partner with ~'라는 동사로 '~와 협력하다, 제휴하다'라는 뜻이에요. '한 카페와 협력하여'로 해석하세요.", ex:"Kivetz, Urminsky, and Zheng partnered with a café to test the motivating effect of illusory progress in an experiment.", exko:"Kivetz, Urminsky, Zheng은 한 카페와 협력하여 착각된 진전이 주는 동기 부여 효과를 실험으로 검증했다." },
+    open: { word:"open", tag:"[형용사 open · 의미 확인]", meaning:"open을 '열려 있는, 개방된'으로 해석하면 어색해요. 칸·자리를 가리킬 때 open은 '아직 채워지지 않은, 비어 있는'이라는 뜻이라서, 'ten open slots'는 '빈칸 열 개'로 해석돼요.", ex:"While half of the customers received a card with ten open slots, the other half got a card with twelve open slots.", exko:"고객의 절반은 빈칸이 열 개 있는 카드를 받았고, 나머지 절반은 빈칸이 열두 개 있는 카드를 받았다." },
+    stamps: { word:"stamps", tag:"[명사 stamp · 의미 확인]", meaning:"stamp를 '우표'로 해석하면 뜻이 통하지 않아요. 여기서는 적립 카드에 찍는 '도장'을 뜻해요. 'two preexisting \"bonus\" stamps'는 '이미 찍혀 있는 보너스 도장 두 개'로 해석하세요.", ex:"Yet the twelve-slot card had two preexisting \"bonus\" stamps, so, strictly speaking, these were identical reward programs.", exko:"그런데 열두 칸짜리 카드에는 이미 '보너스' 도장이 두 개 찍혀 있었으므로, 엄밀히 말하면 이 둘은 동일한 적립 프로그램이었다." },
+    make: { word:"make", tag:"[동사 make · make a purchase]", meaning:"make를 '만들다'로 해석하면 '구매를 만들다'라는 이상한 말이 돼요. 'make a purchase'는 '구매를 하다'라는 뜻의 표현이라서, 'needed to make ten coffee purchases'는 '커피를 열 번 구매해야 했다'로 해석돼요.", ex:"Every customer who got a card needed to make ten coffee purchases (and collect ten stamps) to get their free coffee.", exko:"카드를 받은 모든 고객은 무료 커피를 받기 위해 열 번의 커피 구매를 해야(그리고 도장 열 개를 모아야) 했다." },
+    came: { word:"came", tag:"[동사 come · 관용구 come with]", meaning:"came을 '왔다'로 해석하면 어색해요. 'come with ~'는 물건에 '~이 딸려 있다, ~이 함께 제공되다'라는 뜻이라서, 'When the card came with two out of twelve slots already filled'는 '카드에 열두 칸 중 두 칸이 이미 채워져 있을 때'로 해석돼요.", ex:"When the card came with two out of twelve slots already filled, it felt to customers like they were already 16 percent finished with the goal before they'd even started.", exko:"카드에 열두 칸 중 두 칸이 이미 채워져 있을 때, 고객들은 시작도 하기 전에 이미 목표의 16퍼센트를 끝낸 것처럼 느꼈다." }
   },
   passage: `Kivetz, Urminsky, and Zheng partnered with a café to test the motivating effect of [[illusory::illusory]] progress in an experiment. Customers received a [[reward_card::reward card]] that offered one free coffee after they'd bought ten. While half of the customers received a card with ten open [[slots::slots]], the other half got a card with twelve open slots. Yet the twelve-slot card had two [[preexisting::preexisting]] "bonus" stamps, so, [[strictly::strictly speaking]], these were [[identical::identical]] reward programs. Every customer who got a card needed to make ten coffee purchases (and collect ten stamps) to get their free coffee. But the appeal of the free stamps was high. People who thought they'd gotten a [[head_start::head start]] came back to the café more often, filling in their reward card more quickly than the others. When the card came with two out of twelve slots already filled, it felt to customers like they were already 16 percent finished with the goal before they'd even started. Believing they were closer to the reward, they were more [[motivated::motivated]] to reach the finish line.`,
   translation: `Kivetz, Urminsky, Zheng은 한 카페와 협력하여 착각된 진전이 주는 동기 부여 효과를 실험으로 검증했다. 고객들은 커피 열 잔을 사면 한 잔을 무료로 주는 적립 카드를 받았다. 고객의 절반은 빈칸이 열 개 있는 카드를 받았고, 나머지 절반은 빈칸이 열두 개 있는 카드를 받았다. 그런데 열두 칸짜리 카드에는 이미 '보너스' 도장이 두 개 찍혀 있었으므로, 엄밀히 말하면 이 둘은 동일한 적립 프로그램이었다. 카드를 받은 모든 고객은 무료 커피를 받기 위해 열 번의 커피 구매를 해야(그리고 도장 열 개를 모아야) 했다. 하지만 무료 도장의 매력은 컸다. 유리하게 출발했다고 생각한 사람들은 카페에 더 자주 돌아왔고, 다른 사람들보다 더 빠르게 적립 카드를 채웠다. 카드에 열두 칸 중 두 칸이 이미 채워져 있을 때, 고객들은 시작도 하기 전에 이미 목표의 16퍼센트를 끝낸 것처럼 느꼈다. 자신이 보상에 더 가까이 있다고 믿었기에, 그들은 결승선에 도달하려는 동기가 더 강했다.`,
@@ -231,14 +261,29 @@ const problems = [
 {
   num: "41-42", label: "41~42번", type: "장문 (제목 · 어휘)",
   vocab: {
-    novel: { word:"novel", pron:"[노벌]", meaning:"참신한, 새로운", ex:"the ability to generate novel ideas", exko:"참신한 아이디어를 만들어내는 능력" },
-    divergent: { word:"divergent thinking", pron:"[다이버전트 씽킹]", meaning:"확산적 사고", ex:"It involves divergent thinking.", exko:"그것은 확산적 사고를 포함한다." },
-    originality: { word:"originality", pron:"[오리지낼리티]", meaning:"독창성", ex:"the risk of limiting originality", exko:"독창성을 제한할 위험" },
-    derivative: { word:"derivative", pron:"[디리버티브]", meaning:"모방적인, 파생된", ex:"derivative works that lack originality", exko:"독창성이 없는 모방적 작품들" },
-    constraints: { word:"constraints", pron:"[컨스트레인츠]", meaning:"제약", ex:"the constraints of the training data", exko:"훈련 데이터의 제약" },
+    novel: { word:"novel", pron:"[노벌]", meaning:"참신한, 새로운", ex:"the ability to generate novel ideas", exko:"참신한 아이디어를 만들어내는 능력", etym:"nov(=novus, 새로운) + -el(형용사형) → 새로운. 같은 nov 어근을 쓰는 다른 접두사 단어: innovate(in-안으로 + nov + ate → 새로움을 안으로 들이다 → 혁신하다), renovate(re-다시 + nov + ate → 다시 새롭게 하다 → 개조하다)." },
+    divergent: { word:"divergent thinking", pron:"[다이버전트 씽킹]", meaning:"확산적 사고", ex:"It involves divergent thinking.", exko:"그것은 확산적 사고를 포함한다.", etym:"di-(dis-, 서로 다른 쪽으로) + verg(=vergere, 기울다·향하다) + -ent(형용사형) → 서로 다른 방향으로 기울어진 → 확산적인. 같은 verg 어근을 쓰는 다른 접두사 단어: converge(con-함께 + verge → 한데 모이다 → 수렴하다)." },
+    originality: { word:"originality", pron:"[오리지낼리티]", meaning:"독창성", ex:"the risk of limiting originality", exko:"독창성을 제한할 위험", etym:"origin(=oriri, 생겨나다) + -al + -ity(명사형) → 근원이 되는 성질 → 독창성. 같은 oriri 어근을 쓰는 다른 접두사 단어: aboriginal(ab-처음부터 + origin + al → 처음부터 있던 → 원주민의), original(접두사 없이 원형 → 원래의)." },
+    derivative: { word:"derivative", pron:"[디리버티브]", meaning:"모방적인, 파생된", ex:"derivative works that lack originality", exko:"독창성이 없는 모방적 작품들", etym:"de-(~로부터) + riv(=rivus, 강·개울) + -ative(형용사형) → 강에서 갈라져 나온 지류 같은 → 파생적인, 모방적인. 같은 riv 어근을 쓰는 다른 접두사 단어: arrive(ar-(ad-, ~로) + rive(rivus) → 강가에 닿다 → 도착하다), rival(riv + al → 같은 강물을 쓰는 사람 → 경쟁자)." },
+    constraints: { word:"constraints", pron:"[컨스트레인츠]", meaning:"제약", ex:"the constraints of the training data", exko:"훈련 데이터의 제약", etym:"con-(강하게 함께) + strain(=stringere, 조이다) + -ts(명사·복수형) → 강하게 조여 묶음 → 제약. 같은 string 어근을 쓰는 다른 접두사 단어: restrain(re-다시 + strain → 억제하다), strict(string + ict → 엄격한)." },
     breakthroughs: { word:"breakthroughs", pron:"[브레이크쓰루즈]", meaning:"돌파구, 획기적 발전", ex:"struggle that leads to breakthroughs", exko:"돌파구로 이어지는 분투" },
     setbacks: { word:"setbacks", pron:"[셋백스]", meaning:"좌절", ex:"involving numerous failures and setbacks", exko:"수많은 실패와 좌절을 수반하는" },
-    inhibiting: { word:"inhibiting", pron:"[인히비팅]", meaning:"억제하는", ex:"ultimately inhibiting the development of talent", exko:"궁극적으로 재능의 발달을 억제하는" }
+    inhibiting: { word:"inhibiting", pron:"[인히비팅]", meaning:"억제하는", ex:"ultimately inhibiting the development of talent", exko:"궁극적으로 재능의 발달을 억제하는", etym:"in-(안으로) + hibit(=habere, 가지다·붙잡다) + -ing → 안에 붙잡아 두다 → 억제하는. 같은 hibit/habere 어근을 쓰는 다른 접두사 단어: exhibit(ex-밖으로 + hibit → 밖으로 꺼내 보이다 → 전시하다), prohibit(pro-앞을 + hibit → 앞을 가로막다 → 금지하다)." }
+  },
+  funcWords: {
+    which: { word:"which", tag:"[전치사 + 관계대명사]", meaning:"'the ease with which AI can generate content'는 '전치사+관계대명사(with which)' 구조로 '~하는 그 용이함'이라는 뜻이에요. with which를 어색하게 직역하지 말고 'AI가 콘텐츠를 쉽게 생성할 수 있다는 그 용이함'이라고 통째로 풀어서 이해하세요.", ex:"Moreover, the ease with which AI can generate content can discourage the kind of struggle and experimentation that often leads to breakthroughs.", exko:"게다가, AI가 콘텐츠를 생성할 수 있는 그 용이함은 종종 돌파구로 이어지는 종류의 분투와 실험을 위축시킬 수 있다." },
+    that: { word:"that", tag:"[관계대명사 · 주격]", meaning:"'the kind of struggle and experimentation that often leads to breakthroughs'의 that은 struggle and experimentation을 선행사로 받는 주격 관계대명사예요. '종종 돌파구로 이어지는 (분투와 실험)'이라고 해석하세요.", ex:"Moreover, the ease with which AI can generate content can discourage the kind of struggle and experimentation that often leads to breakthroughs.", exko:"게다가, AI가 콘텐츠를 생성할 수 있는 그 용이함은 종종 돌파구로 이어지는 종류의 분투와 실험을 위축시킬 수 있다." },
+    through: { word:"through", tag:"[강조구문 it is ~ through]", meaning:"'It is through these challenges that ~'는 강조구문으로, through는 '~을 통해서'라는 뜻의 전치사예요. 강조하고 싶은 부분(through these challenges)을 It is와 that 사이에 넣어 강조한 문장이에요.", ex:"It is through these (d) challenges that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible.", exko:"우리가 기술을 다듬고, 고유한 관점을 발전시키며, 가능성의 경계를 넓히는 것은 바로 이러한 (d)어려움을 통해서이다." },
+    unable: { word:"unable", tag:"[분사구문 (being) unable]", meaning:"unable은 '(being) unable to ~'에서 being이 생략된 분사구문으로 볼 수 있어요. 'trapped ~, unable to break free ~'는 '갇혀서, (그 결과) 벗어날 수 없는 채로'라는 뜻으로, 앞 상황에 동시에 딸린 상태를 설명해요.", ex:"If artists and designers rely too heavily on AI for inspiration and content generation, they may find themselves (c) trapped in a cycle of imitation, unable to break free from the constraints of the AI's training data.", exko:"만약 예술가와 디자이너가 영감과 콘텐츠 생성을 AI에 지나치게 의존한다면, 그들은 AI 훈련 데이터의 제약에서 벗어나지 못한 채 모방의 순환에 (c)갇힌 자신을 발견하게 될지도 모른다." },
+    what: { word:"what", tag:"[관계대명사 what]", meaning:"'the boundaries of what is possible'에서 what은 관계대명사로 '가능한 것'이라는 뜻이에요. 'push the boundaries of what is possible'은 '가능한 것의 경계를 넓히다'라고 해석돼요.", ex:"It is through these (d) challenges that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible.", exko:"우리가 기술을 다듬고, 고유한 관점을 발전시키며, 가능성의 경계를 넓히는 것은 바로 이러한 (d)어려움을 통해서이다." },
+    carries: { word:"carries", tag:"[동사 · 의미 확인]", meaning:"carries는 '(물건을) 나르다, 휴대하다'라는 뜻으로 흔히 알려져 있지만, 여기 'it also (a) carries the risk'에서는 '(위험 등을) 지니다, 수반하다'라는 뜻이에요. 물리적으로 무언가를 옮기는 것이 아니라 추상적인 위험을 '내포하다'라는 의미예요.", ex:"While AI can be a powerful tool for creative efforts, it also (a) carries the risk of limiting originality and innovation.", exko:"AI가 창의적 노력에 강력한 도구가 될 수 있지만, 그것은 또한 독창성과 혁신을 제한할 위험도 (a)지닌다." },
+    existing: { word:"existing", tag:"[형용사 · 의미 확인]", meaning:"existing은 동사 exist(존재하다)의 분사형으로 '존재하는'이라는 뜻이 먼저 떠오르지만, 여기 '(b) existing datasets'에서는 명사 앞에서 '기존의'라는 뜻의 형용사로 쓰였어요. '기존의 데이터셋'이라고 해석하세요.", ex:"AI algorithms are trained on (b) existing datasets, often identifying patterns and trends in past creations.", exko:"AI 알고리즘은 (b)기존의 데이터셋으로 훈련되며, 종종 과거 창작물의 패턴과 경향을 식별한다." },
+    take: { word:"take", tag:"[동사 take · 관용구 take risks]", meaning:"take를 '가져가다'로 해석하면 어색해요. 'take risks'는 '위험을 감수하다'라는 뜻의 관용 표현이라서, 'a willingness to experiment and take risks'는 '실험하고 위험을 감수하려는 의지'로 해석돼요.", ex:"It involves divergent thinking, imagination, and a willingness to experiment and take risks.", exko:"그것은 확산적 사고, 상상력, 그리고 실험하고 위험을 감수하려는 의지를 포함한다." },
+    works: { word:"works", tag:"[명사 works · 의미 확인]", meaning:"works를 동사 work(일하다)의 3인칭 단수형으로 보면 문장 구조가 무너져요. 여기서는 '작품(들)'이라는 뜻의 명사로, derivative works는 '모방적 작품'이라는 뜻이에요. 뒤의 that은 works를 받는 관계대명사예요.", ex:"While this can be useful for generating new content in similar styles or formats, it can also lead to derivative works that lack genuine originality.", exko:"이것이 비슷한 스타일이나 형식의 새로운 콘텐츠를 생성하는 데는 유용할 수 있지만, 진정한 독창성이 결여된 모방적 작품으로 이어질 수도 있다." },
+    lack: { word:"lack", tag:"[동사 lack · 품사 확인]", meaning:"lack을 명사 '부족'으로 보면 안 돼요. 여기서는 관계대명사 that의 동사로 '~이 결여되다, ~이 없다'라는 뜻이며 뒤에 전치사 없이 목적어가 바로 옵니다. 'works that lack genuine originality'는 '진정한 독창성이 결여된 작품'으로 해석돼요.", ex:"While this can be useful for generating new content in similar styles or formats, it can also lead to derivative works that lack genuine originality.", exko:"이것이 비슷한 스타일이나 형식의 새로운 콘텐츠를 생성하는 데는 유용할 수 있지만, 진정한 독창성이 결여된 모방적 작품으로 이어질 수도 있다." },
+    heavily: { word:"heavily", tag:"[부사 heavily · 의미 확인]", meaning:"heavily를 '무겁게'로 해석하면 어색해요. rely, depend 같은 동사와 함께 쓰이면 '심하게, 크게'라는 정도의 뜻이라서, 'rely too heavily on AI'는 'AI에 지나치게 의존하다'로 해석돼요.", ex:"If artists and designers rely too heavily on AI for inspiration and content generation, they may find themselves (c) trapped in a cycle of imitation, unable to break free from the constraints of the AI's training data.", exko:"만약 예술가와 디자이너가 영감과 콘텐츠 생성을 AI에 지나치게 의존한다면, 그들은 AI 훈련 데이터의 제약에서 벗어나지 못한 채 모방의 순환에 (c)갇힌 자신을 발견하게 될지도 모른다." },
+    challenges: { word:"challenges", tag:"[명사 challenge · 의미 확인]", meaning:"challenge를 '도전'으로만 해석하면 어색해요. 앞 문장의 failures and setbacks(실패와 좌절)를 받는 말이므로 여기서는 '어려움, 힘든 일'이라는 뜻이에요. 'through these challenges'는 '이러한 어려움을 통해'로 해석하세요.", ex:"It is through these (d) challenges that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible.", exko:"우리가 기술을 다듬고, 고유한 관점을 발전시키며, 가능성의 경계를 넓히는 것은 바로 이러한 (d)어려움을 통해서이다." },
+    push: { word:"push", tag:"[동사 push · 관용구 push the boundaries]", meaning:"push를 '밀다'로 해석하면 어색해요. 'push the boundaries of ~'는 '~의 한계를 넓히다, 경계를 확장하다'라는 뜻의 표현이라서, 'push the boundaries of what is possible'은 '가능성의 경계를 넓히다'로 해석돼요.", ex:"It is through these (d) challenges that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible.", exko:"우리가 기술을 다듬고, 고유한 관점을 발전시키며, 가능성의 경계를 넓히는 것은 바로 이러한 (d)어려움을 통해서이다." }
   },
   passage: `Creativity is the ability to generate [[novel::novel]] and valuable ideas. It involves [[divergent::divergent thinking]], imagination, and a willingness to experiment and take risks. While AI can be a powerful tool for creative efforts, it also (a) ‹carries› the risk of limiting [[originality::originality]] and innovation. AI algorithms are trained on (b) ‹existing› datasets, often identifying patterns and trends in past creations. While this can be useful for generating new content in similar styles or formats, it can also lead to [[derivative::derivative]] works that lack genuine originality. If artists and designers rely too heavily on AI for inspiration and content generation, they may find themselves (c) ‹trapped› in a cycle of imitation, unable to break free from the [[constraints::constraints]] of the AI's training data. Moreover, the ease with which AI can generate content can discourage the kind of struggle and experimentation that often leads to [[breakthroughs::breakthroughs]]. The creative process is often messy and repetitive, involving numerous failures and [[setbacks::setbacks]]. It is through these (d) ‹challenges› that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible. If AI provides instant solutions, it can (e) ‹enhance› this essential process of learning through trial and error, ultimately [[inhibiting::inhibiting]] the development of true creative talent.`,
   translation: `창의성은 참신하고 가치 있는 아이디어를 만들어내는 능력이다. 그것은 확산적 사고, 상상력, 그리고 실험하고 위험을 감수하려는 의지를 포함한다. AI가 창의적 노력에 강력한 도구가 될 수 있지만, 그것은 또한 독창성과 혁신을 제한할 위험도 (a)지닌다. AI 알고리즘은 (b)기존의 데이터셋으로 훈련되며, 종종 과거 창작물의 패턴과 경향을 식별한다. 이것이 비슷한 스타일이나 형식의 새로운 콘텐츠를 생성하는 데는 유용할 수 있지만, 진정한 독창성이 결여된 모방적 작품으로 이어질 수도 있다. 만약 예술가와 디자이너가 영감과 콘텐츠 생성을 AI에 지나치게 의존한다면, 그들은 AI 훈련 데이터의 제약에서 벗어나지 못한 채 모방의 순환에 (c)갇힌 자신을 발견하게 될지도 모른다. 게다가, AI가 콘텐츠를 생성할 수 있는 그 용이함은 종종 돌파구로 이어지는 종류의 분투와 실험을 위축시킬 수 있다. 창작 과정은 흔히 지저분하고 반복적이며, 수많은 실패와 좌절을 수반한다. 우리가 기술을 다듬고, 고유한 관점을 발전시키며, 가능성의 경계를 넓히는 것은 바로 이러한 (d)어려움을 통해서이다. 만약 AI가 즉각적인 해결책을 제공한다면, 그것은 시행착오를 통한 이 필수적인 학습 과정을 (e)강화하여(→약화시켜), 궁극적으로 진정한 창의적 재능의 발달을 억제할 수 있다.`,
@@ -266,14 +311,29 @@ const problems = [
 {
   num: "43-45", label: "43~45번", type: "장문 (순서 · 지칭 · 내용일치)",
   vocab: {
-    billionaire: { word:"billionaire", pron:"[빌리어네어]", meaning:"억만장자", ex:"billionaire James Walker", exko:"억만장자 James Walker" },
+    billionaire: { word:"billionaire", pron:"[빌리어네어]", meaning:"억만장자", ex:"billionaire James Walker", exko:"억만장자 James Walker", etym:"billion(bi-둘 + (m)illion의 변형, 백만을 두 단계 거듭한 단위) + -aire(사람을 나타내는 프랑스어 접미사) → 10억을 가진 사람 → 억만장자. 같은 -aire 접미사를 쓰는 단어: millionaire(million + aire → 백만장자)." },
     broke: { word:"broke", pron:"[브로크]", meaning:"빈털터리인", ex:"James was broke and stuck at the airport.", exko:"James는 빈털터리로 공항에 발이 묶였다." },
     killing_time: { word:"killing time", pron:"[킬링 타임]", meaning:"시간을 때우는 것", ex:"killing time reading headlines", exko:"기사 제목을 읽으며 시간을 때우는 것" },
     newsstand: { word:"newsstand", pron:"[뉴스스탠드]", meaning:"신문 가판대", ex:"He worked at the newsstand.", exko:"그는 신문 가판대에서 일했다." },
-    hesitated: { word:"hesitated", pron:"[헤지테이티드]", meaning:"망설였다", ex:"James hesitated, saying he had no money.", exko:"James는 돈이 없다며 망설였다." },
+    hesitated: { word:"hesitated", pron:"[헤지테이티드]", meaning:"망설였다", ex:"James hesitated, saying he had no money.", exko:"James는 돈이 없다며 망설였다.", etym:"hes(=haerere, 들러붙다·망설이다) + -it + -ate + -ed → 붙어서 움직이지 못하다 → 망설였다. 같은 haerere 어근을 쓰는 다른 접두사 단어: adhere(ad-~에 + here(haerere) → ~에 들러붙다 → 고수하다), coherent(co-함께 + her(haerere) + ent → 함께 들러붙은 → 일관성 있는)." },
     wealthy: { word:"wealthy", pron:"[웰씨]", meaning:"부유한", ex:"James became a wealthy businessman.", exko:"James는 부유한 사업가가 되었다." },
-    compensate: { word:"compensate", pron:"[캄펀세이트]", meaning:"보상하다", ex:"You can't truly compensate me.", exko:"당신은 나에게 진정으로 보상할 수 없다." },
-    generosity: { word:"generosity", pron:"[제너로서티]", meaning:"관대함", ex:"That's just generosity at convenience.", exko:"그건 그저 편할 때의 관대함일 뿐이다." }
+    compensate: { word:"compensate", pron:"[캄펀세이트]", meaning:"보상하다", ex:"You can't truly compensate me.", exko:"당신은 나에게 진정으로 보상할 수 없다.", etym:"com-(함께) + pens(=pendere, 무게를 달다) + -ate(동사형) → 함께 저울질하여 균형을 맞추다 → 보상하다. 같은 pend/pens 어근을 쓰는 다른 접두사 단어: suspense(sus-(sub-, 아래에) + pense → 매달려 있는 상태 → 긴장, 서스펜스), pension(같은 어근 → 저울질하여 지급하는 돈 → 연금)." },
+    generosity: { word:"generosity", pron:"[제너로서티]", meaning:"관대함", ex:"That's just generosity at convenience.", exko:"그건 그저 편할 때의 관대함일 뿐이다.", etym:"gener(=genus, 태생·혈통—원래 '고귀한 태생'을 뜻함) + -osity(명사형) → 고귀한 태생다운 성품 → 관대함. 같은 gener 어근을 쓰는 다른 접두사 단어: degenerate(de-아래로 + gener + ate → 아래로 퇴화하다), generate(접두사 없이 원형 → 발생시키다)." }
+  },
+  funcWords: {
+    that: { word:"that", tag:"[now that · 이유]", meaning:"'now that'은 '이제 그것'이 아니라 '이제 ~이므로, ~이니까'라는 뜻의 이유를 나타내는 접속사예요. 'now that you have everything'은 '이제 당신이 모든 것을 가졌으니까'라고 해석돼요.", ex:"You're offering me something now that you have everything.", exko:"당신은 모든 것을 가진 지금에서야 저에게 무언가를 제안하고 있습니다." },
+    even: { word:"even", tag:"[부사 even · 강조]", meaning:"even은 '심지어 ~조차도'라는 뜻으로 when절을 강조해요. 'even when you have very little'은 '아주 적게 가졌을 때조차도'라고 해석돼요.", ex:"It's the willingness to give even when you have very little that makes you wealthy. And so, David is the richest person I have ever met.", exko:"아주 적게 가졌을 때조차 기꺼이 베풀려는 마음, 그것이 당신을 부유하게 만듭니다. 그래서 David는 제가 만나본 사람 중 가장 부유한 사람입니다." },
+    at: { word:"at", tag:"[generosity at convenience]", meaning:"'generosity at convenience'에서 at은 '~에서'가 아니라 '~할 때의, ~한 상황에서의'라는 뜻이에요. 'generosity at convenience'는 '편할 때(형편이 좋을 때)의 관대함'이라고 해석돼요. 진짜 어려울 때 베푼 관대함과 대조되는 표현이에요.", ex:"That's just generosity at convenience. So, I can't accept your offer.", exko:"그건 그저 편할 때의 관대함일 뿐입니다. 그래서 저는 당신의 제안을 받아들일 수 없습니다." },
+    return: { word:"return", tag:"[in return]", meaning:"'in return'은 '돌아오다'라는 동사 return과 관련 없이, '보답으로, 대가로'라는 뜻의 명사 표현이에요. 'without expecting anything in return'은 '아무 보답도 기대하지 않고'라고 해석돼요.", ex:"Again, David gave him a newspaper without expecting anything in return.", exko:"다시 한번, David는 아무런 대가도 바라지 않고 그에게 신문을 주었다." },
+    caught: { word:"caught", tag:"[catch one's eye · 관용표현]", meaning:"caught는 '(공을) 잡았다'라는 뜻으로 흔히 알려져 있지만, 'caught his eye'는 '~의 눈길을 사로잡다'라는 관용 표현이에요. 물리적으로 무언가를 잡은 것이 아니라 시선을 끌었다는 뜻이에요.", ex:"One headline caught (a) his eye, but he had no money to buy the paper.", exko:"한 기사 제목이 (a)그의 눈길을 사로잡았지만, 그는 신문을 살 돈이 없었다." },
+    running: { word:"running", tag:"[동사 · 의미 확인]", meaning:"running은 '달리기, 달리는'이라는 뜻으로 가장 먼저 떠오르지만, 여기 'found David running a small bookstore'에서는 '(가게를) 운영하는'이라는 뜻이에요. 달리기가 아니라 서점을 경영한다는 의미예요.", ex:"He found David running a small bookstore and visited him there.", exko:"그는 David가 작은 서점을 운영하고 있다는 것을 알아내고 그곳으로 그를 찾아갔다." },
+    offering: { word:"offering", tag:"[동사 · 품사 확인]", meaning:"offering은 '제물, 헌금'이라는 명사로도 쓰이지만, 여기 'You're offering me something'에서는 be동사(are) 뒤에 온 현재진행형 동사로 '제안하고 있다'라는 뜻이에요. 명사가 아니라 동사라는 점에 주의하세요. 뒤에 나오는 명사형 'your offer(당신의 제안)'와 헷갈리지 마세요.", ex:"You're offering me something now that you have everything.", exko:"당신은 모든 것을 가진 지금에서야 저에게 무언가를 제안하고 있습니다." },
+    still: { word:"still", tag:"[부사 · 품사 확인]", meaning:"still은 '고요한'이라는 형용사나 '정지 사진'이라는 명사로도 쓰이지만, 여기 'James, still broke'에서는 '여전히'라는 뜻의 부사로 broke(빈털터리인)를 꾸며줘요. '여전히 빈털터리인 James'라고 해석하세요.", ex:"Three months later, James, still broke, met him at the newsstand once more.", exko:"세 달 후, 여전히 빈털터리였던 James는 신문 가판대에서 그를 다시 한번 만났다." },
+    stuck: { word:"stuck", tag:"[동사 stick · 의미 확인]", meaning:"stuck은 stick(붙이다)의 과거분사라서 '붙어 있는'으로 떠올리기 쉽지만, 사람이 주어일 때는 '(어딘가에) 발이 묶인, 꼼짝 못 하는'이라는 뜻이에요. 'was broke and stuck at the airport'는 '빈털터리로 공항에 발이 묶였다'로 해석돼요.", ex:"Years ago, James was broke and stuck at the airport, killing time reading newspaper headlines at the newsstand.", exko:"몇 년 전, James는 빈털터리로 공항에 발이 묶여 신문 가판대에서 신문 기사 제목을 읽으며 시간을 때우고 있었다." },
+    paper: { word:"paper", tag:"[명사 paper · 의미 확인]", meaning:"paper를 '종이'로 해석하면 어색해요. 여기서는 the paper로 앞에 나온 newspaper를 가리켜 '신문'이라는 뜻이에요. 'no money to buy the paper'는 '신문을 살 돈이 없었다'로 해석하세요.", ex:"One headline caught (a) his eye, but he had no money to buy the paper.", exko:"한 기사 제목이 (a)그의 눈길을 사로잡았지만, 그는 신문을 살 돈이 없었다." },
+    found: { word:"found", tag:"[동사 find · 의미 확인]", meaning:"found를 '(잃어버린 것을) 찾았다'로 해석하면 어색해요. 'find+목적어+-ing'는 '~가 …하고 있는 것을 알게 되다'라는 구조라서, 'He found David running a small bookstore'는 '그는 David가 작은 서점을 운영하고 있다는 것을 알아냈다'로 해석돼요.", ex:"He found David running a small bookstore and visited him there.", exko:"그는 David가 작은 서점을 운영하고 있다는 것을 알아내고 그곳으로 그를 찾아갔다." },
+    now: { word:"now", tag:"[접속사 now that]", meaning:"now를 '지금'이라는 부사로만 보면 뒤에 절이 이어지는 이유를 알 수 없어요. 'now that+주어+동사'는 '~이니까, ~인 지금'이라는 뜻의 접속사예요. 'now that you have everything'은 '당신이 모든 것을 가진 지금에서야'로 해석돼요.", ex:"You're offering me something now that you have everything.", exko:"당신은 모든 것을 가진 지금에서야 저에게 무언가를 제안하고 있습니다." },
+    just: { word:"Just", tag:"[부사 just · 의미 확인]", meaning:"just를 '단지, 그냥'으로만 알면 'Just then'이 해석되지 않아요. 시간 표현 앞의 just는 '바로'라는 강조의 뜻이라서 'Just then'은 '바로 그때'예요. 앞에 나온 'That's just generosity at convenience'의 just는 '그저 ~일 뿐'이라는 다른 뜻이니 구별하세요.", ex:"(D) Just then, David, working at the newsstand noticed James.", exko:"(D) 바로 그때, 신문 가판대에서 일하던 David가 James를 알아차렸다." }
   },
   passage: `(A) When [[billionaire::billionaire]] James Walker was once asked by a journalist, "Is there anyone richer than you?", he replied, "Yes, there is one young man I'll never forget." He told the story of when he first met David at a New York airport. Years ago, James was [[broke::broke]] and stuck at the airport, [[killing_time::killing time]] reading newspaper headlines at the [[newsstand::newsstand]]. One headline caught (a) ‹his› eye, but he had no money to buy the paper.
 
@@ -342,6 +402,7 @@ function toggleSheetStar() {
   setStarred(gid, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
   if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
+  else if (idx >= 0 && window.studyStats) window.studyStats.unrecord('star');
   updateSheetStarBtn();
 }
 
@@ -512,8 +573,13 @@ function showWord(key) {
   currentSheetWordData = { word:v.word, pron:v.pron, meaning:v.meaning, en:v.ex, ko:v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
@@ -557,6 +623,23 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -565,6 +648,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
@@ -574,8 +658,12 @@ function showPlain(rawWord) {
   currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();

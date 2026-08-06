@@ -56,7 +56,7 @@ const data = {
   },
   2026: {
     months: ["3월", "6월", "9월", "11월"],
-    available: ["3월"]
+    available: ["3월", "6월"]
   }
 };
 
@@ -158,6 +158,33 @@ const marCardsHtml = '<div class="cards">' +
   '</a>' +
 '</div>';
 
+const junCardsHtml = '<div class="cards">' +
+  '<a class="card" href="jun-listening1-17.html">' +
+    '<div class="card-main"><div class="card-title">🎧 1~17번 듣기평가</div><div class="card-sub">대본·해석, 문제 풀이, 핵심 단어</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="jun-study18-24.html">' +
+    '<div class="card-main"><div class="card-title">18~24번 지문 완전정복</div><div class="card-sub">단어 클릭 뜻·발음, 전체 해석, 문법, 실전 문제</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="jun-study25-31.html">' +
+    '<div class="card-main"><div class="card-title">25~31번 지문 완전정복</div><div class="card-sub">도표·안내문·어법·어휘·빈칸까지, 단어 클릭 학습</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="jun-study32-38.html">' +
+    '<div class="card-main"><div class="card-title">32~38번 지문 완전정복</div><div class="card-sub">빈칸추론·무관한 문장·순서배열·문장삽입, 단어 클릭 학습</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="jun-study39-45.html">' +
+    '<div class="card-main"><div class="card-title">39~45번 지문 완전정복</div><div class="card-sub">문장삽입·요약문·장문까지, 단어 클릭 학습</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="jun-vocab18-45.html">' +
+    '<div class="card-main"><div class="card-title">단어장 퀴즈 (18~45번)</div><div class="card-sub">핵심 단어 + 지문 학습지에서 저장한 단어로 퀴즈 풀기</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+'</div>';
+
 function renderContent() {
   var isAvailable = data[year].available.indexOf(month) !== -1;
   if (!isAvailable) {
@@ -168,6 +195,7 @@ function renderContent() {
   var html = cardsHtml;
   if (year === 2025 && month === '10월') html = octCardsHtml;
   else if (year === 2026 && month === '3월') html = marCardsHtml;
+  else if (year === 2026 && month === '6월') html = junCardsHtml;
   document.getElementById('content-area').innerHTML = html;
 }
 

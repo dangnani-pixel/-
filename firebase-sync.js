@@ -17,6 +17,7 @@ const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 const STAR_PREFIX = 'vocabStar_';
+const WRONG_KEY = 'vocabWrongWords';
 const RELOAD_FLAG = 'fbSyncJustReloaded';
 
 function allStarKeys() {
@@ -54,7 +55,7 @@ function pullAndMerge(uid) {
     var cloud = snap.exists() ? snap.data() : {};
     var changed = false;
     Object.keys(cloud).forEach(function (key) {
-      if (key.indexOf(STAR_PREFIX) !== 0) return;
+      if (key.indexOf(STAR_PREFIX) !== 0 && key !== WRONG_KEY) return;
       var local = readLocal(key);
       var merged = mergeArrays(local, cloud[key] || []);
       if (merged.length !== local.length) changed = true;
@@ -76,6 +77,7 @@ function pullAndMerge(uid) {
 function pushAll(uid) {
   var data = {};
   allStarKeys().forEach(function (key) { data[key] = readLocal(key); });
+  data[WRONG_KEY] = readLocal(WRONG_KEY);
   var stats = readStats();
   if (Object.keys(stats).length) data[STATS_KEY] = stats;
   if (Object.keys(data).length === 0) return Promise.resolve();

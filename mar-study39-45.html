@@ -97,12 +97,17 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
 .sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
 .sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
 .sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
 .sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
 .sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
 </style>
 </head>
 <body>
@@ -163,6 +168,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="sheet-pron" id="sheet-pron"></div>
   <div class="sheet-meaning" id="sheet-meaning"></div>
   <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
 </div>
 
 <script>
@@ -178,8 +184,19 @@ const problems = [
     frozen_solid: { word:"frozen solid", pron:"[프로즌 솔리드]", meaning:"꽁꽁 언", ex:"All the crops are frozen solid.", exko:"모든 작물이 꽁꽁 얼어 있다." },
     frost_coated: { word:"frost-coated", pron:"[프로스트 코티드]", meaning:"서리가 내려앉은", ex:"hard, frost-coated leaves", exko:"딱딱하고 서리가 내려앉은 잎들" },
     bleak: { word:"bleak", pron:"[블리크]", meaning:"황량한", ex:"leaves bleak enough to convince anyone", exko:"누구든 납득시킬 만큼 황량한 잎들" },
-    vigorous: { word:"vigorous", pron:"[비거러스]", meaning:"생기가 넘치는", ex:"closely spaced rows of vigorous, healthy leaves", exko:"촘촘히 배치된 생기 넘치고 건강한 잎들의 줄" },
+    vigorous: { word:"vigorous", pron:"[비거러스]", meaning:"생기가 넘치는", ex:"closely spaced rows of vigorous, healthy leaves", exko:"촘촘히 배치된 생기 넘치고 건강한 잎들의 줄", etym:"vig(활기차다, Latin vigere) + -or + -ous → '활기가 넘치는' → '생기가 넘치는'. 같은 vig 어근을 쓰는 단어: invigorate(in-안으로 + vig → 활기를 불어넣다), vigilant(vig → 깨어 활기찬 → 경계하는)." },
     maroons: { word:"maroons", pron:"[머룬즈]", meaning:"적갈색", ex:"greens, reds, maroons, and yellows", exko:"초록, 빨강, 적갈색, 노랑" }
+  },
+  funcWords: {
+    sight: { word:"sight", tag:"[명사 sight · 광경]", meaning:"sight를 '시력, 보는 것'으로만 알고 있으면 어색해요. 여기 a sight of ~는 눈앞에 펼쳐진 '광경, 장면'을 뜻해서, reveals a sight of hard, frost-coated leaves는 '딱딱하고 서리 내려앉은 잎들의 광경이 드러난다'로 해석돼요.", ex:"Raising the inner covers, which is difficult because they too are frozen, reveals a sight of hard, frost-coated leaves bleak enough to convince anyone that this idea is foolish.", exko:"내부 덮개를 걷어 올리는 것은 그것들 역시 얼어 있어서 어렵기도 한데, 그렇게 하면 이 발상이 어리석다고 누구든 납득시킬 만큼 황량한, 딱딱하고 서리 내려앉은 잎들의 광경이 드러난다." },
+    spaced: { word:"spaced", tag:"[동사 space · 간격을 두고 배치하다]", meaning:"space를 '우주, 공간'이라는 명사로만 알고 있으면 spaced가 해석되지 않아요. 여기서는 '간격을 두고 배치하다'라는 동사의 과거분사라서, closely spaced rows는 '촘촘히 배치된 줄'로 해석돼요.", ex:"Under the inner covers are closely spaced rows of vigorous, healthy leaves that stretch the length of the greenhouse.", exko:"내부 덮개 아래에는 온실 길이만큼 뻗은, 촘촘히 배치된 생기 넘치고 건강한 잎들의 줄이 있다." },
+    against: { word:"against", tag:"[전치사 against · ~을 배경으로]", meaning:"against를 '~에 반대하여'로 해석하면 뜻이 통하지 않아요. 색깔·모습을 말할 때의 against는 '~을 배경으로 (하여)'라는 뜻이라서, stand bright against the dark soil은 '어두운 흙을 배경으로 밝게 돋보인다'로 해석돼요.", ex:"The leaf colors in different shades of greens, reds, maroons, and yellows stand bright against the dark soil.", exko:"초록, 빨강, 적갈색, 노랑의 여러 색조를 띤 잎의 색깔들이 어두운 흙을 배경으로 밝게 돋보인다." },
+    which: { word:"which", tag:"[관계대명사 · 계속적 용법]", meaning:"콤마 뒤에 오는 which는 앞 문장 전체(내부 덮개를 걷어 올리는 것)를 받아 '그런데 그것이 ~하다'라고 덧붙여 설명하는 계속적 용법의 관계대명사예요. 여기서는 '내부 덮개를 걷어 올리는 것'이 어렵다는 사실을 이어서 설명해요.", ex:"Raising the inner covers, which is difficult because they too are frozen, reveals a sight of hard, frost-coated leaves bleak enough to convince anyone that this idea is foolish.", exko:"내부 덮개를 걷어 올리는 것은 그것들 역시 얼어 있어서 어렵기도 한데, 그렇게 하면 이 발상이 어리석다고 누구든 납득시킬 만큼 황량한, 딱딱하고 서리 내려앉은 잎들의 광경이 드러난다." },
+    too: { word:"too", tag:"[부사 too · 역시]", meaning:"too는 '너무'가 아니라 '역시, 또한'이라는 뜻으로 쓰였어요. because they too are frozen은 '그것들(내부 덮개) 역시 얼어 있기 때문에'라고 해석돼요.", ex:"Raising the inner covers, which is difficult because they too are frozen, reveals a sight of hard, frost-coated leaves bleak enough to convince anyone that this idea is foolish.", exko:"내부 덮개를 걷어 올리는 것은 그것들 역시 얼어 있어서 어렵기도 한데, 그렇게 하면 이 발상이 어리석다고 누구든 납득시킬 만큼 황량한, 딱딱하고 서리 내려앉은 잎들의 광경이 드러난다." },
+    enough: { word:"enough", tag:"[형용사/부사 + enough + to부정사]", meaning:"enough는 형용사·부사 뒤에 놓여 '~할 만큼 충분히 …한'이라는 뜻을 만들어요. bleak enough to convince anyone that this idea is foolish는 '이 발상이 어리석다고 누구든 납득시킬 만큼 황량한'이라고 해석돼요.", ex:"Raising the inner covers, which is difficult because they too are frozen, reveals a sight of hard, frost-coated leaves bleak enough to convince anyone that this idea is foolish.", exko:"내부 덮개를 걷어 올리는 것은 그것들 역시 얼어 있어서 어렵기도 한데, 그렇게 하면 이 발상이 어리석다고 누구든 납득시킬 만큼 황량한, 딱딱하고 서리 내려앉은 잎들의 광경이 드러난다." },
+    under: { word:"Under", tag:"[전치사구 도치 · Under ~]", meaning:"장소를 나타내는 전치사구 Under the inner covers가 문장 맨 앞에 나오면서 주어(rows)와 동사(are)의 순서가 바뀌는 도치가 일어났어요. Under the inner covers are closely spaced rows of vigorous, healthy leaves는 '내부 덮개 아래에는 촘촘히 배치된 생기 넘치고 건강한 잎들의 줄이 있다'라고 해석돼요.", ex:"( ③ ) Under the inner covers are closely spaced rows of vigorous, healthy leaves that stretch the length of the greenhouse.", exko:"( ③ ) 내부 덮개 아래에는 온실 길이만큼 뻗은, 촘촘히 배치된 생기 넘치고 건강한 잎들의 줄이 있다." },
+    shades: { word:"shades", tag:"[명사 shades · 의미 확인 필요]", meaning:"shade는 '그늘'이라는 뜻으로 흔히 알려져 있지만, 여기 different shades of greens, reds, maroons, and yellows에서는 '색조'라는 뜻이에요. '초록, 빨강 등의 여러 그늘'이 아니라 '초록, 빨강 등의 여러 색조'라고 해석해야 자연스러워요.", ex:"( ④ ) The leaf colors in different shades of greens, reds, maroons, and yellows stand bright against the dark soil.", exko:"( ④ ) 초록, 빨강, 적갈색, 노랑의 여러 색조를 띤 잎의 색깔들이 어두운 흙을 배경으로 밝게 돋보인다." },
+    stand: { word:"stand", tag:"[동사 stand · 의미 확인 필요]", meaning:"stand는 '서다'라는 뜻으로 흔히 알려져 있지만, 여기 stand bright against the dark soil에서는 '(뚜렷하게) 보이다, 돋보이다'라는 뜻이에요. '어두운 흙에 맞서 밝게 서 있다'가 아니라 '어두운 흙을 배경으로 밝게 돋보인다'라고 해석해야 자연스러워요.", ex:"( ④ ) The leaf colors in different shades of greens, reds, maroons, and yellows stand bright against the dark soil.", exko:"( ④ ) 초록, 빨강, 적갈색, 노랑의 여러 색조를 띤 잎의 색깔들이 어두운 흙을 배경으로 밝게 돋보인다." }
   },
   passage: `Making two visits to one of our cold [[greenhouses::greenhouses]] — one at [[dawn::dawn]] after a below-zero night, and the other a few hours later — provides a [[striking::striking]] introduction to the winter harvest. ( ① ) During the dawn visit all the crops are [[frozen_solid::frozen solid]]. ( ② ) Raising the inner covers, which is difficult because they too are frozen, reveals a sight of hard, [[frost_coated::frost-coated]] leaves [[bleak::bleak]] enough to convince anyone that this idea is foolish. ( ③ ) Under the inner covers are closely spaced rows of [[vigorous::vigorous]], healthy leaves that stretch the length of the greenhouse. ( ④ ) The leaf colors in different shades of greens, reds, [[maroons::maroons]], and yellows stand bright against the dark soil. ( ⑤ ) It looks like a never-ending spring.`,
   translation: `우리의 차가운 온실 중 한 곳을 두 번 방문하는 것 — 한 번은 영하의 밤을 보낸 뒤 새벽에, 또 한 번은 몇 시간 뒤에 — 은 겨울 수확에 대한 인상적인 소개를 제공한다. ( ① ) 새벽 방문 동안에는 모든 작물이 꽁꽁 얼어 있다. ( ② ) 내부 덮개를 걷어 올리는 것은 그것들 역시 얼어 있어서 어렵기도 한데, 그렇게 하면 이 발상이 어리석다고 누구든 납득시킬 만큼 황량한, 딱딱하고 서리 내려앉은 잎들의 광경이 드러난다. ( ③ ) 내부 덮개 아래에는 온실 길이만큼 뻗은, 촘촘히 배치된 생기 넘치고 건강한 잎들의 줄이 있다. ( ④ ) 초록, 빨강, 적갈색, 노랑의 여러 색조를 띤 잎의 색깔들이 어두운 흙을 배경으로 밝게 돋보인다. ( ⑤ ) 그것은 끝나지 않는 봄처럼 보인다.`,
@@ -202,14 +219,26 @@ const problems = [
   insertSentence: "To help parents raise independent children, cities and suburbs need to create _____(A)_____ environments, where parents can keep their children under _____(B)_____ supervision, through changes in physical structure and culture.",
   insertSentenceKo: "부모가 독립적인 아이를 기르도록 돕기 위해, 도시와 교외는 물리적 구조와 문화의 변화를 통해 부모가 아이들을 (B)한 감독 아래 둘 수 있는 (A)한 환경을 만들 필요가 있다.",
   vocab: {
-    independence: { word:"independence", pron:"[인디펜던스]", meaning:"독립성", ex:"Children need to learn independence.", exko:"아이들은 독립성을 배울 필요가 있다." },
-    resilience: { word:"resilience", pron:"[리질리언스]", meaning:"회복 탄력성", ex:"Children need independence and resilience.", exko:"아이들은 독립성과 회복 탄력성이 필요하다." },
-    suburbs: { word:"suburbs", pron:"[서버브즈]", meaning:"교외", ex:"cities and suburbs don't offer safe routes", exko:"도시와 교외는 안전한 경로를 제공하지 않는다" },
-    navigate: { word:"navigate", pron:"[내비게이트]", meaning:"헤쳐 나가다", ex:"They take more time or money to navigate.", exko:"그것들을 헤쳐 나가는 데 더 많은 시간이나 돈이 든다." },
+    independence: { word:"independence", pron:"[인디펜던스]", meaning:"독립성", ex:"Children need to learn independence.", exko:"아이들은 독립성을 배울 필요가 있다.", etym:"in-(부정) + de-(~로부터) + pend(매달리다, Latin pendere) + -ence → '무엇에도 매달려 있지 않은 상태' → '독립성'. 같은 pend 어근을 쓰는 다른 접두사 단어: depend(de-~에서 + pend → 매달리다 → 의존하다), suspend(sub-아래에 + pend → 매달다, 중단하다)." },
+    resilience: { word:"resilience", pron:"[리질리언스]", meaning:"회복 탄력성", ex:"Children need independence and resilience.", exko:"아이들은 독립성과 회복 탄력성이 필요하다.", etym:"re-(다시) + sil(뛰다, Latin salire) + -ience → '다시 튀어 오르는 성질' → '회복 탄력성'. 같은 sil/sult 어근을 쓰는 다른 접두사 단어: result(re-다시 + sult → 결과로 나타나다), insult(in-향해 + sult → 모욕하다)." },
+    suburbs: { word:"suburbs", pron:"[서버브즈]", meaning:"교외", ex:"cities and suburbs don't offer safe routes", exko:"도시와 교외는 안전한 경로를 제공하지 않는다", etym:"sub-(가까이, 아래) + urb(도시, Latin urbs) + -s → '도시 근처' → '교외'. 같은 urb 어근을 쓰는 단어: urban(urb + -an → 도시의), suburban(sub + urban → 교외의)." },
+    navigate: { word:"navigate", pron:"[내비게이트]", meaning:"헤쳐 나가다", ex:"They take more time or money to navigate.", exko:"그것들을 헤쳐 나가는 데 더 많은 시간이나 돈이 든다.", etym:"nav(배, Latin navis) + ig(몰다, agere) + -ate → '배를 몰다' → '헤쳐 나가다'. 같은 nav 어근을 쓰는 단어: navy(nav → 해군), circumnavigate(circum-주위로 + navigate → 배로 돌아 항해하다)." },
     underparenting: { word:"underparenting", pron:"[언더페어런팅]", meaning:"덜 개입하는 양육", ex:"Underparenting requires structural change.", exko:"덜 개입하는 양육에는 구조적 변화가 필요하다." },
-    structural: { word:"structural", pron:"[스트럭처럴]", meaning:"구조적인", ex:"It requires structural change.", exko:"그것은 구조적 변화를 요구한다." },
-    tolerance: { word:"tolerance", pron:"[톨러런스]", meaning:"관용", ex:"build back our tolerance for children", exko:"아이들에 대한 관용을 되살리다" },
-    supervised: { word:"supervised", pron:"[수퍼바이즈드]", meaning:"감독받는", ex:"lightly supervised kids", exko:"가볍게 감독받는 아이들" }
+    structural: { word:"structural", pron:"[스트럭처럴]", meaning:"구조적인", ex:"It requires structural change.", exko:"그것은 구조적 변화를 요구한다.", etym:"struct(짓다, 세우다, Latin struere) + -ural → '지어진 것에 관한' → '구조적인'. 같은 struct 어근을 쓰는 다른 접두사 단어: construct(con-함께 + struct → 짓다, 건설하다), instruct(in-안으로 + struct → 가르치다), destroy(de-부수어 + stroy → 파괴하다)." },
+    tolerance: { word:"tolerance", pron:"[톨러런스]", meaning:"관용", ex:"build back our tolerance for children", exko:"아이들에 대한 관용을 되살리다", etym:"toler(견디다, 참다, Latin tolerare) + -ance → '견뎌내는 성질' → '관용'." },
+    supervised: { word:"supervised", pron:"[수퍼바이즈드]", meaning:"감독받는", ex:"lightly supervised kids", exko:"가볍게 감독받는 아이들", etym:"super-(위에서) + vis(보다, Latin videre) + -ed → '위에서 지켜보는' → '감독받는'. 같은 vis/vid 어근을 쓰는 다른 접두사 단어: revise(re-다시 + vis → 다시 보다 → 수정하다), provide(pro-미리 + vid → 미리 보다 → 제공하다), television(tele-멀리 + vis → 멀리서 보는 것)." }
+  },
+  funcWords: {
+    kick: { word:"kick", tag:"[동사 kick · 구동사 kick out]", meaning:"kick을 '발로 차다'로만 해석하면 어색해요. 'kick + 목적어 + out'은 '~을 내쫓다, 쫓아내다'라는 뜻의 구동사라서, malls kick teenagers out은 '쇼핑몰은 십 대들을 내쫓는다'로 해석돼요.", ex:"But cities and suburbs don't offer safe walk and bike routes to school, malls kick teenagers out on the weekends, and free time disappears under a spreadsheet of activities.", exko:"그러나 도시와 교외는 학교까지 안전하게 걷거나 자전거로 갈 수 있는 경로를 제공하지 않고, 쇼핑몰은 주말에 십 대들을 내쫓으며, 자유 시간은 빽빽한 활동 일정표 아래로 사라진다." },
+    take: { word:"take", tag:"[동사 take · (시간·돈이) 들다]", meaning:"take를 '가져가다'로 해석하면 어색해요. 시간이나 돈을 목적어로 받는 take는 '~이 들다, 필요하다'라는 뜻이라서, take more of the parents' time or money는 '부모의 시간이나 돈을 더 많이 들여야 한다'로 해석돼요.", ex:"All of those \"musts\" take more of the parents' time or money to navigate, because the child can't do it on their own.", exko:"그 모든 '반드시 해야 할 것들'은 부모의 시간이나 돈을 더 많이 들여야 헤쳐 나갈 수 있는데, 아이가 스스로 할 수 없기 때문이다." },
+    leave: { word:"leave", tag:"[명사 leave · 휴가, 휴직]", meaning:"leave를 '떠나다'라는 동사로 보면 문장이 풀리지 않아요. 여기서는 '(직장에서 허락받은) 휴가, 휴직'이라는 명사라서, family leave는 '육아 휴직'을 뜻해요.", ex:"Unlike most political experts, she's not just talking about economic policies like family leave and government-supported childcare.", exko:"대부분의 정치 전문가들과 달리, 그녀는 육아 휴직이나 정부 지원 보육 같은 경제 정책만을 말하는 것이 아니다." },
+    build: { word:"build", tag:"[동사 build · 관용구 build back]", meaning:"build를 '(건물을) 짓다'로만 보면 어색해요. 'build back ~'은 잃어버린 것을 '다시 쌓아 올리다, 되살리다'라는 뜻이라서, build back our tolerance for children은 '아이들에 대한 관용을 되살리다'로 해석돼요.", ex:"We need to \"build back our tolerance for children in public spaces,\" she writes, \"and create safe environments where lightly supervised kids can move around freely.\"", exko:"우리는 \"공공장소에서 아이들에 대한 관용을 되살리고, 가볍게 감독받는 아이들이 자유롭게 돌아다닐 수 있는 안전한 환경을 만들어야 한다\"고 그녀는 쓴다." },
+    under: { word:"under", tag:"[전치사 under · 관용적 의미]", meaning:"under는 '~아래에'가 아니라 여기서는 '~에 파묻혀, ~에 치여'라는 관용적 의미로 쓰였어요. free time disappears under a spreadsheet of activities는 '자유 시간이 빽빽한 활동 일정표 아래로(에 파묻혀) 사라진다'라고 해석돼요.", ex:"But cities and suburbs don't offer safe walk and bike routes to school, malls kick teenagers out on the weekends, and free time disappears under a spreadsheet of activities.", exko:"그러나 도시와 교외는 학교까지 안전하게 걷거나 자전거로 갈 수 있는 경로를 제공하지 않고, 쇼핑몰은 주말에 십 대들을 내쫓으며, 자유 시간은 빽빽한 활동 일정표 아래로 사라진다." },
+    on: { word:"on", tag:"[관용 표현 on their own]", meaning:"on their own은 '그들 자신 위에'가 아니라 '스스로, 혼자 힘으로'라는 뜻의 관용 표현이에요. because the child can't do it on their own은 '아이가 스스로 할 수 없기 때문에'라고 해석돼요.", ex:"All of those \"musts\" take more of the parents' time or money to navigate, because the child can't do it on their own.", exko:"그 모든 '반드시 해야 할 것들'은 부모의 시간이나 돈을 더 많이 들여야 헤쳐 나갈 수 있는데, 아이가 스스로 할 수 없기 때문이다." },
+    like: { word:"like", tag:"[전치사 like · 예시]", meaning:"like는 '좋아하다'가 아니라 '~와 같은(예시)'이라는 뜻의 전치사예요. economic policies like family leave and government-supported childcare는 '육아 휴직이나 정부 지원 보육 같은 경제 정책'이라고 해석돼요.", ex:"Unlike most political experts, she's not just talking about economic policies like family leave and government-supported childcare.", exko:"대부분의 정치 전문가들과 달리, 그녀는 육아 휴직이나 정부 지원 보육 같은 경제 정책만을 말하는 것이 아니다." },
+    where: { word:"where", tag:"[관계부사 where · 환경]", meaning:"where는 장소뿐 아니라 environments(환경)처럼 추상적 공간을 선행사로 받는 관계부사로도 쓰여요. create safe environments where lightly supervised kids can move around freely는 '가볍게 감독받는 아이들이 자유롭게 돌아다닐 수 있는 안전한 환경을 만들다'라고 해석돼요.", ex:"We need to \"build back our tolerance for children in public spaces,\" she writes, \"and create safe environments where lightly supervised kids can move around freely.\"", exko:"우리는 \"공공장소에서 아이들에 대한 관용을 되살리고, 가볍게 감독받는 아이들이 자유롭게 돌아다닐 수 있는 안전한 환경을 만들어야 한다\"고 그녀는 쓴다." },
+    musts: { word:"musts", tag:"[명사 musts · 품사 확인 필요]", meaning:"must는 '~해야 한다'라는 조동사로 흔히 알려져 있지만, 여기 All of those \"musts\"에서는 '반드시 해야 할 것들'이라는 뜻의 명사로 쓰였어요. 조동사 must에 -s가 붙어 복수 명사가 된 특이한 용법이에요.", ex:"All of those \"musts\" take more of the parents' time or money to navigate, because the child can't do it on their own.", exko:"그 모든 '반드시 해야 할 것들'은 부모의 시간이나 돈을 더 많이 들여야 헤쳐 나갈 수 있는데, 아이가 스스로 할 수 없기 때문이다." },
+    populate: { word:"populate", tag:"[동사 populate · 의미 확인 필요]", meaning:"populate는 '거주하다, 인구를 이루다'라는 뜻으로 흔히 알려져 있지만, 여기 the cultural change required to populate them에서는 공간을 사람들로 '채우다'라는 뜻이에요. '그것들에 거주하기 위해 필요한 문화적 변화'보다 '그것들을 (사람들로) 채우기 위해 필요한 문화적 변화'로 해석하는 것이 자연스러워요.", ex:"She's talking about actual physical structures, and the cultural change required to populate them.", exko:"그녀는 실제 물리적 구조물과, 그것을 채우기 위해 필요한 문화적 변화에 대해 말하고 있다." }
   },
   passage: `Parenting experts say children need to learn [[independence::independence]] and [[resilience::resilience]]. But cities and [[suburbs::suburbs]] don't offer safe walk and bike routes to school, malls kick teenagers out on the weekends, and free time disappears under a spreadsheet of activities. All of those "musts" take more of the parents' time or money to [[navigate::navigate]], because the child can't do it on their own. As Darby Saxbe, a clinical psychologist, recently wrote in the New York Times, "[[underparenting::underparenting]] requires [[structural::structural]] change." Unlike most political experts, she's not just talking about economic policies like family leave and government-supported childcare. She's talking about actual physical structures, and the cultural change required to populate them. We need to "build back our [[tolerance::tolerance]] for children in public spaces," she writes, "and create safe environments where lightly [[supervised::supervised]] kids can move around freely."`,
   translation: `육아 전문가들은 아이들이 독립성과 회복 탄력성을 배울 필요가 있다고 말한다. 그러나 도시와 교외는 학교까지 안전하게 걷거나 자전거로 갈 수 있는 경로를 제공하지 않고, 쇼핑몰은 주말에 십 대들을 내쫓으며, 자유 시간은 빽빽한 활동 일정표 아래로 사라진다. 그 모든 '반드시 해야 할 것들'은 부모의 시간이나 돈을 더 많이 들여야 헤쳐 나갈 수 있는데, 아이가 스스로 할 수 없기 때문이다. 임상심리학자 Darby Saxbe가 최근 New York Times에 썼듯이, "덜 개입하는 양육에는 구조적 변화가 필요하다." 대부분의 정치 전문가들과 달리, 그녀는 육아 휴직이나 정부 지원 보육 같은 경제 정책만을 말하는 것이 아니다. 그녀는 실제 물리적 구조물과, 그것을 채우기 위해 필요한 문화적 변화에 대해 말하고 있다. 우리는 "공공장소에서 아이들에 대한 관용을 되살리고, 가볍게 감독받는 아이들이 자유롭게 돌아다닐 수 있는 안전한 환경을 만들어야 한다"고 그녀는 쓴다.`,
@@ -231,14 +260,30 @@ const problems = [
 {
   num: "41-42", label: "41~42번", type: "장문 (제목 · 어휘)",
   vocab: {
-    prospect: { word:"prospect", pron:"[프라스펙트]", meaning:"전망, 가능성", ex:"the prospect of doing anything", exko:"무언가를 한다는 전망" },
-    disturbingly: { word:"disturbingly", pron:"[디스터빙리]", meaning:"불편할 만큼", ex:"it's disturbingly passive", exko:"그것은 불편할 만큼 수동적이다" },
-    virtue: { word:"virtue", pron:"[버추]", meaning:"미덕", ex:"the virtue urged upon housewives", exko:"주부들에게 권장된 미덕" },
-    self_effacing: { word:"self-effacing", pron:"[셀프 이페이싱]", meaning:"자기를 내세우지 않는", ex:"The talented but self-effacing employee", exko:"재능 있지만 자신을 내세우지 않는 직원" },
+    prospect: { word:"prospect", pron:"[프라스펙트]", meaning:"전망, 가능성", ex:"the prospect of doing anything", exko:"무언가를 한다는 전망", etym:"pro-(앞으로) + spect(보다, Latin spectare) → '앞을 내다봄' → '전망, 가능성'. 같은 spect 어근을 쓰는 다른 접두사 단어: inspect(in-안으로 + spect → 조사하다), respect(re-다시 + spect → 존중하다), spectator(spect + -ator → 구경꾼)." },
+    disturbingly: { word:"disturbingly", pron:"[디스터빙리]", meaning:"불편할 만큼", ex:"it's disturbingly passive", exko:"그것은 불편할 만큼 수동적이다", etym:"dis-(강조) + turb(휘젓다, 어지럽히다, Latin turbare) + -ing + -ly → '완전히 뒤흔드는 방식으로' → '불편할 만큼'. 같은 turb 어근을 쓰는 단어: perturb(per-완전히 + turb → 동요시키다), turbulent(turb + -ulent → 격동하는)." },
+    virtue: { word:"virtue", pron:"[버추]", meaning:"미덕", ex:"the virtue urged upon housewives", exko:"주부들에게 권장된 미덕", etym:"vir(힘, 남자다움, Latin vir/virtus) + -tue → '뛰어난 힘, 능력' → '미덕'. 같은 vir 어근을 쓰는 단어: virtual(vir + -tual → 사실상의, 가상의), virile(vir + -ile → 남성적인)." },
+    self_effacing: { word:"self-effacing", pron:"[셀프 이페이싱]", meaning:"자기를 내세우지 않는", ex:"The talented but self-effacing employee", exko:"재능 있지만 자신을 내세우지 않는 직원", etym:"self(자기) + ef-(밖으로, ex-) + fac(얼굴, 모습, Latin facies) + -ing → '자신의 모습을 밖으로 지워내는' → '자기를 내세우지 않는'. 같은 fac(e) 어근을 쓰는 단어: surface(sur-위에 + face → 표면), facial(fac + -ial → 얼굴의)." },
     trumpeting: { word:"trumpeting", pron:"[트럼피팅]", meaning:"널리 알리는 것", ex:"She ought to be trumpeting her achievements.", exko:"그녀는 자신의 성과를 널리 알려야 한다." },
-    accommodating: { word:"accommodating", pron:"[어카머데이팅]", meaning:"맞추는 것", ex:"psychologically accommodating yourself to a lack of power", exko:"힘의 부재에 심리적으로 자신을 맞추는 것" },
+    accommodating: { word:"accommodating", pron:"[어카머데이팅]", meaning:"맞추는 것", ex:"psychologically accommodating yourself to a lack of power", exko:"힘의 부재에 심리적으로 자신을 맞추는 것", etym:"ac-(~에게) + com-(함께) + mod(척도, 방식, Latin modus) + -ate + -ing → '척도에 맞춰 함께 조정하는' → '맞추는 것'. 같은 mod 어근을 쓰는 단어: modify(mod + -ify → 수정하다), commodity(com-함께 + mod → 상품)." },
     resign: { word:"resign yourself to", pron:"[리자인 유어셀프 투]", meaning:"~을 단념하고 받아들이다", ex:"resign yourself to your lowly position", exko:"자신의 낮은 지위를 단념하고 받아들이다" },
     geared_for: { word:"geared for", pron:"[기어드 포]", meaning:"~에 맞춰진", ex:"In a world geared for hurry", exko:"서두름에 맞춰진 세상에서" }
+  },
+  funcWords: {
+    fair: { word:"fair", tag:"[형용사 fair · 타당한]", meaning:"fair를 '공정한' 또는 명사 '박람회'로만 알고 있으면 어색해요. 'It's fair to say that ~'은 '~라고 말하는 것은 타당하다(무리가 없다)'라는 뜻의 표현이에요.", ex:"It's fair to say that patience has a terrible name.", exko:"인내가 형편없는 평판을 갖고 있다고 말하는 것은 타당하다." },
+    urged: { word:"urged", tag:"[동사 urge · 권장하다]", meaning:"urge를 '충동'이라는 명사나 '재촉하다'로만 알고 있으면 어색해요. 'urge A upon B'는 'B에게 A를 권하다, 강력히 권장하다'라는 뜻이라서, has traditionally been urged upon housewives는 '전통적으로 주부들에게 권장되어 왔다'로 해석돼요.", ex:"It is the virtue that has traditionally been urged upon housewives, while their husbands led more exciting lives outside the home; or on racial minorities, told to wait just a few more decades for their full civil rights.", exko:"그것은 전통적으로 주부들에게 권장되어 온 미덕인데, 그동안 그들의 남편은 집 밖에서 더 신나는 삶을 살았다." },
+    promotion: { word:"promotion", tag:"[명사 promotion · 승진]", meaning:"promotion을 '홍보, 판촉'으로만 알고 있으면 어색해요. 직장 문맥에서 promotion은 '승진'을 뜻해서, waits patiently for a promotion은 '승진을 위해 참을성 있게 기다린다'로 해석돼요.", ex:"The talented but self-effacing employee who \"waits patiently\" for a promotion, we tend to feel, will be waiting a long time: she ought to be trumpeting her (b) achievements instead.", exko:"승진을 위해 \"참을성 있게 기다리는\" 재능 있지만 자신을 내세우지 않는 직원은 오랫동안 기다리게 될 것이라고 우리는 느끼는 경향이 있다." },
+    take: { word:"take", tag:"[동사 take · (시간이) 걸리다]", meaning:"take를 '가져가다'로 해석하면 뜻이 통하지 않아요. 시간을 목적어로 받는 take는 '(시간이) 걸리다'라는 뜻이라서, to allow things to take the time they take는 '일이 걸리는 시간만큼 걸리도록 허용하는 것'으로 해석돼요.", ex:"In a world geared for hurry, the capacity to (e) feed the urge to hurry — to allow things to take the time they take — is a way to gain purchase on the world, to do the work that counts, and to derive satisfaction from the doing itself, instead of putting off all your fulfillment to the future.", exko:"서두름에 맞춰진 세상에서, 서두르려는 충동을 (e)먹여 살리는(→억제하는) 능력 — 즉 일이 걸리는 시간만큼 걸리도록 허용하는 능력 — 은 세상에 대한 발판을 얻고, 중요한 일을 해내고, 모든 성취감을 미래로 미루는 대신 그 행위 자체에서 만족을 얻는 방법이다." },
+    derive: { word:"derive", tag:"[동사 derive · 얻다]", meaning:"derive를 '유래하다, 파생되다'로만 알고 있으면 어색해요. 'derive A from B'는 'B에서 A를 얻어 내다'라는 뜻이라서, to derive satisfaction from the doing itself는 '그 행위 자체에서 만족을 얻는 것'으로 해석돼요.", ex:"In a world geared for hurry, the capacity to (e) feed the urge to hurry — to allow things to take the time they take — is a way to gain purchase on the world, to do the work that counts, and to derive satisfaction from the doing itself, instead of putting off all your fulfillment to the future.", exko:"서두름에 맞춰진 세상에서, 서두르려는 충동을 (e)먹여 살리는(→억제하는) 능력 — 즉 일이 걸리는 시간만큼 걸리도록 허용하는 능력 — 은 세상에 대한 발판을 얻고, 중요한 일을 해내고, 모든 성취감을 미래로 미루는 대신 그 행위 자체에서 만족을 얻는 방법이다." },
+    for: { word:"for", tag:"[관용 표현 for one thing]", meaning:"for one thing은 '하나의 것을 위해'가 아니라 '우선, 한 가지 이유를 들자면'이라는 뜻의 관용 표현으로, 이유나 예시를 하나 제시할 때 써요.", ex:"For one thing, the prospect of doing anything that you've been told will require patience simply seems unattractive.", exko:"우선, 인내가 필요할 것이라고 들어온 무언가를 한다는 전망은 그저 매력적이지 않게 보인다." },
+    though: { word:"though", tag:"[부사 though · 문장 중간 삽입]", meaning:"though는 여기서 '비록 ~이지만'이라는 접속사가 아니라, 문장 중간에 삽입되어 '그렇지만'이라는 뜻을 더하는 부사예요. More specifically, though, it's disturbingly passive는 '그러나 더 구체적으로 말하면, 그것은 불편할 만큼 수동적이다'라고 해석돼요.", ex:"More specifically, though, it's disturbingly (a) passive.", exko:"그러나 더 구체적으로 말하면, 그것은 불편할 만큼 (a)수동적이다." },
+    told: { word:"told", tag:"[과거분사 · 후치수식 (관계대명사 생략)]", meaning:"told는 앞의 racial minorities를 꾸며주는 과거분사로, who were told가 줄어든 형태예요. racial minorities, told to wait just a few more decades for their full civil rights는 '완전한 시민권을 위해 몇십 년만 더 기다리라는 말을 들은 인종적 소수자들'이라고 해석돼요.", ex:"It is the virtue that has traditionally been urged upon housewives, while their husbands led more exciting lives outside the home; or on racial minorities, told to wait just a few more decades for their full civil rights.", exko:"그것은 전통적으로 주부들에게 권장되어 온 미덕인데, 그동안 그들의 남편은 집 밖에서 더 신나는 삶을 살았다. 또는 완전한 시민권을 위해 몇십 년만 더 기다리라는 말을 들은 인종적 소수자들에게 권장된 미덕이기도 하다." },
+    as: { word:"as", tag:"[접속사 as · ~함에 따라]", meaning:"as는 '~함에 따라'라는 뜻으로, 두 가지 변화가 동시에 일어남을 나타내요. as society accelerates, something (d) shifts는 '사회가 가속화됨에 따라, 무언가가 달라진다'라고 해석돼요.", ex:"But as society accelerates, something (d) shifts.", exko:"그러나 사회가 가속화되면서, 무언가가 (d)달라진다." },
+    counts: { word:"counts", tag:"[동사 count · 문맥 확인 필요]", meaning:"count는 '세다, 계산하다'라는 뜻으로 많이 알고 있지만, 여기서는 '중요하다'라는 뜻의 자동사예요. the work that counts는 '숫자를 세는 일'이 아니라 '중요한 일'이라고 해석돼요.", ex:"In a world geared for hurry, the capacity to (e) feed the urge to hurry — to allow things to take the time they take — is a way to gain purchase on the world, to do the work that counts, and to derive satisfaction from the doing itself, instead of putting off all your fulfillment to the future.", exko:"서두름에 맞춰진 세상에서, 서두르려는 충동을 (e)먹여 살리는(→억제하는) 능력 — 즉 일이 걸리는 시간만큼 걸리도록 허용하는 능력 — 은 세상에 대한 발판을 얻고, 중요한 일을 해내고, 모든 성취감을 미래로 미루는 대신 그 행위 자체에서 만족을 얻는 방법이다." },
+    putting: { word:"putting", tag:"[관용 표현 put off · 미루다]", meaning:"put off는 '떼어놓다'가 아니라 '미루다, 연기하다'라는 뜻의 구동사예요. instead of putting off all your fulfillment to the future는 '모든 성취감을 미래로 미루는 대신'이라고 해석돼요.", ex:"In a world geared for hurry, the capacity to (e) feed the urge to hurry — to allow things to take the time they take — is a way to gain purchase on the world, to do the work that counts, and to derive satisfaction from the doing itself, instead of putting off all your fulfillment to the future.", exko:"서두름에 맞춰진 세상에서, 서두르려는 충동을 (e)먹여 살리는(→억제하는) 능력 — 즉 일이 걸리는 시간만큼 걸리도록 허용하는 능력 — 은 세상에 대한 발판을 얻고, 중요한 일을 해내고, 모든 성취감을 미래로 미루는 대신 그 행위 자체에서 만족을 얻는 방법이다." },
+    name: { word:"name", tag:"[명사 name · 의미 확인 필요]", meaning:"name은 '이름'이라는 뜻으로 흔히 알려져 있지만, 여기 patience has a terrible name에서는 '평판, 명성'이라는 뜻이에요. '인내는 끔찍한 이름을 가지고 있다'가 아니라 '인내는 형편없는 평판을 갖고 있다'라고 해석해야 자연스러워요.", ex:"It's fair to say that patience has a terrible name.", exko:"인내가 형편없는 평판을 갖고 있다고 말하는 것은 타당하다." },
+    led: { word:"led", tag:"[동사 lead a life · 의미 확인 필요]", meaning:"led는 '이끌다'라는 동사 lead의 과거형으로 흔히 알려져 있지만, 여기 their husbands led more exciting lives에서는 lead a life(삶을 살다)라는 관용 표현으로 쓰여 '살았다'라는 뜻이에요. '남편들이 더 신나는 삶들을 이끌었다'가 아니라 '남편들이 더 신나는 삶을 살았다'라고 해석해야 자연스러워요.", ex:"It is the virtue that has traditionally been urged upon housewives, while their husbands led more exciting lives outside the home; or on racial minorities, told to wait just a few more decades for their full civil rights.", exko:"그것은 전통적으로 주부들에게 권장되어 온 미덕인데, 그동안 그들의 남편은 집 밖에서 더 신나는 삶을 살았다. 또는 완전한 시민권을 위해 몇십 년만 더 기다리라는 말을 들은 인종적 소수자들에게 권장된 미덕이기도 하다." },
+    purchase: { word:"purchase", tag:"[명사 purchase · 의미 확인 필요]", meaning:"purchase는 '구매'라는 뜻으로 흔히 알려져 있지만, 여기 a way to gain purchase on the world에서는 '발판, 지지 기반'이라는 뜻이에요. '세상에 대한 구매를 얻는 방법'이 아니라 '세상에 대한 발판을 얻는 방법'이라고 해석해야 자연스러워요.", ex:"In a world geared for hurry, the capacity to (e) feed the urge to hurry — to allow things to take the time they take — is a way to gain purchase on the world, to do the work that counts, and to derive satisfaction from the doing itself, instead of putting off all your fulfillment to the future.", exko:"서두름에 맞춰진 세상에서, 서두르려는 충동을 (e)먹여 살리는(→억제하는) 능력 — 즉 일이 걸리는 시간만큼 걸리도록 허용하는 능력 — 은 세상에 대한 발판을 얻고, 중요한 일을 해내고, 모든 성취감을 미래로 미루는 대신 그 행위 자체에서 만족을 얻는 방법이다." }
   },
   passage: `It's fair to say that patience has a terrible name. For one thing, the [[prospect::prospect]] of doing anything that you've been told will require patience simply seems unattractive. More specifically, though, it's [[disturbingly::disturbingly]] (a) ‹passive›. It is the [[virtue::virtue]] that has traditionally been urged upon housewives, while their husbands led more exciting lives outside the home; or on racial minorities, told to wait just a few more decades for their full civil rights. The talented but [[self_effacing::self-effacing]] employee who "waits patiently" for a promotion, we tend to feel, will be waiting a long time: she ought to be [[trumpeting::trumpeting]] her (b) ‹achievements› instead. In all such cases, patience is a way of psychologically [[accommodating::accommodating]] yourself to a lack of power, an attitude intended to help you to [[resign::resign yourself to]] your (c) ‹lowly› position, in theoretical hopes of better days to come. But as society accelerates, something (d) ‹shifts›. In more and more contexts, patience becomes a form of power. In a world [[geared_for::geared for]] hurry, the capacity to (e) ‹feed› the urge to hurry — to allow things to take the time they take — is a way to gain purchase on the world, to do the work that counts, and to derive satisfaction from the doing itself, instead of putting off all your fulfillment to the future.`,
   translation: `인내가 형편없는 평판을 갖고 있다고 말하는 것은 타당하다. 우선, 인내가 필요할 것이라고 들어온 무언가를 한다는 전망은 그저 매력적이지 않게 보인다. 그러나 더 구체적으로 말하면, 그것은 불편할 만큼 (a)수동적이다. 그것은 전통적으로 주부들에게 권장되어 온 미덕인데, 그동안 그들의 남편은 집 밖에서 더 신나는 삶을 살았다. 또는 완전한 시민권을 위해 몇십 년만 더 기다리라는 말을 들은 인종적 소수자들에게 권장된 미덕이기도 하다. 승진을 위해 "참을성 있게 기다리는" 재능 있지만 자신을 내세우지 않는 직원은 오랫동안 기다리게 될 것이라고 우리는 느끼는 경향이 있다. 그녀는 대신 자신의 (b)성과를 널리 알려야 한다. 그러한 모든 경우에, 인내는 힘의 부재에 심리적으로 자신을 맞추는 방식이며, 앞으로 나아질 날에 대한 이론적인 희망 속에서 자신의 (c)낮은 지위를 단념하고 받아들이도록 돕기 위해 의도된 태도이다. 그러나 사회가 가속화되면서, 무언가가 (d)달라진다. 점점 더 많은 맥락에서, 인내는 '힘'의 한 형태가 된다. 서두름에 맞춰진 세상에서, 서두르려는 충동을 (e)먹여 살리는(→억제하는) 능력 — 즉 일이 걸리는 시간만큼 걸리도록 허용하는 능력 — 은 세상에 대한 발판을 얻고, 중요한 일을 해내고, 모든 성취감을 미래로 미루는 대신 그 행위 자체에서 만족을 얻는 방법이다.`,
@@ -266,14 +311,27 @@ const problems = [
 {
   num: "43-45", label: "43~45번", type: "장문 (순서 · 지칭 · 내용일치)",
   vocab: {
-    sage: { word:"sage", pron:"[세이지]", meaning:"현자", ex:"A sage was traveling with his disciple.", exko:"한 현자가 제자와 함께 여행하고 있었다." },
-    disciple: { word:"disciple", pron:"[디사이플]", meaning:"제자", ex:"He told his disciple his hope.", exko:"그는 제자에게 자신의 바람을 말했다." },
-    prosperous: { word:"prosperous", pron:"[프라스퍼러스]", meaning:"번영하는", ex:"the capital of a prosperous kingdom", exko:"번영하는 왕국의 수도" },
-    genuine: { word:"genuine", pron:"[제뉴인]", meaning:"진정한", ex:"no one in genuine need of the coin", exko:"그 동전이 진정으로 필요한 사람이 아무도 없는" },
+    sage: { word:"sage", pron:"[세이지]", meaning:"현자", ex:"A sage was traveling with his disciple.", exko:"한 현자가 제자와 함께 여행하고 있었다.", etym:"sag(지혜롭다, Latin sapere) + -e → '지혜를 아는' → '현자'. 같은 sap 어근을 쓰는 단어: savor(sap → 맛보다, 음미하다), sapient(sap + -ient → 지혜로운)." },
+    disciple: { word:"disciple", pron:"[디사이플]", meaning:"제자", ex:"He told his disciple his hope.", exko:"그는 제자에게 자신의 바람을 말했다.", etym:"disc(배우다, Latin discere) + -iple → '배우는 사람' → '제자'. 같은 disc 어근을 쓰는 단어: discipline(disc + -ipline → 훈련, 규율)." },
+    prosperous: { word:"prosperous", pron:"[프라스퍼러스]", meaning:"번영하는", ex:"the capital of a prosperous kingdom", exko:"번영하는 왕국의 수도", etym:"pro-(앞으로) + sper(바라다, 희망하다, Latin sperare) + -ous → '바라는 대로 나아가는' → '번영하는'. 같은 sper 어근을 쓰는 단어: desperate(de-부정 + sper → 희망이 없는 → 절망적인), prosperity(pro+sper+ity → 번영)." },
+    genuine: { word:"genuine", pron:"[제뉴인]", meaning:"진정한", ex:"no one in genuine need of the coin", exko:"그 동전이 진정으로 필요한 사람이 아무도 없는", etym:"gen(태어나다, 낳다, Latin gignere) + -uine → '태생 그대로의' → '진정한'. 같은 gen 어근을 쓰는 단어: generate(gen + -erate → 낳다, 생성하다), genius(gen + -ius → 타고난 재능)." },
     puzzled: { word:"puzzled", pron:"[퍼즐드]", meaning:"당황한", ex:"The king, puzzled and slightly annoyed", exko:"당황하고 약간 불쾌해진 왕은" },
-    content: { word:"content", pron:"[컨텐트]", meaning:"만족한", ex:"Everyone I met seemed content.", exko:"내가 만난 모든 사람이 만족해 보였다." },
+    content: { word:"content", pron:"[컨텐트]", meaning:"만족한", ex:"Everyone I met seemed content.", exko:"내가 만난 모든 사람이 만족해 보였다.", etym:"con-(함께, 완전히) + tent(잡다, 담다, Latin tenere) → '가득 담겨 채워진' → '만족한'. 같은 ten/tain 어근을 쓰는 다른 접두사 단어: contain(con-함께 + tain → 담다), maintain(manu-손 + tain → 유지하다), retain(re-다시 + tain → 보유하다)." },
     blessing: { word:"blessing", pron:"[블레싱]", meaning:"축복", ex:"He asked for a blessing.", exko:"그는 축복을 청했다." },
-    contentment: { word:"contentment", pron:"[컨텐트먼트]", meaning:"만족", ex:"He forgot the value of contentment.", exko:"그는 만족의 가치를 잊었다." }
+    contentment: { word:"contentment", pron:"[컨텐트먼트]", meaning:"만족", ex:"He forgot the value of contentment.", exko:"그는 만족의 가치를 잊었다.", etym:"con-(함께, 완전히) + tent(잡다, 담다, Latin tenere) + -ment → '가득 채워진 상태' → '만족'. 같은 ten/tain 어근을 쓰는 단어: content(con+tent → 만족한), contain(con-함께 + tain → 담다)." }
+  },
+  funcWords: {
+    capital: { word:"capital", tag:"[명사 capital · 수도]", meaning:"capital을 '자본, 대문자'로만 알고 있으면 어색해요. 나라·왕국과 함께 쓰인 capital은 '수도'를 뜻해서, the capital of a prosperous kingdom은 '번영하는 왕국의 수도'로 해석돼요.", ex:"One day, a sage was traveling with his disciple through the capital of a prosperous kingdom.", exko:"어느 날, 한 현자가 제자와 함께 번영하는 왕국의 수도를 지나 여행하고 있었다." },
+    busy: { word:"busy", tag:"[형용사 busy · 붐비는]", meaning:"busy를 '바쁜'으로만 알고 있으면 길이 바쁘다는 어색한 말이 돼요. 장소를 꾸미는 busy는 '사람이 많은, 붐비는'이라는 뜻이라서, a busy road는 '붐비는 길'로 해석돼요.", ex:"As they walked along a busy road, the sage noticed a coin on the ground.", exko:"그들이 붐비는 길을 따라 걷고 있을 때, 현자가 땅에 떨어진 동전 하나를 발견했다." },
+    sought: { word:"sought", tag:"[동사 seek의 과거형 · ~하려 하다]", meaning:"sought는 seek의 과거형인데, seek을 '찾다'로만 알고 있으면 어색해요. 'seek to + 동사원형'은 '~하려고 하다, ~하고자 애쓰다'라는 뜻이라서, sought to expand his kingdom은 '왕국을 확장하려 했다'로 해석돼요.", ex:"The king was not satisfied with what he had and sought to expand his kingdom.", exko:"왕은 자신이 가진 것에 만족하지 못하고 왕국을 확장하려 했다." },
+    handed: { word:"handed", tag:"[동사 hand · 건네주다]", meaning:"hand를 '손'이라는 명사로만 알고 있으면 문장이 풀리지 않아요. 여기서는 'hand + 사람 + 사물' 형태의 동사로 '~에게 …을 건네주다'라는 뜻이라서, the sage handed the king the coin은 '현자는 왕에게 그 동전을 건넸다'로 해석돼요.", ex:"After a quiet moment of thought, the sage handed the king the coin (c) he had found the previous day.", exko:"잠시 조용히 생각한 후, 현자는 왕에게 전날 자신이 발견했던 그 동전을 건넸다." },
+    appreciate: { word:"appreciate", tag:"[동사 appreciate · 소중히 여기다]", meaning:"appreciate를 '감사하다'로만 알고 있으면 어색해요. 여기서는 가치를 알아보고 '소중히 여기다, 진가를 인정하다'라는 뜻이라서, chose to appreciate what he already had는 '이미 가진 것을 소중히 여기기로 했다'로 해석돼요.", ex:"The king called off the invasion and chose to appreciate what he already had.", exko:"왕은 침략을 취소하고 이미 가진 것을 소중히 여기기로 했다." },
+    since: { word:"Since", tag:"[접속사 since · 이유]", meaning:"since는 '~이후로(시간)'가 아니라 '~때문에(이유)'라는 뜻의 접속사로 쓰였어요. Since he lived simply and had no need for it은 '그는 소박하게 살았고 그것이 필요하지 않았기 때문에'라고 해석돼요.", ex:"Since he lived simply and had no need for it, he told his disciple (a) he hoped to give it to someone who truly required it.", exko:"그는 소박하게 살았고 그것이 필요하지 않았기 때문에, 제자에게 그것을 진정으로 필요로 하는 사람에게 주고 싶다고 말했다." },
+    what: { word:"what", tag:"[관계대명사 what · ~하는 것]", meaning:"what은 선행사를 포함한 관계대명사로 '~하는 것'이라고 해석해요. puzzled and slightly annoyed at what he did는 '그가 한 행동에 당황하고 약간 불쾌해하며'라고 해석돼요.", ex:"The king, puzzled and slightly annoyed at what he did, asked, \"What is the meaning of this coin? I am the richest king in the land. Why would I need a single coin?\"", exko:"왕은 그가 한 행동에 당황하고 약간 불쾌해하며 물었다. \"이 동전이 무슨 의미인가? 나는 이 땅에서 가장 부유한 왕이다. 어찌 내가 동전 한 닢을 필요로 하겠는가?\"" },
+    called: { word:"called", tag:"[구동사 call off · 취소하다]", meaning:"call off는 '불러서 떨어뜨리다'가 아니라 '취소하다'라는 뜻의 구동사예요. The king called off the invasion은 '왕은 침략을 취소했다'라고 해석돼요.", ex:"The king called off the invasion and chose to appreciate what he already had.", exko:"왕은 침략을 취소하고 이미 가진 것을 소중히 여기기로 했다." },
+    struck: { word:"struck", tag:"[관용 표현 be struck by · 큰 충격을 받다]", meaning:"be struck by는 '얻어맞다'라는 문자 그대로의 뜻이 아니라 '~에 큰 충격을 받다, 감명받다'라는 뜻의 관용 표현이에요. The king was struck by the sage's words는 '왕은 현자의 말에 큰 충격을 받았다'라고 해석돼요.", ex:"The king was struck by the sage's words.", exko:"왕은 현자의 말에 큰 충격을 받았다." },
+    accompanied: { word:"Accompanied", tag:"[분사구문 Accompanied by · 수동]", meaning:"Accompanied by는 '동반된 채로'라는 뜻의 수동 분사구문으로 '~을 거느린 채, ~을 동반하여'라고 해석해요. Accompanied by his army, he stopped when he saw the sage and his disciple는 '군대를 거느린 채, 그는 현자와 그의 제자를 보고 멈춰 섰다'라고 해석돼요.", ex:"Accompanied by his army, he stopped when he saw the sage and his disciple.", exko:"군대를 거느린 채, 그는 현자와 그의 제자를 보고 멈춰 섰다." },
+    hunger: { word:"hunger", tag:"[명사 hunger · 의미 확인 필요]", meaning:"hunger는 '배고픔'이라는 뜻으로 흔히 알려져 있지만, 여기 his hunger for more에서는 더 많은 것을 향한 비유적인 '갈망'이라는 뜻이에요. '더 많은 것을 향한 배고픔'이 아니라 '더 많은 것을 향한 갈망'이라고 해석해야 자연스러워요.", ex:"He realized that his hunger for more had made him forget the value of contentment.", exko:"그는 더 많은 것을 향한 자신의 갈망이 만족의 가치를 잊게 만들었다는 것을 깨달았다." }
   },
   passage: `(A) One day, a [[sage::sage]] was traveling with his [[disciple::disciple]] through the capital of a [[prosperous::prosperous]] kingdom. As they walked along a busy road, the sage noticed a coin on the ground. Since he lived simply and had no need for it, he told his disciple (a) ‹he› hoped to give it to someone who truly required it. The two men searched the streets, but found no one in [[genuine::genuine]] need of the coin.
 
@@ -342,6 +400,7 @@ function toggleSheetStar() {
   setStarred(gid, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
   if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
+  else if (idx >= 0 && window.studyStats) window.studyStats.unrecord('star');
   updateSheetStarBtn();
 }
 
@@ -512,8 +571,13 @@ function showWord(key) {
   currentSheetWordData = { word:v.word, pron:v.pron, meaning:v.meaning, en:v.ex, ko:v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
@@ -557,6 +621,23 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -565,6 +646,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
@@ -574,8 +656,12 @@ function showPlain(rawWord) {
   currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();

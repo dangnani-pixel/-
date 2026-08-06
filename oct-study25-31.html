@@ -91,12 +91,17 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
 .sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
 .sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
 .sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
 .sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
 .sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
 </style>
 </head>
 <body>
@@ -156,6 +161,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="sheet-pron" id="sheet-pron"></div>
   <div class="sheet-meaning" id="sheet-meaning"></div>
   <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
 </div>
 
 <script>
@@ -173,14 +179,24 @@ const problems = [
   answer: 3,
   explanation: "45~54세 집단에서 남성은 9%, 여성은 6%입니다. 여성의 2배는 12%인데 남성은 9%이므로 '2배가 넘는다'는 ④번 진술은 도표와 일치하지 않습니다.",
   vocab: {
-    sustainable: { word:"sustainable", pron:"[서스테이너블]", meaning:"지속 가능한", ex:"They prefer sustainable brands.", exko:"그들은 지속 가능한 브랜드를 선호한다." },
-    consumers: { word:"consumers", pron:"[컨슈머즈]", meaning:"소비자", ex:"U.K. consumers were surveyed.", exko:"영국 소비자들이 조사되었다." },
-    purchasing: { word:"purchasing", pron:"[퍼처싱]", meaning:"구매하는 것", ex:"They preferred purchasing clothes online.", exko:"그들은 옷을 온라인으로 구매하는 것을 선호했다." },
+    sustainable: { word:"sustainable", pron:"[서스테이너블]", meaning:"지속 가능한", ex:"They prefer sustainable brands.", exko:"그들은 지속 가능한 브랜드를 선호한다.", etym:"sus-(sub-, 아래에서 받쳐) + tain(=tenere, 잡다) + -able(~할 수 있는) → 계속 붙들고 유지할 수 있는 → 지속 가능한. 같은 tain 어근을 쓰는 다른 접두사 단어: maintain(main-(manu-, 손) + tain → 손으로 붙잡다 → 유지하다), obtain(ob-향해 + tain → 향해 붙잡다 → 얻다)." },
+    consumers: { word:"consumers", pron:"[컨슈머즈]", meaning:"소비자", ex:"U.K. consumers were surveyed.", exko:"영국 소비자들이 조사되었다.", etym:"con-(완전히) + sum(=sumere, 취하다·쓰다) + -er(사람) → 완전히 써버리는 사람 → 소비자. 같은 sum 어근을 쓰는 다른 접두사 단어: presume(pre-미리 + sum → 미리 취하다 → 추정하다), resume(re-다시 + sum → 다시 집어들다 → 재개하다)." },
+    purchasing: { word:"purchasing", pron:"[퍼처싱]", meaning:"구매하는 것", ex:"They preferred purchasing clothes online.", exko:"그들은 옷을 온라인으로 구매하는 것을 선호했다.", etym:"pur-(pro-, 앞으로) + chase(=captiare, 뒤쫓다) + -ing → 원하는 것을 앞서 뒤쫓아 얻다 → 구매하는 것. 같은 chase 어근을 쓰는 단어: chase(접두사 없이 원형 → 뒤쫓다)." },
     percentage_point: { word:"percentage point", pron:"[퍼센티지 포인트]", meaning:"퍼센트포인트", ex:"The percentage point gap was large.", exko:"퍼센트포인트 격차가 컸다." },
     gap: { word:"gap", pron:"[갭]", meaning:"격차, 차이", ex:"There is a gap between men and women.", exko:"남성과 여성 사이에 격차가 있다." },
     twice: { word:"twice", pron:"[트와이스]", meaning:"두 배", ex:"It was more than twice that of women.", exko:"그것은 여성의 두 배가 넘었다." },
     among: { word:"among", pron:"[어멍]", meaning:"~중에서", ex:"It was the lowest among the five groups.", exko:"그것은 다섯 집단 중 가장 낮았다." },
     age_group: { word:"age group", pron:"[에이지 그룹]", meaning:"연령대", ex:"There are five age groups.", exko:"다섯 개의 연령대가 있다." }
+  },
+  funcWords: {
+    who: { word:"who", tag:"[관계대명사 · 주격]", meaning:"who는 women을 선행사로 받는 주격 관계대명사예요. 'women who preferred purchasing clothes from sustainable brands'는 '지속 가능한 브랜드에서 옷 구매를 선호한 여성들'이라는 뜻으로, 도표 설명 문장마다 반복해서 나오니 구조를 한 번 익혀두면 편해요.", ex:"In each of the five age groups, the percentage of women who preferred purchasing clothes from sustainable brands was over 5 percent.", exko:"다섯 개 연령대 각각에서, 지속 가능한 브랜드에서 옷 구매를 선호한 여성의 비율은 5퍼센트를 넘었다." },
+    did: { word:"did", tag:"[대동사 did]", meaning:"'who did so'에서 did so는 앞에 나온 'preferred purchasing clothes from sustainable brands'라는 동사구 전체를 대신하는 대동사 표현이에요. '그렇게 한(=지속 가능한 브랜드 구매를 선호한) 여성'이라고 해석하세요.", ex:"In the 45-54 age group, the percentage of men who preferred purchasing clothes from sustainable brands was more than twice that of women who did so.", exko:"45~54세 연령대에서, 지속 가능한 브랜드 구매를 선호한 남성의 비율은 그렇게 한 여성 비율의 두 배가 넘었다." },
+    that: { word:"that", tag:"[대명사 that]", meaning:"여기서 that은 앞에 나온 명사(the percentage point gap)의 반복을 피하려고 쓰인 대명사예요. 'that in the 18-24 age group'은 '18~24세 연령대의 (격차)'라는 뜻이 됩니다.", ex:"The percentage point gap between men and women who preferred purchasing clothes from sustainable brands in the 25-34 age group was larger than that in the 18-24 age group.", exko:"25~34세 연령대에서 지속 가능한 브랜드 구매를 선호한 남성과 여성 사이의 퍼센트포인트 격차는 18~24세 연령대의 격차보다 더 컸다." },
+    which: { word:"which", tag:"[관계대명사 · 계속적 용법]", meaning:"콤마 뒤 which는 앞 내용 전체(4퍼센트였다는 사실)를 받아 부연 설명하는 계속적 용법의 관계대명사예요. '그런데 이것이 다섯 연령대 중 가장 낮았다'라고 이어서 해석해요.", ex:"The percentage of men who preferred purchasing clothes from sustainable brands in the 55 and up age group was 4 percent, which was the lowest among the five age groups.", exko:"55세 이상 연령대에서 지속 가능한 브랜드 구매를 선호한 남성의 비율은 4퍼센트였고, 이는 다섯 연령대 중 가장 낮았다." },
+    over: { word:"over", tag:"[전치사 over · 의미 확인]", meaning:"over는 '~위에'라는 위치를 뜻하는 것으로 잘 알려져 있지만, 여기 'was over 5 percent'에서는 '~을 넘는, 초과하는'이라는 뜻이에요. '5퍼센트를 넘었다'라고 해석하세요.", ex:"In each of the five age groups, the percentage of women who preferred purchasing clothes from sustainable brands was over 5 percent.", exko:"다섯 개 연령대 각각에서, 지속 가능한 브랜드에서 옷 구매를 선호한 여성의 비율은 5퍼센트를 넘었다." },
+    by: { word:"by", tag:"[전치사 by · 기준]", meaning:"by는 '~에 의해(행위자)'라는 뜻으로 흔히 알려져 있지만, 여기 'by age and gender'에서는 '~에 따라, ~별로'라는 뜻의 전치사예요. '연령과 성별에 따라'라고 해석하세요.", ex:"The above graph shows the percentages of U.K. consumers who preferred purchasing clothes from sustainable brands by age and gender in 2020.", exko:"위 도표는 2020년 연령과 성별에 따라 지속 가능한 브랜드에서 옷을 구매하는 것을 선호한 영국 소비자의 비율을 보여준다." },
+    had: { word:"had", tag:"[동사 have · 도표 표현]", meaning:"had를 '가지고 있었다'로 직역하면 어색해요. 도표 문장에서 'A had the highest percentage of ~'는 'A가 ~의 비율이 가장 높았다'라는 뜻으로 쓰여요. 소유가 아니라 그 집단의 수치가 어떠했는지를 나타내는 표현이에요.", ex:"The 25-34 and 35-44 age groups had the highest percentage of men who preferred purchasing clothes from sustainable brands.", exko:"25~34세와 35~44세 연령대가 지속 가능한 브랜드에서 옷 구매를 선호한 남성의 비율이 가장 높았다." },
+    up: { word:"up", tag:"[부사 up · and up]", meaning:"up을 '위로'라고 해석하면 뜻이 통하지 않아요. 숫자 뒤에 오는 'and up'은 '~ 이상'이라는 뜻이라서, 'the 55 and up age group'은 '55세 이상 연령대'라고 해석해야 해요. 도표 문제에서 자주 나오는 표현이에요.", ex:"The percentage of men who preferred purchasing clothes from sustainable brands in the 55 and up age group was 4 percent, which was the lowest among the five age groups.", exko:"55세 이상 연령대에서 지속 가능한 브랜드 구매를 선호한 남성의 비율은 4퍼센트였고, 이는 다섯 연령대 중 가장 낮았다." }
   },
   passage: `The above graph shows the percentages of U.K. [[consumers::consumers]] who preferred [[purchasing::purchasing]] clothes from [[sustainable::sustainable]] brands by age and gender in 2020. ① In each of the five [[age_group::age groups]], the percentage of women who preferred purchasing clothes from sustainable brands was over 5 percent. ② The 25-34 and 35-44 age groups had the highest percentage of men who preferred purchasing clothes from sustainable brands. ③ The [[percentage_point::percentage point]] [[gap::gap]] between men and women who preferred purchasing clothes from sustainable brands in the 25-34 age group was larger than that in the 18-24 age group. ④ In the 45-54 age group, the percentage of men who preferred purchasing clothes from sustainable brands was more than [[twice::twice]] that of women who did so. ⑤ The percentage of men who preferred purchasing clothes from sustainable brands in the 55 and up age group was 4 percent, which was the lowest [[among::among]] the five age groups.`,
   translation: `위 도표는 2020년 연령과 성별에 따라 지속 가능한 브랜드에서 옷을 구매하는 것을 선호한 영국 소비자의 비율을 보여준다. ① 다섯 개 연령대 각각에서, 지속 가능한 브랜드에서 옷 구매를 선호한 여성의 비율은 5퍼센트를 넘었다. ② 25~34세와 35~44세 연령대가 지속 가능한 브랜드에서 옷 구매를 선호한 남성의 비율이 가장 높았다. ③ 25~34세 연령대에서 지속 가능한 브랜드 구매를 선호한 남성과 여성 사이의 퍼센트포인트 격차는 18~24세 연령대의 격차보다 더 컸다. ④ 45~54세 연령대에서, 지속 가능한 브랜드 구매를 선호한 남성의 비율은 그렇게 한 여성 비율의 두 배가 넘었다. ⑤ 55세 이상 연령대에서 지속 가능한 브랜드 구매를 선호한 남성의 비율은 4퍼센트였고, 이는 다섯 연령대 중 가장 낮았다.`,
@@ -202,14 +218,27 @@ const problems = [
   answer: 2,
   explanation: "'he began farming in Imperial Valley, but he was not able to buy land without U.S. citizenship'이라고 했으므로, 그는 시민권이 없어 땅을 살 수 없었습니다. 땅을 구입해서 농사를 시작했다는 ③번이 일치하지 않습니다.",
   vocab: {
-    politician: { word:"politician", pron:"[폴리티션]", meaning:"정치인", ex:"He was an American politician.", exko:"그는 미국인 정치인이었다." },
-    graduating: { word:"graduating", pron:"[그래주에이팅]", meaning:"졸업하는 것", ex:"After graduating, he moved to the U.S.", exko:"졸업 후 그는 미국으로 이주했다." },
-    doctoral: { word:"doctoral degree", pron:"[닥터럴 디그리]", meaning:"박사 학위", ex:"He earned his doctoral degree in 1924.", exko:"그는 1924년에 박사 학위를 받았다." },
-    nationality: { word:"nationality", pron:"[내셔낼리티]", meaning:"국적", ex:"He couldn't get a job because of his nationality.", exko:"그는 국적 때문에 직업을 구할 수 없었다." },
-    citizenship: { word:"citizenship", pron:"[시티즌십]", meaning:"시민권", ex:"He could not buy land without citizenship.", exko:"그는 시민권 없이는 땅을 살 수 없었다." },
+    politician: { word:"politician", pron:"[폴리티션]", meaning:"정치인", ex:"He was an American politician.", exko:"그는 미국인 정치인이었다.", etym:"polit(=polis, 그리스어 '도시국가') + -ician(사람을 나타내는 접미사) → 도시(국가)의 일을 하는 사람 → 정치인. 같은 polis 어근을 쓰는 다른 단어: police(polis에서 유래 → 도시를 다스림 → 경찰), metropolis(metro-어머니 + polis → 모(母)도시 → 대도시)." },
+    graduating: { word:"graduating", pron:"[그래주에이팅]", meaning:"졸업하는 것", ex:"After graduating, he moved to the U.S.", exko:"졸업 후 그는 미국으로 이주했다.", etym:"grad(=gradus, 걸음·단계) + -ate + -ing → 단계를 밟아 나아가다 → 졸업하는 것. 같은 grad 어근을 쓰는 다른 접두사 단어: upgrade(up-위로 + grade → 등급을 올리다), progress(pro-앞으로 + gress(=grad) → 앞으로 나아가다)." },
+    doctoral: { word:"doctoral degree", pron:"[닥터럴 디그리]", meaning:"박사 학위", ex:"He earned his doctoral degree in 1924.", exko:"그는 1924년에 박사 학위를 받았다.", etym:"doct(=docere, 가르치다) + -or + -al → 가르칠 자격을 갖춘 → 박사의. 같은 doct 어근을 쓰는 다른 단어: doctrine(가르침, 교리), indoctrinate(in-안으로 + doctrin + ate → 가르침을 안으로 주입하다 → 세뇌하다)." },
+    nationality: { word:"nationality", pron:"[내셔낼리티]", meaning:"국적", ex:"He couldn't get a job because of his nationality.", exko:"그는 국적 때문에 직업을 구할 수 없었다.", etym:"nat(=nasci, 태어나다) + -ion + -al + -ity → 태어난 곳에 따른 것 → 국적. 같은 nat 어근을 쓰는 다른 접두사 단어: international(inter-사이에 + national → 나라들 사이의 → 국제적인), innate(in-안에 + nat → 태어날 때부터 안에 있는 → 타고난)." },
+    citizenship: { word:"citizenship", pron:"[시티즌십]", meaning:"시민권", ex:"He could not buy land without citizenship.", exko:"그는 시민권 없이는 땅을 살 수 없었다.", etym:"cit(=civis, 라틴어 '시민') + -izen + -ship(자격·신분) → 시민으로서의 자격 → 시민권. 같은 civ 어근을 쓰는 다른 단어: civil(civ + il → 시민의), city(civ 어근에서 유래 → 도시)." },
     spoke_out: { word:"spoke out", pron:"[스포크 아웃]", meaning:"공개적으로 말했다", ex:"He often spoke out on political topics.", exko:"그는 정치적 주제에 대해 자주 목소리를 냈다." },
     bill: { word:"bill", pron:"[빌]", meaning:"법안", ex:"He promoted a bill in Washington.", exko:"그는 워싱턴에서 법안을 홍보했다." },
-    congress: { word:"Congress", pron:"[콩그레스]", meaning:"(미국) 의회", ex:"He was elected to the U.S. Congress.", exko:"그는 미국 의회에 당선되었다." }
+    congress: { word:"Congress", pron:"[콩그레스]", meaning:"(미국) 의회", ex:"He was elected to the U.S. Congress.", exko:"그는 미국 의회에 당선되었다.", etym:"con-(함께) + gress(=gradi, 걷다·나아가다) → 함께 모여 나아가다 → 의회. 같은 gress 어근을 쓰는 다른 접두사 단어: progress(pro-앞으로 + gress → 앞으로 나아가다), digress(di-(dis-, 벗어나) + gress → 주제를 벗어나다)." }
+  },
+  funcWords: {
+    because: { word:"because", tag:"[because of]", meaning:"'because of'는 뒤에 명사(구)가 오는 전치사로 '~때문에'라는 뜻이에요. because 혼자 쓰이면 뒤에 '주어+동사'가 있는 절이 와야 하지만, because of는 nationality처럼 명사만 와도 됩니다.", ex:"He earned his doctoral degree at the University of California in 1924 but could not get a job because of his nationality.", exko:"그는 1924년 캘리포니아 대학교에서 박사 학위를 받았지만 국적 때문에 직업을 구할 수 없었다." },
+    without: { word:"without", tag:"[전치사 without]", meaning:"without은 '~없이는'이라는 뜻으로 조건을 나타내는 전치사예요. 'without U.S. citizenship'은 '미국 시민권이 없으면'이라고 해석하면 자연스러워요.", ex:"The next year, he began farming in Imperial Valley, but he was not able to buy land without U.S. citizenship.", exko:"이듬해, 그는 Imperial Valley에서 농사를 짓기 시작했지만, 미국 시민권 없이는 땅을 살 수 없었다." },
+    that: { word:"that", tag:"[관계대명사 · 주격]", meaning:"that은 bill을 선행사로 받는 주격 관계대명사예요. 'that would allow Indians to become U.S. citizens'가 뒤에서 bill을 꾸며주며 '인도인이 미국 시민이 될 수 있도록 하는 (법안)'이라고 해석돼요.", ex:"He went to Washington, D.C. and promoted a bill that would allow Indians to become U.S. citizens.", exko:"그는 워싱턴 D.C.로 가서 인도인이 미국 시민이 될 수 있도록 하는 법안을 홍보했다." },
+    to: { word:"to", tag:"[to부정사]", meaning:"'the first Asian to be elected'에서 to는 to부정사로, 앞의 명사(the first Asian)를 꾸며주는 형용사적 용법이에요. '당선된 최초의 아시아인'이라고 해석돼요. 뒤에 나오는 'elected to the U.S. Congress'의 to는 별개로, '~에(직위·기관으로)'라는 뜻의 전치사예요.", ex:"He later became the first Asian to be elected to the U.S. Congress.", exko:"그는 후에 미국 의회에 당선된 최초의 아시아인이 되었다." },
+    graduate: { word:"graduate", tag:"[명사/형용사 · 품사 확인]", meaning:"graduate는 '졸업하다'라는 동사로 가장 먼저 떠오르지만, 여기 'graduate school'에서는 명사 school을 꾸며주는 형용사(또는 명사)로 쓰여 '대학원(의)'이라는 뜻이에요. 동사 graduating(졸업하는 것)과 헷갈리지 마세요.", ex:"After graduating from the University of Punjab in India, he moved to the U.S. to attend graduate school.", exko:"인도의 Punjab 대학교를 졸업한 후, 그는 대학원에 다니기 위해 미국으로 이주했다." },
+    moved: { word:"moved", tag:"[동사 move · 의미 확인]", meaning:"moved를 '움직였다'로 해석하면 어색해요. 'move to+장소'는 '~로 이주하다, 이사하다'라는 뜻이라서, 'he moved to the U.S.'는 '그는 미국으로 이주했다'로 해석돼요. 인물 소개 글에서 자주 나오는 표현이에요.", ex:"After graduating from the University of Punjab in India, he moved to the U.S. to attend graduate school.", exko:"인도의 Punjab 대학교를 졸업한 후, 그는 대학원에 다니기 위해 미국으로 이주했다." },
+    attend: { word:"attend", tag:"[동사 attend · 의미 확인]", meaning:"attend는 '참석하다'라는 뜻으로 가장 먼저 떠오르지만, 학교를 목적어로 쓰면 '(학교에) 다니다, 재학하다'라는 뜻이에요. 'to attend graduate school'은 '대학원에 참석하기 위해'가 아니라 '대학원에 다니기 위해'로 해석해야 해요.", ex:"After graduating from the University of Punjab in India, he moved to the U.S. to attend graduate school.", exko:"인도의 Punjab 대학교를 졸업한 후, 그는 대학원에 다니기 위해 미국으로 이주했다." },
+    earned: { word:"earned", tag:"[동사 earn · 의미 확인]", meaning:"earn을 '돈을 벌다'로만 알고 있으면 오해하기 쉬워요. 학위·자격·명성을 목적어로 쓰면 '(노력해서) 얻다, 받다'라는 뜻이에요. 'earned his doctoral degree'는 '박사 학위를 받았다'로 해석돼요.", ex:"He earned his doctoral degree at the University of California in 1924 but could not get a job because of his nationality.", exko:"그는 1924년 캘리포니아 대학교에서 박사 학위를 받았지만 국적 때문에 직업을 구할 수 없었다." },
+    developed: { word:"developed", tag:"[동사 develop · 관용 표현]", meaning:"developed를 '개발했다'로 해석하면 뜻이 어색해져요. 'develop an interest in ~'은 '~에 관심을 갖게 되다, 흥미가 생기다'라는 뜻의 표현이라서, 'Dalip developed an interest in politics'는 'Dalip은 정치에 관심을 갖게 되었다'로 해석돼요.", ex:"Dalip developed an interest in politics and he often spoke out on Indian and political topics.", exko:"Dalip은 정치에 관심을 갖게 되었고 인도 관련 주제와 정치적 주제에 대해 자주 목소리를 냈다." },
+    promoted: { word:"promoted", tag:"[동사 promote · 의미 확인]", meaning:"promote를 '승진시키다'로만 알면 문장이 이상해져요. 여기서는 '홍보하다, (법안 등을) 널리 알려 추진하다'라는 뜻이라서, 'promoted a bill'은 '법안을 홍보했다'로 해석돼요.", ex:"He went to Washington, D.C. and promoted a bill that would allow Indians to become U.S. citizens.", exko:"그는 워싱턴 D.C.로 가서 인도인이 미국 시민이 될 수 있도록 하는 법안을 홍보했다." },
+    passed: { word:"passed", tag:"[동사 pass · 의미 확인]", meaning:"passed를 '지나갔다'로 해석하면 안 돼요. 법안(bill)이 주어일 때 pass는 '(의회에서) 통과시키다'라는 뜻이라서, 'The bill was passed in 1946'는 '그 법안은 1946년에 통과되었다'로 해석돼요.", ex:"The bill was passed in 1946, and three years later Dalip received U.S. citizenship.", exko:"그 법안은 1946년에 통과되었고, 3년 후 Dalip은 미국 시민권을 받았다." }
   },
   passage: `Dalip Singh Saund was an Indian-born American [[politician::politician]]. After [[graduating::graduating]] from the University of Punjab in India, he moved to the U.S. to attend graduate school. He earned his [[doctoral::doctoral degree]] at the University of California in 1924 but could not get a job because of his [[nationality::nationality]]. The next year, he began farming in Imperial Valley, but he was not able to buy land without U.S. [[citizenship::citizenship]]. Dalip developed an interest in politics and he often [[spoke_out::spoke out]] on Indian and political topics. He went to Washington, D.C. and promoted a [[bill::bill]] that would allow Indians to become U.S. citizens. The bill was passed in 1946, and three years later Dalip received U.S. citizenship. He later became the first Asian to be elected to the U.S. [[congress::Congress]].`,
   translation: `Dalip Singh Saund는 인도 태생의 미국인 정치인이었다. 인도의 Punjab 대학교를 졸업한 후, 그는 대학원에 다니기 위해 미국으로 이주했다. 그는 1924년 캘리포니아 대학교에서 박사 학위를 받았지만 국적 때문에 직업을 구할 수 없었다. 이듬해, 그는 Imperial Valley에서 농사를 짓기 시작했지만, 미국 시민권 없이는 땅을 살 수 없었다. Dalip은 정치에 관심을 갖게 되었고 인도 관련 주제와 정치적 주제에 대해 자주 목소리를 냈다. 그는 워싱턴 D.C.로 가서 인도인이 미국 시민이 될 수 있도록 하는 법안을 홍보했다. 그 법안은 1946년에 통과되었고, 3년 후 Dalip은 미국 시민권을 받았다. 그는 후에 미국 의회에 당선된 최초의 아시아인이 되었다.`,
@@ -231,14 +260,22 @@ const problems = [
   answer: 4,
   explanation: "'Winners will be announced on our school's website... No personal contact will be made.'라고 했으므로 수상자는 개별 연락을 받지 않고 학교 웹사이트로 발표됩니다. 따라서 ⑤번이 일치하지 않습니다.",
   vocab: {
-    symbolizes: { word:"symbolizes", pron:"[심벌라이지스]", meaning:"상징하다", ex:"Create a character that symbolizes our school.", exko:"우리 학교를 상징하는 캐릭터를 만드세요." },
-    submission: { word:"Submission", pron:"[서브미션]", meaning:"제출", ex:"The submission deadline is October 24.", exko:"제출 마감일은 10월 24일이다." },
+    symbolizes: { word:"symbolizes", pron:"[심벌라이지스]", meaning:"상징하다", ex:"Create a character that symbolizes our school.", exko:"우리 학교를 상징하는 캐릭터를 만드세요.", etym:"sym-(syn-, 함께) + bol(=ballein, 던지다) + -ize + -s → 함께 짝지어 던지다 → 상징하다. 같은 bol 어근을 쓰는 다른 접두사 단어: emblem(em-(en-, 안에) + blem → 안에 새겨 넣은 것 → 상징, 문장), problem(pro-앞에 + blem → 앞에 던져진 것 → 문제)." },
+    submission: { word:"Submission", pron:"[서브미션]", meaning:"제출", ex:"The submission deadline is October 24.", exko:"제출 마감일은 10월 24일이다.", etym:"sub-(아래로) + miss(=mittere, 보내다) + -ion → 아래로 보내다 → 제출. 같은 miss/mit 어근을 쓰는 다른 접두사 단어: permission(per-통하여 + miss → 통과하도록 보내다 → 허가), transmission(trans-가로질러 + miss → 건너 보내다 → 전송)." },
     deadline: { word:"Deadline", pron:"[데드라인]", meaning:"마감 기한", ex:"The deadline is 5 p.m.", exko:"마감 시간은 오후 5시이다." },
-    entries: { word:"Entries", pron:"[엔트리즈]", meaning:"출품작", ex:"Entries should be sent by email.", exko:"출품작은 이메일로 보내야 한다." },
-    criteria: { word:"Judging Criteria", pron:"[저징 크라이티리아]", meaning:"심사 기준", ex:"The judging criteria include creativity.", exko:"심사 기준에는 창의성이 포함된다." },
-    creativity: { word:"Creativity", pron:"[크리에이티비티]", meaning:"창의성", ex:"Creativity is one of the criteria.", exko:"창의성은 기준 중 하나이다." },
-    announced: { word:"announced", pron:"[어나운스트]", meaning:"발표되다", ex:"Winners will be announced on the website.", exko:"수상자는 웹사이트에 발표될 것이다." },
+    entries: { word:"Entries", pron:"[엔트리즈]", meaning:"출품작", ex:"Entries should be sent by email.", exko:"출품작은 이메일로 보내야 한다.", etym:"en-(안으로, in-의 변형) + tr(y)(=intrare, 들어가다) → 안으로 들어간 것 → 출품작, 입장(작). 같은 어근을 쓰는 단어: enter(원형, 들어가다), entrance(en + trance → 들어가는 곳, 입구)." },
+    criteria: { word:"Judging Criteria", pron:"[저징 크라이티리아]", meaning:"심사 기준", ex:"The judging criteria include creativity.", exko:"심사 기준에는 창의성이 포함된다.", etym:"criteria는 그리스어 kriterion(판단 기준)의 복수형으로 krinein(구별하다·판별하다)에서 유래 → 심사 기준. 같은 어근을 쓰는 단어: critic(krinein에서 유래 → 비평가), crisis(krinein에서 유래 → 판가름 나는 순간 → 위기)." },
+    creativity: { word:"Creativity", pron:"[크리에이티비티]", meaning:"창의성", ex:"Creativity is one of the criteria.", exko:"창의성은 기준 중 하나이다.", etym:"cre(=creare, 창조하다) + -ative + -ity → 창조하는 능력 → 창의성. 같은 cre 어근을 쓰는 다른 접두사 단어: recreate(re-다시 + create → 다시 만들다 → 기분전환하다), procreate(pro-앞으로 + create → 자손을 낳다)." },
+    announced: { word:"announced", pron:"[어나운스트]", meaning:"발표되다", ex:"Winners will be announced on the website.", exko:"수상자는 웹사이트에 발표될 것이다.", etym:"an-(ad-, ~에게) + nounce(=nuntiare, 알리다) + -ed → ~에게 알리다 → 발표되다. 같은 nounce 어근을 쓰는 다른 접두사 단어: pronounce(pro-앞에서 + nounce → 앞에서 알리다 → 발음하다, 선언하다), denounce(de-부정적으로 + nounce → 비난하며 알리다 → 규탄하다)." },
     personal_contact: { word:"personal contact", pron:"[퍼스널 컨택트]", meaning:"개별 연락", ex:"No personal contact will be made.", exko:"개별 연락은 하지 않습니다." }
+  },
+  funcWords: {
+    that: { word:"that", tag:"[관계대명사 · 주격]", meaning:"that은 a character를 선행사로 받는 주격 관계대명사예요. 'that symbolizes our school'이 뒤에서 캐릭터를 꾸며주어 '우리 학교를 상징하는 (캐릭터)'라고 해석돼요.", ex:"Join the contest and create a character that symbolizes our school.", exko:"대회에 참가하여 우리 학교를 상징하는 캐릭터를 만들어 보세요." },
+    by: { word:"by", tag:"[전치사 by · 수단]", meaning:"여기서 by는 '~에 의해(행위자)'가 아니라 '~을 통해, ~으로(수단)'라는 뜻이에요. by email은 '이메일로'라고 해석하면 자연스러워요.", ex:"Entries should be sent by email to cdcbritt@bhs.edu.", exko:"출품작은 cdcbritt@bhs.edu로 이메일을 통해 보내야 합니다." },
+    on: { word:"on", tag:"[전치사 on · 다의어]", meaning:"이 문장에는 on이 두 번 나와요. 'on our school's website'에서는 '~에서, ~을 통해(매체)'라는 뜻이고, 'on October 31'에서는 '~에(날짜)'라는 뜻이에요. 같은 단어라도 뒤에 오는 명사에 따라 해석이 달라지니 주의하세요.", ex:"Winners will be announced on our school's website on October 31.", exko:"수상자는 10월 31일 학교 웹사이트에 발표됩니다." },
+    holds: { word:"holds", tag:"[동사 · 품사 확인]", meaning:"holds는 '잡다, 보유하다'라는 뜻으로 흔히 알려져 있지만, 여기 'Britt High School holds ~ Contest'에서는 '(행사를) 개최하다'라는 뜻의 동사예요. hold a contest는 '대회를 열다'라고 해석하세요.", ex:"Britt High School holds our first Character Design Contest.", exko:"Britt 고등학교가 첫 번째 캐릭터 디자인 대회를 개최합니다." },
+    join: { word:"Join", tag:"[동사 join · 의미 확인]", meaning:"join을 '합치다, 연결하다'로만 알면 어색해요. 대회·모임·동아리를 목적어로 쓰면 '~에 참가하다, 가입하다'라는 뜻이라서, 'Join the contest'는 '대회에 참가하세요'로 해석돼요. join 뒤에는 전치사 없이 바로 목적어가 온다는 점도 기억하세요.", ex:"Join the contest and create a character that symbolizes our school.", exko:"대회에 참가하여 우리 학교를 상징하는 캐릭터를 만들어 보세요." },
+    made: { word:"made", tag:"[동사 make · 관용구 make contact]", meaning:"made를 '만들어졌다'로 해석하면 뜻이 통하지 않아요. 'make contact'는 '연락을 취하다'라는 뜻의 표현이라서, 'No personal contact will be made'는 '개별 연락은 하지 않습니다'로 해석돼요.", ex:"No personal contact will be made.", exko:"개별 연락은 하지 않습니다." }
   },
   passage: `Britt High School holds our first Character Design Contest. Join the contest and create a character that [[symbolizes::symbolizes]] our school.
 
@@ -288,14 +325,22 @@ Winners will be [[announced::announced]] on our school's website on October 31. 
   answer: 2,
   explanation: "'Shoot a bow like Robin Hood. (only available for ages 6 and above)'라고 했으므로 활쏘기에는 6세 이상이라는 나이 제한이 있습니다. 정답은 ③번입니다.",
   vocab: {
-    annual: { word:"annual", pron:"[애뉴얼]", meaning:"연례의, 매년의", ex:"This annual festival is popular.", exko:"이 연례 축제는 인기가 있다." },
+    annual: { word:"annual", pron:"[애뉴얼]", meaning:"연례의, 매년의", ex:"This annual festival is popular.", exko:"이 연례 축제는 인기가 있다.", etym:"annu(=annus, 해·년) + -al(형용사형) → 매년의 → 연례의. 같은 annu 어근을 쓰는 다른 단어: anniversary(anni + vers(돌다) + ary → 해마다 돌아오는 날 → 기념일), biannual(bi-둘 + annual → 일 년에 두 번의)." },
     aims: { word:"aims to", pron:"[에임즈 투]", meaning:"~하는 것을 목표로 하다", ex:"The festival aims to celebrate Robin Hood.", exko:"그 축제는 Robin Hood를 기념하는 것을 목표로 한다." },
-    celebrate: { word:"celebrate", pron:"[셀러브레이트]", meaning:"기념하다, 축하하다", ex:"We celebrate the hero every year.", exko:"우리는 매년 그 영웅을 기념한다." },
+    celebrate: { word:"celebrate", pron:"[셀러브레이트]", meaning:"기념하다, 축하하다", ex:"We celebrate the hero every year.", exko:"우리는 매년 그 영웅을 기념한다.", etym:"cele(=celeber, 붐비는·유명한) + -brate(동사형 어미) → 많은 사람이 모여 기리다 → 기념하다, 축하하다. 같은 어근을 쓰는 단어: celebrity(같은 어근의 명사형 → 유명 인사)." },
     shoot_a_bow: { word:"shoot a bow", pron:"[슛 어 보우]", meaning:"활을 쏘다", ex:"You can shoot a bow like Robin Hood.", exko:"Robin Hood처럼 활을 쏠 수 있다." },
-    available: { word:"available", pron:"[어베일러블]", meaning:"이용 가능한", ex:"It's only available for ages 6 and above.", exko:"6세 이상만 이용 가능하다." },
+    available: { word:"available", pron:"[어베일러블]", meaning:"이용 가능한", ex:"It's only available for ages 6 and above.", exko:"6세 이상만 이용 가능하다.", etym:"a-(ad-, ~로) + vail(=valere, 힘이 있다) + -able(~할 수 있는) → ~에 힘을 쓸 수 있는 → 이용 가능한. 같은 val/vail 어근을 쓰는 다른 접두사 단어: prevail(pre-먼저 + vail → 먼저 힘을 발휘하다 → 우세하다), valuable(val + uable → 가치 있는)." },
     shuttle_bus: { word:"shuttle bus", pron:"[셔틀 버스]", meaning:"셔틀버스", ex:"Free shuttle bus will be provided.", exko:"무료 셔틀버스가 제공될 것이다." },
-    provided: { word:"provided", pron:"[프로바이디드]", meaning:"제공되는", ex:"Free parking is provided.", exko:"무료 주차가 제공된다." },
-    reservation: { word:"reservation", pron:"[레저베이션]", meaning:"예약", ex:"A reservation is not required.", exko:"예약은 필요하지 않다." }
+    provided: { word:"provided", pron:"[프로바이디드]", meaning:"제공되는", ex:"Free parking is provided.", exko:"무료 주차가 제공된다.", etym:"pro-(앞으로, 미리) + vide(=videre, 보다) + -ed → 미리 내다보고 마련하다 → 제공된. 같은 vid 어근을 쓰는 다른 접두사 단어: evident(e-밖으로 + vid → 밖으로 보이는 → 명백한), video(vid → 보다)." },
+    reservation: { word:"reservation", pron:"[레저베이션]", meaning:"예약", ex:"A reservation is not required.", exko:"예약은 필요하지 않다.", etym:"re-(다시, 뒤로) + serve(=servare, 지키다·보관하다) + -ation → 따로 보관해 두다 → 예약. 같은 serve 어근을 쓰는 다른 접두사 단어: preserve(pre-미리 + serve → 미리 지키다 → 보존하다), observe(ob-향해 + serve → 지켜보다 → 관찰하다)." }
+  },
+  funcWords: {
+    who: { word:"who", tag:"[관계대명사 · 계속적 용법]", meaning:"콤마 뒤 who는 앞의 Robin Hood를 받아 부연 설명하는 계속적 용법의 관계대명사예요. '그런데 그가 Shearwood 숲을 전 세계적으로 유명하게 만들었다'라고 이어서 해석하면 자연스러워요. 한국어 번역에서는 관계절이 앞으로 나와 '숲을 유명하게 만든 Robin Hood'처럼 명사를 꾸미는 형태로 바뀐다는 점도 눈여겨보세요.", ex:"This annual festival aims to celebrate Robin Hood, who has made Shearwood Forest famous around the world.", exko:"이 연례 축제는 Shearwood 숲을 전 세계적으로 유명하게 만든 Robin Hood를 기념하는 것을 목표로 합니다." },
+    like: { word:"like", tag:"[전치사 like]", meaning:"'like Robin Hood'에서 like는 동사(좋아하다)가 아니라 '~처럼'이라는 뜻의 전치사예요. 'Shoot a bow like Robin Hood'는 'Robin Hood처럼 활을 쏘다'라고 해석돼요.", ex:"Shoot a bow like Robin Hood. (only available for ages 6 and above)", exko:"Robin Hood처럼 활을 쏘아 보세요. (6세 이상만 이용 가능)" },
+    for: { word:"for", tag:"[전치사 for · 대상]", meaning:"'available for ages 6 and above'에서 for는 '~을 위해'가 아니라 '~에게 해당하는, ~을 대상으로'라는 뜻이에요. '6세 이상에게 이용 가능한'이라고 해석하면 자연스러워요.", ex:"Shoot a bow like Robin Hood. (only available for ages 6 and above)", exko:"Robin Hood처럼 활을 쏘아 보세요. (6세 이상만 이용 가능)" },
+    above: { word:"above", tag:"[부사 above · 의미 확인]", meaning:"above를 '위에'라고 해석하면 뜻이 통하지 않아요. 나이·수량 뒤에 오는 'and above'는 '~ 이상'이라는 뜻이라서, 'for ages 6 and above'는 '6세 이상을 대상으로'라고 해석해야 해요. 안내문에서 참가 조건을 나타낼 때 자주 나와요.", ex:"Shoot a bow like Robin Hood. (only available for ages 6 and above)", exko:"Robin Hood처럼 활을 쏘아 보세요. (6세 이상만 이용 가능)" },
+    take: { word:"Take", tag:"[동사 take · 관용구 take pictures]", meaning:"take를 '가져가다'로 해석하면 어색해요. 'take pictures (with ~)'는 '(~와 함께) 사진을 찍다'라는 뜻의 표현이에요. 'Take pictures with Robin Hood'는 'Robin Hood와 함께 사진을 찍으세요'로 해석돼요.", ex:"Take pictures with Robin Hood and other festival characters.", exko:"Robin Hood와 다른 축제 캐릭터들과 사진을 찍으세요." },
+    any: { word:"any", tag:"[형용사 any · 부정문]", meaning:"any는 '약간의, 어떤'으로 알려져 있지만, 부정문에서 쓰이면 '어떤 ~도 (아니다)'라는 전면 부정의 뜻이 돼요. 'A reservation is not required for any event'는 '어떤 행사에도 예약은 필요하지 않다'라고 해석해야 해요.", ex:"A reservation is not required for any event.", exko:"어떤 행사에도 예약은 필요하지 않습니다." }
   },
   passage: `The Robin Hood Festival is coming soon! This [[annual::annual]] festival [[aims::aims to]] [[celebrate::celebrate]] Robin Hood, who has made Shearwood Forest famous around the world.
 
@@ -346,13 +391,29 @@ Robin Hood와 다른 축제 캐릭터들과 사진을 찍으세요.
   explanation: "'we should assume ... ② what there is probably a good reason why'에서 뒤에 이어지는 절이 완전하므로 관계대명사 what을 쓸 수 없고, 명사절 접속사 that을 써야 합니다. 따라서 정답은 ②번입니다.",
   vocab: {
     make_the_most_of: { word:"make the most of", pron:"[메이크 더 모스트 오브]", meaning:"~을 최대한 활용하다", ex:"They make the most of available resources.", exko:"그들은 이용 가능한 자원을 최대한 활용한다." },
-    subtle: { word:"subtle", pron:"[서틀]", meaning:"미묘한", ex:"The ways are subtle and complicated.", exko:"그 방식들은 미묘하고 복잡하다." },
-    humility: { word:"humility", pron:"[휴밀리티]", meaning:"겸손", ex:"We ought to have more humility.", exko:"우리는 더 많은 겸손을 가져야 한다." },
-    millennia: { word:"millennia", pron:"[밀레니아]", meaning:"수천 년", ex:"We have eaten these foods for millennia.", exko:"우리는 수천 년 동안 이 음식들을 먹어왔다." },
+    subtle: { word:"subtle", pron:"[서틀]", meaning:"미묘한", ex:"The ways are subtle and complicated.", exko:"그 방식들은 미묘하고 복잡하다.", etym:"sub-(아래에, 촘촘히) + tle(=tela, '촘촘히 짠 천'—texere '짜다'에서 유래) → 촘촘하게 짜여 잘 드러나지 않는 → 미묘한. 같은 texere 어근을 쓰는 단어: text(짜여진 것 → 글), textile(짜여진 것 → 직물)." },
+    humility: { word:"humility", pron:"[휴밀리티]", meaning:"겸손", ex:"We ought to have more humility.", exko:"우리는 더 많은 겸손을 가져야 한다.", etym:"humil(=humilis, 낮은, humus '흙'에서 유래) + -ity(명사형) → 땅처럼 낮은 상태 → 겸손. 같은 hum 어근을 쓰는 다른 단어: humble(같은 어근의 형용사형 → 겸손한), exhume(ex-밖으로 + hum(땅) → 땅 밖으로 꺼내다 → 발굴하다)." },
+    millennia: { word:"millennia", pron:"[밀레니아]", meaning:"수천 년", ex:"We have eaten these foods for millennia.", exko:"우리는 수천 년 동안 이 음식들을 먹어왔다.", etym:"mill(=mille, 천) + enni(=annus, 해) + -a(복수형) → 천 년들 → 수천 년. 같은 mill/anni 어근을 쓰는 다른 단어: millennium(단수형, 천 년), anniversary(anni + vers → 해마다 돌아오는 날 → 기념일)." },
     otherwise: { word:"otherwise", pron:"[아더와이즈]", meaning:"달리, 그렇지 않게", ex:"until it is proven otherwise", exko:"그렇지 않다고 증명될 때까지" },
-    processed: { word:"processed", pron:"[프로세스트]", meaning:"가공된", ex:"highly processed foods", exko:"고도로 가공된 식품들" },
-    preferable: { word:"preferable", pron:"[프레퍼러블]", meaning:"더 나은, 선호되는", ex:"They are preferable to lean salamis.", exko:"그것들이 기름기 없는 살라미보다 낫다." },
-    transition: { word:"transition", pron:"[트랜지션]", meaning:"전환", ex:"They undergo a nutrition transition.", exko:"그들은 영양 전환을 겪는다." }
+    processed: { word:"processed", pron:"[프로세스트]", meaning:"가공된", ex:"highly processed foods", exko:"고도로 가공된 식품들", etym:"pro-(앞으로) + cess(=cedere, 가다) + -ed → 앞으로 나아가게 하다 → 가공된, 처리된. 같은 cess/ced 어근을 쓰는 다른 접두사 단어: exceed(ex-넘어서 + ceed → 넘어서 가다 → 초과하다), recede(re-뒤로 + cede → 물러나다)." },
+    preferable: { word:"preferable", pron:"[프레퍼러블]", meaning:"더 나은, 선호되는", ex:"They are preferable to lean salamis.", exko:"그것들이 기름기 없는 살라미보다 낫다.", etym:"pre-(앞서) + fer(=ferre, 나르다·옮기다) + -able(~할 만한) → 앞에 놓을 만한 → 더 나은, 선호되는. 같은 fer 어근을 쓰는 다른 접두사 단어: transfer(trans-가로질러 + fer → 옮기다), infer(in-안으로 + fer → 안으로 이끌어내다 → 추론하다)." },
+    transition: { word:"transition", pron:"[트랜지션]", meaning:"전환", ex:"They undergo a nutrition transition.", exko:"그들은 영양 전환을 겪는다.", etym:"trans-(가로질러) + it(=ire, 가다) + -ion(명사형) → 가로질러 가다 → 전환, 이행. 같은 it/i 어근을 쓰는 다른 접두사 단어: exit(ex-밖으로 + it → 밖으로 나가다), initial(in-안으로 + it → 처음 들어가는 → 최초의)." }
+  },
+  funcWords: {
+    that: { word:"that", tag:"[관계대명사/명사절 접속사]", meaning:"that은 이 글에서 두 가지로 쓰여요. 'ways that are subtle and complicated'에서는 ways를 선행사로 받는 주격 관계대명사이고, 뒤에 나오는 'We should assume that traditionally made fatty blood sausages are preferable ~'에서는 assume의 목적어절을 이끄는 명사절 접속사(~라는 것을)예요. 뒤에 선행사가 있는지 없는지로 구별하면 쉬워요.", ex:"Human beings have evolved to make the most of the resources available to them in ways that are subtle and complicated.", exko:"인간은 미묘하고 복잡한 방식으로 자신에게 이용 가능한 자원을 최대한 활용하도록 진화해 왔다." },
+    to: { word:"to", tag:"[to부정사 / 전치사 to]", meaning:"'evolved to make the most of'에서 to는 to부정사로 '~하도록/~하기 위해'라는 결과·목적의 뜻이에요. 뒤에 나오는 'preferable to lean, factory-made salamis'의 to는 다른 용법으로, preferable A to B(B보다 A를 선호하다) 구문에 쓰인 전치사예요. '~보다'라고 해석해야지 '~하기 위해'로 오해하면 안 돼요.", ex:"Human beings have evolved to make the most of the resources available to them in ways that are subtle and complicated.", exko:"인간은 미묘하고 복잡한 방식으로 자신에게 이용 가능한 자원을 최대한 활용하도록 진화해 왔다." },
+    over: { word:"over", tag:"[전치사 over · 비교]", meaning:"'chosen over'에서 over는 '~위에'가 아니라 '~보다(우선하여)'라는 뜻의 전치사예요. be chosen over는 '~보다 더 선택되다, ~대신 선택되다'라고 해석돼요.", ex:"Traditional foods that don't fit neatly on the contemporary dietary food plate should generally be chosen over highly processed ones that ③ do.", exko:"현대의 식단 접시에 딱 들어맞지 않는 전통 음식이 그것에 들어맞는 고도로 가공된 음식보다 일반적으로 선택되어야 한다." },
+    so: { word:"so", tag:"[대동사 so / 부사 so]", meaning:"'do so'에서 so는 앞에 나온 동사구(change our diets)를 대신하는 대동사 표현으로 '그렇게 하다'라는 뜻이에요. 뒤에 나오는 'there is so much we do not know'의 so는 이것과 달리 much를 강조하는 부사로 '너무나 (많은)'이라는 뜻이에요.", ex:"When we change our diets, especially when we do so quickly, we are ① effectively conducting huge experiments in nutrition.", exko:"우리가 식단을 바꿀 때, 특히 그것을 빠르게 할 때, 우리는 사실상 영양학에서 거대한 실험을 하고 있는 것이다." },
+    how: { word:"how", tag:"[의문사 how · 정도]", meaning:"'how poorly traditional societies are faring'에서 how는 '어떻게'가 아니라 poorly(안 좋게)의 정도를 나타내는 의문사로, '얼마나 안 좋게 지내고 있는지'라고 해석돼요. how+형용사/부사 구조는 '얼마나 ~한지'로 해석하는 경우가 많다는 것을 기억하세요.", ex:"Witnessing how poorly traditional societies are faring as they undergo a nutrition transition should make those who have already completed it ⑤ question whether their diets have moved too far.", exko:"전통 사회가 영양 전환을 겪으면서 얼마나 좋지 않게 살아가고 있는지를 목격하는 것은, 이미 그 전환을 마친 사람들이 자신의 식단이 너무 멀리 와버린 것은 아닌지 의문을 갖게 만들 것이다." },
+    effectively: { word:"effectively", tag:"[부사 · 문맥 확인 필요]", meaning:"effectively는 사전에 '효과적으로'라는 뜻으로 흔히 나오지만, 여기 '① effectively conducting huge experiments'에서는 '사실상, 실제로는'이라는 뜻으로 쓰였어요. '효과적으로'가 아니라 '사실상'으로 해석해야 문맥이 자연스러워요.", ex:"When we change our diets, especially when we do so quickly, we are ① effectively conducting huge experiments in nutrition.", exko:"우리가 식단을 바꿀 때, 특히 그것을 빠르게 할 때, 우리는 사실상 영양학에서 거대한 실험을 하고 있는 것이다." },
+    young: { word:"young", tag:"[형용사 · 의미 확인]", meaning:"young은 사람의 '어린, 젊은' 나이를 뜻하는 것으로 가장 먼저 떠오르지만, 여기 'Nutritional science is still young'에서는 학문 분야가 '아직 역사가 짧은, 미숙한'이라는 뜻으로 쓰였어요. 나이가 아니라 학문의 발전 정도를 나타내요.", ex:"Nutritional science is still young and there is so much we do not know.", exko:"영양 과학은 아직 역사가 짧고 우리가 모르는 것이 너무나 많다." },
+    certain: { word:"certain", tag:"[형용사 · 의미 확인]", meaning:"certain은 '확실한'이라는 뜻으로 흔히 알려져 있지만, 여기 'certain foods in certain ways'에서는 '특정한'이라는 뜻이에요. '확실한 음식'이 아니라 '특정한 음식'으로 해석하세요.", ex:"If we have eaten certain foods in certain ways for millennia, we should assume until it is proven otherwise ② what there is probably a good reason why.", exko:"만약 우리가 수천 년 동안 특정한 방식으로 특정한 음식을 먹어 왔다면, 그렇지 않다고 증명될 때까지 우리는 아마도 그럴 만한 타당한 이유가 있다고 가정해야 한다." },
+    fit: { word:"fit", tag:"[동사 · 품사 확인]", meaning:"fit은 '건강한, 신체가 튼튼한'이라는 형용사나 '발작'이라는 명사로도 쓰이지만, 여기 'don't fit neatly on the ~ plate'에서는 '맞다, 들어맞다'라는 뜻의 동사예요. '식단 접시에 딱 들어맞지 않는'이라고 해석하세요.", ex:"Traditional foods that don't fit neatly on the contemporary dietary food plate should generally be chosen over highly processed ones that ③ do.", exko:"현대의 식단 접시에 딱 들어맞지 않는 전통 음식이 그것에 들어맞는 고도로 가공된 음식보다 일반적으로 선택되어야 한다." },
+    do: { word:"do", tag:"[대동사 do · 품사 확인]", meaning:"이 문장의 ③ do는 '하다'라는 일반적인 뜻이 아니라, 앞에 나온 동사구 'fit neatly on the contemporary dietary food plate'를 대신하는 대동사예요. 'highly processed ones that do'는 '(식단 접시에) 딱 들어맞는 고도로 가공된 음식들'이라고 해석돼요.", ex:"Traditional foods that don't fit neatly on the contemporary dietary food plate should generally be chosen over highly processed ones that ③ do.", exko:"현대의 식단 접시에 딱 들어맞지 않는 전통 음식이 그것에 들어맞는 고도로 가공된 음식보다 일반적으로 선택되어야 한다." },
+    conducting: { word:"conducting", tag:"[동사 conduct · 관용구 conduct an experiment]", meaning:"conduct를 '지휘하다, 안내하다'로 알고 있으면 어색해져요. 'conduct an experiment'는 '실험을 하다, 실험을 실시하다'라는 뜻의 표현이라서, 'conducting huge experiments in nutrition'은 '영양학에서 거대한 실험을 하고 있는'으로 해석돼요.", ex:"When we change our diets, especially when we do so quickly, we are ① effectively conducting huge experiments in nutrition.", exko:"우리가 식단을 바꿀 때, 특히 그것을 빠르게 할 때, 우리는 사실상 영양학에서 거대한 실험을 하고 있는 것이다." },
+    faring: { word:"faring", tag:"[동사 fare · 의미 확인]", meaning:"fare를 명사 '요금(버스 요금 등)'으로만 알면 이 문장을 전혀 해석할 수 없어요. 여기서 fare는 동사로 '지내다, 살아가다, (형편이) ~하다'라는 뜻이라서, 'how poorly traditional societies are faring'은 '전통 사회가 얼마나 좋지 않게 살아가고 있는지'로 해석돼요.", ex:"Witnessing how poorly traditional societies are faring as they undergo a nutrition transition should make those who have already completed it ⑤ question whether their diets have moved too far.", exko:"전통 사회가 영양 전환을 겪으면서 얼마나 좋지 않게 살아가고 있는지를 목격하는 것은, 이미 그 전환을 마친 사람들이 자신의 식단이 너무 멀리 와버린 것은 아닌지 의문을 갖게 만들 것이다." },
+    poorly: { word:"poorly", tag:"[부사 poorly · 의미 확인]", meaning:"poorly를 '가난하게'나 '서투르게'로 해석하면 어색해요. fare와 함께 쓰이면 '형편이 좋지 않게, 잘 지내지 못하는 상태로'라는 뜻이에요. 'how poorly ~ are faring'은 '얼마나 좋지 않게 살아가고 있는지'로 해석하세요.", ex:"Witnessing how poorly traditional societies are faring as they undergo a nutrition transition should make those who have already completed it ⑤ question whether their diets have moved too far.", exko:"전통 사회가 영양 전환을 겪으면서 얼마나 좋지 않게 살아가고 있는지를 목격하는 것은, 이미 그 전환을 마친 사람들이 자신의 식단이 너무 멀리 와버린 것은 아닌지 의문을 갖게 만들 것이다." },
+    question: { word:"question", tag:"[동사 question · 품사 확인]", meaning:"question을 명사 '질문'으로 보면 문장 구조가 무너져요. 여기서는 'make+목적어+동사원형' 구조의 동사원형 자리라서 '의문을 갖다, 의심하다'라는 뜻의 동사예요. '~인지 의문을 갖게 만들다'로 해석하세요.", ex:"Witnessing how poorly traditional societies are faring as they undergo a nutrition transition should make those who have already completed it ⑤ question whether their diets have moved too far.", exko:"전통 사회가 영양 전환을 겪으면서 얼마나 좋지 않게 살아가고 있는지를 목격하는 것은, 이미 그 전환을 마친 사람들이 자신의 식단이 너무 멀리 와버린 것은 아닌지 의문을 갖게 만들 것이다." }
   },
   passage: `Human beings have evolved to [[make_the_most_of::make the most of]] the resources available to them in ways that are [[subtle::subtle]] and complicated. When we change our diets, especially when we do so quickly, we are ① ‹effectively› conducting huge experiments in nutrition. We ought to have more [[humility::humility]]. Nutritional science is still young and there is so much we do not know. If we have eaten certain foods in certain ways for [[millennia::millennia]], we should assume until it is proven [[otherwise::otherwise]] ② ‹what› there is probably a good reason why. Traditional foods that don't fit neatly on the contemporary dietary food plate should generally be chosen over highly [[processed::processed]] ones that ③ ‹do›. We should assume that traditionally ④ ‹made› fatty blood sausages are [[preferable::preferable]] to lean, factory-made salamis; that spoonfuls of honey are superior to sprinkles of sweeteners. Witnessing how poorly traditional societies are faring as they undergo a nutrition [[transition::transition]] should make those who have already completed it ⑤ ‹question› whether their diets have moved too far.`,
   translation: `인간은 미묘하고 복잡한 방식으로 자신에게 이용 가능한 자원을 최대한 활용하도록 진화해 왔다. 우리가 식단을 바꿀 때, 특히 그것을 빠르게 할 때, 우리는 사실상 영양학에서 거대한 실험을 하고 있는 것이다. 우리는 더 겸손해야 한다. 영양 과학은 아직 역사가 짧고 우리가 모르는 것이 너무나 많다. 만약 우리가 수천 년 동안 특정한 방식으로 특정한 음식을 먹어 왔다면, 그렇지 않다고 증명될 때까지 우리는 아마도 그럴 만한 타당한 이유가 있다고 가정해야 한다. 현대의 식단 접시에 딱 들어맞지 않는 전통 음식이 그것에 들어맞는 고도로 가공된 음식보다 일반적으로 선택되어야 한다. 우리는 전통적으로 만들어진 기름진 순대가 기름기 없는 공장제 살라미보다 더 낫고, 꿀 한 숟가락이 감미료 가루보다 더 우수하다고 가정해야 한다. 전통 사회가 영양 전환을 겪으면서 얼마나 좋지 않게 살아가고 있는지를 목격하는 것은, 이미 그 전환을 마친 사람들이 자신의 식단이 너무 멀리 와버린 것은 아닌지 의문을 갖게 만들 것이다.`,
@@ -374,14 +435,30 @@ Robin Hood와 다른 축제 캐릭터들과 사진을 찍으세요.
   answer: 3,
   explanation: "Gen Z가 자신의 돈이 '~한 관행'에 쓰이지 않도록 하려 한다는 문맥이므로, 자금이 투입되지 않기를 바라는 대상은 '유익한(beneficial)'이 아니라 '해로운(harmful)' 관행이어야 자연스럽습니다. 따라서 ④번이 적절하지 않습니다.",
   vocab: {
-    crucial: { word:"crucial", pron:"[크루셜]", meaning:"매우 중요한", ex:"Convenience and technology are crucial.", exko:"편의성과 기술은 매우 중요하다." },
+    crucial: { word:"crucial", pron:"[크루셜]", meaning:"매우 중요한", ex:"Convenience and technology are crucial.", exko:"편의성과 기술은 매우 중요하다.", etym:"cruci(=crux, 십자가) + -al(형용사형) → 십자가처럼 결정적인 지점의 → 매우 중요한. 같은 cruc 어근을 쓰는 다른 단어: crucify(cruci + fy → 십자가에 못박다), excruciating(ex-강조 + cruci + ating → 십자가형처럼 고통스러운 → 극도로 고통스러운)." },
     values_driven: { word:"values-driven", pron:"[밸류즈 드리븐]", meaning:"가치 중심의", ex:"This generation is values-driven.", exko:"이 세대는 가치 중심적이다." },
-    transparency: { word:"Transparency", pron:"[트랜스패런시]", meaning:"투명성", ex:"Transparency is vital.", exko:"투명성이 매우 중요하다." },
-    skeptical: { word:"skeptical", pron:"[스켑티컬]", meaning:"회의적인", ex:"Gen Z is skeptical of large corporations.", exko:"Z세대는 대기업에 회의적이다." },
-    accountability: { word:"accountability", pron:"[어카운터빌리티]", meaning:"책임감", ex:"institutions that lack accountability", exko:"책임감이 부족한 기관들" },
-    ethical: { word:"ethical", pron:"[에씨컬]", meaning:"윤리적인", ex:"Ethical banking practices matter.", exko:"윤리적인 금융 관행이 중요하다." },
-    implications: { word:"implications", pron:"[임플리케이션즈]", meaning:"영향, 함의", ex:"the ethical implications of their decisions", exko:"그들의 결정이 갖는 윤리적 함의" },
-    sustainability: { word:"sustainability", pron:"[서스테이너빌리티]", meaning:"지속 가능성", ex:"committed to environmental sustainability", exko:"환경 지속 가능성에 전념하는" }
+    transparency: { word:"Transparency", pron:"[트랜스패런시]", meaning:"투명성", ex:"Transparency is vital.", exko:"투명성이 매우 중요하다.", etym:"trans-(가로질러) + par(=parere, 나타나다·보이다) + -ency(명사형) → 가로질러 훤히 보이는 성질 → 투명성. 같은 par 어근을 쓰는 다른 접두사 단어: appear(ap-(ad-, ~쪽으로) + par → ~쪽으로 나타나다), disappear(dis-사라지게 + appear → 사라지다)." },
+    skeptical: { word:"skeptical", pron:"[스켑티컬]", meaning:"회의적인", ex:"Gen Z is skeptical of large corporations.", exko:"Z세대는 대기업에 회의적이다.", etym:"skep(=그리스어 skeptesthai, 살펴보다·의심하다) + -tic + -al(형용사형) → 의심하며 따져보는 → 회의적인. 같은 어근의 명사형: skepticism(회의론)." },
+    accountability: { word:"accountability", pron:"[어카운터빌리티]", meaning:"책임감", ex:"institutions that lack accountability", exko:"책임감이 부족한 기관들", etym:"ac-(ad-, ~에게) + count(=computare, 세다·계산하다) + -ability(~할 수 있는 성질) → ~에게 셈을 대야 하는 성질 → 책임감. 같은 count 어근을 쓰는 다른 접두사 단어: discount(dis-떨어뜨려 + count → 셈을 깎다 → 할인), recount(re-다시 + count → 다시 세다, 이야기하다)." },
+    ethical: { word:"ethical", pron:"[에씨컬]", meaning:"윤리적인", ex:"Ethical banking practices matter.", exko:"윤리적인 금융 관행이 중요하다.", etym:"eth(=ethos, 그리스어 '관습·성격') + -ical(형용사형) → 관습과 도리에 맞는 → 윤리적인. 같은 어근의 명사형: ethics(윤리학)." },
+    implications: { word:"implications", pron:"[임플리케이션즈]", meaning:"영향, 함의", ex:"the ethical implications of their decisions", exko:"그들의 결정이 갖는 윤리적 함의", etym:"im-(in-, 안으로) + plic(=plicare, 접다·포개다) + -ation(명사형) + -s → 안으로 접어 넣어진 것 → 함축, 영향. 같은 plic 어근을 쓰는 다른 접두사 단어: complicate(com-함께 + plic + ate → 함께 접다 → 복잡하게 만들다), explicit(ex-밖으로 + plic + it → 펼쳐서 밖으로 드러낸 → 명백한)." },
+    sustainability: { word:"sustainability", pron:"[서스테이너빌리티]", meaning:"지속 가능성", ex:"committed to environmental sustainability", exko:"환경 지속 가능성에 전념하는", etym:"sus-(sub-, 아래에서 받쳐) + tain(=tenere, 잡다) + -ability(~할 수 있는 성질) → 계속 유지할 수 있는 능력 → 지속 가능성. 같은 tain 어근을 쓰는 다른 접두사 단어: obtain(ob-향해 + tain → 향해 잡다 → 얻다), contain(con-함께 + tain → 함께 담다 → 포함하다)." }
+  },
+  funcWords: {
+    that: { word:"that", tag:"[관계대명사 · 주격]", meaning:"that은 institutions를 선행사로 받는 주격 관계대명사예요. 이 글에는 'institutions that lack accountability', 'businesses that match their values', 'Banks that offer ~'처럼 'that+동사'가 명사를 꾸며주는 구조가 반복해서 나오니, '~하는 (명사)'로 해석하는 패턴에 익숙해지세요.", ex:"This generation is incredibly values-driven, and they want to bank with institutions that match their personal beliefs and values.", exko:"이 세대는 대단히 가치 중심적이며, 자신의 개인적 신념 및 가치와 부합하는 기관과 거래하기를 원한다." },
+    where: { word:"where", tag:"[관계부사 where]", meaning:"where는 a world를 선행사로 받는 관계부사예요. 'a world where information is freely available'은 '정보를 자유롭게 얻을 수 있는 세상'이라고 해석돼요.", ex:"They have grown up in a world where information is freely available, and they expect complete transparency from the brands they support.", exko:"그들은 정보를 자유롭게 얻을 수 있는 세상에서 자랐고, 자신이 지지하는 브랜드로부터 완전한 투명성을 기대한다." },
+    than: { word:"than", tag:"[more ~ than ever]", meaning:"'more ~ than ever'는 '그 어느 때보다 더 ~한'이라는 뜻의 관용 표현이에요. than ever를 '언제나보다'로 직역하지 말고 '지금까지 중 가장'이라는 느낌으로 해석하세요.", ex:"Moreover, ethical banking practices are more ③ important than ever.", exko:"게다가, 윤리적인 금융 관행이 그 어느 때보다 중요하다." },
+    with: { word:"with", tag:"[bank with · 전치사 with]", meaning:"'bank with institutions'에서 bank는 동사로 '거래하다, 예금하다'라는 뜻이고, with는 그 거래 상대를 나타내는 전치사예요. 'bank with institutions'는 '기관과 거래하다'라고 해석하세요.", ex:"This generation is incredibly values-driven, and they want to bank with institutions that match their personal beliefs and values.", exko:"이 세대는 대단히 가치 중심적이며, 자신의 개인적 신념 및 가치와 부합하는 기관과 거래하기를 원한다." },
+    match: { word:"match", tag:"[동사 · 품사 확인]", meaning:"match는 '성냥'이나 '경기'라는 명사로도 잘 쓰이지만, 여기 'institutions that match their personal beliefs and values'에서는 '부합하다, 일치하다'라는 뜻의 동사예요. that의 동사이므로 명사가 아니라 동사로 보세요.", ex:"This generation is incredibly values-driven, and they want to bank with institutions that match their personal beliefs and values.", exko:"이 세대는 대단히 가치 중심적이며, 자신의 개인적 신념 및 가치와 부합하는 기관과 거래하기를 원한다." },
+    driving: { word:"driving", tag:"[동사 · 의미 확인]", meaning:"driving은 '운전하는'이라는 뜻으로 먼저 떠오르지만, 여기 'factors driving Gen Z's financial decisions'에서는 '~을 이끄는, ~을 좌우하는'이라는 뜻이에요. 자동차 운전이 아니라 요인이 결정을 '움직이게 하는' 것을 가리켜요.", ex:"While convenience and technology are crucial, they are not the only factors driving Gen Z's financial decisions.", exko:"편의성과 기술이 매우 중요하기는 하지만, 그것들이 Z세대의 금융 결정을 이끄는 유일한 요인은 아니다." },
+    terms: { word:"terms", tag:"[명사 · 의미 확인]", meaning:"terms는 '용어들'이나 '학기'라는 뜻으로도 잘 쓰이지만, 여기 'fees, terms, and conditions'에서는 계약·거래의 '약관'이라는 뜻이에요. 은행 이용 약관을 가리키는 표현이에요.", ex:"Banks, for example, must ② clearly communicate fees, terms, and conditions, as well as how they handle customers' data.", exko:"예를 들어 은행은 수수료, 약관, 조건뿐만 아니라 고객 데이터를 어떻게 처리하는지도 명확하게 알려야 한다." },
+    handle: { word:"handle", tag:"[동사 · 품사 확인]", meaning:"handle은 '손잡이'라는 명사로도 잘 알려져 있지만, 여기 'how they handle customers' data'에서는 '처리하다, 다루다'라는 뜻의 동사예요. how 뒤에 주어(they)와 함께 쓰인 동사이므로 명사가 아니에요.", ex:"Banks, for example, must ② clearly communicate fees, terms, and conditions, as well as how they handle customers' data.", exko:"예를 들어 은행은 수수료, 약관, 조건뿐만 아니라 고객 데이터를 어떻게 처리하는지도 명확하게 알려야 한다." },
+    fund: { word:"fund", tag:"[동사 · 품사 확인]", meaning:"fund는 '기금, 자금'이라는 명사로 흔히 쓰이지만, 여기 'used to fund ④ beneficial practices'에서는 '자금을 대다, 자금을 지원하다'라는 뜻의 동사예요. to 뒤에 오는 동사원형이므로 명사가 아니라 동사로 해석하세요.", ex:"They are interested in sustainable investing, supporting businesses that match their values, and ensuring that their money is not being used to fund ④ beneficial practices.", exko:"그들은 지속 가능한 투자, 자신의 가치와 맞는 기업을 지원하는 것, 그리고 자신의 돈이 유익한(→해로운) 관행에 자금을 대는 데 사용되지 않도록 하는 것에 관심이 있다." },
+    bank: { word:"bank", tag:"[동사 bank · 품사 확인]", meaning:"bank를 명사 '은행'으로만 보면 'want to bank with ~'가 해석되지 않아요. to 뒤에 온 동사원형이며, 'bank with ~'는 '~와 (금융) 거래를 하다, ~에 예금하다'라는 뜻이에요. '기관과 거래하기를 원한다'로 해석하세요.", ex:"This generation is incredibly values-driven, and they want to bank with institutions that match their personal beliefs and values.", exko:"이 세대는 대단히 가치 중심적이며, 자신의 개인적 신념 및 가치와 부합하는 기관과 거래하기를 원한다." },
+    lack: { word:"lack", tag:"[동사 lack · 품사 확인]", meaning:"lack을 명사 '부족'으로 보면 안 돼요. 여기서는 that절의 동사로 '~이 부족하다, ~이 없다'라는 뜻이며, 뒤에 전치사 없이 목적어가 바로 옵니다. 'institutions that lack accountability'는 '책임감이 부족한 기관'으로 해석돼요.", ex:"Gen Z is skeptical of large corporations and institutions that ① lack accountability.", exko:"Z세대는 책임감이 부족한 대기업과 기관에 회의적이다." },
+    communicate: { word:"communicate", tag:"[동사 communicate · 의미 확인]", meaning:"communicate를 '의사소통하다'로만 알면 뒤에 목적어(fees, terms)가 오는 이 문장이 어색해요. 여기서는 '(정보를) 전달하다, 알리다'라는 뜻의 타동사라서 '수수료, 약관, 조건을 명확하게 알려야 한다'로 해석돼요.", ex:"Banks, for example, must ② clearly communicate fees, terms, and conditions, as well as how they handle customers' data.", exko:"예를 들어 은행은 수수료, 약관, 조건뿐만 아니라 고객 데이터를 어떻게 처리하는지도 명확하게 알려야 한다." },
+    practices: { word:"practices", tag:"[명사 practice · 의미 확인]", meaning:"practice를 '연습'으로 해석하면 '윤리적인 금융 연습'이라는 이상한 말이 돼요. 여기서는 '관행, (업계의) 방식'이라는 뜻이라서 'ethical banking practices'는 '윤리적인 금융 관행'으로 해석돼요. 뒤에 나오는 'beneficial practices'도 같은 뜻이에요.", ex:"Moreover, ethical banking practices are more ③ important than ever.", exko:"게다가, 윤리적인 금융 관행이 그 어느 때보다 중요하다." },
+    committed: { word:"committed", tag:"[동사 commit · 관용구 be committed to]", meaning:"commit을 '(범죄를) 저지르다'로만 알면 오해하기 쉬워요. 'be committed to+명사'는 '~에 전념하다, 헌신하다'라는 뜻의 표현이라서, 'are committed to environmental sustainability'는 '환경 지속 가능성에 전념하는'으로 해석돼요. 여기서 to는 to부정사가 아니라 전치사예요.", ex:"Banks that offer socially responsible investment opportunities and are committed to environmental sustainability will ⑤ attract Gen Z's attention.", exko:"사회적으로 책임 있는 투자 기회를 제공하고 환경 지속 가능성에 전념하는 은행은 Z세대의 관심을 끌 것이다." }
   },
   passage: `While convenience and technology are [[crucial::crucial]], they are not the only factors driving Gen Z's financial decisions. This generation is incredibly [[values_driven::values-driven]], and they want to bank with institutions that match their personal beliefs and values. [[transparency::Transparency]] is vital. Gen Z is [[skeptical::skeptical]] of large corporations and institutions that ① ‹lack› [[accountability::accountability]]. They have grown up in a world where information is freely available, and they expect complete transparency from the brands they support. Banks, for example, must ② ‹clearly› communicate fees, terms, and conditions, as well as how they handle customers' data. Moreover, [[ethical::ethical]] banking practices are more ③ ‹important› than ever. Gen Z cares about the environment, social justice, and the ethical [[implications::implications]] of their financial decisions. They are interested in sustainable investing, supporting businesses that match their values, and ensuring that their money is not being used to fund ④ ‹beneficial› practices. Banks that offer socially responsible investment opportunities and are committed to environmental [[sustainability::sustainability]] will ⑤ ‹attract› Gen Z's attention.`,
   translation: `편의성과 기술이 매우 중요하기는 하지만, 그것들이 Z세대의 금융 결정을 이끄는 유일한 요인은 아니다. 이 세대는 대단히 가치 중심적이며, 자신의 개인적 신념 및 가치와 부합하는 기관과 거래하기를 원한다. 투명성이 매우 중요하다. Z세대는 책임감이 부족한 대기업과 기관에 회의적이다. 그들은 정보를 자유롭게 얻을 수 있는 세상에서 자랐고, 자신이 지지하는 브랜드로부터 완전한 투명성을 기대한다. 예를 들어 은행은 수수료, 약관, 조건뿐만 아니라 고객 데이터를 어떻게 처리하는지도 명확하게 알려야 한다. 게다가, 윤리적인 금융 관행이 그 어느 때보다 중요하다. Z세대는 환경, 사회 정의, 그리고 자신의 금융 결정이 갖는 윤리적 함의에 관심을 갖는다. 그들은 지속 가능한 투자, 자신의 가치와 맞는 기업을 지원하는 것, 그리고 자신의 돈이 유익한(→해로운) 관행에 자금을 대는 데 사용되지 않도록 하는 것에 관심이 있다. 사회적으로 책임 있는 투자 기회를 제공하고 환경 지속 가능성에 전념하는 은행은 Z세대의 관심을 끌 것이다.`,
@@ -403,14 +480,27 @@ Robin Hood와 다른 축제 캐릭터들과 사진을 찍으세요.
   answer: 2,
   explanation: "오류가 정정되었는데도 신화는 잊히지 않고 오늘날까지 150년 가까이 이어지고 있으므로, 뽀빠이가 그 신화의 '지속(endurance)'에 기여했다는 ③번이 정답입니다.",
   vocab: {
-    persists: { word:"persists", pron:"[퍼시스츠]", meaning:"지속되다", ex:"A myth that persists today", exko:"오늘날까지 지속되는 신화" },
-    supposed: { word:"supposed", pron:"[서포즈드]", meaning:"~라고 여겨지는", ex:"the supposed high iron content", exko:"높다고 여겨지는 철분 함량" },
-    originates: { word:"originates from", pron:"[오리지네이츠 프롬]", meaning:"~에서 비롯되다", ex:"It originates from a miscalculation.", exko:"그것은 계산 착오에서 비롯된다." },
-    miscalculation: { word:"miscalculation", pron:"[미스캘큘레이션]", meaning:"계산 착오", ex:"a simple miscalculation by a physiologist", exko:"한 생리학자의 단순한 계산 착오" },
-    accurately: { word:"accurately", pron:"[애큐럿리]", meaning:"정확하게", ex:"He accurately determined the amount.", exko:"그는 그 양을 정확하게 측정했다." },
+    persists: { word:"persists", pron:"[퍼시스츠]", meaning:"지속되다", ex:"A myth that persists today", exko:"오늘날까지 지속되는 신화", etym:"per-(끝까지, 통하여) + sist(=sistere, 서다) + -s → 끝까지 버티고 서다 → 지속되다. 같은 sist 어근을 쓰는 다른 접두사 단어: assist(as-(ad-, 곁에) + sist → 곁에 서다 → 돕다), resist(re-거슬러 + sist → 맞서 서다 → 저항하다)." },
+    supposed: { word:"supposed", pron:"[서포즈드]", meaning:"~라고 여겨지는", ex:"the supposed high iron content", exko:"높다고 여겨지는 철분 함량", etym:"sup-(sub-, 아래에) + pose(=ponere, 놓다) + -ed → 아래에 놓아 가정하다 → ~라고 여겨지는. 같은 pos/pon 어근을 쓰는 다른 접두사 단어: propose(pro-앞에 + pose → 앞에 내놓다 → 제안하다), oppose(op-(ob-, 맞서) + pose → 맞서 놓다 → 반대하다)." },
+    originates: { word:"originates from", pron:"[오리지네이츠 프롬]", meaning:"~에서 비롯되다", ex:"It originates from a miscalculation.", exko:"그것은 계산 착오에서 비롯된다.", etym:"origin(=oriri, 라틴어 '생겨나다, (해가) 뜨다') + -ate(동사형) → 어떤 근원에서 생겨나다 → 비롯되다. 같은 oriri 어근을 쓰는 다른 접두사 단어: aboriginal(ab-처음부터 + origin + al → 처음부터 있던 → 원주민의), orient(oriri에서 유래 → 해 뜨는 방향을 잡다 → 방향을 정하다)." },
+    miscalculation: { word:"miscalculation", pron:"[미스캘큘레이션]", meaning:"계산 착오", ex:"a simple miscalculation by a physiologist", exko:"한 생리학자의 단순한 계산 착오", etym:"mis-(잘못) + calcul(=calculus, 조약돌·계산) + -ation(명사형) → 잘못 계산함 → 계산 착오. 같은 calcul 어근을 쓰는 다른 접두사 단어: recalculate(re-다시 + calculate → 다시 계산하다), calculate(접두사 없이 원형 → 계산하다)." },
+    accurately: { word:"accurately", pron:"[애큐럿리]", meaning:"정확하게", ex:"He accurately determined the amount.", exko:"그는 그 양을 정확하게 측정했다.", etym:"ac-(ad-, ~에) + cur(=cura, 주의·돌봄) + -ate + -ly → 주의를 기울여서 → 정확하게. 같은 cur 어근을 쓰는 다른 접두사 단어: secure(se-떨어져(근심이) + cure → 근심이 없는 → 안전한), curious(cur + ious → 호기심 있는)." },
     swiftly: { word:"swiftly", pron:"[스위프틀리]", meaning:"신속하게", ex:"The error was swiftly corrected.", exko:"그 오류는 신속하게 정정되었다." },
     taken_hold: { word:"taken hold", pron:"[테이큰 홀드]", meaning:"자리를 잡다", ex:"The myth had taken hold.", exko:"그 신화는 이미 자리를 잡았다." },
-    persuade: { word:"persuade", pron:"[퍼스웨이드]", meaning:"설득하다", ex:"Parents use this tale to persuade children.", exko:"부모들은 아이들을 설득하려고 이 이야기를 쓴다." }
+    persuade: { word:"persuade", pron:"[퍼스웨이드]", meaning:"설득하다", ex:"Parents use this tale to persuade children.", exko:"부모들은 아이들을 설득하려고 이 이야기를 쓴다.", etym:"per-(완전히) + suade(=suadere, 권하다·설득하다) → 완전히 설득하다 → 설득하다. 같은 suade 어근을 쓰는 다른 접두사 단어: dissuade(dis-반대로 + suade → 그만두도록 설득하다 → 단념시키다)." }
+  },
+  funcWords: {
+    that: { word:"that", tag:"[관계대명사 · 주격]", meaning:"that은 myth를 선행사로 받는 주격 관계대명사예요. 'a myth that persists today'는 '오늘날까지 지속되는 신화'라고 해석돼요. 바로 뒤 문장의 'a legend that dates back to 1890'도 같은 구조로 쓰였어요.", ex:"For example, a well-known myth that persists today is the supposed high iron content in spinach.", exko:"예를 들어, 오늘날까지 지속되는 잘 알려진 신화 하나는 시금치에 철분 함량이 높다고 여겨지는 것이다." },
+    which: { word:"which", tag:"[관계대명사 · 계속적 용법]", meaning:"콤마 뒤 which는 앞의 dried spinach를 받아 부연 설명하는 계속적 용법의 관계대명사예요. '그런데 그것(말린 시금치)은 신선한 잎채소보다 철분을 열 배 더 많이 함유하고 있었다'라고 이어서 해석하세요.", ex:"He accurately determined that 100 grams of spinach contained 35 milligrams of iron but he was analyzing dried spinach, which held ten times more iron than the same amount of fresh leafy greens.", exko:"그는 시금치 100그램에 철분 35밀리그램이 들어 있다고 정확하게 측정했지만, 그는 말린 시금치를 분석하고 있었고, 그것은 같은 양의 신선한 잎채소보다 열 배 더 많은 철분을 함유하고 있었다." },
+    who: { word:"who", tag:"[관계대명사 · 계속적 용법]", meaning:"콤마 사이의 who는 Popeye를 받는 계속적 용법의 관계대명사예요. 'who gained superhuman strength ~ and defended himself ~'가 Popeye에 대한 부가 설명으로 삽입된 구조예요.", ex:"Popeye, who gained superhuman strength from the leafy greens and defended himself with iron fists, contributed to its __________ and even today, some nearly 150 years later, parents the world over use this tale to try to persuade their children into eating the healthy vegetable.", exko:"잎채소로부터 초인적인 힘을 얻고 철 주먹으로 자신을 방어했던 뽀빠이는 그 신화의 지속에 기여했고, 심지어 오늘날 거의 150년이 지난 지금도 전 세계의 부모들은 아이들에게 그 건강한 채소를 먹게 하려고 이 이야기를 사용한다." },
+    just: { word:"just", tag:"[부사 just · just as ~ as]", meaning:"'just as swiftly'에서 just는 '그냥, 단지'가 아니라 as ~ as 구문을 강조하는 부사로 '꼭, 그만큼'이라는 뜻이에요. '(오류가 정정된 것)만큼이나 (정정도) 빠르게 잊혔다'라고 해석하세요.", ex:"Although the error was swiftly corrected, the correction was just as swiftly forgotten.", exko:"그 오류는 신속하게 정정되었지만, 그 정정 또한 그만큼 신속하게 잊혔다." },
+    over: { word:"over", tag:"[the world over]", meaning:"'parents the world over'에서 over는 명사(the world) 뒤에 놓여 '전 세계에 걸쳐, 전 세계의'라는 뜻을 나타내는 표현이에요. the world over 전체를 '전 세계의'라고 해석하면 자연스러워요.", ex:"Popeye, who gained superhuman strength from the leafy greens and defended himself with iron fists, contributed to its __________ and even today, some nearly 150 years later, parents the world over use this tale to try to persuade their children into eating the healthy vegetable.", exko:"잎채소로부터 초인적인 힘을 얻고 철 주먹으로 자신을 방어했던 뽀빠이는 그 신화의 지속에 기여했고, 심지어 오늘날 거의 150년이 지난 지금도 전 세계의 부모들은 아이들에게 그 건강한 채소를 먹게 하려고 이 이야기를 사용한다." },
+    content: { word:"content", tag:"[명사 · 의미 확인]", meaning:"content는 '만족하는'이라는 형용사나 '(책 등의) 내용'이라는 뜻으로 잘 알려져 있지만, 여기 'the supposed high iron content in spinach'에서는 '함유량, 함량'이라는 뜻의 명사예요. '철분 함량이 높다고 여겨지는 것'이라고 해석하세요.", ex:"For example, a well-known myth that persists today is the supposed high iron content in spinach.", exko:"예를 들어, 오늘날까지 지속되는 잘 알려진 신화 하나는 시금치에 철분 함량이 높다고 여겨지는 것이다." },
+    dates: { word:"dates", tag:"[동사 · 품사 확인]", meaning:"dates는 '날짜들'이라는 명사의 복수형으로 보이기 쉽지만, 여기 'dates back to 1890'에서는 주어(a legend) 뒤에 온 동사로 '(시기가) 거슬러 올라가다'라는 뜻이에요. 'dates back to'를 하나의 표현으로 기억하세요.", ex:"This is a legend that dates back to 1890 and originates from a simple miscalculation by physiologist Gustav von Bunge.", exko:"이것은 1890년까지 거슬러 올라가는 전설이며 생리학자 Gustav von Bunge의 단순한 계산 착오에서 비롯되었다." },
+    held: { word:"held", tag:"[동사 · 의미 확인]", meaning:"held는 '잡았다, 붙들었다'라는 뜻으로 흔히 알려져 있지만, 여기 'which held ten times more iron'에서는 '함유하고 있었다'라는 뜻이에요. 물리적으로 손에 쥔 것이 아니라 성분을 담고 있었다는 의미예요.", ex:"He accurately determined that 100 grams of spinach contained 35 milligrams of iron but he was analyzing dried spinach, which held ten times more iron than the same amount of fresh leafy greens.", exko:"그는 시금치 100그램에 철분 35밀리그램이 들어 있다고 정확하게 측정했지만, 그는 말린 시금치를 분석하고 있었고, 그것은 같은 양의 신선한 잎채소보다 열 배 더 많은 철분을 함유하고 있었다." },
+    determined: { word:"determined", tag:"[동사 determine · 의미 확인]", meaning:"determine을 '결정하다'로 해석하면 어색해요. 과학·측정 문맥에서는 '측정하다, 밝혀내다, 알아내다'라는 뜻이라서, 'He accurately determined that ~'은 '그는 ~라고 정확하게 측정했다'로 해석돼요.", ex:"He accurately determined that 100 grams of spinach contained 35 milligrams of iron but he was analyzing dried spinach, which held ten times more iron than the same amount of fresh leafy greens.", exko:"그는 시금치 100그램에 철분 35밀리그램이 들어 있다고 정확하게 측정했지만, 그는 말린 시금치를 분석하고 있었고, 그것은 같은 양의 신선한 잎채소보다 열 배 더 많은 철분을 함유하고 있었다." },
+    greens: { word:"greens", tag:"[명사 greens · 의미 확인]", meaning:"greens를 '초록색들'로 해석하면 안 돼요. green이 복수형 명사 greens가 되면 '(잎이 많은) 녹색 채소'라는 뜻이라서, 'fresh leafy greens'는 '신선한 잎채소'로 해석돼요.", ex:"He accurately determined that 100 grams of spinach contained 35 milligrams of iron but he was analyzing dried spinach, which held ten times more iron than the same amount of fresh leafy greens.", exko:"그는 시금치 100그램에 철분 35밀리그램이 들어 있다고 정확하게 측정했지만, 그는 말린 시금치를 분석하고 있었고, 그것은 같은 양의 신선한 잎채소보다 열 배 더 많은 철분을 함유하고 있었다." },
+    some: { word:"some", tag:"[부사 some · 의미 확인]", meaning:"some을 '약간의, 어떤'으로 해석하면 뒤의 숫자와 어울리지 않아요. 숫자 앞에 오는 some은 '약, 대략'이라는 뜻의 부사라서, 'some nearly 150 years later'는 '거의 150년쯤 지난 뒤에'라는 뜻이 돼요.", ex:"Popeye, who gained superhuman strength from the leafy greens and defended himself with iron fists, contributed to its __________ and even today, some nearly 150 years later, parents the world over use this tale to try to persuade their children into eating the healthy vegetable.", exko:"잎채소로부터 초인적인 힘을 얻고 철 주먹으로 자신을 방어했던 뽀빠이는 그 신화의 지속에 기여했고, 심지어 오늘날 거의 150년이 지난 지금도 전 세계의 부모들은 아이들에게 그 건강한 채소를 먹게 하려고 이 이야기를 사용한다." }
   },
   passage: `Myths aren't only stories. For example, a well-known myth that [[persists::persists]] today is the [[supposed::supposed]] high iron content in spinach. This is a legend that dates back to 1890 and [[originates::originates from]] a simple [[miscalculation::miscalculation]] by physiologist Gustav von Bunge. He [[accurately::accurately]] determined that 100 grams of spinach contained 35 milligrams of iron but he was analyzing dried spinach, which held ten times more iron than the same amount of fresh leafy greens. Although the error was [[swiftly::swiftly]] corrected, the correction was just as swiftly forgotten. The myth had [[taken_hold::taken hold]]. Popeye, who gained superhuman strength from the leafy greens and defended himself with iron fists, contributed to its __________ and even today, some nearly 150 years later, parents the world over use this tale to try to [[persuade::persuade]] their children into eating the healthy vegetable.`,
   translation: `신화는 단지 이야기만이 아니다. 예를 들어, 오늘날까지 지속되는 잘 알려진 신화 하나는 시금치에 철분 함량이 높다고 여겨지는 것이다. 이것은 1890년까지 거슬러 올라가는 전설이며 생리학자 Gustav von Bunge의 단순한 계산 착오에서 비롯되었다. 그는 시금치 100그램에 철분 35밀리그램이 들어 있다고 정확하게 측정했지만, 그는 말린 시금치를 분석하고 있었고, 그것은 같은 양의 신선한 잎채소보다 열 배 더 많은 철분을 함유하고 있었다. 그 오류는 신속하게 정정되었지만, 그 정정 또한 그만큼 신속하게 잊혔다. 그 신화는 이미 자리를 잡아버린 것이다. 잎채소로부터 초인적인 힘을 얻고 철 주먹으로 자신을 방어했던 뽀빠이는 그 신화의 지속에 기여했고, 심지어 오늘날 거의 150년이 지난 지금도 전 세계의 부모들은 아이들에게 그 건강한 채소를 먹게 하려고 이 이야기를 사용한다.`,
@@ -453,6 +543,7 @@ function toggleSheetStar() {
   setStarred(gid, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
   if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
+  else if (idx >= 0 && window.studyStats) window.studyStats.unrecord('star');
   updateSheetStarBtn();
 }
 
@@ -589,8 +680,13 @@ function showWord(key) {
   currentSheetWordData = { word:v.word, pron:v.pron, meaning:v.meaning, en:v.ex, ko:v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
@@ -634,6 +730,23 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -642,6 +755,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
@@ -651,8 +765,12 @@ function showPlain(rawWord) {
   currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();

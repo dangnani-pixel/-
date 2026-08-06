@@ -88,12 +88,17 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
 .sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
 .sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
 .sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .sheet-word { font-size: 22px; font-weight: 700; }
 .speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
 .sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
 .sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
 .sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
 </style>
 </head>
 <body>
@@ -151,6 +156,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
   <div class="sheet-pron" id="sheet-pron"></div>
   <div class="sheet-meaning" id="sheet-meaning"></div>
   <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
 </div>
 
 <script>
@@ -163,13 +169,21 @@ const problems = [
   explanation: "'We regret to inform you that the center's reopening must be delayed.'와 '원래 4월 1일 → 5월 1일로 변경'이라는 내용이 핵심이므로, 재개장 일정 연기를 알리는 ②번이 정답입니다.",
   vocab: {
     upcoming: { word:"upcoming", pron:"[업커밍]", meaning:"다가오는", ex:"the upcoming reopening of the center", exko:"다가오는 센터의 재개장" },
-    reopening: { word:"reopening", pron:"[리오프닝]", meaning:"재개장", ex:"The center's reopening must be delayed.", exko:"센터의 재개장이 연기되어야 합니다." },
-    unexpected: { word:"unexpected", pron:"[언익스펙티드]", meaning:"예상치 못한", ex:"unexpected electrical issues were discovered", exko:"예상치 못한 전기 문제가 발견되었다" },
-    electrical: { word:"electrical", pron:"[일렉트리컬]", meaning:"전기의", ex:"There were electrical issues.", exko:"전기 문제가 있었다." },
+    reopening: { word:"reopening", pron:"[리오프닝]", meaning:"재개장", ex:"The center's reopening must be delayed.", exko:"센터의 재개장이 연기되어야 합니다.", etym:"re-(다시) + open(열다) + -ing → '다시 여는 것' → '재개장'. 같은 re- 접두사를 쓰는 단어: return(re-다시 + turn-돌다 → 돌아가다), rebuild(re-다시 + build-짓다 → 다시 짓다), renew(re-다시 + new-새로운 → 새롭게 하다)." },
+    unexpected: { word:"unexpected", pron:"[언익스펙티드]", meaning:"예상치 못한", ex:"unexpected electrical issues were discovered", exko:"예상치 못한 전기 문제가 발견되었다", etym:"un-(부정) + ex-(밖으로) + spect(보다, Latin spectare) + -ed → '밖을 내다보며 미리 예상하지 못한' → '예상치 못한'. 같은 spect 어근을 쓰는 다른 접두사 단어: inspect(in-안으로 + spect → 안을 들여다보다 → 조사하다), respect(re-다시 + spect → 다시 보다 → 존중하다), prospect(pro-앞으로 + spect → 앞을 내다보다 → 전망)." },
+    electrical: { word:"electrical", pron:"[일렉트리컬]", meaning:"전기의", ex:"There were electrical issues.", exko:"전기 문제가 있었다.", etym:"electr(그리스어 elektron-호박, 정전기) + -ic + -al(형용사 접미사) → '전기의'. 같은 electr- 어근을 쓰는 단어: electricity(electr + -icity → 전기), electrician(electr + -ician → 전기 기술자)." },
     regret: { word:"regret to inform", pron:"[리그렛 투 인폼]", meaning:"유감스럽게도 알리다", ex:"We regret to inform you of the delay.", exko:"유감스럽게도 지연을 알려드립니다." },
     delayed: { word:"delayed", pron:"[딜레이드]", meaning:"연기된", ex:"The reopening must be delayed.", exko:"재개장이 연기되어야 한다." },
-    originally: { word:"originally", pron:"[오리지널리]", meaning:"원래", ex:"It was originally scheduled to reopen on April 1st.", exko:"원래 4월 1일에 재개장할 예정이었다." },
-    patience: { word:"patience", pron:"[페이션스]", meaning:"인내, 양해", ex:"Thank you for your patience.", exko:"양해해 주셔서 감사합니다." }
+    originally: { word:"originally", pron:"[오리지널리]", meaning:"원래", ex:"It was originally scheduled to reopen on April 1st.", exko:"원래 4월 1일에 재개장할 예정이었다.", etym:"origin(oriri-일어나다, 생겨나다, Latin) + -al + -ly → '근원으로부터' → '원래는'. 같은 origin 어근을 쓰는 다른 접두사 단어: aboriginal(ab-~로부터 + origin → 원래 그 자리에서 생겨난 → 원주민의)." },
+    patience: { word:"patience", pron:"[페이션스]", meaning:"인내, 양해", ex:"Thank you for your patience.", exko:"양해해 주셔서 감사합니다.", etym:"pati(견디다, 고통을 겪다, Latin pati) + -ence(명사 접미사) → '견뎌내는 성질' → '인내'. 같은 pati 어근을 쓰는 단어: patient(pati + -ent → 견디는 → 참을성 있는; 환자), passion(pati의 변형 passio → 겪는 것 → 열정, 수난)." }
+  },
+  funcWords: {
+    take: { word:"take", tag:"[동사 take · take longer]", meaning:"take를 '가져가다, 잡다'로 외운 학생은 여기서 막혀요. take가 시간과 함께 쓰이면 '(시간이) 걸리다'라는 뜻이에요. take longer than we planned는 '우리가 계획했던 것보다 더 오래 걸리다'로 해석돼요.", ex:"Unfortunately, during the repair process, unexpected electrical issues were discovered, causing the work to take longer than we planned.", exko:"안타깝게도, 보수 과정에서 예상치 못한 전기 문제가 발견되어 작업이 저희가 계획했던 것보다 더 오래 걸리게 되었습니다." },
+    forward: { word:"forward", tag:"[관용구 look forward to ~ing]", meaning:"forward를 '앞으로'라고만 알면 뜻이 통하지 않아요. 'look forward to + 동사ing'는 '~하기를 기대하다, 고대하다'라는 관용 표현이에요. 여기서 to는 to부정사가 아니라 전치사라서 뒤에 seeing이 온 점도 함께 기억하세요.", ex:"We look forward to seeing you back on the court soon.", exko:"곧 코트에서 여러분을 다시 뵙기를 기대합니다." },
+    causing: { word:"causing", tag:"[분사구문 · 결과]", meaning:"동사 discovered 뒤에 콤마 없이 이어지는 causing은 '그래서 ~하게 만들다'라는 결과를 나타내는 분사구문이에요. 문제가 발견된 것이 원인이 되어 작업이 더 오래 걸리게 되었다는 인과관계를 나타내며, '~해서 …하게 되다'로 해석하면 자연스러워요.", ex:"Unfortunately, during the repair process, unexpected electrical issues were discovered, causing the work to take longer than we planned.", exko:"안타깝게도, 보수 과정에서 예상치 못한 전기 문제가 발견되어 작업이 저희가 계획했던 것보다 더 오래 걸리게 되었습니다." },
+    to: { word:"to", tag:"[to부정사 · 목적]", meaning:"to는 여기서 '~하기 위해(목적)'라는 뜻의 to부정사 부사적 용법이에요. it will now reopen on May 1st to ensure the safety of all members는 '모든 회원의 안전을 보장하기 위해 5월 1일에 재개장할 것이다'라고 해석돼요.", ex:"However, it will now reopen on May 1st to ensure the safety of all members.", exko:"그러나 모든 회원의 안전을 보장하기 위해 이제 5월 1일에 재개장할 것입니다." },
+    back: { word:"back", tag:"[부사 back · 문맥 확인 필요]", meaning:"back은 여기서 '뒤로'가 아니라 '다시, 원래 상태로'라는 뜻의 부사예요. 'seeing you back on the court'는 '코트에서 여러분을 다시 보다'라는 의미로, 회원들이 다시 탁구장에 돌아오는 것을 가리켜요. 사전에서 back을 찾으면 '뒤로'가 먼저 나오지만 이 문맥에서는 어울리지 않으니 주의하세요.", ex:"We look forward to seeing you back on the court soon.", exko:"곧 코트에서 여러분을 다시 뵙기를 기대합니다." },
+    however: { word:"However", tag:"[접속부사 however]", meaning:"however는 앞 문장(재개장이 연기되었다는 안 좋은 소식)과 반대·대조되는 내용을 이어줄 때 쓰는 접속부사로 '그러나, 하지만'이라고 해석해요. 문장 맨 앞에 쓰이며 뒤에 콤마가 옵니다.", ex:"However, it will now reopen on May 1st to ensure the safety of all members.", exko:"그러나 모든 회원의 안전을 보장하기 위해 이제 5월 1일에 재개장할 것입니다." }
   },
   passage: `Dear Connexa Point Table Tennis Center members,
 
@@ -201,14 +215,22 @@ Manager of the Table Tennis Center`,
   answer: 0,
   explanation: "'the twinkling lights and music made her jump with joy'라며 신났지만, 거대한 풍선을 괴물처럼 느껴 'Her heart began to beat fast from fear'라며 겁을 먹었으므로 excited → scared인 ①번이 정답입니다.",
   vocab: {
-    carnival: { word:"carnival", pron:"[카니벌]", meaning:"축제, 카니발", ex:"It was her first carnival.", exko:"그것은 그녀의 첫 축제였다." },
-    imagining: { word:"imagining", pron:"[이매지닝]", meaning:"상상하는 것", ex:"She had been imagining colorful balloons.", exko:"그녀는 알록달록한 풍선을 상상해 왔다." },
+    carnival: { word:"carnival", pron:"[카니벌]", meaning:"축제, 카니발", ex:"It was her first carnival.", exko:"그것은 그녀의 첫 축제였다.", etym:"carn(고기, 살, Latin caro) + -ival(← levare-치우다) → 사순절 전 '고기를 멀리하는 축제' → '축제, 카니발'. 같은 carn 어근을 쓰는 단어: carnivore(carn-고기 + vor-먹다 → 육식동물), incarnate(in-안으로 + carn → 살 안으로 들어오다 → 육신을 갖추다)." },
+    imagining: { word:"imagining", pron:"[이매지닝]", meaning:"상상하는 것", ex:"She had been imagining colorful balloons.", exko:"그녀는 알록달록한 풍선을 상상해 왔다.", etym:"imag(형상, Latin imago) + -ine(동사화) + -ing → '마음속에 형상을 그리는 것' → '상상하는 것'. 같은 imag 어근을 쓰는 단어: image(imag → 형상, 이미지), imaginary(imag + -inary → 상상의)." },
     twinkling: { word:"twinkling", pron:"[트윙클링]", meaning:"반짝이는", ex:"the twinkling lights and music", exko:"반짝이는 조명과 음악" },
     jump_with_joy: { word:"jump with joy", pron:"[점프 위드 조이]", meaning:"기뻐서 뛰다", ex:"They made her jump with joy.", exko:"그것들은 그녀를 기뻐서 뛰게 만들었다." },
     magician: { word:"magician", pron:"[머지션]", meaning:"마술사", ex:"The magician showed his tricks.", exko:"마술사가 마술을 보여주었다." },
     cheered: { word:"cheered", pron:"[치어드]", meaning:"환호했다", ex:"She cheered with her family.", exko:"그녀는 가족과 함께 환호했다." },
-    parade: { word:"parade", pron:"[퍼레이드]", meaning:"행진, 퍼레이드", ex:"huge balloons in the parade", exko:"퍼레이드에 있는 거대한 풍선들" },
+    parade: { word:"parade", pron:"[퍼레이드]", meaning:"행진, 퍼레이드", ex:"huge balloons in the parade", exko:"퍼레이드에 있는 거대한 풍선들", etym:"par(준비하다, Latin parare) + -ade(명사형) → '준비되어 늘어선 행렬' → '행진, 퍼레이드'. 같은 par 어근을 쓰는 다른 접두사 단어: prepare(pre-미리 + par → 미리 준비하다), repair(re-다시 + par → 다시 준비하다 → 수리하다)." },
     froze: { word:"froze", pron:"[프로즈]", meaning:"얼어붙었다", ex:"Cassie froze and dropped her candy.", exko:"Cassie는 얼어붙어서 사탕을 떨어뜨렸다." }
+  },
+  funcWords: {
+    only: { word:"only", tag:"[부사 only · 문맥 확인 필요]", meaning:"only는 여기서 '오직, 유일하게'가 아니라 '그저 ~하기만 했다'라는 뜻으로 heard를 꾸며주는 부사예요. She had only heard about it은 '그녀는 그것에 대해 듣기만 했었다(직접 본 적은 없었다)'는 의미로, 실제 경험이 아니라 전해 들은 것뿐임을 강조해요.", ex:"She had only heard about it from her mother.", exko:"그녀는 어머니에게서 그것에 대해 듣기만 했었다." },
+    coming: { word:"coming", tag:"[현재분사 · 후치수식]", meaning:"coming towards her는 앞의 명사구 'a lot of huge balloons in the parade'를 뒤에서 꾸며주는 현재분사구예요. '그녀를 향해 다가오는 (거대한 풍선들)'이라고 해석하며, (= that were coming towards her)로 바꿔 쓸 수 있어요.", ex:"But suddenly, she saw a lot of huge balloons in the parade coming towards her.", exko:"그런데 갑자기, 그녀는 퍼레이드에서 자신을 향해 다가오는 수많은 거대한 풍선들을 보았다." },
+    like: { word:"like", tag:"[전치사 like]", meaning:"like는 여기서 동사 '좋아하다'가 아니라 '~처럼, ~와 같이'라는 뜻의 전치사예요. like monsters는 '괴물처럼'이라고 해석되어, 풍선이 무섭게 느껴졌다는 것을 비유적으로 표현해요.", ex:"She thought they were too big, like monsters.", exko:"그녀는 그것들이 괴물처럼 너무 크다고 생각했다." },
+    from: { word:"from", tag:"[전치사 from · 원인]", meaning:"from은 보통 '~로부터(출처)'로 알고 있지만, 여기 beat fast from fear에서는 '~때문에(원인)'이라는 뜻이에요. 두려움 때문에 심장이 빠르게 뛰었다는 의미로, '~해서, ~때문에'로 해석하는 것이 자연스러워요.", ex:"Her heart began to beat fast from fear.", exko:"그녀의 심장은 두려움으로 빠르게 뛰기 시작했다." },
+    beat: { word:"beat", tag:"[동사 beat · 의미 확인 필요]", meaning:"beat는 '이기다, 때리다'라는 뜻으로 흔히 알려져 있지만, 여기 beat fast에서는 심장이 '뛰다, 고동치다'라는 뜻의 동사예요. Her heart began to beat fast는 '그녀의 심장이 빠르게 뛰기 시작했다'라고 해석되며, 누군가를 이기거나 때린다는 뜻이 아니에요.", ex:"Her heart began to beat fast from fear.", exko:"그녀의 심장은 두려움으로 빠르게 뛰기 시작했다." },
+    tricks: { word:"tricks", tag:"[명사 trick · 의미 확인 필요]", meaning:"trick은 흔히 '속임수, 계략'이라는 뜻으로 알려져 있지만, 여기서는 마술사가 보여주는 '마술, 묘기'라는 뜻이에요. The magician showed his tricks는 '마술사가 마술을 보여주었다'라고 해석되며, 누군가를 속인다는 부정적인 뜻이 아니에요.", ex:"The magician showed his tricks and she cheered with her family.", exko:"마술사가 마술을 보여주었고 그녀는 가족과 함께 환호했다." }
   },
   passage: `It was the first [[carnival::carnival]] for the four-year-old girl, Cassie. She had only heard about it from her mother. She had been [[imagining::imagining]] colorful balloons and delicious candies for a long time. When she finally arrived at the carnival, the [[twinkling::twinkling]] lights and music made her [[jump_with_joy::jump with joy]]. The [[magician::magician]] showed his tricks and she [[cheered::cheered]] with her family. But suddenly, she saw a lot of huge balloons in the [[parade::parade]] coming towards her. She thought they were too big, like monsters. Her heart began to beat fast from fear. Cassie [[froze::froze]] and dropped her cotton candy on the ground. She quickly hid behind her mother.`,
   translation: `네 살 소녀 Cassie에게는 첫 축제였다. 그녀는 어머니에게서 그것에 대해 듣기만 했었다. 그녀는 오랫동안 알록달록한 풍선과 맛있는 사탕을 상상해 왔다. 마침내 축제에 도착했을 때, 반짝이는 조명과 음악은 그녀를 기뻐서 뛰게 만들었다. 마술사가 마술을 보여주었고 그녀는 가족과 함께 환호했다. 그런데 갑자기, 그녀는 퍼레이드에서 자신을 향해 다가오는 수많은 거대한 풍선들을 보았다. 그녀는 그것들이 괴물처럼 너무 크다고 생각했다. 그녀의 심장은 두려움으로 빠르게 뛰기 시작했다. Cassie는 얼어붙었고 솜사탕을 땅에 떨어뜨렸다. 그녀는 재빨리 어머니 뒤에 숨었다.`,
@@ -231,13 +253,25 @@ Manager of the Table Tennis Center`,
   explanation: "'There is simply no better way to influence an audience than by opening up to them with a personal story'와 'people won't bond with your arguments, but they will bond with you'가 핵심이므로 ②번이 정답입니다.",
   vocab: {
     stir: { word:"stir", pron:"[스터]", meaning:"(마음을) 움직이다", ex:"no better way to influence or stir an audience", exko:"청중에게 영향을 주거나 마음을 움직이는 더 나은 방법은 없다" },
-    anecdote: { word:"anecdote", pron:"[애닉도트]", meaning:"일화", ex:"open up with a personal story or anecdote", exko:"개인적인 이야기나 일화로 마음을 열다" },
-    biographical: { word:"biographical", pron:"[바이오그래피컬]", meaning:"자전적인, 신상의", ex:"share a key biographical detail", exko:"핵심적인 신상의 세부 내용을 공유하다" },
-    self_deprecating: { word:"self-deprecating", pron:"[셀프 데프러케이팅]", meaning:"자기 비하의", ex:"a self-deprecating joke", exko:"자기 비하적인 농담" },
+    anecdote: { word:"anecdote", pron:"[애닉도트]", meaning:"일화", ex:"open up with a personal story or anecdote", exko:"개인적인 이야기나 일화로 마음을 열다", etym:"an-(부정) + ec-(밖으로) + dote(주다, 그리스어 didonai) → '공개적으로 알려지지 않은 이야기' → '일화'. 같은 dote 어원을 쓰는 단어: antidote(anti-반대로 + dote → 독에 맞서 주는 것 → 해독제)." },
+    biographical: { word:"biographical", pron:"[바이오그래피컬]", meaning:"자전적인, 신상의", ex:"share a key biographical detail", exko:"핵심적인 신상의 세부 내용을 공유하다", etym:"bio(생명, 삶) + graph(쓰다, 기록하다) + -ical(형용사) → '삶을 기록한' → '자전적인'. 같은 graph 어근을 쓰는 단어: autograph(auto-스스로 + graph → 자필 서명), photograph(photo-빛 + graph → 빛으로 기록한 것 → 사진)." },
+    self_deprecating: { word:"self-deprecating", pron:"[셀프 데프러케이팅]", meaning:"자기 비하의", ex:"a self-deprecating joke", exko:"자기 비하적인 농담", etym:"self(자기) + de-(아래로, 낮추어) + prec(빌다, Latin precari) + -ating → '자신을 낮추어 비는' → '자기 비하의'. 같은 prec 어근을 쓰는 단어: imprecate(im-향해 + prec → 저주를 빌다), pray(prec에서 유래 → 기도하다)." },
     tried_and_tested: { word:"tried-and-tested", pron:"[트라이드 앤 테스티드]", meaning:"검증된", ex:"It is a tried-and-tested way of bonding.", exko:"그것은 검증된 유대 형성 방법이다." },
     bonding: { word:"bonding", pron:"[본딩]", meaning:"유대를 형성하는 것", ex:"a way of bonding with an audience", exko:"청중과 유대를 형성하는 방법" },
     groundwork: { word:"groundwork", pron:"[그라운드워크]", meaning:"기반, 토대", ex:"laying the groundwork for persuasion", exko:"설득을 위한 기반을 놓는 것" },
     identify_with: { word:"identify with", pron:"[아이덴티파이 위드]", meaning:"~에 공감하다", ex:"a way to identify with you", exko:"당신에게 공감할 수 있는 방법" }
+  },
+  funcWords: {
+    opening: { word:"opening", tag:"[동사 open · 관용구 open up to ~]", meaning:"opening을 '(문을) 여는 것'이나 '개장'으로 읽으면 어색해요. 'open up to + 사람'은 '~에게 마음을 열다, 속내를 털어놓다'라는 뜻이에요. opening up to them with a personal story는 '개인적인 이야기로 그들에게 마음을 여는 것'으로 해석돼요.", ex:"There is simply no better way to influence or stir an audience — instantly, powerfully, authentically — than by opening up to them with a personal story or anecdote.", exko:"청중에게 영향을 주거나 그들의 마음을 움직이는 데 있어 — 즉각적이고, 강력하며, 진정성 있게 — 개인적인 이야기나 일화로 그들에게 마음을 여는 것보다 더 나은 방법은 단연코 없다." },
+    arguments: { word:"arguments", tag:"[명사 argument · 다의어]", meaning:"argument를 '말다툼, 논쟁'으로 해석하면 문맥이 어그러져요. 여기서는 '(근거를 갖춘) 주장, 논거'라는 뜻이에요. people won't bond with your arguments는 '사람들은 여러분의 주장과 유대를 맺지는 않는다'로 해석돼요.", ex:"The harsh reality is that people won't bond with your arguments, but they will, says speech coach Bas van den Beld, \"bond with you\" — the person making those arguments.", exko:"냉혹한 현실은 사람들이 여러분의 주장과 유대를 맺지는 않지만, 화술 코치 Bas van den Beld가 말하듯이 그들은 그 주장을 하는 사람인 \"여러분과 유대를 맺을 것\"이라는 점이다." },
+    allow: { word:"allow", tag:"[동사 allow · 4형식]", meaning:"allow를 '허락하다'로만 옮기면 딱딱해요. 'allow + 사람 + 사물'은 '~에게 …을 주다, ~가 …할 수 있게 해주다'라는 뜻이에요. you allow audience members a way to identify with you는 '청중이 여러분에게 공감할 수 있는 길을 열어준다'로 해석돼요.", ex:"By sharing a revealing story or a personal flaw, you allow audience members a way to identify with you.", exko:"자신을 드러내는 이야기나 개인적인 결점을 공유함으로써, 여러분은 청중이 여러분에게 공감할 수 있는 길을 열어준다." },
+    by: { word:"by", tag:"[전치사 by · 수단]", meaning:"by는 두 곳에서 모두 '~함으로써(수단)'라는 뜻으로 쓰였어요. 'than by opening up to them'은 '그들에게 마음을 엶으로써'라는 뜻이고, 'By sharing a revealing story'는 '이야기를 공유함으로써'라는 뜻이에요. by 뒤에는 동명사(-ing)가 와서 수단·방법을 나타냅니다.", ex:"There is simply no better way to influence or stir an audience — instantly, powerfully, authentically — than by opening up to them with a personal story or anecdote.", exko:"청중에게 영향을 주거나 그들의 마음을 움직이는 데 있어 — 즉각적이고, 강력하며, 진정성 있게 — 개인적인 이야기나 일화로 그들에게 마음을 여는 것보다 더 나은 방법은 단연코 없다." },
+    to: { word:"to", tag:"[to부정사 · 형용사적 용법]", meaning:"to는 앞의 명사를 꾸며주는 형용사적 용법의 to부정사로 두 번 쓰였어요. 'groundwork for you to then persuade them'은 '그들을 설득하기 위한 기반'이라는 뜻이고, 'a way to identify with you'는 '당신에게 공감할 수 있는 방법(길)'이라는 뜻이에요. 둘 다 앞의 명사(groundwork, way)를 꾸며줍니다.", ex:"By sharing a revealing story or a personal flaw, you allow audience members a way to identify with you.", exko:"자신을 드러내는 이야기나 개인적인 결점을 공유함으로써, 여러분은 청중이 여러분에게 공감할 수 있는 길을 열어준다." },
+    that: { word:"that", tag:"[접속사 that · 명사절]", meaning:"that은 여기서 관계대명사가 아니라 '~라는 것'이라는 뜻으로 명사절을 이끄는 접속사예요. 'The harsh reality is that people won't bond ~'는 '냉혹한 현실은 사람들이 ~하지 않는다는 것이다'로 해석돼요.", ex:"The harsh reality is that people won't bond with your arguments, but they will, says speech coach Bas van den Beld, \"bond with you\" — the person making those arguments.", exko:"냉혹한 현실은 사람들이 여러분의 주장과 유대를 맺지는 않지만, 화술 코치 Bas van den Beld가 말하듯이 그들은 그 주장을 하는 사람인 \"여러분과 유대를 맺을 것\"이라는 점이다." },
+    of: { word:"of", tag:"[전치사 of · a way of -ing]", meaning:"of는 '~의'라는 소유격 의미가 아니라, 'a way of bonding', 'of laying the groundwork'처럼 앞의 명사(way)의 구체적인 내용을 설명하는 동명사와 함께 쓰여 '~하는 (방법)'이라고 해석돼요.", ex:"It is a tried-and-tested way of bonding with an audience of strangers — and of laying the groundwork for you to then persuade them.", exko:"그것은 낯선 청중과 유대를 형성하는, 그리고 그런 다음 그들을 설득하기 위한 기반을 놓는 검증된 방법이다." },
+    says: { word:"says", tag:"[삽입절 says]", meaning:"says speech coach Bas van den Beld는 인용문 중간에 삽입된 절로, '화술 코치 Bas van den Beld가 말하듯이'라는 뜻이에요. 원래 순서라면 'speech coach Bas van den Beld says that they will bond with you'이지만, 강조를 위해 says와 주어가 문장 중간에 삽입되었어요.", ex:"The harsh reality is that people won't bond with your arguments, but they will, says speech coach Bas van den Beld, \"bond with you\" — the person making those arguments.", exko:"냉혹한 현실은 사람들이 여러분의 주장과 유대를 맺지는 않지만, 화술 코치 Bas van den Beld가 말하듯이 그들은 그 주장을 하는 사람인 \"여러분과 유대를 맺을 것\"이라는 점이다." },
+    key: { word:"key", tag:"[형용사 key · 품사 확인 필요]", meaning:"key는 명사로 '열쇠'라는 뜻이 가장 먼저 떠오르지만, 여기 a key biographical detail에서는 명사 detail을 꾸며주는 형용사로 '핵심적인, 중요한'이라는 뜻이에요. '열쇠가 되는 신상 정보'가 아니라 '핵심적인 신상 정보'라고 해석해야 자연스러워요.", ex:"I'm saying that you can share a key biographical detail, or an emotion that you're feeling in the moment, or a self-deprecating joke.", exko:"내가 말하는 것은 핵심적인 신상의 세부 내용이나, 그 순간 느끼고 있는 감정, 혹은 자기 비하적인 농담을 공유할 수 있다는 것이다." },
+    stage: { word:"stage", tag:"[명사 stage · 의미 확인 필요]", meaning:"stage는 '단계, 시기'라는 뜻으로 흔히 알려져 있지만, 여기 baby pictures from the stage에서는 강연자가 서는 '무대'라는 뜻이에요. '발달 단계에서'가 아니라 '무대에서'라고 해석해야 문맥에 맞아요.", ex:"To be clear: I'm not saying you need to tell them long stories about your family vacations or show them baby pictures from the stage.", exko:"분명히 하자면, 나는 여러분이 가족 여행에 대한 긴 이야기를 하거나 무대에서 아기 사진을 보여줘야 한다고 말하는 것이 아니다." }
   },
   passage: `There is simply no better way to influence or [[stir::stir]] an audience — instantly, powerfully, authentically — than by opening up to them with a personal story or [[anecdote::anecdote]]. To be clear: I'm not saying you need to tell them long stories about your family vacations or show them baby pictures from the stage. I'm saying that you can share a key [[biographical::biographical]] detail, or an emotion that you're feeling in the moment, or a [[self_deprecating::self-deprecating]] joke. It is a [[tried_and_tested::tried-and-tested]] way of [[bonding::bonding]] with an audience of strangers — and of laying the [[groundwork::groundwork]] for you to then persuade them. The harsh reality is that people won't bond with your arguments, but they will, says speech coach Bas van den Beld, "bond with you" — the person making those arguments. By sharing a revealing story or a personal flaw, you allow audience members a way to [[identify_with::identify with]] you.`,
   translation: `청중에게 영향을 주거나 그들의 마음을 움직이는 데 있어 — 즉각적이고, 강력하며, 진정성 있게 — 개인적인 이야기나 일화로 그들에게 마음을 여는 것보다 더 나은 방법은 단연코 없다. 분명히 하자면, 나는 여러분이 가족 여행에 대한 긴 이야기를 하거나 무대에서 아기 사진을 보여줘야 한다고 말하는 것이 아니다. 내가 말하는 것은 핵심적인 신상의 세부 내용이나, 그 순간 느끼고 있는 감정, 혹은 자기 비하적인 농담을 공유할 수 있다는 것이다. 그것은 낯선 청중과 유대를 형성하는, 그리고 그런 다음 그들을 설득하기 위한 기반을 놓는 검증된 방법이다. 냉혹한 현실은 사람들이 여러분의 주장과 유대를 맺지는 않지만, 화술 코치 Bas van den Beld가 말하듯이 그들은 그 주장을 하는 사람인 "여러분과 유대를 맺을 것"이라는 점이다. 자신을 드러내는 이야기나 개인적인 결점을 공유함으로써, 여러분은 청중이 여러분에게 공감할 수 있는 길을 열어준다.`,
@@ -259,14 +293,25 @@ Manager of the Table Tennis Center`,
   answer: 4,
   explanation: "조상이 심은 정원(그늘)을 우리가 누리듯, 미래 세대가 누려야 할 것을 우리가 빼앗아서는 안 된다는 뜻이므로 ⑤번이 정답입니다. '좋은 조상이 되라'는 글의 취지와도 맞습니다.",
   vocab: {
-    unprecedented: { word:"unprecedented", pron:"[언프레시덴티드]", meaning:"전례 없는", ex:"a point of unprecedented power", exko:"전례 없는 힘의 시점" },
-    embodied: { word:"embodied", pron:"[임바디드]", meaning:"육신을 가진", ex:"We are embodied individuals.", exko:"우리는 육신을 가진 개인들이다." },
+    unprecedented: { word:"unprecedented", pron:"[언프레시덴티드]", meaning:"전례 없는", ex:"a point of unprecedented power", exko:"전례 없는 힘의 시점", etym:"un-(부정) + pre-(미리) + cede(가다, Latin cedere) + -ent → '미리 앞서 간 적이 없는' → '전례 없는'. 같은 cede 어근을 쓰는 다른 접두사 단어: proceed(pro-앞으로 + ceed → 나아가다), exceed(ex-밖으로 + ceed → 벗어나게 가다 → 초과하다), recede(re-뒤로 + cede → 물러나다)." },
+    embodied: { word:"embodied", pron:"[임바디드]", meaning:"육신을 가진", ex:"We are embodied individuals.", exko:"우리는 육신을 가진 개인들이다.", etym:"em-(안으로, en-의 변형) + body(몸) + -ed → '몸 안에 들어간' → '육신을 가진, 구현된'. 같은 em-/en- 접두사를 쓰는 단어: enable(en-안으로 + able → 할 수 있게 하다), enclose(en-안으로 + close → 둘러싸다)." },
     networked: { word:"networked", pron:"[네트워크트]", meaning:"연결된", ex:"we are also networked data streams", exko:"우리는 또한 연결된 데이터 흐름이다" },
     far_reaching: { word:"far-reaching", pron:"[파 리칭]", meaning:"광범위한, 멀리 미치는", ex:"Our decisions have far-reaching impacts.", exko:"우리의 결정은 멀리 미치는 영향을 갖는다." },
-    ancestors: { word:"ancestors", pron:"[앤세스터즈]", meaning:"조상", ex:"a responsibility to become good ancestors", exko:"좋은 조상이 될 책임" },
+    ancestors: { word:"ancestors", pron:"[앤세스터즈]", meaning:"조상", ex:"a responsibility to become good ancestors", exko:"좋은 조상이 될 책임", etym:"ante-(앞에, 이전에) + cess(가다, Latin cedere) + -or → '앞서 간 사람' → '조상'. 같은 cess 어근을 쓰는 단어: predecessor(pre-미리 + de + cess → 미리 물러난 사람 → 전임자), process(pro-앞으로 + cess → 앞으로 나아가는 것 → 과정)." },
     take_the_long_view: { word:"take the long view", pron:"[테이크 더 롱 뷰]", meaning:"장기적으로 보다", ex:"We must take the long view.", exko:"우리는 장기적으로 봐야 한다." },
     stewardship: { word:"stewardship", pron:"[스튜어드십]", meaning:"관리, 책임 있는 돌봄", ex:"seven generation stewardship", exko:"일곱 세대 관리 원칙" },
-    descendants: { word:"descendants", pron:"[디센던츠]", meaning:"후손", ex:"We must not steal from our descendants.", exko:"우리는 후손에게서 빼앗아서는 안 된다." }
+    descendants: { word:"descendants", pron:"[디센던츠]", meaning:"후손", ex:"We must not steal from our descendants.", exko:"우리는 후손에게서 빼앗아서는 안 된다.", etym:"de-(아래로) + scend(오르다/기다, Latin scandere) + -ant → '아래로 내려온 (사람)' → '후손'. 같은 scend 어근을 쓰는 다른 접두사 단어: ascend(a-위로 + scend → 올라가다), transcend(trans-넘어서 + scend → 초월하다)." }
+  },
+  funcWords: {
+    people: { word:"people", tag:"[명사 people · 다의어]", meaning:"people은 보통 '사람들'이지만, the Iroquois people처럼 민족 이름 뒤에 오면 '~족, 민족'이라는 뜻이에요. leaders of the native North American Iroquois people은 '북미 원주민 이로쿼이족의 지도자들'로 해석돼요. 같은 문장 뒤쪽의 instructing people은 평범한 '사람들'이라는 뜻이니 문맥으로 구분하세요.", ex:"Centuries ago, leaders of the native North American Iroquois people created \"seven generation stewardship,\" instructing people to consider the impact of every decision on their children, seven generations into the future.", exko:"수 세기 전, 북미 원주민 이로쿼이족의 지도자들은 '일곱 세대 관리'라는 것을 만들어, 사람들에게 모든 결정이 미래 일곱 세대 후의 자손들에게 미칠 영향을 고려하도록 가르쳤다." },
+    that: { word:"that", tag:"[관계대명사/관계부사 · 문맥별]", meaning:"that은 두 가지 다른 역할로 쓰였어요. 'impacts that place a responsibility on us'에서는 far-reaching impacts를 선행사로 받는 주격 관계대명사이고, 'the precious few decades that Earth is ours'에서는 '지구가 우리의 것인 (그 몇십 년)'이라는 뜻으로 few decades를 꾸며주는 관계부사(= during which)처럼 쓰였어요.", ex:"In the precious few decades that Earth is ours, while we enjoy the gardens planted by our ancestors, we must not steal the shade from our descendants.", exko:"지구가 우리의 것인 그 소중한 몇십 년 동안, 우리가 조상들이 심어 놓은 정원을 누리는 한편, 우리는 후손들로부터 그늘을 훔쳐서는 안 된다." },
+    while: { word:"while", tag:"[접속사 while · 양보]", meaning:"while은 '~하는 동안'이 아니라 여기서는 '~하는 한편, ~하면서도'라는 대조·양보의 뜻으로 쓰였어요. 조상이 남긴 혜택을 누리는 것과 동시에 후손을 생각해야 한다는 대조를 나타내요.", ex:"In the precious few decades that Earth is ours, while we enjoy the gardens planted by our ancestors, we must not steal the shade from our descendants.", exko:"지구가 우리의 것인 그 소중한 몇십 년 동안, 우리가 조상들이 심어 놓은 정원을 누리는 한편, 우리는 후손들로부터 그늘을 훔쳐서는 안 된다." },
+    as: { word:"as", tag:"[전치사 as · 자격]", meaning:"as는 '~로서(자격)'이라는 뜻의 전치사예요. 'power as a species'는 '하나의 종으로서(가지는) 힘'이라고 해석돼요.", ex:"We are now at a point of unprecedented genetic, cultural, and environmental power as a species, and we are linked to nearly every other person on Earth.", exko:"우리는 지금 하나의 종으로서 전례 없는 유전적, 문화적, 환경적 힘을 가진 시점에 있으며, 지구상의 거의 모든 다른 사람들과 연결되어 있다." },
+    to: { word:"to", tag:"[to부정사 · 형용사적 용법 · 병렬]", meaning:"앞의 명사 responsibility를 꾸며주는 형용사적 용법의 to부정사가 병렬로 이어져요. 'to become good ancestors', '(to) take the long view', '(to) time travel forward to imagine ~'가 모두 '~해야 할 (책임)'이라는 의미로 연결됩니다.", ex:"Our decisions today have far-reaching impacts that place a responsibility on us to become good ancestors, to take the long view and time travel forward to imagine the well-being of billions of people whose lives will be lived in the world we are currently making.", exko:"오늘 우리의 결정은 멀리까지 미치는 영향을 갖고 있으며, 그것은 우리에게 좋은 조상이 될 책임, 즉 장기적인 안목을 갖고 미래로 시간 여행을 하여 우리가 현재 만들어가고 있는 세상에서 살아갈 수십억 명의 안녕을 상상해야 할 책임을 지운다." },
+    into: { word:"into", tag:"[전치사 into · 시간]", meaning:"into는 보통 '~안으로(공간)'라는 뜻이지만, 'seven generations into the future'에서는 시간적으로 '미래로 (일곱 세대만큼) 들어가서' 즉 '미래 일곱 세대 후'라는 뜻으로 쓰였어요.", ex:"Centuries ago, leaders of the native North American Iroquois people created \"seven generation stewardship,\" instructing people to consider the impact of every decision on their children, seven generations into the future.", exko:"수 세기 전, 북미 원주민 이로쿼이족의 지도자들은 '일곱 세대 관리'라는 것을 만들어, 사람들에게 모든 결정이 미래 일곱 세대 후의 자손들에게 미칠 영향을 고려하도록 가르쳤다." },
+    point: { word:"point", tag:"[명사 point · 의미 확인 필요]", meaning:"point는 '요점, 점수'라는 뜻으로 흔히 알려져 있지만, 여기 at a point of unprecedented ... power에서는 '시점(어떤 시기)'이라는 뜻이에요. '전례 없는 힘의 요점에'가 아니라 '전례 없는 힘을 가진 시점에'라고 해석해야 자연스러워요.", ex:"We are now at a point of unprecedented genetic, cultural, and environmental power as a species, and we are linked to nearly every other person on Earth.", exko:"우리는 지금 하나의 종으로서 전례 없는 유전적, 문화적, 환경적 힘을 가진 시점에 있으며, 지구상의 거의 모든 다른 사람들과 연결되어 있다." },
+    place: { word:"place", tag:"[동사 place · 품사 확인 필요]", meaning:"place는 명사로 '장소'라는 뜻이 가장 먼저 떠오르지만, 여기 impacts that place a responsibility on us에서는 '(책임 등을) 지우다, 부과하다'라는 뜻의 동사예요. '우리에게 책임을 놓는다'가 아니라 '우리에게 책임을 지운다'라고 해석해야 자연스러워요.", ex:"Our decisions today have far-reaching impacts that place a responsibility on us to become good ancestors, to take the long view and time travel forward to imagine the well-being of billions of people whose lives will be lived in the world we are currently making.", exko:"오늘 우리의 결정은 멀리까지 미치는 영향을 갖고 있으며, 그것은 우리에게 좋은 조상이 될 책임, 즉 장기적인 안목을 갖고 미래로 시간 여행을 하여 우리가 현재 만들어가고 있는 세상에서 살아갈 수십억 명의 안녕을 상상해야 할 책임을 지운다." },
+    lives: { word:"lives", tag:"[명사 lives · 품사 확인 필요]", meaning:"lives는 동사 live(살다)의 3인칭 단수형처럼 보이기 쉽지만, 여기 whose lives will be lived에서는 명사 life(삶)의 복수형으로 '삶들'이라는 뜻이에요. lives 뒤에 will be lived(살아질 것이다)라는 수동태 동사가 따로 있다는 점에서 lives가 주어(명사)임을 알 수 있어요.", ex:"Our decisions today have far-reaching impacts that place a responsibility on us to become good ancestors, to take the long view and time travel forward to imagine the well-being of billions of people whose lives will be lived in the world we are currently making.", exko:"오늘 우리의 결정은 멀리까지 미치는 영향을 갖고 있으며, 그것은 우리에게 좋은 조상이 될 책임, 즉 장기적인 안목을 갖고 미래로 시간 여행을 하여 우리가 현재 만들어가고 있는 세상에서 살아갈 수십억 명의 안녕을 상상해야 할 책임을 지운다." }
   },
   passage: `We are now at a point of [[unprecedented::unprecedented]] genetic, cultural, and environmental power as a species, and we are linked to nearly every other person on Earth. We are [[embodied::embodied]] individuals trapped within limited time, but we are also [[networked::networked]] data streams, memories, and influencers, and part of a grander humanity. Our decisions today have [[far_reaching::far-reaching]] impacts that place a responsibility on us to become good [[ancestors::ancestors]], to [[take_the_long_view::take the long view]] and time travel forward to imagine the well-being of billions of people whose lives will be lived in the world we are currently making. Centuries ago, leaders of the native North American Iroquois people created "seven generation [[stewardship::stewardship]]," instructing people to consider the impact of every decision on their children, seven generations into the future. In the precious few decades that Earth is ours, while we enjoy the gardens planted by our ancestors, we must not steal the shade from our [[descendants::descendants]].`,
   translation: `우리는 지금 하나의 종으로서 전례 없는 유전적, 문화적, 환경적 힘을 가진 시점에 있으며, 지구상의 거의 모든 다른 사람들과 연결되어 있다. 우리는 제한된 시간 안에 갇힌 육신을 가진 개인이지만, 또한 연결된 데이터 흐름이자 기억이며 영향력을 미치는 존재이고, 더 큰 인류의 일부이기도 하다. 오늘 우리의 결정은 멀리까지 미치는 영향을 갖고 있으며, 그것은 우리에게 좋은 조상이 될 책임, 즉 장기적인 안목을 갖고 미래로 시간 여행을 하여 우리가 현재 만들어가고 있는 세상에서 살아갈 수십억 명의 안녕을 상상해야 할 책임을 지운다. 수 세기 전, 북미 원주민 이로쿼이족의 지도자들은 '일곱 세대 관리'라는 것을 만들어, 사람들에게 모든 결정이 미래 일곱 세대 후의 자손들에게 미칠 영향을 고려하도록 가르쳤다. 지구가 우리의 것인 그 소중한 몇십 년 동안, 우리가 조상들이 심어 놓은 정원을 누리는 한편, 우리는 후손들로부터 그늘을 훔쳐서는 안 된다.`,
@@ -288,14 +333,28 @@ Manager of the Table Tennis Center`,
   answer: 4,
   explanation: "신경 가소성 덕분에 나이가 들어도 미각 선호는 바뀔 수 있고, 마지막 문장 'Repeated exposure — and a willingness to change — is the key.'가 결론이므로 ⑤번이 정답입니다.",
   vocab: {
-    inborn: { word:"inborn", pron:"[인본]", meaning:"타고난", ex:"inborn biological differences", exko:"타고난 생물학적 차이" },
-    preferences: { word:"preferences", pron:"[프레퍼런시스]", meaning:"선호", ex:"Taste preferences can be changed.", exko:"미각 선호는 바뀔 수 있다." },
-    neuroplasticity: { word:"neuroplasticity", pron:"[뉴로플라스티시티]", meaning:"신경 가소성", ex:"due to neuroplasticity", exko:"신경 가소성 덕분에" },
-    adaptability: { word:"adaptability", pron:"[어댑터빌리티]", meaning:"적응력", ex:"our brain's amazing adaptability", exko:"우리 뇌의 놀라운 적응력" },
-    flexibility: { word:"flexibility", pron:"[플렉서빌리티]", meaning:"유연성", ex:"There is far more flexibility in our food behaviors.", exko:"우리의 식행동에는 훨씬 더 많은 유연성이 있다." },
-    adventurous: { word:"adventurous", pron:"[어드벤처러스]", meaning:"모험을 즐기는", ex:"terrific news for adventurous eaters", exko:"모험적인 식성을 가진 사람들에게 좋은 소식" },
-    readjust: { word:"readjust", pron:"[리어저스트]", meaning:"다시 조정하다", ex:"Adults can readjust their taste.", exko:"성인도 미각을 다시 조정할 수 있다." },
-    exposure: { word:"exposure", pron:"[익스포저]", meaning:"노출", ex:"Repeated exposure is the key.", exko:"반복된 노출이 핵심이다." }
+    inborn: { word:"inborn", pron:"[인본]", meaning:"타고난", ex:"inborn biological differences", exko:"타고난 생물학적 차이", etym:"in-(안에) + born(태어난, bear의 과거분사) → '태어날 때부터 안에 지닌' → '타고난'." },
+    preferences: { word:"preferences", pron:"[프레퍼런시스]", meaning:"선호", ex:"Taste preferences can be changed.", exko:"미각 선호는 바뀔 수 있다.", etym:"pre-(앞에) + fer(나르다, Latin ferre) + -ence → '앞에 놓아 더 좋아함' → '선호'. 같은 fer 어근을 쓰는 다른 접두사 단어: transfer(trans-건너 + fer → 옮기다), infer(in-안으로 + fer → 추론하다), offer(ob-향해 + fer → 제공하다)." },
+    neuroplasticity: { word:"neuroplasticity", pron:"[뉴로플라스티시티]", meaning:"신경 가소성", ex:"due to neuroplasticity", exko:"신경 가소성 덕분에", etym:"neuro(신경, 그리스어 neuron) + plastic(형성되는, 그리스어 plassein-빚다) + -ity → '신경이 형태를 바꿀 수 있는 성질' → '신경 가소성'." },
+    adaptability: { word:"adaptability", pron:"[어댑터빌리티]", meaning:"적응력", ex:"our brain's amazing adaptability", exko:"우리 뇌의 놀라운 적응력", etym:"ad-(~에) + apt(맞는, Latin aptus) + -ability → '~에 맞출 수 있는 능력' → '적응력'. 같은 apt 어근을 쓰는 단어: inept(in-부정 + apt → 서투른), aptitude(apt + -itude → 소질, 적성)." },
+    flexibility: { word:"flexibility", pron:"[플렉서빌리티]", meaning:"유연성", ex:"There is far more flexibility in our food behaviors.", exko:"우리의 식행동에는 훨씬 더 많은 유연성이 있다.", etym:"flex(구부리다, Latin flectere) + -ibility → '구부러질 수 있는 성질' → '유연성'. 같은 flex 어근을 쓰는 다른 접두사 단어: reflex(re-다시 + flex → 다시 구부러짐 → 반사), inflexible(in-부정 + flex → 융통성 없는)." },
+    adventurous: { word:"adventurous", pron:"[어드벤처러스]", meaning:"모험을 즐기는", ex:"terrific news for adventurous eaters", exko:"모험적인 식성을 가진 사람들에게 좋은 소식", etym:"ad-(~쪽으로) + vent(오다, Latin venire) + -urous → '(뜻밖의 일이) 다가오는 것을 향해 나아가는' → '모험을 즐기는'. 같은 vent/ven 어근을 쓰는 다른 접두사 단어: prevent(pre-미리 + vent → 미리 막다), event(e-밖으로 + vent → 밖으로 나온 일 → 사건), convene(con-함께 + ven → 함께 모이다)." },
+    readjust: { word:"readjust", pron:"[리어저스트]", meaning:"다시 조정하다", ex:"Adults can readjust their taste.", exko:"성인도 미각을 다시 조정할 수 있다.", etym:"re-(다시) + ad-(~에) + just(올바른, Latin justus) → '다시 올바르게 맞추다' → '다시 조정하다'. 같은 just 어근을 쓰는 단어: adjust(ad + just → 맞추다), justify(just + -ify → 정당화하다)." },
+    exposure: { word:"exposure", pron:"[익스포저]", meaning:"노출", ex:"Repeated exposure is the key.", exko:"반복된 노출이 핵심이다.", etym:"ex-(밖으로) + pos(놓다, Latin ponere) + -ure → '밖에 내놓임' → '노출'. 같은 pos 어근을 쓰는 다른 접두사 단어: propose(pro-앞에 + pos → 제안하다), compose(com-함께 + pos → 구성하다), oppose(ob-맞서서 + pos → 반대하다)." }
+  },
+  funcWords: {
+    break: { word:"break", tag:"[동사 break · 다의어]", meaning:"break를 '부수다, 깨뜨리다'로만 알면 어색해요. habit(습관)과 함께 쓰이면 '(습관을) 끊다, 고치다'라는 뜻이에요. eager to break poor diet habits는 '형편없는 식습관을 고치고 싶어 안달인'으로 해석돼요.", ex:"— but it's amazing news for those eager to break poor diet habits.", exko:"— 형편없는 식습관을 고치고 싶어 안달인 사람들에게는 놀라운 소식이다." },
+    poor: { word:"poor", tag:"[형용사 poor · 다의어]", meaning:"poor를 '가난한'으로 해석하면 뜻이 통하지 않아요. 여기서는 '형편없는, 질이 나쁜'이라는 뜻이에요. poor diet habits는 '형편없는 식습관'을 가리켜요.", ex:"— but it's amazing news for those eager to break poor diet habits.", exko:"— 형편없는 식습관을 고치고 싶어 안달인 사람들에게는 놀라운 소식이다." },
+    age: { word:"age", tag:"[동사 age · 명사 아님]", meaning:"age를 명사 '나이'로 읽으면 문장이 안 풀려요. 여기서는 we age처럼 주어 뒤에 온 동사로, '나이를 먹다, 늙어가다'라는 뜻이에요. even as we age는 '우리가 나이를 먹어가더라도'로 해석돼요.", ex:"There is far more flexibility in our food behaviors than most think, even as we age.", exko:"우리가 나이를 먹어가더라도, 우리의 식행동에는 대부분의 사람들이 생각하는 것보다 훨씬 더 많은 유연성이 있다." },
+    far: { word:"far", tag:"[부사 far · 비교급 강조]", meaning:"far를 '멀리'로 해석하면 엉뚱해져요. 비교급(more, -er) 앞에 오는 far는 '훨씬'이라는 강조 표현이에요. far more flexibility는 '훨씬 더 많은 유연성'으로 해석돼요. much, even, still, a lot도 같은 역할을 해요.", ex:"There is far more flexibility in our food behaviors than most think, even as we age.", exko:"우리가 나이를 먹어가더라도, 우리의 식행동에는 대부분의 사람들이 생각하는 것보다 훨씬 더 많은 유연성이 있다." },
+    nutty: { word:"nutty", tag:"[형용사 nutty · 다의어]", meaning:"nutty를 '견과류가 든' 또는 '정신 나간'으로 옮기면 어색해요. 맛을 나타낼 때 nutty는 '고소한'이라는 뜻이에요. the nutty flavors는 통곡물의 '고소한 풍미'를 가리켜요.", ex:"Many who switch from processed grain foods like white bread and white rice to whole grain types, for instance, gradually learn to prefer the nutty flavors and chewy textures.", exko:"예를 들어, 흰 빵이나 흰쌀 같은 가공된 곡물 식품에서 통곡물 종류로 바꾸는 많은 사람들이 점차 고소한 풍미와 쫄깃한 식감을 선호하게 되는 법을 배운다." },
+    even: { word:"even", tag:"[부사+접속사 even as]", meaning:"even as는 '심지어 ~할 때'가 아니라 '~함에도 불구하고, ~하더라도'라는 양보의 뜻이에요. even as we age는 '우리가 나이를 먹어가더라도'로 해석돼요.", ex:"Despite learned eating behaviors that are formed in early childhood and inborn biological differences, taste preferences can be changed throughout our lives due to neuroplasticity, our brain's amazing adaptability: There is far more flexibility in our food behaviors than most think, even as we age.", exko:"어린 시절에 형성된 학습된 식행동과 타고난 생물학적 차이에도 불구하고, 미각 선호는 신경 가소성, 즉 우리 뇌의 놀라운 적응력 덕분에 평생에 걸쳐 바뀔 수 있다. 우리가 나이를 먹어가더라도, 우리의 식행동에는 대부분의 사람들이 생각하는 것보다 훨씬 더 많은 유연성이 있다." },
+    those: { word:"those", tag:"[대명사 those + 형용사/to부정사]", meaning:"'those eager to break poor diet habits'에서 those는 '사람들'을 뜻하는 대명사이고, 뒤에 형용사구 eager to break가 those를 꾸며서 '형편없는 식습관을 고치고 싶어 안달인 사람들'이라는 뜻이 돼요. (= those who are eager to break ~)", ex:"This is terrific news for adventurous eaters who want to expand their dinner menu — it's a big, tasty world out there! — but it's amazing news for those eager to break poor diet habits.", exko:"이것은 저녁 메뉴를 넓히고 싶어 하는 모험적인 식성을 가진 사람들에게 굉장한 소식이지만 — 저 바깥에는 크고 맛있는 세상이 있다! — 형편없는 식습관을 고치고 싶어 안달인 사람들에게는 놀라운 소식이다." },
+    like: { word:"like", tag:"[전치사 like · 예시]", meaning:"like는 '좋아하다'라는 동사가 아니라 '~와 같은(예시)'이라는 뜻의 전치사로 쓰였어요. 'processed grain foods like white bread and white rice'는 '흰 빵이나 흰쌀 같은 가공된 곡물 식품'이라고 해석돼요.", ex:"Many who switch from processed grain foods like white bread and white rice to whole grain types, for instance, gradually learn to prefer the nutty flavors and chewy textures.", exko:"예를 들어, 흰 빵이나 흰쌀 같은 가공된 곡물 식품에서 통곡물 종류로 바꾸는 많은 사람들이 점차 고소한 풍미와 쫄깃한 식감을 선호하게 되는 법을 배운다." },
+    who: { word:"who", tag:"[관계대명사 who]", meaning:"who는 사람을 선행사로 받는 주격 관계대명사예요. 'adventurous eaters who want to expand their dinner menu'는 '저녁 메뉴를 넓히고 싶어 하는 모험적인 식성을 가진 사람들'로, 'Many who switch from ~'는 '~에서 바꾸는 많은 사람들'로 해석돼요.", ex:"This is terrific news for adventurous eaters who want to expand their dinner menu — it's a big, tasty world out there! — but it's amazing news for those eager to break poor diet habits.", exko:"이것은 저녁 메뉴를 넓히고 싶어 하는 모험적인 식성을 가진 사람들에게 굉장한 소식이지만 — 저 바깥에는 크고 맛있는 세상이 있다! — 형편없는 식습관을 고치고 싶어 안달인 사람들에게는 놀라운 소식이다." },
+    due: { word:"due", tag:"[전치사구 due to]", meaning:"due to는 '예정된'이라는 뜻이 아니라 '~때문에, ~덕분에'라는 뜻의 전치사구예요. due to neuroplasticity는 '신경 가소성 덕분에'라고 해석돼요.", ex:"Despite learned eating behaviors that are formed in early childhood and inborn biological differences, taste preferences can be changed throughout our lives due to neuroplasticity, our brain's amazing adaptability: There is far more flexibility in our food behaviors than most think, even as we age.", exko:"어린 시절에 형성된 학습된 식행동과 타고난 생물학적 차이에도 불구하고, 미각 선호는 신경 가소성, 즉 우리 뇌의 놀라운 적응력 덕분에 평생에 걸쳐 바뀔 수 있다. 우리가 나이를 먹어가더라도, 우리의 식행동에는 대부분의 사람들이 생각하는 것보다 훨씬 더 많은 유연성이 있다." },
+    key: { word:"key", tag:"[명사 key · 의미 확인 필요]", meaning:"key는 '열쇠'라는 뜻이 가장 먼저 떠오르지만, 여기 is the key에서는 '핵심, 비결'이라는 뜻의 명사예요. '반복된 노출은 열쇠이다'가 아니라 '반복된 노출이 핵심이다'라고 해석해야 자연스러워요.", ex:"Repeated exposure — and a willingness to change — is the key.", exko:"반복된 노출, 그리고 변화하려는 의지가 핵심이다." },
+    most: { word:"most", tag:"[대명사 most · 품사 확인 필요]", meaning:"most는 '가장'이라는 최상급 부사로 흔히 알려져 있지만, 여기 than most think에서는 '대부분의 사람들'이라는 뜻의 대명사예요. '가장 생각하는 것보다'가 아니라 '대부분의 사람들이 생각하는 것보다'라고 해석해야 자연스러워요.", ex:"There is far more flexibility in our food behaviors than most think, even as we age.", exko:"우리가 나이를 먹어가더라도, 우리의 식행동에는 대부분의 사람들이 생각하는 것보다 훨씬 더 많은 유연성이 있다." }
   },
   passage: `Despite learned eating behaviors that are formed in early childhood and [[inborn::inborn]] biological differences, taste [[preferences::preferences]] can be changed throughout our lives due to [[neuroplasticity::neuroplasticity]], our brain's amazing [[adaptability::adaptability]]: There is far more [[flexibility::flexibility]] in our food behaviors than most think, even as we age. This is terrific news for [[adventurous::adventurous]] eaters who want to expand their dinner menu — it's a big, tasty world out there! — but it's amazing news for those eager to break poor diet habits. Just as kids gradually learn to like nutritious foods, so, too, can adults [[readjust::readjust]] their taste. Many who switch from processed grain foods like white bread and white rice to whole grain types, for instance, gradually learn to prefer the nutty flavors and chewy textures. Repeated [[exposure::exposure]] — and a willingness to change — is the key.`,
   translation: `어린 시절에 형성된 학습된 식행동과 타고난 생물학적 차이에도 불구하고, 미각 선호는 신경 가소성, 즉 우리 뇌의 놀라운 적응력 덕분에 평생에 걸쳐 바뀔 수 있다. 우리가 나이를 먹어가더라도, 우리의 식행동에는 대부분의 사람들이 생각하는 것보다 훨씬 더 많은 유연성이 있다. 이것은 저녁 메뉴를 넓히고 싶어 하는 모험적인 식성을 가진 사람들에게 굉장한 소식이지만 — 저 바깥에는 크고 맛있는 세상이 있다! — 형편없는 식습관을 고치고 싶어 안달인 사람들에게는 놀라운 소식이다. 아이들이 점차 영양가 있는 음식을 좋아하게 되는 법을 배우는 것처럼, 성인들도 마찬가지로 자신의 미각을 다시 조정할 수 있다. 예를 들어, 흰 빵이나 흰쌀 같은 가공된 곡물 식품에서 통곡물 종류로 바꾸는 많은 사람들이 점차 고소한 풍미와 쫄깃한 식감을 선호하게 되는 법을 배운다. 반복된 노출, 그리고 변화하려는 의지가 핵심이다.`,
@@ -317,14 +376,23 @@ Manager of the Table Tennis Center`,
   answer: 2,
   explanation: "동조 성향이 14세 무렵 정점을 찍고 16~17세가 되면 감소한다는 연령에 따른 변화가 핵심 내용이므로 ③번이 정답입니다.",
   vocab: {
-    conformity: { word:"Conformity", pron:"[컨포미티]", meaning:"동조", ex:"Conformity in the teenage years has been studied.", exko:"청소년기의 동조가 연구되어 왔다." },
+    conformity: { word:"Conformity", pron:"[컨포미티]", meaning:"동조", ex:"Conformity in the teenage years has been studied.", exko:"청소년기의 동조가 연구되어 왔다.", etym:"con-(함께) + form(형태, Latin forma) + -ity → '함께 같은 형태를 이루는 것' → '동조'. 같은 form 어근을 쓰는 다른 접두사 단어: reform(re-다시 + form → 개혁하다), inform(in-안으로 + form → 알리다), transform(trans-넘어서 + form → 변형시키다)." },
     go_against: { word:"go against", pron:"[고 어게인스트]", meaning:"~에 반하다", ex:"a choice that appears to go against the group", exko:"집단에 반하는 것으로 보이는 선택" },
     fascinating: { word:"fascinating", pron:"[패서네이팅]", meaning:"흥미로운", ex:"The fascinating thing about the results", exko:"그 결과에서 흥미로운 점" },
     spread: { word:"spread", pron:"[스프레드]", meaning:"분포되다", ex:"Conformity is not spread equally.", exko:"동조는 균등하게 분포되어 있지 않다." },
     willingness: { word:"willingness", pron:"[윌링니스]", meaning:"의향, 기꺼이 함", ex:"the willingness to go along with others", exko:"다른 사람들을 따르려는 의향" },
     peak: { word:"peak", pron:"[피크]", meaning:"정점", ex:"It reaches a peak around the age of 14.", exko:"그것은 14세 무렵 정점에 이른다." },
     stand_up_for: { word:"stand up for", pron:"[스탠드 업 포]", meaning:"~을 옹호하다", ex:"stand up for their own opinion", exko:"자신의 의견을 옹호하다" },
-    resilient: { word:"resilient", pron:"[리질리언트]", meaning:"회복 탄력적인", ex:"They become more resilient.", exko:"그들은 더 회복 탄력적이 된다." }
+    resilient: { word:"resilient", pron:"[리질리언트]", meaning:"회복 탄력적인", ex:"They become more resilient.", exko:"그들은 더 회복 탄력적이 된다.", etym:"re-(다시) + sil(뛰다, Latin salire) + -ient → '다시 튀어 오르는' → '회복 탄력적인'. 같은 sil/sult 어근을 쓰는 다른 접두사 단어: result(re-다시 + sult → 다시 튀어오르다 → 결과로 나타나다), insult(in-향해 + sult → 덤벼들다 → 모욕하다)." }
+  },
+  funcWords: {
+    along: { word:"along", tag:"[관용구 go along with ~]", meaning:"along을 '~을 따라(길을)'로만 알면 뜻이 안 잡혀요. 'go along with + 사람/의견'은 '~에 동조하다, ~을 따르다'라는 관용 표현이에요. the willingness to go along with others는 '다른 사람들을 따르려는 의향'으로 해석돼요.", ex:"Thus, the willingness to go along with others reaches a peak around the age of 14.", exko:"즉, 다른 사람들을 따르려는 의향은 14세 무렵에 정점에 도달한다." },
+    peer: { word:"peer", tag:"[명사 peer · 다의어]", meaning:"peer를 동사 '유심히 들여다보다'나 '(귀족) 동료'로 읽으면 안 돼요. 여기서는 '또래, 동년배'라는 명사로, peer group은 '또래 집단'이라는 뜻이에요.", ex:"It demonstrates that the influence of the peer group is not the same across all ages.", exko:"그것은 또래 집단의 영향력이 모든 연령대에 걸쳐 동일하지 않다는 것을 보여준다." },
+    where: { word:"where", tag:"[관계부사 where · 추상적 상황]", meaning:"where는 장소가 아니라 '상황'을 나타내는 situations, decision을 선행사로 받는 관계부사예요. 'situations where they are asked to make a choice'는 '그들이 선택을 하도록 요구받는 상황'이라고 해석되고, 뒤의 'decision where that appears to go against ~'도 마찬가지로 그 결정이 이루어지는 상황을 설명해요.", ex:"Conformity in the teenage years has been studied by putting young people in situations where they are asked to make a choice or decision where that appears to go against what everyone else in the group is saying.", exko:"청소년기의 동조는 젊은이들을 집단의 다른 모든 사람이 말하는 것에 반하는 것처럼 보이는 선택이나 결정을 하도록 요구받는 상황에 놓음으로써 연구되어 왔다." },
+    that: { word:"that", tag:"[지시대명사/접속사 · 문맥별]", meaning:"that은 여러 역할로 쓰여요. '~ decision where that appears to go against ~'에서 that은 앞의 '선택이나 결정'을 가리키는 지시대명사이고, 'The fascinating thing ... is that conformity is not spread equally'와 'It demonstrates that the influence ~'에서는 '~라는 것'이라는 뜻의 명사절 접속사예요.", ex:"The fascinating thing about the results of these studies is that conformity is not spread equally across all age groups.", exko:"이러한 연구 결과에서 흥미로운 점은 동조가 모든 연령대에 걸쳐 균등하게 분포되어 있지 않다는 것이다." },
+    so: { word:"so", tag:"[so that · 결과]", meaning:"so that은 '그래서 ~하다'라는 결과를 나타내는 접속사예요. this tendency decreases, so that by 16 or 17, young people are much more able ~ 은 '경향이 감소해서, 16~17세가 되면 ~할 수 있게 된다'로 해석돼요.", ex:"After that, this tendency decreases, so that by 16 or 17, young people are much more able to disagree with the group and to stand up for their own opinion.", exko:"그 이후로 이러한 경향은 감소하여, 16세나 17세가 되면 젊은이들은 집단에 반대하고 자신의 의견을 옹호하는 것을 훨씬 더 잘하게 된다." },
+    as: { word:"as", tag:"[접속사 as · 문맥별]", meaning:"as는 문장 앞의 'As young people mature'에서는 '~함에 따라'라는 뜻의 접속사이고, 문장 끝의 'as individuals'에서는 '~로서'라는 뜻의 전치사예요. As young people mature, they become more resilient는 '젊은이들이 성숙해감에 따라, 더 회복 탄력적이 된다'로, defend their opinions as individuals는 '개인으로서 자신의 의견을 방어하다'로 해석돼요.", ex:"As young people mature, they become more resilient, and more able to defend their opinions as individuals.", exko:"젊은이들이 성숙해감에 따라, 그들은 더 회복 탄력적이 되고, 개인으로서 자신의 의견을 방어하는 것을 더 잘하게 된다." },
+    mature: { word:"mature", tag:"[동사 mature · 품사 확인 필요]", meaning:"mature는 '성숙한'이라는 형용사로 흔히 알려져 있지만, 여기 As young people mature에서는 '성숙해지다'라는 뜻의 동사예요. '성숙한 젊은이들로서'가 아니라 '젊은이들이 성숙해감에 따라'라고 해석해야 자연스러워요.", ex:"As young people mature, they become more resilient, and more able to defend their opinions as individuals.", exko:"젊은이들이 성숙해감에 따라, 그들은 더 회복 탄력적이 되고, 개인으로서 자신의 의견을 방어하는 것을 더 잘하게 된다." }
   },
   passage: `[[conformity::Conformity]] in the teenage years has been studied by putting young people in situations where they are asked to make a choice or decision where that appears to [[go_against::go against]] what everyone else in the group is saying. The [[fascinating::fascinating]] thing about the results of these studies is that conformity is not [[spread::spread]] equally across all age groups. Thus, the [[willingness::willingness]] to go along with others reaches a [[peak::peak]] around the age of 14. After that, this tendency decreases, so that by 16 or 17, young people are much more able to disagree with the group and to [[stand_up_for::stand up for]] their own opinion. This is an important finding. It demonstrates that the influence of the peer group is not the same across all ages. As young people mature, they become more [[resilient::resilient]], and more able to defend their opinions as individuals.`,
   translation: `청소년기의 동조는 젊은이들을 집단의 다른 모든 사람이 말하는 것에 반하는 것처럼 보이는 선택이나 결정을 하도록 요구받는 상황에 놓음으로써 연구되어 왔다. 이러한 연구 결과에서 흥미로운 점은 동조가 모든 연령대에 걸쳐 균등하게 분포되어 있지 않다는 것이다. 즉, 다른 사람들을 따르려는 의향은 14세 무렵에 정점에 도달한다. 그 이후로 이러한 경향은 감소하여, 16세나 17세가 되면 젊은이들은 집단에 반대하고 자신의 의견을 옹호하는 것을 훨씬 더 잘하게 된다. 이것은 중요한 발견이다. 그것은 또래 집단의 영향력이 모든 연령대에 걸쳐 동일하지 않다는 것을 보여준다. 젊은이들이 성숙해감에 따라, 그들은 더 회복 탄력적이 되고, 개인으로서 자신의 의견을 방어하는 것을 더 잘하게 된다.`,
@@ -346,14 +414,24 @@ Manager of the Table Tennis Center`,
   answer: 4,
   explanation: "즐거운 습관(오디오북 듣기)을 하기 싫은 습관(운동)과 묶는 '유혹 묶기(temptation bundling)'로 새로운 행동을 유도한다는 내용이므로 ⑤번이 정답입니다.",
   vocab: {
-    survive: { word:"survive", pron:"[서바이브]", meaning:"살아남다", ex:"We need habits to survive.", exko:"우리는 살아남기 위해 습관이 필요하다." },
-    essential: { word:"essential", pron:"[이센셜]", meaning:"필수적인", ex:"Understanding habits is essential for business.", exko:"습관을 이해하는 것은 사업에 필수적이다." },
+    survive: { word:"survive", pron:"[서바이브]", meaning:"살아남다", ex:"We need habits to survive.", exko:"우리는 살아남기 위해 습관이 필요하다.", etym:"sur-(넘어서) + viv(살다, Latin vivere) + -e → '~을 넘어 살아남다' → '살아남다'. 같은 viv 어근을 쓰는 단어: revive(re-다시 + viv → 다시 살아나다), vivid(viv + -id → 생생한)." },
+    essential: { word:"essential", pron:"[이센셜]", meaning:"필수적인", ex:"Understanding habits is essential for business.", exko:"습관을 이해하는 것은 사업에 필수적이다.", etym:"esse(존재하다, Latin esse) + -ial → '존재에 필수적인' → '필수적인'. 같은 esse 어근을 쓰는 단어: absent(ab-떨어져 + esse → 없는), present(prae-앞에 + esse → 앞에 있는, 참석한)." },
     break_a_habit: { word:"break a habit", pron:"[브레이크 어 해빗]", meaning:"습관을 끊다", ex:"Are you trying to break a habit?", exko:"습관을 끊으려고 하고 있나요?" },
-    attaching: { word:"attaching", pron:"[어태칭]", meaning:"붙이는 것, 결합하는 것", ex:"by attaching to another one", exko:"다른 것에 붙임으로써" },
+    attaching: { word:"attaching", pron:"[어태칭]", meaning:"붙이는 것, 결합하는 것", ex:"by attaching to another one", exko:"다른 것에 붙임으로써", etym:"at-(~에, ad-) + tach(고정하다, 옛프랑스어 tache) + -ing → '~에 고정시키는 것' → '붙이는 것'. 같은 tach 어근을 쓰는 단어: detach(de-분리 + tach → 떼어내다), attack(at- + tacc → 달라붙어 공격하다)." },
     temptation_bundling: { word:"temptation bundling", pron:"[템테이션 번들링]", meaning:"유혹 묶기", ex:"This is known as temptation bundling.", exko:"이것은 유혹 묶기로 알려져 있다." },
     hostage: { word:"hostage", pron:"[하스티지]", meaning:"볼모, 인질", ex:"Their devices were held hostage.", exko:"그들의 기기는 볼모로 잡혀 있었다." },
     put_off: { word:"put off", pron:"[풋 오프]", meaning:"미루다", ex:"a habit people feel forced to put off", exko:"사람들이 미루게 되는 습관" },
-    opted: { word:"opted to", pron:"[옵티드 투]", meaning:"~하기로 선택했다", ex:"Two-thirds opted to pay for it.", exko:"3분의 2가 그것에 돈을 내기로 선택했다." }
+    opted: { word:"opted to", pron:"[옵티드 투]", meaning:"~하기로 선택했다", ex:"Two-thirds opted to pay for it.", exko:"3분의 2가 그것에 돈을 내기로 선택했다.", etym:"opt(선택하다, Latin optare) + -ed → '선택했다'. 같은 opt 어근을 쓰는 단어: adopt(ad-~에게 + opt → 골라서 받아들이다 → 입양하다), option(opt + -ion → 선택지)." }
+  },
+  funcWords: {
+    build: { word:"build", tag:"[동사 build · 다의어]", meaning:"build를 '(건물을) 짓다'로만 알면 어색해요. habit과 함께 쓰이면 '(습관을) 들이다, 만들다'라는 뜻이에요. a habit people would like to build는 '사람들이 만들고 싶어 하는 습관'으로 해석돼요.", ex:"This uses a tempting habit — listening to that awesome audiobook — and combines it with a habit people would like to build, but may otherwise feel forced to put off, like exercising.", exko:"이것은 유혹적인 습관 — 그 멋진 오디오북 듣기 — 을 이용해서, 사람들이 만들고 싶어 하지만 그렇지 않으면 미루게 되는 습관, 예를 들어 운동하기와 결합시킨 것이다." },
+    over: { word:"over", tag:"[형용사 over · 전치사 아님]", meaning:"over를 '~위에, ~을 넘어'라는 전치사로 읽으면 문장이 안 풀려요. be동사 뒤에 오는 over는 '끝난'이라는 뜻의 형용사예요. after it was over는 '그것이 끝난 후에'로 해석돼요.", ex:"And the really amazing thing is what happened after it was over: nearly two-thirds opted to pay to have gym-only access for their devices!", exko:"그리고 정말 놀라운 것은 그것이 끝난 후에 일어난 일이다. 거의 3분의 2가 자신의 기기를 체육관에서만 이용할 수 있게 하는 데 돈을 내기로 선택했다!" },
+    to: { word:"to", tag:"[to부정사 · 여러 용법]", meaning:"to는 문장마다 다른 역할로 쓰였어요. 'We need them to survive'에서는 '살아남기 위해(목적)', 'One question to ask'에서는 앞 명사 question을 꾸미는 형용사적 용법으로 '물어볼 (질문)', 'opted to pay to have gym-only access'에서는 '지불하기로(opted to pay)', '이용하게 하기 위해(to have)'로 목적을 나타내요. 문맥에 따라 자연스럽게 해석하세요.", ex:"We need them to survive.", exko:"우리는 살아남기 위해 습관이 필요하다." },
+    only: { word:"only", tag:"[부사 only · 수식 범위 주의]", meaning:"only는 '오직 접근할 수만 있었다'가 아니라 뒤에 오는 'while at the gym'을 한정해서 '체육관에 있을 때만' 이용할 수 있었다는 뜻이에요. only가 어디를 수식하는지 문맥으로 판단해야 정확히 해석할 수 있어요.", ex:"Wharton professor Katy Milkman led a research project called Holding the Hunger Games Hostage at the Gym, where participants could only have access to their audio devices while at the gym.", exko:"Wharton 대학 교수 Katy Milkman은 '헝거게임을 체육관에 볼모로 잡기'라는 연구 프로젝트를 이끌었는데, 그 연구에서 참가자들은 체육관에 있는 동안에만 자신의 오디오 기기를 이용할 수 있었다." },
+    like: { word:"like", tag:"[전치사/would like to · 문맥별]", meaning:"like는 이 문장에 두 가지 다른 뜻으로 쓰였어요. 'a habit people would like to build'에서 would like to는 '~하고 싶다'라는 뜻이고, 문장 끝의 'like exercising'에서 like는 '~와 같은(예시)'이라는 뜻의 전치사예요. 같은 단어지만 뜻이 다르니 문맥으로 구분하세요.", ex:"This uses a tempting habit — listening to that awesome audiobook — and combines it with a habit people would like to build, but may otherwise feel forced to put off, like exercising.", exko:"이것은 유혹적인 습관 — 그 멋진 오디오북 듣기 — 을 이용해서, 사람들이 만들고 싶어 하지만 그렇지 않으면 미루게 되는 습관, 예를 들어 운동하기와 결합시킨 것이다." },
+    otherwise: { word:"otherwise", tag:"[부사 otherwise]", meaning:"otherwise는 '다른 방법으로'가 아니라 '그렇지 않으면'이라는 뜻의 부사예요. may otherwise feel forced to put off는 '그렇지 않으면(그 습관을 만들지 않으면) 미루게 될 수도 있는'이라고 해석돼요.", ex:"This uses a tempting habit — listening to that awesome audiobook — and combines it with a habit people would like to build, but may otherwise feel forced to put off, like exercising.", exko:"이것은 유혹적인 습관 — 그 멋진 오디오북 듣기 — 을 이용해서, 사람들이 만들고 싶어 하지만 그렇지 않으면 미루게 되는 습관, 예를 들어 운동하기와 결합시킨 것이다." },
+    while: { word:"while", tag:"[전치사처럼 쓰인 while · 생략]", meaning:"while at the gym은 while they are(were) at the gym에서 '주어+be동사'가 생략된 형태로, '체육관에 있는 동안(에만)'이라고 해석돼요.", ex:"Wharton professor Katy Milkman led a research project called Holding the Hunger Games Hostage at the Gym, where participants could only have access to their audio devices while at the gym.", exko:"Wharton 대학 교수 Katy Milkman은 '헝거게임을 체육관에 볼모로 잡기'라는 연구 프로젝트를 이끌었는데, 그 연구에서 참가자들은 체육관에 있는 동안에만 자신의 오디오 기기를 이용할 수 있었다." },
+    work: { word:"work", tag:"[동사 work · 의미 확인 필요]", meaning:"work는 '일하다'라는 뜻으로 흔히 알려져 있지만, 여기 how you can work with them에서는 습관을 '다루다, 활용하다'라는 뜻이에요. '그것들과 함께 일하는 방법'이 아니라 '그것들을 어떻게 활용할 수 있는지'라고 해석해야 자연스러워요.", ex:"Understanding how the brain uses habits, and how you can work with them, is essential for business.", exko:"뇌가 습관을 어떻게 사용하는지, 그리고 여러분이 그것을 어떻게 활용할 수 있는지 이해하는 것은 사업에 필수적이다." }
   },
   passage: `Habits aren't bad. We need them to [[survive::survive]]. Understanding how the brain uses habits, and how you can work with them, is [[essential::essential]] for business. One question to ask is, are you really trying to [[break_a_habit::break a habit]], or would you do better by [[attaching::attaching]] to another one (known as [[temptation_bundling::temptation bundling]])? Wharton professor Katy Milkman led a research project called Holding the Hunger Games Hostage at the Gym, where participants could only have access to their audio devices while at the gym. This uses a tempting habit — listening to that awesome audiobook — and combines it with a habit people would like to build, but may otherwise feel forced to [[put_off::put off]], like exercising. The participants whose devices were "held [[hostage::hostage]]" were 51 percent more likely to visit the gym. And the really amazing thing is what happened after it was over: nearly two-thirds [[opted::opted to]] pay to have gym-only access for their devices!`,
   translation: `습관은 나쁜 것이 아니다. 우리는 살아남기 위해 습관이 필요하다. 뇌가 습관을 어떻게 사용하는지, 그리고 여러분이 그것을 어떻게 활용할 수 있는지 이해하는 것은 사업에 필수적이다. 던져볼 만한 한 가지 질문은, 여러분이 정말로 습관을 끊으려고 하는 것인지, 아니면 다른 습관에 붙이는 편(이른바 '유혹 묶기')이 더 나을지이다. Wharton 대학 교수 Katy Milkman은 '헝거게임을 체육관에 볼모로 잡기'라는 연구 프로젝트를 이끌었는데, 그 연구에서 참가자들은 체육관에 있는 동안에만 자신의 오디오 기기를 이용할 수 있었다. 이것은 유혹적인 습관 — 그 멋진 오디오북 듣기 — 을 이용해서, 사람들이 만들고 싶어 하지만 그렇지 않으면 미루게 되는 습관, 예를 들어 운동하기와 결합시킨 것이다. 기기가 '볼모로 잡힌' 참가자들은 체육관에 갈 가능성이 51퍼센트 더 높았다. 그리고 정말 놀라운 것은 그것이 끝난 후에 일어난 일이다. 거의 3분의 2가 자신의 기기를 체육관에서만 이용할 수 있게 하는 데 돈을 내기로 선택했다!`,
@@ -396,6 +474,7 @@ function toggleSheetStar() {
   setStarred(gid, starred);
   if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
   if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
+  else if (idx >= 0 && window.studyStats) window.studyStats.unrecord('star');
   updateSheetStarBtn();
 }
 
@@ -544,8 +623,13 @@ function showWord(key) {
   currentSheetWordData = { word:v.word, pron:v.pron, meaning:v.meaning, en:v.ex, ko:v.exko };
   document.getElementById('sheet-word').textContent = v.word;
   document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = v.meaning;
   document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();
@@ -589,6 +673,23 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -597,6 +698,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;
@@ -606,8 +708,12 @@ function showPlain(rawWord) {
   currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
   document.getElementById('sheet-word').textContent = clean;
   document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
   document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
   document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   document.getElementById('sheet').classList.add('show');
   updateSheetStarBtn();

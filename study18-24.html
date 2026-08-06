@@ -31,6 +31,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .w:active, .w.tapped { background: #EEEDFE; }
 .p { cursor: pointer; }
 .p:active { background: #EFEFEF; border-radius: 3px; }
+.uline { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #534AB7; }
 
 .quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
 .quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
@@ -450,7 +451,21 @@ function toggleSheetStar() {
   updateSheetStarBtn();
 }
 
+function markUnderlinePhrase(text) {
+  var prob = problems[current];
+  if (!prob || prob.type !== '밑줄 의미 추론' || text.indexOf('‹') !== -1) return text;
+  var m = prob.question.match(/밑줄\s*친\s+(.+?)\s*(?:가|이)\s*(?:다음|윗)\s*글/);
+  if (!m) return text;
+  var pat = m[1].trim().split(/\s+/).map(function(w) {
+    var esc = w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return '(?:\\[\\[[^\\]]+?::' + esc + '\\]\\]|' + esc + ')';
+  }).join('\\s+');
+  var re = new RegExp('(' + pat + ')', 'i');
+  return re.test(text) ? text.replace(re, '‹$1›') : text;
+}
+
 function renderPassage(text) {
+  text = markUnderlinePhrase(text);
   return text.split('\n\n').map(function(para) {
     var placeholders = [];
     var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
@@ -462,6 +477,7 @@ function renderPassage(text) {
     });
     html = html.replace(/(\d+)/g, function(m, idx) { return placeholders[idx]; });
     html = html.replace(/\n/g, '<br>');
+    html = html.replace(/‹(.+?)›/g, '<u class="uline">$1</u>');
     return '<p>' + html + '</p>';
   }).join('');
 }

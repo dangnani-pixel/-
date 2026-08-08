@@ -87,8 +87,11 @@ const cardsHtml = '<div class="cards">' +
   '</a>' +
 '</div>';
 
-let year = 2025;
-let month = "9월";
+const _params = new URLSearchParams(location.search);
+let year = Number(_params.get('year')) || 2025;
+if (!data.hasOwnProperty(year)) year = 2025;
+let month = _params.get('month');
+if (!month || data[year].months.indexOf(month) === -1) month = data[year].months[0];
 
 function renderYears() {
   document.getElementById('year-row').innerHTML = Object.keys(data).map(function(y) {

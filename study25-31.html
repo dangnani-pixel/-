@@ -46,6 +46,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .w:active, .w.tapped { background: #EEEDFE; }
 .p { cursor: pointer; }
 .p:active { background: #EFEFEF; border-radius: 3px; }
+.uw { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #7F77DD; }
 
 .quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
 .quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
@@ -614,7 +615,8 @@ function toggleSheetStar() {
 function renderPassage(text) {
   return text.split('\n\n').map(function(para) {
     var placeholders = [];
-    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+    var html = para.replace(/\{\{u\}\}/g, '\u0003').replace(/\{\{\/u\}\}/g, '\u0004');
+    html = html.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
       placeholders.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
       return '' + (placeholders.length - 1) + '';
     });
@@ -622,6 +624,7 @@ function renderPassage(text) {
       return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
     });
     html = html.replace(/(\d+)/g, function(m, idx) { return placeholders[idx]; });
+    html = html.replace(/\u0003/g, '<u class="uw">').replace(/\u0004/g, '</u>');
     html = html.replace(/\n/g, '<br>');
     return '<p>' + html + '</p>';
   }).join('');

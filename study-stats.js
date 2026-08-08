@@ -105,16 +105,24 @@
       '#stats-panel .sp-cell.clickable:active { background: #EEEDFE; }' +
       '#stats-panel .sp-back-btn { position: absolute; top: 14px; left: 16px; font-size: 12.5px; color: #534AB7; background: none; border: none; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }' +
       '#stats-panel .sp-wrong-title { font-size: 15px; font-weight: 800; text-align: center; margin: 18px 0 14px; }' +
+      '#stats-panel .sp-export-btn { display: block; margin: -6px auto 10px; background: #F8F7FF; color: #534AB7; border: none; border-radius: 99px; padding: 7px 16px; font-size: 12.5px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }' +
+      '#stats-panel .sp-export-btn:active { background: #EEEDFE; }' +
+      '#stats-panel .sp-playall-btn { display: block; margin: 0 auto 14px; background: #534AB7; color: #fff; border: none; border-radius: 99px; padding: 9px 20px; font-size: 13px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; font-family: inherit; }' +
+      '#stats-panel .sp-playall-btn:active { opacity: 0.85; }' +
+      '#stats-panel .sp-playall-btn.active { background: #e0524d; }' +
       '#stats-panel .sp-wrong-list { max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }' +
-      '#stats-panel .sp-wrong-item { background: #F8F7FF; border-radius: 12px; padding: 10px 14px; text-align: left; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }' +
+      '#stats-panel .sp-wrong-item { background: #F8F7FF; border-radius: 12px; padding: 10px 14px; text-align: left; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; transition: background 0.2s ease, box-shadow 0.2s ease; }' +
+      '#stats-panel .sp-wrong-item.sp-playing { background: #EEEDFE; box-shadow: 0 0 0 2px #7F77DD inset; }' +
       '#stats-panel .sp-wrong-word { font-size: 14.5px; font-weight: 700; color: #1a1a1a; }' +
       '#stats-panel .sp-wrong-pron { font-size: 11.5px; color: #aaa; margin-left: 6px; font-weight: 400; }' +
       '#stats-panel .sp-wrong-meaning { font-size: 12.5px; color: #534AB7; margin-top: 2px; }' +
+      '#stats-panel .sp-item-actions { flex: 0 0 auto; display: flex; align-items: center; gap: 2px; }' +
+      '#stats-panel .sp-item-play { background: none; border: none; color: #7F77DD; font-size: 16px; cursor: pointer; padding: 2px 5px; line-height: 1; -webkit-tap-highlight-color: transparent; }' +
+      '#stats-panel .sp-item-play.playing { animation: sp-pulse 0.9s ease-in-out infinite; }' +
+      '@keyframes sp-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }' +
       '#stats-panel .sp-item-del { flex: 0 0 auto; background: none; border: none; color: #ccc; font-size: 15px; cursor: pointer; padding: 2px 4px; line-height: 1; -webkit-tap-highlight-color: transparent; }' +
       '#stats-panel .sp-item-del:active { color: #e0524d; }' +
-      '#stats-panel .sp-empty { text-align: center; font-size: 13px; color: #aaa; padding: 30px 10px; }' +
-      '#stats-panel .sp-export-btn { display: block; margin: -6px auto 14px; background: #F8F7FF; color: #534AB7; border: none; border-radius: 99px; padding: 7px 16px; font-size: 12.5px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }' +
-      '#stats-panel .sp-export-btn:active { background: #EEEDFE; }';
+      '#stats-panel .sp-empty { text-align: center; font-size: 13px; color: #aaa; padding: 30px 10px; }';
     document.head.appendChild(st);
   }
 
@@ -137,7 +145,7 @@
     var pn = document.getElementById('stats-panel');
     if (!ov) {
       ov = document.createElement('div'); ov.id = 'stats-overlay';
-      ov.onclick = closePanel;
+      ov.onclick = function () { stopSpeak(); closePanel(); };
       document.body.appendChild(ov);
     }
     if (!pn) {
@@ -178,12 +186,80 @@
     pn.classList.add('show');
   }
 
+  var speakTimer = null;
+  var playAllActive = false;
+  function stopSpeak() {
+    if (speakTimer) { clearTimeout(speakTimer); speakTimer = null; }
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    playAllActive = false;
+    var playing = document.querySelectorAll('#stats-panel .sp-item-play.playing');
+    for (var i = 0; i < playing.length; i++) playing[i].classList.remove('playing');
+    var playingItems = document.querySelectorAll('#stats-panel .sp-wrong-item.sp-playing');
+    for (var j = 0; j < playingItems.length; j++) playingItems[j].classList.remove('sp-playing');
+    var allBtn = document.getElementById('sp-playall-btn');
+    if (allBtn) { allBtn.textContent = '▶ 전체 듣기'; allBtn.classList.remove('active'); }
+  }
+  // Speaks one word (English, then 3s later its Korean meaning), then calls onDone.
+  function speakOne(w, onDone) {
+    if (!('speechSynthesis' in window)) { if (onDone) onDone(); return; }
+    var enUtter = new SpeechSynthesisUtterance(w.word);
+    enUtter.lang = 'en-US';
+    window.speechSynthesis.speak(enUtter);
+    speakTimer = setTimeout(function () {
+      speakTimer = null;
+      if (w.meaning) {
+        var koUtter = new SpeechSynthesisUtterance(w.meaning);
+        koUtter.lang = 'ko-KR';
+        koUtter.onend = function () { if (onDone) onDone(); };
+        window.speechSynthesis.speak(koUtter);
+      } else if (onDone) {
+        onDone();
+      }
+    }, 3000);
+  }
+  function speakWord(w, btn) {
+    if (!('speechSynthesis' in window)) { alert('이 브라우저는 단어 읽어주기 기능을 지원하지 않아요.'); return; }
+    stopSpeak();
+    if (btn) btn.classList.add('playing');
+    speakOne(w, function () { if (btn) btn.classList.remove('playing'); });
+  }
+  // Plays through the whole list in order so you can listen and memorize hands-free.
+  // Clicking the button again while playing stops it.
+  function playAllWords(words, btn, items) {
+    if (!('speechSynthesis' in window)) { alert('이 브라우저는 단어 읽어주기 기능을 지원하지 않아요.'); return; }
+    if (playAllActive) { stopSpeak(); return; }
+    if (!words.length) return;
+    stopSpeak();
+    playAllActive = true;
+    btn.textContent = '⏸ 정지';
+    btn.classList.add('active');
+    var idx = 0;
+    function next() {
+      if (!playAllActive || idx >= words.length) { stopSpeak(); return; }
+      var prevItem = items[idx - 1];
+      if (prevItem) prevItem.classList.remove('sp-playing');
+      var item = items[idx];
+      if (item) {
+        item.classList.add('sp-playing');
+        if (item.scrollIntoView) item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+      speakOne(words[idx], function () {
+        idx++;
+        if (playAllActive) speakTimer = setTimeout(next, 500);
+      });
+    }
+    next();
+  }
+
   function wordListHtml(words) {
     return words.map(function (w, i) {
       return '<div class="sp-wrong-item"><div><div class="sp-wrong-word">' + w.word +
         (w.pron ? '<span class="sp-wrong-pron">' + w.pron + '</span>' : '') + '</div>' +
         (w.meaning ? '<div class="sp-wrong-meaning">' + w.meaning + '</div>' : '') + '</div>' +
-        '<button class="sp-item-del" data-idx="' + i + '" title="삭제">✕</button></div>';
+        '<div class="sp-item-actions">' +
+        '<button class="sp-item-play" data-idx="' + i + '" title="단어 읽어주기">🔊</button>' +
+        '<button class="sp-item-del" data-idx="' + i + '" title="삭제">✕</button>' +
+        '</div></div>';
     }).join('');
   }
 
@@ -215,24 +291,39 @@
   }
 
   function openWordList(title, words, emptyMsg, onDelete, exportFilename) {
+    stopSpeak();
     var pn = ensureShell();
     var listHtml = words.length ? wordListHtml(words) : ('<div class="sp-empty">' + emptyMsg + '</div>');
     var exportBtnHtml = (exportFilename && words.length) ? '<button class="sp-export-btn" id="sp-export-btn">⬇ 텍스트 파일로 내보내기</button>' : '';
+    var playAllBtnHtml = words.length
+      ? '<button class="sp-playall-btn" id="sp-playall-btn">▶ 전체 듣기</button>' : '';
     pn.innerHTML =
       '<button class="sp-close" id="sp-close-btn">✕</button>' +
       '<button class="sp-back-btn" id="sp-back-btn">← 뒤로</button>' +
       '<div class="sp-wrong-title">' + title + ' (' + words.length + '개)</div>' +
       exportBtnHtml +
+      playAllBtnHtml +
       '<div class="sp-wrong-list">' + listHtml + '</div>';
-    document.getElementById('sp-close-btn').onclick = closePanel;
-    document.getElementById('sp-back-btn').onclick = openPanel;
+    document.getElementById('sp-close-btn').onclick = function () { stopSpeak(); closePanel(); };
+    document.getElementById('sp-back-btn').onclick = function () { stopSpeak(); openPanel(); };
     var exportBtn = document.getElementById('sp-export-btn');
     if (exportBtn) exportBtn.onclick = function () { exportWords(title, words, exportFilename); };
     var delBtns = pn.querySelectorAll('.sp-item-del');
     for (var i = 0; i < delBtns.length; i++) {
       delBtns[i].onclick = (function (idx) {
-        return function (e) { e.stopPropagation(); onDelete(idx); };
+        return function (e) { e.stopPropagation(); stopSpeak(); onDelete(idx); };
       })(Number(delBtns[i].getAttribute('data-idx')));
+    }
+    var playBtns = pn.querySelectorAll('.sp-item-play');
+    for (var i = 0; i < playBtns.length; i++) {
+      playBtns[i].onclick = (function (idx, btn) {
+        return function (e) { e.stopPropagation(); speakWord(words[idx], btn); };
+      })(Number(playBtns[i].getAttribute('data-idx')), playBtns[i]);
+    }
+    var playAllBtn = document.getElementById('sp-playall-btn');
+    if (playAllBtn) {
+      var items = pn.querySelectorAll('.sp-wrong-item');
+      playAllBtn.onclick = function () { playAllWords(words, playAllBtn, items); };
     }
   }
 

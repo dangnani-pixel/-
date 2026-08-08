@@ -88,9 +88,9 @@ const cardsHtml = '<div class="cards">' +
 '</div>';
 
 const _params = new URLSearchParams(location.search);
-let year = Number(_params.get('year')) || 2025;
+let year = Number(_params.get('year')) || Number(localStorage.getItem('grade1_lastYear')) || 2025;
 if (!data.hasOwnProperty(year)) year = 2025;
-let month = _params.get('month');
+let month = _params.get('month') || localStorage.getItem('grade1_lastMonth');
 if (!month || data[year].months.indexOf(month) === -1) month = data[year].months[0];
 
 function renderYears() {
@@ -202,22 +202,30 @@ function renderContent() {
   document.getElementById('content-area').innerHTML = html;
 }
 
+function saveState() {
+  localStorage.setItem('grade1_lastYear', year);
+  localStorage.setItem('grade1_lastMonth', month);
+}
+
 function selectYear(y) {
   year = y;
   renderYears();
   renderMonths();
   renderContent();
+  saveState();
 }
 
 function selectMonth(m) {
   month = m;
   renderMonths();
   renderContent();
+  saveState();
 }
 
 renderYears();
 renderMonths();
 renderContent();
+saveState();
 </script>
 <script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>

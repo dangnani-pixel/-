@@ -112,7 +112,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="wrap">
 <div class="source-tag">📝 2025 고1 9월 전국연합학력평가 · 영어 32~38번</div>
 <h1>지문 완전정복 학습지</h1>
-<p class="subtitle">지문 속 파란 밑줄 단어를 클릭하면 뜻·발음·예문이 나와요. 🔊 버튼을 누르면 실제 발음을 들을 수 있어요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a> · <a class="home-link" href="study39-45.html">39~45번 학습지 →</a> · <a class="home-link" href="vocab18-45.html">단어장 퀴즈</a></p>
+<p class="subtitle">지문 속 파란 밑줄 단어를 클릭하면 뜻·발음·예문이 나와요. 🔊 버튼을 누르면 실제 발음을 들을 수 있어요.<br><a class="home-link" href="grade1.html?year=2025&month=9월">← 9월 모의고사 처음으로</a> · <a class="home-link" href="study39-45.html">39~45번 학습지 →</a> · <a class="home-link" href="vocab18-45.html">단어장 퀴즈</a></p>
 
 <div class="top-bar">
   <span class="prog-text" id="prog-text">1 / 7</span>
@@ -674,10 +674,14 @@ function render() {
   switchTab('grammar');
 }
 
-function selectProblem(i) {
+function selectProblem(i, skipHistory) {
   current = i;
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!skipHistory) {
+    var h = '#p' + current;
+    if (location.hash !== h) history.pushState({ pIdx: current }, '', h);
+  }
 }
 
 function go(delta) {
@@ -686,8 +690,7 @@ function go(delta) {
   } else {
     current = Math.max(0, Math.min(problems.length - 1, current + delta));
   }
-  render();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  selectProblem(current);
 }
 
 function toggleTranslation() {
@@ -922,7 +925,21 @@ function speak(text) {
 }
 
 buildTabs();
-render();
+(function() {
+  var m = /^#p(\d+)$/.exec(location.hash);
+  var idx = m ? parseInt(m[1], 10) : -1;
+  if (idx >= 0 && idx < problems.length) current = idx;
+  render();
+  history.replaceState({ pIdx: current }, '', '#p' + current);
+  window.addEventListener('popstate', function(e) {
+    var i = (e.state && typeof e.state.pIdx === 'number') ? e.state.pIdx : -1;
+    if (i < 0) {
+      var mm = /^#p(\d+)$/.exec(location.hash);
+      i = mm ? parseInt(mm[1], 10) : 0;
+    }
+    if (i >= 0 && i < problems.length && i !== current) selectProblem(i, true);
+  });
+})();
 </script>
 <script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>

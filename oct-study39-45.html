@@ -39,8 +39,8 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .w { color: #4b3fc4; border-bottom: 2px dotted #b7b0f0; cursor: pointer; padding: 0 1px; border-radius: 3px; }
 .w:active { background: #EEEDFE; }
 .p { cursor: pointer; }
+.uline { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #534AB7; }
 .p:active { background: #EFEFEF; border-radius: 3px; }
-.uw { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #7F77DD; }
 
 .quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
 .quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
@@ -114,7 +114,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="wrap">
 <div class="source-tag">📝 2025 고1 10월 전국연합학력평가 · 영어 39~45번</div>
 <h1>지문 완전정복 학습지</h1>
-<p class="subtitle">지문 속 단어를 클릭하면 뜻·발음·예문이 나와요. 팝업의 ⭐를 누르면 단어장에 저장돼요.<br><a class="home-link" href="grade1.html">← 고1 학습 홈</a> · <a class="home-link" href="oct-study32-38.html">32~38번 학습지</a></p>
+<p class="subtitle">지문 속 단어를 클릭하면 뜻·발음·예문이 나와요. 팝업의 ⭐를 누르면 단어장에 저장돼요.<br><a class="home-link" href="grade1.html?year=2025&month=10월">← 10월 모의고사 처음으로</a> · <a class="home-link" href="oct-study32-38.html">32~38번 학습지</a></p>
 
 <div class="top-bar">
   <span class="prog-text" id="prog-text">1 / 7</span>
@@ -285,7 +285,7 @@ const problems = [
     challenges: { word:"challenges", tag:"[명사 challenge · 의미 확인]", meaning:"challenge를 '도전'으로만 해석하면 어색해요. 앞 문장의 failures and setbacks(실패와 좌절)를 받는 말이므로 여기서는 '어려움, 힘든 일'이라는 뜻이에요. 'through these challenges'는 '이러한 어려움을 통해'로 해석하세요.", ex:"It is through these (d) challenges that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible.", exko:"우리가 기술을 다듬고, 고유한 관점을 발전시키며, 가능성의 경계를 넓히는 것은 바로 이러한 (d)어려움을 통해서이다." },
     push: { word:"push", tag:"[동사 push · 관용구 push the boundaries]", meaning:"push를 '밀다'로 해석하면 어색해요. 'push the boundaries of ~'는 '~의 한계를 넓히다, 경계를 확장하다'라는 뜻의 표현이라서, 'push the boundaries of what is possible'은 '가능성의 경계를 넓히다'로 해석돼요.", ex:"It is through these (d) challenges that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible.", exko:"우리가 기술을 다듬고, 고유한 관점을 발전시키며, 가능성의 경계를 넓히는 것은 바로 이러한 (d)어려움을 통해서이다." }
   },
-  passage: `Creativity is the ability to generate [[novel::novel]] and valuable ideas. It involves [[divergent::divergent thinking]], imagination, and a willingness to experiment and take risks. While AI can be a powerful tool for creative efforts, it also {{u}}(a) carries{{/u}} the risk of limiting [[originality::originality]] and innovation. AI algorithms are trained on {{u}}(b) existing{{/u}} datasets, often identifying patterns and trends in past creations. While this can be useful for generating new content in similar styles or formats, it can also lead to [[derivative::derivative]] works that lack genuine originality. If artists and designers rely too heavily on AI for inspiration and content generation, they may find themselves {{u}}(c) trapped{{/u}} in a cycle of imitation, unable to break free from the [[constraints::constraints]] of the AI's training data. Moreover, the ease with which AI can generate content can discourage the kind of struggle and experimentation that often leads to [[breakthroughs::breakthroughs]]. The creative process is often messy and repetitive, involving numerous failures and [[setbacks::setbacks]]. It is through these {{u}}(d) challenges{{/u}} that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible. If AI provides instant solutions, it can {{u}}(e) enhance{{/u}} this essential process of learning through trial and error, ultimately [[inhibiting::inhibiting]] the development of true creative talent.`,
+  passage: `Creativity is the ability to generate [[novel::novel]] and valuable ideas. It involves [[divergent::divergent thinking]], imagination, and a willingness to experiment and take risks. While AI can be a powerful tool for creative efforts, it also (a) ‹carries› the risk of limiting [[originality::originality]] and innovation. AI algorithms are trained on (b) ‹existing› datasets, often identifying patterns and trends in past creations. While this can be useful for generating new content in similar styles or formats, it can also lead to [[derivative::derivative]] works that lack genuine originality. If artists and designers rely too heavily on AI for inspiration and content generation, they may find themselves (c) ‹trapped› in a cycle of imitation, unable to break free from the [[constraints::constraints]] of the AI's training data. Moreover, the ease with which AI can generate content can discourage the kind of struggle and experimentation that often leads to [[breakthroughs::breakthroughs]]. The creative process is often messy and repetitive, involving numerous failures and [[setbacks::setbacks]]. It is through these (d) ‹challenges› that we refine our skills, develop our unique perspectives, and push the boundaries of what is possible. If AI provides instant solutions, it can (e) ‹enhance› this essential process of learning through trial and error, ultimately [[inhibiting::inhibiting]] the development of true creative talent.`,
   translation: `창의성은 참신하고 가치 있는 아이디어를 만들어내는 능력이다. 그것은 확산적 사고, 상상력, 그리고 실험하고 위험을 감수하려는 의지를 포함한다. AI가 창의적 노력에 강력한 도구가 될 수 있지만, 그것은 또한 독창성과 혁신을 제한할 위험도 (a)지닌다. AI 알고리즘은 (b)기존의 데이터셋으로 훈련되며, 종종 과거 창작물의 패턴과 경향을 식별한다. 이것이 비슷한 스타일이나 형식의 새로운 콘텐츠를 생성하는 데는 유용할 수 있지만, 진정한 독창성이 결여된 모방적 작품으로 이어질 수도 있다. 만약 예술가와 디자이너가 영감과 콘텐츠 생성을 AI에 지나치게 의존한다면, 그들은 AI 훈련 데이터의 제약에서 벗어나지 못한 채 모방의 순환에 (c)갇힌 자신을 발견하게 될지도 모른다. 게다가, AI가 콘텐츠를 생성할 수 있는 그 용이함은 종종 돌파구로 이어지는 종류의 분투와 실험을 위축시킬 수 있다. 창작 과정은 흔히 지저분하고 반복적이며, 수많은 실패와 좌절을 수반한다. 우리가 기술을 다듬고, 고유한 관점을 발전시키며, 가능성의 경계를 넓히는 것은 바로 이러한 (d)어려움을 통해서이다. 만약 AI가 즉각적인 해결책을 제공한다면, 그것은 시행착오를 통한 이 필수적인 학습 과정을 (e)강화하여(→약화시켜), 궁극적으로 진정한 창의적 재능의 발달을 억제할 수 있다.`,
   grammar: [
     { title:"It is ~ that ... (강조구문)", desc:"강조하려는 어구를 It is와 that 사이에 넣습니다.", ex:"It is through these challenges that we refine our skills. (우리가 기술을 다듬는 것은 바로 이러한 어려움을 통해서이다.)" },
@@ -335,13 +335,13 @@ const problems = [
     now: { word:"now", tag:"[접속사 now that]", meaning:"now를 '지금'이라는 부사로만 보면 뒤에 절이 이어지는 이유를 알 수 없어요. 'now that+주어+동사'는 '~이니까, ~인 지금'이라는 뜻의 접속사예요. 'now that you have everything'은 '당신이 모든 것을 가진 지금에서야'로 해석돼요.", ex:"You're offering me something now that you have everything.", exko:"당신은 모든 것을 가진 지금에서야 저에게 무언가를 제안하고 있습니다." },
     just: { word:"Just", tag:"[부사 just · 의미 확인]", meaning:"just를 '단지, 그냥'으로만 알면 'Just then'이 해석되지 않아요. 시간 표현 앞의 just는 '바로'라는 강조의 뜻이라서 'Just then'은 '바로 그때'예요. 앞에 나온 'That's just generosity at convenience'의 just는 '그저 ~일 뿐'이라는 다른 뜻이니 구별하세요.", ex:"(D) Just then, David, working at the newsstand noticed James.", exko:"(D) 바로 그때, 신문 가판대에서 일하던 David가 James를 알아차렸다." }
   },
-  passage: `(A) When [[billionaire::billionaire]] James Walker was once asked by a journalist, "Is there anyone richer than you?", he replied, "Yes, there is one young man I'll never forget." He told the story of when he first met David at a New York airport. Years ago, James was [[broke::broke]] and stuck at the airport, [[killing_time::killing time]] reading newspaper headlines at the [[newsstand::newsstand]]. One headline caught {{u}}(a) his{{/u}} eye, but he had no money to buy the paper.
+  passage: `(A) When [[billionaire::billionaire]] James Walker was once asked by a journalist, "Is there anyone richer than you?", he replied, "Yes, there is one young man I'll never forget." He told the story of when he first met David at a New York airport. Years ago, James was [[broke::broke]] and stuck at the airport, [[killing_time::killing time]] reading newspaper headlines at the [[newsstand::newsstand]]. One headline caught (a) ‹his› eye, but he had no money to buy the paper.
 
-(B) Years passed and James became a [[wealthy::wealthy]] businessman, but he never forgot the young man he had met at the airport. He found David running a small bookstore and visited him there. {{u}}(b) He{{/u}} introduced himself, saying, "David, you helped me twice when you had almost nothing. I want to give you anything you wish." He looked at {{u}}(c) him{{/u}} and said, "You can't truly [[compensate::compensate]] me."
+(B) Years passed and James became a [[wealthy::wealthy]] businessman, but he never forgot the young man he had met at the airport. He found David running a small bookstore and visited him there. (b) ‹He› introduced himself, saying, "David, you helped me twice when you had almost nothing. I want to give you anything you wish." He looked at (c) ‹him› and said, "You can't truly [[compensate::compensate]] me."
 
-(C) James asked, "Why not?" David replied, "Because I gave to you when I had almost nothing. You're offering me something now that you have everything. That's just [[generosity::generosity]] at convenience. So, I can't accept your offer." James realized that money doesn't make someone rich. Remembering that moment, {{u}}(d) he{{/u}} said to the journalist, "It's the willingness to give even when you have very little that makes you wealthy. And so, David is the richest person I have ever met."
+(C) James asked, "Why not?" David replied, "Because I gave to you when I had almost nothing. You're offering me something now that you have everything. That's just [[generosity::generosity]] at convenience. So, I can't accept your offer." James realized that money doesn't make someone rich. Remembering that moment, (d) ‹he› said to the journalist, "It's the willingness to give even when you have very little that makes you wealthy. And so, David is the richest person I have ever met."
 
-(D) Just then, David, working at the newsstand noticed James. {{u}}(e) He{{/u}} asked, "Would you like to buy this, sir?" But, James [[hesitated::hesitated]], saying he had no money. David smiled and said, "Me, too. But I have enough for this. Take it as a gift." Three months later, James, still broke, met him at the newsstand once more. Again, David gave him a newspaper without expecting anything in return.`,
+(D) Just then, David, working at the newsstand noticed James. (e) ‹He› asked, "Would you like to buy this, sir?" But, James [[hesitated::hesitated]], saying he had no money. David smiled and said, "Me, too. But I have enough for this. Take it as a gift." Three months later, James, still broke, met him at the newsstand once more. Again, David gave him a newspaper without expecting anything in return.`,
   translation: `(A) 억만장자 James Walker가 언젠가 한 기자에게 "당신보다 더 부유한 사람이 있습니까?"라는 질문을 받았을 때, 그는 "네, 제가 결코 잊지 못할 젊은이가 한 명 있습니다."라고 답했다. 그는 뉴욕의 한 공항에서 David를 처음 만났을 때의 이야기를 들려주었다. 몇 년 전, James는 빈털터리로 공항에 발이 묶여 신문 가판대에서 신문 기사 제목을 읽으며 시간을 때우고 있었다. 한 기사 제목이 (a)그의 눈길을 사로잡았지만, 그는 신문을 살 돈이 없었다.
 
 (B) 세월이 흘러 James는 부유한 사업가가 되었지만, 공항에서 만났던 그 젊은이를 결코 잊지 않았다. 그는 David가 작은 서점을 운영하고 있다는 것을 알아내고 그곳으로 그를 찾아갔다. (b)그는 자신을 소개하며 말했다. "David, 당신은 거의 아무것도 없을 때 나를 두 번이나 도와주었습니다. 당신이 원하는 것은 무엇이든 드리고 싶습니다." 그는 (c)그를 바라보며 말했다. "당신은 나에게 진정으로 보상할 수 없습니다."
@@ -409,8 +409,7 @@ function toggleSheetStar() {
 function renderPassage(text) {
   return text.split('\n\n').map(function(para) {
     var ph = [];
-    var html = para.replace(/\{\{u\}\}/g, '\u0001').replace(/\{\{\/u\}\}/g, '\u0002');
-    html = html.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
       ph.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
       return '§' + (ph.length - 1) + '§';
     });
@@ -422,7 +421,7 @@ function renderPassage(text) {
       return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
     });
     html = html.replace(/§(\d+)§/g, function(m, i) { return ph[i]; });
-    html = html.replace(/\u0001/g, '<u class="uw">').replace(/\u0002/g, '</u>');
+    html = html.replace(/‹(.+?)›/g, '<u class="uline">$1</u>');
     return '<p>' + html.replace(/\n/g, '<br>') + '</p>';
   }).join('');
 }
@@ -540,11 +539,14 @@ function render() {
   switchTab('grammar');
 }
 
-function selectProblem(i) { current = i; render(); window.scrollTo({top:0, behavior:'smooth'}); }
+function selectProblem(i, skipHistory) {
+  current = i; render(); window.scrollTo({top:0, behavior:'smooth'});
+  if (!skipHistory) { var h = '#p' + current; if (location.hash !== h) history.pushState({pIdx:current}, '', h); }
+}
 function go(d) {
   if (current === problems.length - 1 && d === 1) current = 0;
   else current = Math.max(0, Math.min(problems.length - 1, current + d));
-  render(); window.scrollTo({top:0, behavior:'smooth'});
+  selectProblem(current);
 }
 
 function toggleTranslation() {
@@ -766,7 +768,21 @@ function speak(text) {
 }
 
 buildTabs();
-render();
+(function() {
+  var m = /^#p(\d+)$/.exec(location.hash);
+  var idx = m ? parseInt(m[1], 10) : -1;
+  if (idx >= 0 && idx < problems.length) current = idx;
+  render();
+  history.replaceState({ pIdx: current }, '', '#p' + current);
+  window.addEventListener('popstate', function(e) {
+    var i = (e.state && typeof e.state.pIdx === 'number') ? e.state.pIdx : -1;
+    if (i < 0) {
+      var mm = /^#p(\d+)$/.exec(location.hash);
+      i = mm ? parseInt(mm[1], 10) : 0;
+    }
+    if (i >= 0 && i < problems.length && i !== current) selectProblem(i, true);
+  });
+})();
 </script>
 <script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>

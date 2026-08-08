@@ -31,7 +31,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .w:active { background: #EEEDFE; }
 .p { cursor: pointer; }
 .p:active { background: #EFEFEF; border-radius: 3px; }
-.uw { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #7F77DD; }
+.uline { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #534AB7; }
 
 .quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
 .quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
@@ -105,7 +105,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="wrap">
 <div class="source-tag">📝 2025 고1 10월 전국연합학력평가 · 영어 18~24번</div>
 <h1>지문 완전정복 학습지</h1>
-<p class="subtitle">지문 속 단어를 클릭하면 뜻·발음·예문이 나와요. 팝업의 ⭐를 누르면 단어장에 저장돼요.<br><a class="home-link" href="grade1.html">← 고1 학습 홈</a> · <a class="home-link" href="oct-listening1-17.html">1~17번 듣기평가</a></p>
+<p class="subtitle">지문 속 단어를 클릭하면 뜻·발음·예문이 나와요. 팝업의 ⭐를 누르면 단어장에 저장돼요.<br><a class="home-link" href="grade1.html?year=2025&month=10월">← 10월 모의고사 처음으로</a></p>
 
 <div class="top-bar">
   <span class="prog-text" id="prog-text">1 / 7</span>
@@ -323,7 +323,7 @@ Mark Smith 드림`,
     to: { word:"to", tag:"[to부정사]", meaning:"'be intended to + 동사원형'은 '~하도록 의도되다'라는 뜻의 수동 표현이에요. to benefit은 '혜택을 받도록'이라고 해석돼요.", ex:"This results in the exclusion or displacement of the poor neighbourhood's residents, who were intended to benefit from the ecosystem services provided by the new green space.", exko:"이는 새로운 녹지 공간이 제공하는 생태계 서비스로부터 혜택을 받도록 의도되었던 가난한 동네 주민들이 배제되거나 쫓겨나는 결과를 낳는다." },
     one: { word:"one", tag:"[대명사 one]", meaning:"여기서 one은 앞에 나온 neighbourhood를 다시 가리키는 대명사예요. 'a similar degraded neighbourhood to the one they left'는 '그들이 떠나온 그 동네와 비슷한 낙후된 동네'라는 뜻으로, the one = the neighbourhood they left라고 이해하면 돼요.", ex:"In turn, the residents may only be able to afford to live in a similar degraded neighbourhood to the one they left, with low access to green infrastructure.", exko:"결국, 그 주민들은 자신들이 떠나온 곳과 비슷한, 녹지 기반시설에 대한 접근성이 낮은 낙후된 동네에서 살 형편밖에 되지 않을 수 있다." }
   },
-  passage: `Currently, urban [[regeneration::regeneration]] projects in [[degraded::degraded]] areas have been promoted as improving the wellbeing of residents and solving environmental [[injustice::injustice]] problems. However, such environmental improvements in [[ethnic::ethnic]] communities and/or low-income households can create {{u}}an urban green space paradox{{/u}}. The creation of new, high-quality green spaces can increase [[attractiveness::attractiveness]], making these neighbourhood more desirable. By contrast, the cost of housing can rise, and residents may not be able to [[afford::afford]] the rent. This results in the exclusion or [[displacement::displacement]] of the poor neighbourhood's residents, who were intended to benefit from the ecosystem services provided by the new green space. In turn, the residents may only be able to afford to live in a similar degraded neighbourhood to the one they left, with low access to green [[infrastructure::infrastructure]].`,
+  passage: `Currently, urban [[regeneration::regeneration]] projects in [[degraded::degraded]] areas have been promoted as improving the wellbeing of residents and solving environmental [[injustice::injustice]] problems. However, such environmental improvements in [[ethnic::ethnic]] communities and/or low-income households can create an urban green space paradox. The creation of new, high-quality green spaces can increase [[attractiveness::attractiveness]], making these neighbourhood more desirable. By contrast, the cost of housing can rise, and residents may not be able to [[afford::afford]] the rent. This results in the exclusion or [[displacement::displacement]] of the poor neighbourhood's residents, who were intended to benefit from the ecosystem services provided by the new green space. In turn, the residents may only be able to afford to live in a similar degraded neighbourhood to the one they left, with low access to green [[infrastructure::infrastructure]].`,
   translation: `현재, 낙후된 지역의 도시 재생 사업은 주민들의 웰빙을 향상시키고 환경 불평등 문제를 해결하는 것으로 홍보되어 왔다. 그러나 소수 민족 공동체 그리고/또는 저소득 가구에서의 그러한 환경 개선은 '도시 녹지 공간의 역설'을 만들어낼 수 있다. 새롭고 질 높은 녹지 공간의 조성은 매력도를 높여, 이 동네들을 더 살고 싶은 곳으로 만들 수 있다. 반면에, 주거 비용이 오를 수 있고, 주민들은 임대료를 감당하지 못할 수도 있다. 이는 새로운 녹지 공간이 제공하는 생태계 서비스로부터 혜택을 받도록 의도되었던 가난한 동네 주민들이 배제되거나 쫓겨나는 결과를 낳는다. 결국, 그 주민들은 자신들이 떠나온 곳과 비슷한, 녹지 기반시설에 대한 접근성이 낮은 낙후된 동네에서 살 형편밖에 되지 않을 수 있다.`,
   grammar: [
     { title:"관계대명사 who (계속적 용법)", desc:"콤마 뒤 who는 앞의 사람 명사를 부연 설명합니다.", ex:"residents, who were intended to benefit (주민들은, 그런데 그들은 혜택을 받도록 의도되었다)" },
@@ -494,11 +494,24 @@ function toggleSheetStar() {
   updateSheetStarBtn();
 }
 
+function markUnderlinePhrase(text) {
+  var prob = problems[current];
+  if (!prob || prob.type !== '밑줄 의미 추론' || text.indexOf('‹') !== -1) return text;
+  var m = prob.question.match(/밑줄\s*친\s+(.+?)\s*(?:가|이)\s*(?:다음|윗)\s*글/);
+  if (!m) return text;
+  var pat = m[1].trim().split(/\s+/).map(function(w) {
+    var esc = w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return '(?:\\[\\[[^\\]]+?::' + esc + '\\]\\]|' + esc + ')';
+  }).join('\\s+');
+  var re = new RegExp('(' + pat + ')', 'i');
+  return re.test(text) ? text.replace(re, '‹$1›') : text;
+}
+
 function renderPassage(text) {
+  text = markUnderlinePhrase(text);
   return text.split('\n\n').map(function(para) {
     var ph = [];
-    var html = para.replace(/\{\{u\}\}/g, '\u0001').replace(/\{\{\/u\}\}/g, '\u0002');
-    html = html.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
       ph.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
       return '§' + (ph.length - 1) + '§';
     });
@@ -506,8 +519,9 @@ function renderPassage(text) {
       return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
     });
     html = html.replace(/§(\d+)§/g, function(m, i) { return ph[i]; });
-    html = html.replace(/\u0001/g, '<u class="uw">').replace(/\u0002/g, '</u>');
-    return '<p>' + html.replace(/\n/g, '<br>') + '</p>';
+    html = html.replace(/\n/g, '<br>');
+    html = html.replace(/‹(.+?)›/g, '<u class="uline">$1</u>');
+    return '<p>' + html + '</p>';
   }).join('');
 }
 
@@ -591,11 +605,14 @@ function render() {
   switchTab('grammar');
 }
 
-function selectProblem(i) { current = i; render(); window.scrollTo({top:0, behavior:'smooth'}); }
+function selectProblem(i, skipHistory) {
+  current = i; render(); window.scrollTo({top:0, behavior:'smooth'});
+  if (!skipHistory) { var h = '#p' + current; if (location.hash !== h) history.pushState({pIdx:current}, '', h); }
+}
 function go(d) {
   if (current === problems.length - 1 && d === 1) current = 0;
   else current = Math.max(0, Math.min(problems.length - 1, current + d));
-  render(); window.scrollTo({top:0, behavior:'smooth'});
+  selectProblem(current);
 }
 
 function toggleTranslation() {
@@ -817,7 +834,21 @@ function speak(text) {
 }
 
 buildTabs();
-render();
+(function() {
+  var m = /^#p(\d+)$/.exec(location.hash);
+  var idx = m ? parseInt(m[1], 10) : -1;
+  if (idx >= 0 && idx < problems.length) current = idx;
+  render();
+  history.replaceState({ pIdx: current }, '', '#p' + current);
+  window.addEventListener('popstate', function(e) {
+    var i = (e.state && typeof e.state.pIdx === 'number') ? e.state.pIdx : -1;
+    if (i < 0) {
+      var mm = /^#p(\d+)$/.exec(location.hash);
+      i = mm ? parseInt(mm[1], 10) : 0;
+    }
+    if (i >= 0 && i < problems.length && i !== current) selectProblem(i, true);
+  });
+})();
 </script>
 <script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>

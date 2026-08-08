@@ -87,9 +87,11 @@ const cardsHtml = '<div class="cards">' +
   '</a>' +
 '</div>';
 
-let year = Number(localStorage.getItem('grade1_lastYear')) || 2025;
-let month = localStorage.getItem('grade1_lastMonth') || "9월";
-if (!data[year]) { year = 2025; month = "9월"; }
+const _params = new URLSearchParams(location.search);
+let year = Number(_params.get('year')) || Number(localStorage.getItem('grade1_lastYear')) || 2025;
+if (!data.hasOwnProperty(year)) year = 2025;
+let month = _params.get('month') || localStorage.getItem('grade1_lastMonth');
+if (!month || data[year].months.indexOf(month) === -1) month = data[year].months[0];
 
 function renderYears() {
   document.getElementById('year-row').innerHTML = Object.keys(data).map(function(y) {

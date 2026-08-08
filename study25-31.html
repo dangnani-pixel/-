@@ -46,7 +46,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .w:active, .w.tapped { background: #EEEDFE; }
 .p { cursor: pointer; }
 .p:active { background: #EFEFEF; border-radius: 3px; }
-.uw { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #7F77DD; }
+.uline { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #534AB7; }
 
 .quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
 .quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
@@ -121,7 +121,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="wrap">
 <div class="source-tag">📝 2025 고1 9월 전국연합학력평가 · 영어 25~31번</div>
 <h1>지문 완전정복 학습지</h1>
-<p class="subtitle">지문 속 파란 밑줄 단어를 클릭하면 뜻·발음·예문이 나와요. 🔊 버튼을 누르면 실제 발음을 들을 수 있어요.<br><a class="home-link" href="grade1.html">← 고1 9월 학습 홈</a> · <a class="home-link" href="study18-24.html">← 18~24번 학습지</a> · <a class="home-link" href="study32-38.html">32~38번 학습지 →</a> · <a class="home-link" href="vocab18-45.html">단어장 퀴즈</a></p>
+<p class="subtitle">지문 속 파란 밑줄 단어를 클릭하면 뜻·발음·예문이 나와요. 🔊 버튼을 누르면 실제 발음을 들을 수 있어요.<br><a class="home-link" href="grade1.html?year=2025&month=9월">← 9월 모의고사 처음으로</a> · <a class="home-link" href="study18-24.html">← 18~24번 학습지</a> · <a class="home-link" href="study32-38.html">32~38번 학습지 →</a> · <a class="home-link" href="vocab18-45.html">단어장 퀴즈</a></p>
 
 <div class="top-bar">
   <span class="prog-text" id="prog-text">1 / 7</span>
@@ -464,7 +464,7 @@ Winners' bookmarks will be printed and given to visitors.`,
     true: { word:"true", tag:"[형용사 true · 관용구 be true of]", meaning:"'be true of ~'는 '~에게도 해당된다, ~의 경우가 그렇다'라는 관용 표현이에요. That's true of gazelles를 '그것은 가젤에 대해 진실이다'라고 직역하지 말고 '가젤이 바로 그런 경우다'라고 해석하세요. of 대신 to가 오면(be true to) '~에 충실하다'로 뜻이 달라져요.", ex:"That's true, for example, of gazelles, which for thousands of years were the most frequently hunted game species in some parts of the Fertile Crescent.", exko:"예를 들어 가젤이 그러한데, 가젤은 수천 년 동안 비옥한 초승달 지대의 일부 지역에서 가장 자주 사냥된 사냥감 종이었다." },
     blindly: { word:"blindly", tag:"[부사 blindly · 앞뒤 가리지 않고]", meaning:"blindly를 '눈이 멀어서'라고 옮기면 어색해요. 여기서는 '앞뒤 가리지 않고, 마구잡이로'라는 뜻으로, 공황에 빠진 동물이 앞을 살피지도 않고 벽에 부딪히는 모습을 나타내요.", ex:"Just imagine trying to herd an animal that runs away, blindly hits itself against walls, can leap up to nearly 30 feet, and can run at a speed of 50 miles per hour!", exko:"도망치고, 앞뒤 가리지 않고 벽에 스스로 부딪히며, 거의 30피트까지 뛰어오를 수 있고, 시속 50마일로 달릴 수 있는 동물을 몰고 다닌다고 상상해 보라!" },
   },
-  passage: `Big [[mammalian::mammalian]] [[herbivore::herbivore]] species react to danger from [[predators::predators]] or humans in different ways. Some species are nervous, fast, and programmed for [[instant_flight::instant flight]] when they [[perceive::perceive]] a [[threat::threat]]. Other species are slower, less nervous, seek protection in herds, ①{{u}}stand{{/u}} their ground when threatened, and don't run until necessary. Naturally, the nervous species are difficult to keep in [[captivity::captivity]]. If ②{{u}}putting{{/u}} into an [[enclosure::enclosure]], they are likely to [[panic::panic]], and either die of shock or hit themselves [[repeatedly::repeatedly]] to death against the fence in their attempts to [[escape::escape]]. That's true, for example, of gazelles, ③{{u}}which{{/u}} for thousands of years were the most frequently hunted game species in some parts of the Fertile Crescent. There is no mammal species that the first settled peoples of that area had more opportunity ④{{u}}to [[domesticate::domesticate]]{{/u}} than gazelles. But no gazelle species has ever been domesticated. Just imagine trying to herd an animal that runs away, blindly hits ⑤{{u}}itself{{/u}} against walls, can [[leap::leap]] up to nearly 30 feet, and can run at a speed of 50 miles per hour!`,
+  passage: `Big [[mammalian::mammalian]] [[herbivore::herbivore]] species react to danger from [[predators::predators]] or humans in different ways. Some species are nervous, fast, and programmed for [[instant_flight::instant flight]] when they [[perceive::perceive]] a [[threat::threat]]. Other species are slower, less nervous, seek protection in herds, ① ‹stand› their ground when threatened, and don't run until necessary. Naturally, the nervous species are difficult to keep in [[captivity::captivity]]. If ② ‹putting› into an [[enclosure::enclosure]], they are likely to [[panic::panic]], and either die of shock or hit themselves [[repeatedly::repeatedly]] to death against the fence in their attempts to [[escape::escape]]. That's true, for example, of gazelles, ③ ‹which› for thousands of years were the most frequently hunted game species in some parts of the Fertile Crescent. There is no mammal species that the first settled peoples of that area had more opportunity ④ ‹to [[domesticate::domesticate]]› than gazelles. But no gazelle species has ever been domesticated. Just imagine trying to herd an animal that runs away, blindly hits ⑤ ‹itself› against walls, can [[leap::leap]] up to nearly 30 feet, and can run at a speed of 50 miles per hour!`,
   translation: `대형 포유류 초식동물 종들은 포식자나 인간으로부터의 위험에 서로 다른 방식으로 반응한다. 어떤 종들은 예민하고, 빠르며, 위협을 감지하면 즉각 도주하도록 프로그램되어 있다. 다른 종들은 더 느리고, 덜 예민하며, 무리 지어 보호받고, 위협받을 때 자리를 지키며, 필요할 때까지 도망가지 않는다. 당연히, 예민한 종들은 가두어 기르기 어렵다. 만약 (그것들이) 우리에 넣어지면, 그것들은 공황 상태에 빠지기 쉬우며, 충격으로 죽거나 탈출을 시도하다가 울타리에 반복적으로 부딪혀 죽기도 한다. 예를 들어 가젤이 그러한데, 가젤은 수천 년 동안 비옥한 초승달 지대의 일부 지역에서 가장 자주 사냥된 사냥감 종이었다. 그 지역의 초기 정착민들이 가젤보다 길들일 기회가 더 많았던 포유류 종은 없었다. 하지만 어떤 가젤 종도 길들여진 적이 없다. 도망치고, 앞뒤 가리지 않고 벽에 스스로 부딪히며, 거의 30피트까지 뛰어오를 수 있고, 시속 50마일로 달릴 수 있는 동물을 몰고 다닌다고 상상해 보라!`,
   grammar: [
     { title:"병렬구조 (동사 나열)", desc:"and로 연결된 동사들은 형태를 통일해야 해요. seek, stand가 모두 원형이므로 병렬을 이룹니다.", ex:"seek protection, stand their ground (보호를 구하다, 자리를 지키다 — 둘 다 원형 동사)" },
@@ -508,7 +508,7 @@ Winners' bookmarks will be printed and given to visitors.`,
     interest: { word:"interest", tag:"[명사 interest · 이익]", meaning:"interest를 '흥미, 관심'으로만 알면 뜻이 통하지 않아요. 'be in one's interest'는 '~에게 이익이 되다'라는 표현으로, 여기서 interest는 '이익, 이해관계'라는 뜻이에요. it is in their interest to do so는 '그렇게 하는 것이 그들에게 이익이 된다'예요.", ex:"Certain nomadic tribes don't have much, yet they are happy to share because it is in their interest to do so.", exko:"어떤 유목 부족들은 가진 것이 많지 않지만, 그렇게 하는 것이 그들에게 이익이 되기 때문에 기꺼이 나눈다." },
     complicated: { word:"complicated", tag:"[동사 complicate · 복잡해지다]", meaning:"complicated를 '복잡한'이라는 형용사로만 보면 문장의 동사를 찾지 못해요. 여기서는 동사 complicate(복잡하게 만들다)의 수동태 is complicated로 쓰여 '복잡해진다'라는 뜻이에요. 주어는 our natural tendency to share and cooperate(공유하고 협력하려는 타고난 성향)예요.", ex:"For a species born in a time when resources were limited and dangers were great, our natural tendency to share and cooperate is complicated when resources are plenty and outside dangers are few.", exko:"자원이 한정되고 위험이 컸던 시대에 태어난 종에게 있어, 공유하고 협력하려는 우리의 타고난 성향은 자원이 풍부하고 외부의 위험이 적을 때 복잡해진다." },
   },
-  passage: `For a species born in a time when resources were limited and dangers were great, our natural [[tendency::tendency]] to share and [[cooperate::cooperate]] is ①{{u}}complicated{{/u}} when resources are plenty and outside dangers are few. When we have less, we tend to be more open to sharing what we have. Certain [[nomadic_tribes::nomadic tribes]] don't have much, yet they are happy to share because it is in their ②{{u}}interest{{/u}} to do so. If you happen upon them in your travels, they will open up their homes and give you their food and [[hospitality::hospitality]]. It's not just because they are nice people; it's because their ③{{u}}survival{{/u}} depends on sharing, for they know that they may be the travelers in need of food and shelter another day. [[ironically::Ironically]], the more we have, the bigger our fences, the ④{{u}}more{{/u}} [[sophisticated::sophisticated]] our security to keep people away and the less we want to share. Our desire for more, [[combined_with::combined with]] our ⑤{{u}}increased{{/u}} physical interaction with the "common folk," starts to create a [[disconnection::disconnection]] or [[blindness::blindness]] to reality.`,
+  passage: `For a species born in a time when resources were limited and dangers were great, our natural [[tendency::tendency]] to share and [[cooperate::cooperate]] is ① ‹complicated› when resources are plenty and outside dangers are few. When we have less, we tend to be more open to sharing what we have. Certain [[nomadic_tribes::nomadic tribes]] don't have much, yet they are happy to share because it is in their ② ‹interest› to do so. If you happen upon them in your travels, they will open up their homes and give you their food and [[hospitality::hospitality]]. It's not just because they are nice people; it's because their ③ ‹survival› depends on sharing, for they know that they may be the travelers in need of food and shelter another day. [[ironically::Ironically]], the more we have, the bigger our fences, the more [[sophisticated::sophisticated]] our security to keep people away and the less we want to share. Our desire for ④ ‹more›, [[combined_with::combined with]] our ⑤ ‹increased› physical interaction with the "common folk," starts to create a [[disconnection::disconnection]] or [[blindness::blindness]] to reality.`,
   translation: `자원이 한정되고 위험이 컸던 시대에 태어난 종에게 있어, 공유하고 협력하려는 우리의 타고난 성향은 자원이 풍부하고 외부의 위험이 적을 때 복잡해진다. 우리는 가진 것이 적을 때 가진 것을 더 기꺼이 나누려는 경향이 있다. 어떤 유목 부족들은 가진 것이 많지 않지만, 그렇게 하는 것이 그들에게 이익이 되기 때문에 기꺼이 나눈다. 만약 여행 중에 그들을 우연히 만난다면, 그들은 자신의 집을 열어주고 음식과 환대를 베풀 것이다. 그것은 단지 그들이 착한 사람들이기 때문만이 아니라, 그들의 생존이 나눔에 달려 있기 때문이다. 그들은 언젠가 자신들이 음식과 잠자리가 필요한 여행자가 될 수도 있다는 것을 알기 때문이다. 아이러니하게도, 우리가 더 많이 가질수록, 우리의 울타리는 더 커지고, 사람들을 멀리하기 위한 보안은 더 정교해지며, 나누고 싶은 마음은 더 줄어든다. 더 많은 것을 원하는 우리의 욕구는 '평범한 사람들'과의 늘어난(→실제로는 줄어든) 물리적 접촉과 결합하여 현실과의 단절이나 무지를 만들어내기 시작한다.`,
   grammar: [
     { title:"the 비교급 ~, the 비교급 … (~할수록 더 …하다)", desc:"두 가지가 함께 변화하는 관계를 나타내는 구문이에요.", ex:"the more we have, the bigger our fences (더 많이 가질수록, 울타리는 더 커진다)" },
@@ -615,8 +615,7 @@ function toggleSheetStar() {
 function renderPassage(text) {
   return text.split('\n\n').map(function(para) {
     var placeholders = [];
-    var html = para.replace(/\{\{u\}\}/g, '\u0003').replace(/\{\{\/u\}\}/g, '\u0004');
-    html = html.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
       placeholders.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
       return '' + (placeholders.length - 1) + '';
     });
@@ -624,8 +623,8 @@ function renderPassage(text) {
       return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
     });
     html = html.replace(/(\d+)/g, function(m, idx) { return placeholders[idx]; });
-    html = html.replace(/\u0003/g, '<u class="uw">').replace(/\u0004/g, '</u>');
     html = html.replace(/\n/g, '<br>');
+    html = html.replace(/‹(.+?)›/g, '<u class="uline">$1</u>');
     return '<p>' + html + '</p>';
   }).join('');
 }
@@ -745,10 +744,14 @@ function render() {
   switchTab('grammar');
 }
 
-function selectProblem(i) {
+function selectProblem(i, skipHistory) {
   current = i;
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!skipHistory) {
+    var h = '#p' + current;
+    if (location.hash !== h) history.pushState({ pIdx: current }, '', h);
+  }
 }
 
 function go(delta) {
@@ -757,8 +760,7 @@ function go(delta) {
   } else {
     current = Math.max(0, Math.min(problems.length - 1, current + delta));
   }
-  render();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  selectProblem(current);
 }
 
 function toggleTranslation() {
@@ -993,7 +995,21 @@ function speak(text) {
 }
 
 buildTabs();
-render();
+(function() {
+  var m = /^#p(\d+)$/.exec(location.hash);
+  var idx = m ? parseInt(m[1], 10) : -1;
+  if (idx >= 0 && idx < problems.length) current = idx;
+  render();
+  history.replaceState({ pIdx: current }, '', '#p' + current);
+  window.addEventListener('popstate', function(e) {
+    var i = (e.state && typeof e.state.pIdx === 'number') ? e.state.pIdx : -1;
+    if (i < 0) {
+      var mm = /^#p(\d+)$/.exec(location.hash);
+      i = mm ? parseInt(mm[1], 10) : 0;
+    }
+    if (i >= 0 && i < problems.length && i !== current) selectProblem(i, true);
+  });
+})();
 </script>
 <script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>

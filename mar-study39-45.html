@@ -39,8 +39,8 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 .w { color: #4b3fc4; border-bottom: 2px dotted #b7b0f0; cursor: pointer; padding: 0 1px; border-radius: 3px; }
 .w:active { background: #EEEDFE; }
 .p { cursor: pointer; }
+.uline { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #534AB7; }
 .p:active { background: #EFEFEF; border-radius: 3px; }
-.uw { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #7F77DD; }
 
 .quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
 .quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
@@ -114,7 +114,7 @@ h1 { font-size: 18px; margin-bottom: 4px; }
 <div class="wrap">
 <div class="source-tag">📝 2026 고1 3월 전국연합학력평가 · 영어 39~45번</div>
 <h1>지문 완전정복 학습지</h1>
-<p class="subtitle">지문 속 단어를 클릭하면 뜻·발음·예문이 나와요. 팝업의 ⭐를 누르면 단어장에 저장돼요.<br><a class="home-link" href="grade1.html">← 고1 학습 홈</a> · <a class="home-link" href="mar-study32-38.html">32~38번 학습지</a></p>
+<p class="subtitle">지문 속 단어를 클릭하면 뜻·발음·예문이 나와요. 팝업의 ⭐를 누르면 단어장에 저장돼요.<br><a class="home-link" href="grade1.html?year=2026&month=3월">← 3월 모의고사 처음으로</a> · <a class="home-link" href="mar-study32-38.html">32~38번 학습지</a></p>
 
 <div class="top-bar">
   <span class="prog-text" id="prog-text">1 / 7</span>
@@ -285,7 +285,7 @@ const problems = [
     led: { word:"led", tag:"[동사 lead a life · 의미 확인 필요]", meaning:"led는 '이끌다'라는 동사 lead의 과거형으로 흔히 알려져 있지만, 여기 their husbands led more exciting lives에서는 lead a life(삶을 살다)라는 관용 표현으로 쓰여 '살았다'라는 뜻이에요. '남편들이 더 신나는 삶들을 이끌었다'가 아니라 '남편들이 더 신나는 삶을 살았다'라고 해석해야 자연스러워요.", ex:"It is the virtue that has traditionally been urged upon housewives, while their husbands led more exciting lives outside the home; or on racial minorities, told to wait just a few more decades for their full civil rights.", exko:"그것은 전통적으로 주부들에게 권장되어 온 미덕인데, 그동안 그들의 남편은 집 밖에서 더 신나는 삶을 살았다. 또는 완전한 시민권을 위해 몇십 년만 더 기다리라는 말을 들은 인종적 소수자들에게 권장된 미덕이기도 하다." },
     purchase: { word:"purchase", tag:"[명사 purchase · 의미 확인 필요]", meaning:"purchase는 '구매'라는 뜻으로 흔히 알려져 있지만, 여기 a way to gain purchase on the world에서는 '발판, 지지 기반'이라는 뜻이에요. '세상에 대한 구매를 얻는 방법'이 아니라 '세상에 대한 발판을 얻는 방법'이라고 해석해야 자연스러워요.", ex:"In a world geared for hurry, the capacity to (e) feed the urge to hurry — to allow things to take the time they take — is a way to gain purchase on the world, to do the work that counts, and to derive satisfaction from the doing itself, instead of putting off all your fulfillment to the future.", exko:"서두름에 맞춰진 세상에서, 서두르려는 충동을 (e)먹여 살리는(→억제하는) 능력 — 즉 일이 걸리는 시간만큼 걸리도록 허용하는 능력 — 은 세상에 대한 발판을 얻고, 중요한 일을 해내고, 모든 성취감을 미래로 미루는 대신 그 행위 자체에서 만족을 얻는 방법이다." }
   },
-  passage: `It's fair to say that patience has a terrible name. For one thing, the [[prospect::prospect]] of doing anything that you've been told will require patience simply seems unattractive. More specifically, though, it's [[disturbingly::disturbingly]] {{u}}(a) passive{{/u}}. It is the [[virtue::virtue]] that has traditionally been urged upon housewives, while their husbands led more exciting lives outside the home; or on racial minorities, told to wait just a few more decades for their full civil rights. The talented but [[self_effacing::self-effacing]] employee who "waits patiently" for a promotion, we tend to feel, will be waiting a long time: she ought to be [[trumpeting::trumpeting]] her {{u}}(b) achievements{{/u}} instead. In all such cases, patience is a way of psychologically [[accommodating::accommodating]] yourself to a lack of power, an attitude intended to help you to [[resign::resign yourself to]] your {{u}}(c) lowly{{/u}} position, in theoretical hopes of better days to come. But as society accelerates, something {{u}}(d) shifts{{/u}}. In more and more contexts, patience becomes a form of power. In a world [[geared_for::geared for]] hurry, the capacity to {{u}}(e) feed{{/u}} the urge to hurry — to allow things to take the time they take — is a way to gain purchase on the world, to do the work that counts, and to derive satisfaction from the doing itself, instead of putting off all your fulfillment to the future.`,
+  passage: `It's fair to say that patience has a terrible name. For one thing, the [[prospect::prospect]] of doing anything that you've been told will require patience simply seems unattractive. More specifically, though, it's [[disturbingly::disturbingly]] (a) ‹passive›. It is the [[virtue::virtue]] that has traditionally been urged upon housewives, while their husbands led more exciting lives outside the home; or on racial minorities, told to wait just a few more decades for their full civil rights. The talented but [[self_effacing::self-effacing]] employee who "waits patiently" for a promotion, we tend to feel, will be waiting a long time: she ought to be [[trumpeting::trumpeting]] her (b) ‹achievements› instead. In all such cases, patience is a way of psychologically [[accommodating::accommodating]] yourself to a lack of power, an attitude intended to help you to [[resign::resign yourself to]] your (c) ‹lowly› position, in theoretical hopes of better days to come. But as society accelerates, something (d) ‹shifts›. In more and more contexts, patience becomes a form of power. In a world [[geared_for::geared for]] hurry, the capacity to (e) ‹feed› the urge to hurry — to allow things to take the time they take — is a way to gain purchase on the world, to do the work that counts, and to derive satisfaction from the doing itself, instead of putting off all your fulfillment to the future.`,
   translation: `인내가 형편없는 평판을 갖고 있다고 말하는 것은 타당하다. 우선, 인내가 필요할 것이라고 들어온 무언가를 한다는 전망은 그저 매력적이지 않게 보인다. 그러나 더 구체적으로 말하면, 그것은 불편할 만큼 (a)수동적이다. 그것은 전통적으로 주부들에게 권장되어 온 미덕인데, 그동안 그들의 남편은 집 밖에서 더 신나는 삶을 살았다. 또는 완전한 시민권을 위해 몇십 년만 더 기다리라는 말을 들은 인종적 소수자들에게 권장된 미덕이기도 하다. 승진을 위해 "참을성 있게 기다리는" 재능 있지만 자신을 내세우지 않는 직원은 오랫동안 기다리게 될 것이라고 우리는 느끼는 경향이 있다. 그녀는 대신 자신의 (b)성과를 널리 알려야 한다. 그러한 모든 경우에, 인내는 힘의 부재에 심리적으로 자신을 맞추는 방식이며, 앞으로 나아질 날에 대한 이론적인 희망 속에서 자신의 (c)낮은 지위를 단념하고 받아들이도록 돕기 위해 의도된 태도이다. 그러나 사회가 가속화되면서, 무언가가 (d)달라진다. 점점 더 많은 맥락에서, 인내는 '힘'의 한 형태가 된다. 서두름에 맞춰진 세상에서, 서두르려는 충동을 (e)먹여 살리는(→억제하는) 능력 — 즉 일이 걸리는 시간만큼 걸리도록 허용하는 능력 — 은 세상에 대한 발판을 얻고, 중요한 일을 해내고, 모든 성취감을 미래로 미루는 대신 그 행위 자체에서 만족을 얻는 방법이다.`,
   grammar: [
     { title:"It's fair to say that ~", desc:"'~라고 말하는 것은 타당하다'라는 뜻으로 It이 가주어입니다.", ex:"It's fair to say that patience has a terrible name. (인내가 나쁜 평판을 가졌다고 말하는 것은 타당하다.)" },
@@ -333,13 +333,13 @@ const problems = [
     accompanied: { word:"Accompanied", tag:"[분사구문 Accompanied by · 수동]", meaning:"Accompanied by는 '동반된 채로'라는 뜻의 수동 분사구문으로 '~을 거느린 채, ~을 동반하여'라고 해석해요. Accompanied by his army, he stopped when he saw the sage and his disciple는 '군대를 거느린 채, 그는 현자와 그의 제자를 보고 멈춰 섰다'라고 해석돼요.", ex:"Accompanied by his army, he stopped when he saw the sage and his disciple.", exko:"군대를 거느린 채, 그는 현자와 그의 제자를 보고 멈춰 섰다." },
     hunger: { word:"hunger", tag:"[명사 hunger · 의미 확인 필요]", meaning:"hunger는 '배고픔'이라는 뜻으로 흔히 알려져 있지만, 여기 his hunger for more에서는 더 많은 것을 향한 비유적인 '갈망'이라는 뜻이에요. '더 많은 것을 향한 배고픔'이 아니라 '더 많은 것을 향한 갈망'이라고 해석해야 자연스러워요.", ex:"He realized that his hunger for more had made him forget the value of contentment.", exko:"그는 더 많은 것을 향한 자신의 갈망이 만족의 가치를 잊게 만들었다는 것을 깨달았다." }
   },
-  passage: `(A) One day, a [[sage::sage]] was traveling with his [[disciple::disciple]] through the capital of a [[prosperous::prosperous]] kingdom. As they walked along a busy road, the sage noticed a coin on the ground. Since he lived simply and had no need for it, he told his disciple {{u}}(a) he{{/u}} hoped to give it to someone who truly required it. The two men searched the streets, but found no one in [[genuine::genuine]] need of the coin.
+  passage: `(A) One day, a [[sage::sage]] was traveling with his [[disciple::disciple]] through the capital of a [[prosperous::prosperous]] kingdom. As they walked along a busy road, the sage noticed a coin on the ground. Since he lived simply and had no need for it, he told his disciple (a) ‹he› hoped to give it to someone who truly required it. The two men searched the streets, but found no one in [[genuine::genuine]] need of the coin.
 
-(B) The king, [[puzzled::puzzled]] and slightly annoyed at what he did, asked, "What is the meaning of this coin? I am the richest king in the land. Why would I need a single coin?" The sage replied calmly, "Oh, Great King, I found this coin yesterday while walking through your capital. I had no need for it, so I planned to give it to someone who did. Yet everyone {{u}}(b) I{{/u}} met seemed [[content::content]] and lacked any urgent need."
+(B) The king, [[puzzled::puzzled]] and slightly annoyed at what he did, asked, "What is the meaning of this coin? I am the richest king in the land. Why would I need a single coin?" The sage replied calmly, "Oh, Great King, I found this coin yesterday while walking through your capital. I had no need for it, so I planned to give it to someone who did. Yet everyone (b) ‹I› met seemed [[content::content]] and lacked any urgent need."
 
-(C) The next morning, near the palace, they saw the king preparing for a war. The king was not satisfied with what he had and sought to expand his kingdom. Accompanied by his army, he stopped when he saw the sage and his disciple. He approached the sage and asked for a [[blessing::blessing]] that might ensure victory. After a quiet moment of thought, the sage handed the king the coin {{u}}(c) he{{/u}} had found the previous day.
+(C) The next morning, near the palace, they saw the king preparing for a war. The king was not satisfied with what he had and sought to expand his kingdom. Accompanied by his army, he stopped when he saw the sage and his disciple. He approached the sage and asked for a [[blessing::blessing]] that might ensure victory. After a quiet moment of thought, the sage handed the king the coin (c) ‹he› had found the previous day.
 
-(D) The sage added, "Today, I see you preparing for war, seeking to conquer more. And {{u}}(d) I{{/u}} thought you, the one who desires more, were in need of this coin." The king was struck by the sage's words. He realized that his hunger for more had made him forget the value of [[contentment::contentment]]. The sage's simple but powerful lesson made him change {{u}}(e) his{{/u}} plans. The king called off the invasion and chose to appreciate what he already had.`,
+(D) The sage added, "Today, I see you preparing for war, seeking to conquer more. And (d) ‹I› thought you, the one who desires more, were in need of this coin." The king was struck by the sage's words. He realized that his hunger for more had made him forget the value of [[contentment::contentment]]. The sage's simple but powerful lesson made him change (e) ‹his plans›. The king called off the invasion and chose to appreciate what he already had.`,
   translation: `(A) 어느 날, 한 현자가 제자와 함께 번영하는 왕국의 수도를 지나 여행하고 있었다. 그들이 붐비는 길을 따라 걷고 있을 때, 현자가 땅에 떨어진 동전 하나를 발견했다. 그는 소박하게 살았고 그것이 필요하지 않았기 때문에, 제자에게 그것을 진정으로 필요로 하는 사람에게 주고 싶다고 말했다. 두 사람은 거리를 뒤졌지만, 그 동전이 진정으로 필요한 사람을 아무도 찾지 못했다.
 
 (B) 왕은 그가 한 행동에 당황하고 약간 불쾌해하며 물었다. "이 동전이 무슨 의미인가? 나는 이 땅에서 가장 부유한 왕이다. 어찌 내가 동전 한 닢을 필요로 하겠는가?" 현자는 차분하게 대답했다. "오, 위대한 왕이시여, 저는 어제 폐하의 수도를 걷다가 이 동전을 발견했습니다. 저에게는 필요가 없어서, 필요한 사람에게 주려고 했습니다. 그런데 제가 만난 모든 사람이 만족해 보였고 절박한 필요가 없었습니다."
@@ -407,8 +407,7 @@ function toggleSheetStar() {
 function renderPassage(text) {
   return text.split('\n\n').map(function(para) {
     var ph = [];
-    var html = para.replace(/\{\{u\}\}/g, '\u0001').replace(/\{\{\/u\}\}/g, '\u0002');
-    html = html.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
       ph.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
       return '§' + (ph.length - 1) + '§';
     });
@@ -420,7 +419,7 @@ function renderPassage(text) {
       return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
     });
     html = html.replace(/§(\d+)§/g, function(m, i) { return ph[i]; });
-    html = html.replace(/\u0001/g, '<u class="uw">').replace(/\u0002/g, '</u>');
+    html = html.replace(/‹(.+?)›/g, '<u class="uline">$1</u>');
     return '<p>' + html.replace(/\n/g, '<br>') + '</p>';
   }).join('');
 }
@@ -538,11 +537,14 @@ function render() {
   switchTab('grammar');
 }
 
-function selectProblem(i) { current = i; render(); window.scrollTo({top:0, behavior:'smooth'}); }
+function selectProblem(i, skipHistory) {
+  current = i; render(); window.scrollTo({top:0, behavior:'smooth'});
+  if (!skipHistory) { var h = '#p' + current; if (location.hash !== h) history.pushState({pIdx:current}, '', h); }
+}
 function go(d) {
   if (current === problems.length - 1 && d === 1) current = 0;
   else current = Math.max(0, Math.min(problems.length - 1, current + d));
-  render(); window.scrollTo({top:0, behavior:'smooth'});
+  selectProblem(current);
 }
 
 function toggleTranslation() {
@@ -764,7 +766,21 @@ function speak(text) {
 }
 
 buildTabs();
-render();
+(function() {
+  var m = /^#p(\d+)$/.exec(location.hash);
+  var idx = m ? parseInt(m[1], 10) : -1;
+  if (idx >= 0 && idx < problems.length) current = idx;
+  render();
+  history.replaceState({ pIdx: current }, '', '#p' + current);
+  window.addEventListener('popstate', function(e) {
+    var i = (e.state && typeof e.state.pIdx === 'number') ? e.state.pIdx : -1;
+    if (i < 0) {
+      var mm = /^#p(\d+)$/.exec(location.hash);
+      i = mm ? parseInt(mm[1], 10) : 0;
+    }
+    if (i >= 0 && i < problems.length && i !== current) selectProblem(i, true);
+  });
+})();
 </script>
 <script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>

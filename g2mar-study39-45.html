@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 고2 3월 모의고사 영어 39~45번 정밀 학습</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+.top-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.prog-text { font-size: 13px; color: #888; white-space: nowrap; min-width: 42px; }
+.progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.3s ease; }
+
+.problem-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.problem-tabs::-webkit-scrollbar { height: 4px; }
+.p-tab { flex: 0 0 auto; padding: 9px 16px; font-size: 14px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.p-tab.active { background: #7F77DD; color: #fff; }
+
+.type-badge { display: inline-block; font-size: 12px; font-weight: 600; color: #fff; background: #534AB7; border-radius: 99px; padding: 5px 14px; margin-bottom: 10px; }
+
+.insert-card { display: none; background: #FFF8E6; border: 1.5px dashed #E0B84D; border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; }
+.insert-card.show { display: block; }
+.insert-label { font-size: 11.5px; color: #a67c1f; font-weight: 700; margin-bottom: 6px; }
+.insert-text { font-size: 15px; color: #5a4413; line-height: 1.6; }
+.insert-text-ko { font-size: 13px; color: #a67c1f; margin-top: 6px; line-height: 1.5; }
+.passage-text .plabel { font-weight: 700; color: #534AB7; }
+.given-card { display: none; background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-align: center; }
+.given-card.show { display: block; }
+.given-card img { max-width: 100%; border-radius: 8px; }
+.passage-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.passage-text p { font-size: 16px; line-height: 1.95; margin-bottom: 12px; }
+.passage-text p:last-child { margin-bottom: 0; }
+.w { color: #4b3fc4; border-bottom: 2px dotted #b7b0f0; cursor: pointer; padding: 0 1px; border-radius: 3px; }
+.w:active { background: #EEEDFE; }
+.p { cursor: pointer; }
+.uline { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #534AB7; }
+.p:active { background: #EFEFEF; border-radius: 3px; }
+
+.quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
+.quiz-choice { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 10px; background: #F8F7FF; margin-bottom: 8px; cursor: pointer; font-size: 14px; line-height: 1.55; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.quiz-choice:last-of-type { margin-bottom: 0; }
+.quiz-choice.selected { border-color: #7F77DD; background: #EEEDFE; }
+.quiz-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 600; }
+.quiz-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.quiz-check-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; }
+.quiz-result { margin-top: 12px; font-size: 13.5px; padding: 12px 14px; border-radius: 10px; line-height: 1.65; display: none; }
+.quiz-result.show { display: block; }
+.quiz-result.ok { background: #E8F8F1; color: #177350; }
+.quiz-result.no { background: #FDEDEC; color: #a8362f; }
+
+.action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.action-btn.on { background: #7F77DD; color: #fff; }
+
+.translation-box { display: none; background: #F8F7FF; border: 1px solid #E4E1FA; border-radius: 12px; padding: 16px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.85; color: #3a2f8f; white-space: pre-line; }
+.translation-box.show { display: block; }
+
+.vocab-grid { display: none; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.vocab-grid.show { display: grid; }
+.vocab-chip { background: #fff; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; }
+.vocab-chip b { display: block; font-size: 13.5px; color: #1a1a1a; }
+.vocab-chip span { display: block; font-size: 12px; color: #7F77DD; margin-top: 2px; }
+
+.tab-row { display: flex; background: #fff; border-radius: 12px; padding: 4px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.tab { flex: 1; padding: 10px 4px; font-size: 14px; text-align: center; cursor: pointer; color: #888; border-radius: 9px; -webkit-tap-highlight-color: transparent; }
+.tab.active { background: #7F77DD; color: #fff; font-weight: 600; }
+.panel { display: none; }
+.panel.active { display: block; }
+.section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+
+.grammar-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.grammar-title { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+.grammar-desc { font-size: 13px; color: #555; line-height: 1.65; }
+.grammar-ex { font-size: 13px; color: #7F77DD; margin-top: 7px; font-style: italic; line-height: 1.5; }
+
+.tip-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #7F77DD; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.tip-item p { font-size: 13.5px; color: #444; line-height: 1.7; }
+
+.nav-row { display: flex; gap: 10px; margin-top: 16px; }
+.nav-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nav-btn:active { transform: scale(0.98); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.secondary { background: #E0DED8; color: #555; }
+.nav-btn.primary { background: #7F77DD; color: #fff; }
+
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; z-index: 50; }
+.overlay.show { display: block; }
+.sheet { position: fixed; left: 0; right: 0; bottom: -100%; background: #fff; border-radius: 20px 20px 0 0; padding: 22px 20px 26px; z-index: 51; transition: bottom 0.25s ease; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); max-width: 640px; margin: 0 auto; }
+.sheet.show { bottom: 0; }
+.sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
+.sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
+.sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
+.sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.sheet-word { font-size: 22px; font-weight: 700; }
+.speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
+.sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
+.sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
+.sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">📝 2026 고2 3월 전국연합학력평가 · 영어 39~45번</div>
+<h1>지문 완전정복 학습지</h1>
+<p class="subtitle">지문 속 단어를 클릭하면 뜻·발음·예문이 나와요. 팝업의 ⭐를 누르면 단어장에 저장돼요.<br><a class="home-link" href="grade2.html">← 고2 학습 홈</a> · <a class="home-link" href="g2mar-study32-38.html">32~38번 학습지</a></p>
+
+<div class="top-bar">
+  <span class="prog-text" id="prog-text">1 / 4</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="problem-tabs" id="problem-tabs"></div>
+<div class="type-badge" id="type-badge"></div>
+
+<div class="given-card" id="given-card"></div>
+
+<div class="insert-card" id="insert-card">
+  <div class="insert-label">📌 삽입할 문장</div>
+  <div class="insert-text" id="insert-text"></div>
+  <div class="insert-text-ko" id="insert-text-ko"></div>
+</div>
+
+<div class="passage-card"><div class="passage-text" id="passage-text"></div></div>
+
+<div class="action-row">
+  <button class="action-btn" id="btn-trans" onclick="toggleTranslation()">🇰🇷 전체 해석 보기</button>
+  <button class="action-btn" id="btn-vocab" onclick="toggleVocabGrid()">📖 핵심 단어 목록</button>
+</div>
+
+<div class="translation-box" id="translation-box"></div>
+<div class="vocab-grid" id="vocab-grid"></div>
+
+<div id="quiz-container"></div>
+
+<div class="tab-row">
+  <div class="tab active" data-t="grammar" onclick="switchTab('grammar')">📝 꼭 알아야 할 문법</div>
+  <div class="tab" data-t="tip" onclick="switchTab('tip')">💡 풀이 팁</div>
+</div>
+<div class="panel active" id="tab-grammar"><div class="section-label">문법 포인트</div><div id="grammar-list"></div></div>
+<div class="panel" id="tab-tip"><div class="section-label">유형별 풀이 팁</div><div id="tip-list"></div></div>
+
+<div class="nav-row">
+  <button class="nav-btn secondary" id="btn-prev" onclick="go(-1)">← 이전 문제</button>
+  <button class="nav-btn primary" id="btn-next" onclick="go(1)">다음 문제 →</button>
+</div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeWord()"></div>
+<div class="sheet" id="sheet">
+  <button class="sheet-close" onclick="closeWord()">✕</button>
+  <button class="sheet-star" id="sheet-star" onclick="toggleSheetStar()">☆</button>
+  <div class="sheet-word-row">
+    <div class="sheet-word" id="sheet-word"></div>
+    <button class="speak-btn" onclick="speakCurrent()">🔊</button>
+  </div>
+  <div class="sheet-pron" id="sheet-pron"></div>
+  <div class="sheet-meaning" id="sheet-meaning"></div>
+  <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
+</div>
+
+<script>
+const problems = [
+{
+  num: "39", label: "39번", type: "문장 삽입",
+  insertSentence: "But the pressure changes we experience are trivial compared to the pressure range of the overall planetary environment.",
+  insertSentenceKo: "그러나 우리가 경험하는 압력 변화는 전체 행성 환경의 압력 범위에 비하면 미미하다.",
+  vocab: {
+    intuition: { word:"intuition", pron:"[인투이션]", meaning:"직관", ex:"Our intuition about states of matter comes from our experience on Earth's surface.", exko:"물질의 상태에 대한 우리의 직관은 지구 표면에서의 경험에서 비롯된다." },
+    uniformly: { word:"uniformly", pron:"[유니폼리]", meaning:"균일하게", ex:"the pressure is uniformly low", exko:"압력이 균일하게 낮다" },
+    metabolism: { word:"metabolism", pron:"[메타볼리즘]", meaning:"신진대사", ex:"Small changes in pressure can have very large effects on our metabolism.", exko:"작은 압력 변화도 우리의 신진대사에 매우 큰 영향을 미칠 수 있다." },
+    generate: { word:"generate", pron:"[제너레이트]", meaning:"만들어 내다", ex:"Imagine the pressures generated by the weight of rock a mile thick!", exko:"1마일 두께의 암석 무게가 만들어내는 압력을 상상해 보라!" }
+  },
+  passage: `Our [[intuition::intuition]] about states of matter comes from our experience on Earth's surface, where the pressure is [[uniformly::uniformly]] low and variations in temperature cause changes in the state of matter from solid to liquid to gas. Therefore, when we think of melting or boiling or the creation of plasma, we intuitively assume it reflects an increase in temperature. ( ① ) This bias comes from the fact that we live in a very constant pressure environment. ( ② ) Even small changes in pressure, such as those we experience when under water or on high mountaintops, can have very large effects on our [[metabolism::metabolism]]. ( ③ ) Since pressure is controlled by the weight of overlying material, pressures increase rapidly with depth. ( ④ ) Imagine the pressures [[generate::generated]] by the weight of rock a mile thick! ( ⑤ ) For this reason a planet's pressure ranges are enormous — from essentially zero pressure in space to pressures of millions of atmospheres in planetary interiors.`,
+  translation: `물질의 상태에 대한 우리의 직관은 지구 표면에서의 경험에서 비롯되는데, 그곳에서는 압력이 균일하게 낮고 온도의 변화가 물질의 상태를 고체에서 액체, 기체로 변화시킨다. 그러므로, 녹거나, 끓거나, 혹은 플라스마의 생성을 생각할 때, 우리는 직관적으로 그것이 온도의 상승을 반영한다고 가정한다. ( ① ) 이러한 편향은 우리가 매우 일정한 압력의 환경 속에서 살고 있다는 사실에서 비롯된다. ( ② ) 물속에 있거나 높은 산에 있을 때 경험하는 것과 같은 작은 압력 변화조차도 우리의 신진대사에 매우 큰 영향을 미칠 수 있다. ( ③ ) 압력은 그 위에 쌓인 물질의 무게에 의해 조절되기 때문에, 압력은 깊이에 따라 급격히 증가한다. ( ④ ) 1마일 두께의 암석이 만들어내는 압력을 상상해 보라! ( ⑤ ) 이러한 이유로 행성의 압력 범위는 거대하다 — 우주에서의 사실상 0인 압력으로부터 행성 내부의 수백만 기압에 이르기까지.`,
+  grammar: [
+    { title:"where + 완전한 절 (관계부사)", desc:"장소를 나타내는 선행사를 보충 설명합니다.", ex:"our experience on Earth's surface, where the pressure is uniformly low (지구 표면에서의 경험, 그런데 그곳은 압력이 균일하게 낮다)" },
+    { title:"such as + 명사(구) (예시)", desc:"'~와 같은'이라는 뜻으로 구체적 예를 듭니다.", ex:"changes in pressure, such as those we experience under water (물속에서 경험하는 것과 같은 압력 변화)" }
+  ],
+  tips: [
+    "주어진 문장의 'But'과 '미미하다(trivial)'는 앞 내용과 반대되는 내용 뒤에 와야 합니다.",
+    "②의 '작은 압력 변화도 큰 영향을 준다'는 내용 뒤, ③의 '압력이 깊이에 따라 급격히 증가한다'는 내용 앞이 논리적으로 자연스러운 위치입니다."
+  ],
+  questions: [{ qNum:39, question:"글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳을 고르시오. [3점]",
+    choices:["①","②","③","④","⑤"], answer:2,
+    explanation:"주어진 문장은 '우리가 경험하는 압력 변화는 미미하다'는 내용으로, ②의 '작은 압력 변화도 신진대사에 큰 영향을 미친다'는 내용과 대조되며, ③ 뒤의 '압력은 깊이에 따라 급격히 증가한다(전체 압력 범위가 크다는 근거)'는 설명으로 자연스럽게 이어지므로 ③번이 정답입니다." }]
+},
+{
+  num: "40", label: "40번", type: "요약문 완성",
+  insertSentence: "Since self-experiments are suited to _____(A)_____ while conventional experiments provide validation, the most efficient strategy is for the former to _____(B)_____ the latter.",
+  insertSentenceKo: "자가 실험은 (A)에 적합한 반면 전통 실험은 타당성을 제공하기 때문에, 가장 효율적인 전략은 전자가 후자에 (B)하는 것이다.",
+  vocab: {
+    self_experimentation: { word:"self-experimentation", pron:"[셀프 익스페리멘테이션]", meaning:"자가 실험", ex:"When self-experimentation and conventional experiments are both possible", exko:"자가 실험과 전통적 실험이 모두 가능할 때" },
+    conventional: { word:"conventional", pron:"[컨벤셔널]", meaning:"전통적인, 관습적인", ex:"convincing others that the solution is helpful", exko:"해결책이 유용하다는 것을 다른 사람에게 납득시키는 것" },
+    hypothesis: { word:"hypothesis", pron:"[하이파써시스]", meaning:"가설", ex:"generate and eliminate many hypotheses", exko:"많은 가설을 생성하고 제거하다" },
+    optimize: { word:"optimize", pron:"[옵티마이즈]", meaning:"최적화하다", ex:"parameters that optimize the solution", exko:"해결책을 최적화하는 매개 변수" }
+  },
+  passage: `When [[self_experimentation::self-experimentation]] and [[conventional::conventional]] experiments are both possible, the difference between them often resembles the difference between learning and showing: Self-experiments are better for discovery but worse for convincing others that the solution is helpful or the answer is correct. Of course, most scientists want to do both — discover something and convince others of their discovery. Thus, psychologists should consider doing both self-experiments and conventional ones. The best use of resources may often be self-experiments followed by conventional ones. The researcher begins with self-experiments that, if all goes well, find large effects and/or generate and eliminate many [[hypothesis::hypotheses]]. This exploratory and theory-building phase lasts until a convenient solution or large effect is found. Then the researcher uses self-experiments to find the procedural parameters (e.g., duration, time of day, intensity) that [[optimize::optimize]] the solution or maximize the effect. Only then would the researcher begin conventional experiments, using the optimized parameters.`,
+  translation: `자가 실험과 전통적 실험이 모두 가능할 때, 그 둘 사이의 차이는 흔히 배우기와 보여주기의 차이와 비슷하다. 즉, 자가 실험은 발견에는 더 유리하지만 그 해결책이 유용하거나 그 답이 옳다는 것을 다른 사람들에게 납득시키는 데는 더 불리하다. 물론, 대부분의 과학자는 무언가를 발견하는 것과 그 발견을 다른 사람들에게 납득시키는 것 둘 다 하기를 원한다. 그러므로, 심리학자들은 자가 실험과 전통 실험 둘 다 하는 것을 고려해야 한다. 아마 자원을 가장 잘 사용하는 방법은 자가 실험 뒤에 전통 실험이 뒤따르는 것일 것이다. 연구자는, 만약 모든 것이 잘 진행된다면, 큰 효과를 발견하고 그리고/또는 많은 가설을 생성하고 제거하는 자가 실험부터 시작한다. 이 탐색적이고 이론을 구축하는 단계는 손쉬운 해결책이나 큰 효과가 발견될 때까지 계속된다. 그런 다음 연구자는 해결책을 최적화하거나 효과를 극대화하기 위해 절차적 매개 변수들(예를 들면, 지속 시간, 시간대, 강도)을 찾기 위해 자가 실험을 이용한다. 그리고 나서야 비로소 연구자는 그 최적화된 매개 변수들을 사용하여, 전통 실험을 시작하게 된다.`,
+  grammar: [
+    { title:"the difference between A and B", desc:"'A와 B 사이의 차이'라는 뜻입니다.", ex:"the difference between them often resembles the difference between learning and showing (그 둘 사이의 차이는 배우기와 보여주기의 차이와 비슷하다)" },
+    { title:"followed by ~", desc:"'~가 뒤따르는'이라는 뜻으로 순서를 나타냅니다.", ex:"self-experiments followed by conventional ones (전통 실험이 뒤따르는 자가 실험)" }
+  ],
+  tips: [
+    "요약문 문제는 (A)(B)가 본문의 어느 표현을 바꿔 쓴 것인지 대응시켜 보세요.",
+    "'발견에 유리(self-experiments better for discovery)'는 (A) exploration, '자가실험 후 전통실험'이라는 순서는 (B) precede에 대응됩니다."
+  ],
+  questions: [{ qNum:40, question:"다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?",
+    choices:["exploration ...... precede","formalization ...... precede","confirmation ...... follow","investigation ...... follow","standardization ...... accompany"],
+    answer:0,
+    explanation:"자가 실험은 발견(탐색, exploration)에 유리하고 전통 실험은 검증(타당성 제공)에 유리하며, 자가 실험이 전통 실험보다 먼저(precede) 이루어지는 것이 효율적이라는 내용이므로 ①번이 정답입니다." }]
+},
+{
+  num: "41-42", label: "41~42번", type: "장문 (제목 · 어휘)",
+  vocab: {
+    emergence: { word:"emergence", pron:"[이머전스]", meaning:"출현", ex:"The emergence of the social sciences in the nineteenth century", exko:"19세기 사회 과학의 출현" },
+    visualize: { word:"visualize", pron:"[비주얼라이즈]", meaning:"시각화하다", ex:"new ways of visualizing information", exko:"정보를 시각화하는 새로운 방식" },
+    statistics: { word:"statistics", pron:"[스터티스틱스]", meaning:"통계", ex:"social sciences that employed statistics", exko:"통계를 활용한 사회 과학" },
+    notable: { word:"notable", pron:"[노터블]", meaning:"주목할 만한", ex:"Perhaps the most notable example is John Snow's map.", exko:"아마도 가장 주목할 만한 예는 John Snow의 지도이다." }
+  },
+  passage: `The [[emergence::emergence]] of the social sciences in the nineteenth century and the ability to work with large datasets created demand for new ways of [[visualize::visualizing]] information. Processed numerical information was best expressed in tables, charts, and graphs. Mathematics, natural sciences, and social sciences that employed [[statistics::statistics]] were at the (a) forefront of the development of charts and graphs. History was a consumer, not a designer, of most of these new visualizations — and mostly a sparing consumer at that, since economic and social history lagged behind political history as an area of research. Simple charts and graphs were not difficult to interpret, and their visual conventions became part of what any (b) ordinary reader would be expected to follow. As statistical analysis became more (c) sophisticated, the visualizations that resulted became more and more central to the argument. In some cases, the visualization made interpretation possible. These success stories (d) demonstrated the worth of statistical analysis and visualization. Perhaps the most [[notable::notable]] example is John Snow's map of the incidence of cholera in an 1854 London outbreak, which helped plot the source of the outbreak at a single water pump in the neighborhood. Snow's cholera map showed that visualizations could serve as both narrative and analysis. Authors began to experiment with ways of using visual clues to tell complex stories about events, increasing the amount of information that could be conveyed in a small space and thereby ‹(e) intensifying› the limitations of two dimensions in print.`,
+  translation: `19세기 사회 과학의 출현과 대규모 데이터 세트를 가지고 작업할 수 있는 능력은 정보를 시각화하는 새로운 방식에 대한 수요를 만들어 냈다. 가공된 수치 정보는 표, 도표, 그래프로 가장 잘 표현되었다. 통계를 활용한 수학, 자연 과학, 사회 과학은 도표와 그래프 발전의 (a)선두에 있었다. 역사학은 이러한 새로운 시각화의 대부분에 있어 설계자가 아니라 소비자였으며, 그것도 대체로 절제된 소비자였는데, 이는 경제사와 사회사가 정치사보다 뒤처져 있었기 때문이다. 단순한 도표와 그래프는 해석하기 어렵지 않았고, 그것들의 시각적 관례는 (b)평범한 독자라면 따를 것으로 기대되는 것의 일부가 되었다. 통계 분석이 점점 더 (c)정교해지면서, 그 결과로 만들어진 시각화는 논증에서 점점 더 핵심적인 것이 되었다. 어떤 경우에는, 시각화가 해석을 가능하게 했다. 이러한 성공 사례들은 통계적 분석과 시각화의 가치를 (d)입증했다. 아마도 가장 주목할 만한 예는 1854년 런던에서 발병한 콜레라 사건을 나타낸 John Snow의 지도인데, 이것은 발병의 근원을 그 동네에 있는 한 개의 물 펌프로 표시하는 데 도움이 되었다. Snow의 콜레라 지도는 시각화가 서사와 분석의 기능을 둘 다 할 수 있었음을 보여 주었다. 작가들은 사건에 대한 복잡한 이야기를 전달하기 위해 시각적 단서를 활용하는 방법을 실험하기 시작했으며, 이는 작은 공간에서 전달될 수 있는 정보량을 증가시켜 그 결과 인쇄물이 갖는 이차원성의 한계를 (e)심화시켰다(→극복했다).`,
+  grammar: [
+    { title:"increasing ~, thereby -ing (분사구문 연쇄)", desc:"연속된 결과를 나타내는 분사구문입니다.", ex:"increasing the amount of information ..., and thereby intensifying the limitations (정보량을 증가시켰고, 그 결과 한계를 심화시켰다)" },
+    { title:"what any ordinary reader would be expected to follow", desc:"관계대명사 what이 '~하는 것'이라는 명사절을 이끕니다.", ex:"part of what any ordinary reader would follow (평범한 독자가 따를 것으로 기대되는 것의 일부)" }
+  ],
+  tips: [
+    "제목 문제는 '19세기 이후 수치 정보의 시각화가 발전해 온 과정'을 압축한 선택지를 고르세요.",
+    "어휘 문맥 문제는 마지막 문장에서 '정보량 증가'가 '이차원 인쇄물의 한계'를 심화시켰는지 극복했는지 논리적으로 따져보세요."
+  ],
+  questions: [
+    { qNum:41, question:"윗글의 제목으로 가장 적절한 것은?",
+      choices:["Balancing Narrative and Analysis in Research","How Numbers Stepped into the Field of History","From Data to Insight: The Power of Visualization","Visual Conventions Used in Numerical Processing","Cholera Outbreak: Why Social Studies Need Statistics"],
+      answer:2,
+      explanation:"글 전체가 19세기 이후 수치 정보가 표·도표·그래프 등 시각적 방식으로 표현되고 발전해 온 과정과 그 힘을 다루고 있으므로 ③번이 정답입니다." },
+    { qNum:42, question:"밑줄 친 (a)~(e) 중에서 문맥상 낱말의 쓰임이 적절하지 않은 것은? [3점]",
+      choices:["(a)","(b)","(c)","(d)","(e)"],
+      answer:4,
+      explanation:"인쇄물의 작은 공간에 많은 정보를 담아 전달하는 시각화 기법의 발전은 이차원 인쇄물의 한계를 '심화시킨(intensifying)' 것이 아니라 '극복한(overcoming)' 것이 문맥상 자연스러우므로, 어휘 쓰임이 적절하지 않은 것은 ⑤번입니다." }
+  ]
+},
+{
+  num: "43-45", label: "43~45번", type: "장문 (순서 · 지칭 · 내용일치)",
+  vocab: {
+    aspiring: { word:"aspiring", pron:"[어스파이어링]", meaning:"의욕적인, ~을 지망하는", ex:"Aiden was a young aspiring painter.", exko:"Aiden은 의욕적인 젊은 화가였다." },
+    reluctantly: { word:"reluctantly", pron:"[릴럭턴틀리]", meaning:"마지못해", ex:"Reluctantly, Aiden took the stone to his place.", exko:"마지못해, Aiden은 돌을 자신의 집으로 가져갔다." },
+    fascinated: { word:"fascinated", pron:"[패시네이티드]", meaning:"매료된", ex:"Fascinated, he grabbed his brush and began to mix colors.", exko:"매료되어, 그는 붓을 잡고 색을 섞기 시작했다." },
+    mock: { word:"mock", pron:"[마크]", meaning:"조롱하다", ex:"He thought the master was mocking him.", exko:"그는 스승이 자신을 조롱하고 있다고 생각했다." }
+  },
+  passage: `(A) Aiden was a young [[aspiring::aspiring]] painter who dreamed of becoming the greatest artist in the kingdom. He traveled far to meet Master Rowan, a legendary artist known for capturing nature's soul. When Aiden arrived at Rowan's cottage, his heart pounded with excitement and fear. (a)He knocked on the old wooden door, holding his paintings to his chest. A moment later, an old man with eyes as deep as the ocean opened the door. Without saying a word, Rowan gestured for him to enter.
+
+(C) On entering, Aiden eagerly spread his best landscape drawings, waiting for praise. However, Rowan scanned them quickly and pushed them aside. Not giving any comments that Aiden expected, ‹(c)he› walked to his garden. He picked up a plain, gray stone and handed it to Aiden. "Paint this," Rowan said. "But forget your fancy techniques. Paint what is truly inside." Aiden felt a wave of disappointment. (d)He thought the master was [[mock::mocking]] him. How could a dull, ugly rock have anything inside?
+
+(B) [[reluctantly::Reluctantly]], Aiden took the stone to his place. For days and nights, he stared at it, frustrated. It seemed just a rough, gray lump. But as he watched the stone in the changing light of sunrise and sunset over time, something changed. Aiden noticed the gray stone held tiny pieces of quartz catching light and patches of dried moss telling a story of time. The more he looked at the stone, the more beauty he found in the rough surface. [[fascinated::Fascinated]], (b)he grabbed his brush and began to mix colors.
+
+(D) Several days later, Aiden returned with (e)his canvas to Master Rowan. His hands shook as he handed the canvas to the master. After the master looked at the stone in Aiden's painting for a long time, a warm smile broke across his face. In Aiden's interpretation, the stone sparkled with hidden colors of blue, green, and gold. "To be an artist is not to invent, but to observe," the master said softly. Aiden realized that the lesson was not about painting, but about seeing.`,
+  translation: `(A) Aiden은 왕국에서 가장 위대한 예술가가 되기를 꿈꾸는 의욕적인 젊은 화가였다. 그는 자연의 영혼을 담아내는 것으로 알려진 전설적인 예술가, 거장 Rowan을 만나려고 먼 길을 떠났다. Aiden이 Rowan의 오두막에 도착했을 때, 그의 심장은 흥분과 두려움으로 두근거렸다. (a)그는 자신의 그림들을 가슴에 꼭 안은 채, 낡은 나무문을 두드렸다. 잠시 후, 바다처럼 깊은 눈을 가진 노인이 문을 열었다. 아무 말 없이, Rowan은 그에게 들어오라고 손짓했다.
+
+(C) 들어가자마자, Aiden은 자신의 최고의 풍경화들을 간절한 마음으로 펼치며, 칭찬을 기대했다. 그러나, Rowan은 그 그림들을 빠르게 훑어보고는 옆으로 밀어냈다. Aiden이 기대했던 어떤 말도 하지 않은 채, (c)그는 자신의 정원으로 걸어갔다. 그는 평범한 회색 돌을 집어 들어 Aiden에게 건넸다. "이것을 그려라." Rowan이 말했다. "하지만 화려한 기교는 잊어라. 진정으로 안에 있는 것을 그려라." Aiden은 실망감이 밀려드는 것을 느꼈다. (d)그는 스승이 자신을 조롱하고 있다고 생각했다. 어떻게 칙칙하고, 못생긴 돌이 무언가를 안에 가질 수 있단 말인가?
+
+(B) 마지못해, Aiden은 그 돌을 자신의 집으로 가져갔다. 며칠 밤낮으로, 그는 좌절한 채, 그 돌을 응시했다. 그것은 그저 거친, 회색 덩어리로만 보였다. 하지만 그가 시간이 지나면서 일출과 일몰의 변화하는 빛에 비친 돌을 바라보던 중, 무언가가 달라졌다. Aiden은 그 회색 돌이 빛을 받은 작은 석영 조각들과 시간의 이야기를 전하는 말라붙은 이끼 자국들을 지니고 있다는 것을 알아챘다. 그 돌을 더 많이 들여다볼수록, 그는 거친 표면에서 더 많은 아름다움을 발견했다. 매료되어, (b)그는 붓을 잡고 물감을 섞기 시작했다.
+
+(D) 며칠 후, Aiden은 (e)그의 캔버스를 들고 거장 Rowan에게 돌아왔다. 거장에게 캔버스를 건네줄 때 그의 손이 떨렸다. 거장이 Aiden의 그림 속 돌을 오랫동안 바라본 후에, 따뜻한 미소가 그의 얼굴에 번졌다. Aiden의 해석에서, 그 돌은 파란색, 초록색, 그리고 금색의 숨겨진 색들로 반짝였다. "예술가가 된다는 것은 창조하는 것이 아니라, 관찰하는 것이다." 거장이 부드럽게 말했다. Aiden은 그 가르침이 그림을 그리는 것에 관한 것이 아니라, (세상을) 보는 것에 관한 것임을 깨달았다.`,
+  grammar: [
+    { title:"the 비교급 ~, the 비교급 … (~할수록 더 …하다)", desc:"두 가지가 함께 변화하는 관계를 나타냅니다.", ex:"The more he looked at the stone, the more beauty he found. (그 돌을 더 볼수록, 그는 더 많은 아름다움을 발견했다.)" },
+    { title:"not A but B", desc:"'A가 아니라 B'라는 대조 구문입니다.", ex:"not to invent, but to observe (창조하는 것이 아니라 관찰하는 것)" },
+    { title:"gesture for + 목적어 + to부정사", desc:"'~에게 …하라고 손짓하다'라는 뜻입니다.", ex:"Rowan gestured for him to enter. (Rowan은 그에게 들어오라고 손짓했다.)" }
+  ],
+  tips: [
+    "장문 순서 배열은 (A) 마지막의 '말 없이 들어오라는 손짓'이 (C)의 '들어가자마자'로 자연스럽게 이어지는지 확인하세요.",
+    "지칭 추론은 각 문단 안에서 직전 문장의 주어가 누구인지부터 확인하세요. (c)는 Aiden이 아니라, 그림을 훑어보고 정원으로 걸어가 돌을 건넨 Rowan을 가리킵니다.",
+    "내용 일치 문제는 '전달받은 것(칭찬 vs 돌)'과 '누가 무엇을 했는지'를 문단별로 정리하며 대조하세요."
+  ],
+  questions: [
+    { qNum:43, question:"주어진 글 (A)에 이어질 내용을 순서에 맞게 배열한 것으로 가장 적절한 것은?",
+      choices:["(B)-(D)-(C)","(C)-(B)-(D)","(C)-(D)-(B)","(D)-(B)-(C)","(D)-(C)-(B)"],
+      answer:1,
+      explanation:"(A)에서 Rowan이 말없이 Aiden에게 들어오라고 손짓한 뒤, (C)에서 Aiden이 그림을 보여주지만 거절당하고 돌을 받으며, (B)에서 그 돌에 매료되어 그림을 그리기 시작하고, (D)에서 완성한 캔버스를 들고 돌아오므로 (C)-(B)-(D) 순서인 ②번이 정답입니다." },
+    { qNum:44, question:"밑줄 친 (a)~(e) 중에서 가리키는 대상이 나머지 넷과 다른 것은?",
+      choices:["(a)","(b)","(c)","(d)","(e)"],
+      answer:2,
+      explanation:"(a), (b), (d), (e)는 모두 Aiden을 가리키지만, (c)는 Aiden의 그림을 훑어보고 아무 말 없이 정원으로 걸어가 돌을 건넨 Rowan을 가리키므로, 나머지 넷과 다른 것은 ③번입니다." },
+    { qNum:45, question:"윗글에 관한 내용으로 적절하지 않은 것은?",
+      choices:["Aiden은 전설적인 예술가인 Rowan을 만나려고 먼 길을 떠났다.","Aiden은 며칠 밤낮으로 좌절한 채 돌을 응시했다.","Rowan은 Aiden이 가져온 풍경화들을 보며 칭찬했다.","Rowan은 Aiden에게 화려한 기교를 잊으라고 말했다.","Rowan에게 캔버스를 건네줄 때 Aiden의 손이 떨렸다."],
+      answer:2,
+      explanation:"'Rowan scanned them quickly and pushed them aside.'라고 했으므로 Rowan은 Aiden의 풍경화를 칭찬한 것이 아니라 빠르게 훑어보고 옆으로 밀어냈습니다. 따라서 적절하지 않은 것은 ③번입니다." }
+  ]
+}
+];
+
+let current = 0, activeVocabKey = null, currentSpeakWord = null, activeSheetWord = null;
+let currentSheetWordData = null;
+
+function starKey(gid) { return 'vocabStar_' + gid; }
+function getStarred(gid) { try { return JSON.parse(localStorage.getItem(starKey(gid)) || '[]'); } catch(e) { return []; } }
+function setStarred(gid, list) { localStorage.setItem(starKey(gid), JSON.stringify(list)); }
+function gidOf() { return 'g2mar' + problems[current].num; }
+
+function updateSheetStarBtn() {
+  var btn = document.getElementById('sheet-star');
+  if (!currentSheetWordData) { btn.textContent = '☆'; btn.classList.remove('starred'); return; }
+  var starred = getStarred(gidOf());
+  var is = starred.some(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  btn.textContent = is ? '★' : '☆';
+  btn.classList.toggle('starred', is);
+}
+
+function toggleSheetStar() {
+  if (!currentSheetWordData) return;
+  var gid = gidOf(), starred = getStarred(gid);
+  var idx = starred.findIndex(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  if (idx >= 0) starred.splice(idx, 1);
+  else starred.push({ word: currentSheetWordData.word, pron: currentSheetWordData.pron || '', meaning: currentSheetWordData.meaning || '뜻 정보 없음', en: currentSheetWordData.en || '', ko: currentSheetWordData.ko || '' });
+  setStarred(gid, starred);
+  if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
+  if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
+  else if (idx >= 0 && window.studyStats) window.studyStats.unrecord('star');
+  updateSheetStarBtn();
+}
+
+function renderPassage(text) {
+  return text.split('\n\n').map(function(para) {
+    var ph = [];
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+      ph.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
+      return '§' + (ph.length - 1) + '§';
+    });
+    html = html.replace(/^\(([A-D])\)/, function(m, letter) {
+      ph.push('<span class="plabel">(' + letter + ')</span>');
+      return '§' + (ph.length - 1) + '§';
+    });
+    html = html.replace(/[A-Za-z]+(?:['’][A-Za-z]+)*/g, function(w) {
+      return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
+    });
+    html = html.replace(/§(\d+)§/g, function(m, i) { return ph[i]; });
+    html = html.replace(/‹(.+?)›/g, '<u class="uline">$1</u>');
+    return '<p>' + html.replace(/\n/g, '<br>') + '</p>';
+  }).join('');
+}
+
+function buildTabs() {
+  document.getElementById('problem-tabs').innerHTML = problems.map(function(p, i) {
+    return '<div class="p-tab" onclick="selectProblem(' + i + ')">' + p.label + '</div>';
+  }).join('');
+}
+
+const circled = ['①','②','③','④','⑤'];
+function choiceLabel(c, i) { return /^[①②③④⑤]/.test(c) ? c : circled[i] + ' ' + c; }
+
+let quizState = [];
+
+function renderChoicesHtml(q, qi) {
+  return q.choices.map(function(c, i) {
+    return '<div class="quiz-choice" onclick="selectChoice(' + qi + ',' + i + ')"><span>' + choiceLabel(c, i) + '</span></div>';
+  }).join('');
+}
+
+function renderQuiz(p) {
+  quizState = p.questions.map(function() { return { selected: null, checked: false }; });
+  document.getElementById('quiz-container').innerHTML = p.questions.map(function(q, qi) {
+    return '<div class="quiz-card">' +
+      '<div class="quiz-q">' + q.qNum + '. ' + q.question + '</div>' +
+      '<div id="qchoices-' + qi + '">' + renderChoicesHtml(q, qi) + '</div>' +
+      '<button class="quiz-check-btn" id="qcheck-' + qi + '" onclick="checkAnswer(' + qi + ')">정답 확인</button>' +
+      '<div class="quiz-result" id="qresult-' + qi + '"></div>' +
+    '</div>';
+  }).join('');
+}
+
+function selectChoice(qi, i) {
+  if (quizState[qi].checked) return;
+  quizState[qi].selected = i;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    el.classList.toggle('selected', idx === i);
+  });
+}
+
+function checkAnswer(qi) {
+  var q = problems[current].questions[qi];
+  if (quizState[qi].checked) return;
+  if (quizState[qi].selected === null) {
+    document.getElementById('qchoices-' + qi).scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+  quizState[qi].checked = true;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    if (idx === q.answer) el.classList.add('correct');
+    else if (idx === quizState[qi].selected) el.classList.add('wrong');
+  });
+  var r = document.getElementById('qresult-' + qi);
+  var ok = quizState[qi].selected === q.answer;
+  if (window.studyStats) window.studyStats.record('quiz', ok);
+  r.classList.add('show', ok ? 'ok' : 'no');
+  r.innerHTML = '<b>' + (ok ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[q.answer] + '번이에요.') + '</b><br>' + q.explanation;
+  var b = document.getElementById('qcheck-' + qi);
+  b.textContent = '다시 풀기';
+  b.onclick = function() { retryQuestion(qi); };
+}
+
+function retryQuestion(qi) {
+  var p = problems[current];
+  quizState[qi] = { selected: null, checked: false };
+  document.getElementById('qchoices-' + qi).innerHTML = renderChoicesHtml(p.questions[qi], qi);
+  var r = document.getElementById('qresult-' + qi);
+  r.classList.remove('show','ok','no'); r.innerHTML = '';
+  var b = document.getElementById('qcheck-' + qi);
+  b.textContent = '정답 확인';
+  b.onclick = function() { checkAnswer(qi); };
+}
+
+function render() {
+  closeWord();
+  var p = problems[current];
+  document.getElementById('prog-text').textContent = (current + 1) + ' / ' + problems.length;
+  document.getElementById('prog-fill').style.width = ((current + 1) / problems.length * 100) + '%';
+  document.getElementById('type-badge').textContent = p.label + ' · ' + p.type;
+  var gc = document.getElementById('given-card');
+  if (p.image) { gc.classList.add('show'); gc.innerHTML = '<img src="' + p.image + '" alt="문제 자료">'; }
+  else { gc.classList.remove('show'); gc.innerHTML = ''; }
+  var ic = document.getElementById('insert-card');
+  if (p.insertSentence) {
+    ic.classList.add('show');
+    document.getElementById('insert-text').textContent = p.insertSentence;
+    document.getElementById('insert-text-ko').textContent = p.insertSentenceKo || '';
+  } else { ic.classList.remove('show'); }
+  document.getElementById('passage-text').innerHTML = renderPassage(p.passage);
+  renderQuiz(p);
+  document.getElementById('translation-box').textContent = p.translation;
+  document.getElementById('translation-box').classList.remove('show');
+  document.getElementById('btn-trans').classList.remove('on');
+  document.getElementById('btn-trans').textContent = '🇰🇷 전체 해석 보기';
+
+  var vg = document.getElementById('vocab-grid');
+  vg.innerHTML = Object.keys(p.vocab).map(function(k) {
+    var v = p.vocab[k];
+    return '<div class="vocab-chip" onclick="showWord(\'' + k + '\')"><b>' + v.word + '</b><span>' + v.meaning + '</span></div>';
+  }).join('');
+  vg.classList.remove('show');
+  document.getElementById('btn-vocab').classList.remove('on');
+  document.getElementById('btn-vocab').textContent = '📖 핵심 단어 목록';
+
+  document.getElementById('grammar-list').innerHTML = p.grammar.map(function(g) {
+    return '<div class="grammar-item"><div class="grammar-title">' + g.title + '</div><div class="grammar-desc">' + g.desc + '</div><div class="grammar-ex">' + g.ex + '</div></div>';
+  }).join('');
+  document.getElementById('tip-list').innerHTML = p.tips.map(function(t) { return '<div class="tip-item"><p>' + t + '</p></div>'; }).join('');
+
+  document.querySelectorAll('.p-tab').forEach(function(t, i) { t.classList.toggle('active', i === current); });
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === problems.length - 1;
+  document.getElementById('btn-next').textContent = current === problems.length - 1 ? '처음으로' : '다음 문제 →';
+  switchTab('grammar');
+}
+
+function selectProblem(i, skipHistory) {
+  current = i; render(); window.scrollTo({top:0, behavior:'smooth'});
+  if (!skipHistory) { var h = '#p' + current; if (location.hash !== h) history.pushState({pIdx:current}, '', h); }
+}
+function go(d) {
+  if (current === problems.length - 1 && d === 1) current = 0;
+  else current = Math.max(0, Math.min(problems.length - 1, current + d));
+  selectProblem(current);
+}
+
+function toggleTranslation() {
+  var box = document.getElementById('translation-box'), btn = document.getElementById('btn-trans');
+  var s = !box.classList.contains('show');
+  box.classList.toggle('show', s); btn.classList.toggle('on', s);
+  btn.textContent = s ? '🇰🇷 해석 숨기기' : '🇰🇷 전체 해석 보기';
+}
+
+function toggleVocabGrid() {
+  var g = document.getElementById('vocab-grid'), btn = document.getElementById('btn-vocab');
+  var s = !g.classList.contains('show');
+  g.classList.toggle('show', s); btn.classList.toggle('on', s);
+  btn.textContent = s ? '📖 목록 숨기기' : '📖 핵심 단어 목록';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.toggle('active', t.getAttribute('data-t') === name); });
+  document.getElementById('tab-grammar').classList.toggle('active', name === 'grammar');
+  document.getElementById('tab-tip').classList.toggle('active', name === 'tip');
+}
+
+function showWord(key) {
+  var v = problems[current].vocab[key];
+  if (!v) return;
+  activeVocabKey = key; activeSheetWord = null; currentSpeakWord = v.word;
+  currentSheetWordData = { word:v.word, pron:v.pron, meaning:v.meaning, en:v.ex, ko:v.exko };
+  document.getElementById('sheet-word').textContent = v.word;
+  document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
+  document.getElementById('sheet-meaning').textContent = v.meaning;
+  document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+}
+
+function splitSentences(text) {
+  var flat = text.replace(/\s+/g, ' ').trim();
+  var parts = flat.match(/[^.!?]+[.!?]+(?=\s|$)|[^.!?]+$/g) || [flat];
+  return parts.map(function(s) { return s.trim(); }).filter(Boolean);
+}
+
+function findSentenceForWord(word) {
+  var p = problems[current];
+  var plain = p.passage.replace(/\[\[(.+?)::(.+?)\]\]/g, '$2');
+  var enSentences = splitSentences(plain);
+  var re = new RegExp('\\b' + word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+  for (var i = 0; i < enSentences.length; i++) {
+    if (re.test(enSentences[i])) {
+      var koSentences = splitSentences(p.translation || '');
+      var ko = (koSentences.length === enSentences.length) ? koSentences[i] : null;
+      return { en: enSentences[i], ko: ko };
+    }
+  }
+  return null;
+}
+
+var POS_KO = { noun:'명사', verb:'동사', adjective:'형용사', adverb:'부사', preposition:'전치사', conjunction:'접속사', pronoun:'대명사', interjection:'감탄사', determiner:'한정사', numeral:'수사', article:'관사', exclamation:'감탄사' };
+
+function cleanKoMeaning(data) {
+  var cands = [];
+  if (data && data.responseData && data.responseData.translatedText) cands.push(data.responseData.translatedText);
+  if (data && data.matches) for (var j = 0; j < data.matches.length; j++) { if (data.matches[j] && data.matches[j].translation) cands.push(data.matches[j].translation); }
+  for (var i = 0; i < cands.length; i++) {
+    var t = String(cands[i]).trim();
+    if (/[가-힣]/.test(t) && !/[一-鿿぀-ヿ]/.test(t) && t.length <= 40) return t;
+  }
+  for (var i2 = 0; i2 < cands.length; i2++) {
+    var t2 = String(cands[i2]).replace(/[一-鿿぀-ヿ]/g, '').replace(/\s+/g, ' ').trim();
+    if (/[가-힣]/.test(t2)) return t2;
+  }
+  return null;
+}
+
+function showPlain(rawWord) {
+  var clean = rawWord.replace(/[^A-Za-z']/g, '');
+  if (!clean) return;
+  var lower = clean.toLowerCase();
+  var p = problems[current];
+  for (var k in p.vocab) {
+    if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
+  }
+  activeVocabKey = null;
+  currentSpeakWord = clean;
+  activeSheetWord = lower;
+  var found = findSentenceForWord(clean);
+  var sentence = found ? found.en : null;
+  var koSentence = found ? found.ko : null;
+  currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
+  document.getElementById('sheet-word').textContent = clean;
+  document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
+  document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
+  document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+  lookupWord(lower, sentence, koSentence);
+}
+
+function lookupWord(lower, sentence, koSentence) {
+  var posText = '';
+  var koMeaning = '';
+  function renderMeaning() {
+    if (!koMeaning) return;
+    var full = (posText ? '[' + posText + '] ' : '') + koMeaning;
+    document.getElementById('sheet-meaning').textContent = full;
+    if (currentSheetWordData) currentSheetWordData.meaning = full;
+  }
+
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(lower))
+    .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var entry = data[0];
+      var phonetic = entry.phonetic || '';
+      if (!phonetic && entry.phonetics) {
+        for (var i = 0; i < entry.phonetics.length; i++) {
+          if (entry.phonetics[i].text) { phonetic = entry.phonetics[i].text; break; }
+        }
+      }
+      if (phonetic) document.getElementById('sheet-pron').textContent = phonetic;
+      if (currentSheetWordData) currentSheetWordData.pron = phonetic;
+      if (entry.meanings) {
+        var seen = {};
+        var list = [];
+        for (var m = 0; m < entry.meanings.length; m++) {
+          var ko = POS_KO[entry.meanings[m].partOfSpeech];
+          if (ko && !seen[ko]) { seen[ko] = true; list.push(ko); }
+        }
+        if (list.length) { posText = list.slice(0, 2).join('·'); renderMeaning(); }
+      }
+    })
+    .catch(function() {});
+
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(lower) + '&langpair=en|ko')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var ko = cleanKoMeaning(data);
+      if (ko) { koMeaning = ko; renderMeaning(); }
+      else {
+        document.getElementById('sheet-meaning').textContent = '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+        if (currentSheetWordData) currentSheetWordData.meaning = '뜻 정보 없음';
+      }
+    })
+    .catch(function() {
+      if (activeSheetWord !== lower) return;
+      document.getElementById('sheet-meaning').textContent = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
+    });
+
+  if (sentence && !koSentence) {
+    fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(sentence) + '&langpair=en|ko')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (activeSheetWord !== lower) return;
+        var ko = data && data.responseData && data.responseData.translatedText;
+        document.getElementById('sheet-example').innerHTML = sentence + (ko ? ('<br>' + ko) : '');
+        if (currentSheetWordData) { currentSheetWordData.en = sentence; currentSheetWordData.ko = ko || ''; }
+      })
+      .catch(function() {
+        if (activeSheetWord !== lower) return;
+        document.getElementById('sheet-example').innerHTML = sentence;
+      });
+  }
+}
+
+function closeWord() {
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('sheet').classList.remove('show');
+  activeSheetWord = null;
+}
+
+function speakCurrent() { if (currentSpeakWord) speak(currentSpeakWord); }
+
+var ttsVoices = [];
+if ('speechSynthesis' in window) {
+  var lv = function() { ttsVoices = window.speechSynthesis.getVoices(); };
+  lv(); window.speechSynthesis.onvoiceschanged = lv;
+}
+
+function speak(text) {
+  if (!text || !('speechSynthesis' in window)) return;
+  var s = window.speechSynthesis, u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.9;
+  var vs = (ttsVoices && ttsVoices.length) ? ttsVoices : s.getVoices();
+  if (vs && vs.length) {
+    var v = vs.find(function(x) { return x.lang === 'en-US'; }) || vs.find(function(x) { return x.lang && x.lang.indexOf('en') === 0; });
+    if (v) u.voice = v;
+  }
+  s.cancel();
+  setTimeout(function() { s.speak(u); }, 80);
+}
+
+buildTabs();
+(function() {
+  var m = /^#p(\d+)$/.exec(location.hash);
+  var idx = m ? parseInt(m[1], 10) : -1;
+  if (idx >= 0 && idx < problems.length) current = idx;
+  render();
+  history.replaceState({ pIdx: current }, '', '#p' + current);
+  window.addEventListener('popstate', function(e) {
+    var i = (e.state && typeof e.state.pIdx === 'number') ? e.state.pIdx : -1;
+    if (i < 0) {
+      var mm = /^#p(\d+)$/.exec(location.hash);
+      i = mm ? parseInt(mm[1], 10) : 0;
+    }
+    if (i >= 0 && i < problems.length && i !== current) selectProblem(i, true);
+  });
+})();
+</script>
+<script src="study-stats.js"></script>
+<script type="module" src="firebase-sync.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고2 영어 학습</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 24px 20px; color: #1a1a1a; }
+.wrap { max-width: 460px; margin: 0 auto; }
+.home-link { font-size: 12.5px; color: #534AB7; text-decoration: none; display: inline-block; margin-bottom: 14px; }
+h1 { font-size: 21px; margin-bottom: 22px; line-height: 1.4; }
+
+.section-title { font-size: 13px; color: #888; margin-bottom: 10px; font-weight: 600; }
+
+.year-row { display: flex; gap: 8px; margin-bottom: 20px; }
+.year-chip { flex: 1; padding: 12px; border-radius: 12px; font-size: 15px; font-weight: 700; background: #fff; color: #888; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; border: none; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+.year-chip.active { background: #7F77DD; color: #fff; }
+
+.month-row { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 22px; padding-bottom: 4px; }
+.month-chip { flex: 0 0 auto; padding: 8px 16px; border-radius: 99px; font-size: 13px; font-weight: 600; background: #fff; color: #aaa; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; cursor: pointer; border: none; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+.month-chip.active { background: #7F77DD; color: #fff; box-shadow: none; }
+
+.cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 26px; }
+.card { display: flex; align-items: center; justify-content: space-between; padding: 20px 22px; border-radius: 16px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-decoration: none; color: #1a1a1a; -webkit-tap-highlight-color: transparent; transition: transform 0.1s ease, background 0.1s ease, color 0.1s ease; }
+.card:active { transform: scale(0.98); background: #7F77DD; color: #fff; }
+.card:active .card-sub { color: rgba(255,255,255,0.8); }
+.card:active .card-arrow { color: rgba(255,255,255,0.7); }
+.card-main { text-align: left; }
+.card-title { font-size: 16.5px; font-weight: 700; margin-bottom: 4px; }
+.card-sub { font-size: 12.5px; color: #888; line-height: 1.5; }
+.card-arrow { font-size: 20px; color: #ccc; flex: 0 0 auto; margin-left: 12px; }
+
+.soon-card { text-align: center; padding: 40px 20px; border-radius: 16px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.07); color: #aaa; font-size: 14px; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="home-link" href="index.html">← 학년 선택으로</a>
+
+  <div class="section-title">연도 선택</div>
+  <div class="year-row" id="year-row"></div>
+
+  <div class="section-title">회차 선택</div>
+  <div class="month-row" id="month-row"></div>
+
+  <div class="section-title">학습 자료</div>
+  <div id="content-area"></div>
+</div>
+
+<script>
+const data = {
+  2026: {
+    months: ["3월", "6월", "9월", "11월"],
+    available: ["3월"]
+  }
+};
+
+const marCardsHtml = '<div class="cards">' +
+  '<a class="card" href="g2mar-listening1-17.html">' +
+    '<div class="card-main"><div class="card-title">🎧 1~17번 듣기평가</div><div class="card-sub">대본·해석, 문제 풀이, 핵심 단어</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2mar-study18-24.html">' +
+    '<div class="card-main"><div class="card-title">18~24번 지문 완전정복</div><div class="card-sub">단어 클릭 뜻·발음, 전체 해석, 문법, 실전 문제</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2mar-study25-31.html">' +
+    '<div class="card-main"><div class="card-title">25~31번 지문 완전정복</div><div class="card-sub">도표·안내문·어법·어휘까지, 단어 클릭 학습</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2mar-study32-38.html">' +
+    '<div class="card-main"><div class="card-title">32~38번 지문 완전정복</div><div class="card-sub">빈칸추론·무관한 문장·순서배열·문장삽입, 단어 클릭 학습</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2mar-study39-45.html">' +
+    '<div class="card-main"><div class="card-title">39~45번 지문 완전정복</div><div class="card-sub">문장삽입·요약문·장문까지, 단어 클릭 학습</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2mar-vocab18-45.html">' +
+    '<div class="card-main"><div class="card-title">단어장 퀴즈 (18~45번)</div><div class="card-sub">핵심 단어 + 지문 학습지에서 저장한 단어로 퀴즈 풀기</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+'</div>';
+
+const _params = new URLSearchParams(location.search);
+let year = Number(_params.get('year')) || 2026;
+if (!data.hasOwnProperty(year)) year = 2026;
+let month = _params.get('month');
+if (!month || data[year].months.indexOf(month) === -1) month = data[year].available[0] || data[year].months[0];
+
+function renderYears() {
+  document.getElementById('year-row').innerHTML = Object.keys(data).map(function(y) {
+    return '<button class="year-chip' + (Number(y) === year ? ' active' : '') + '" onclick="selectYear(' + y + ')">' + y + '</button>';
+  }).join('');
+}
+
+function renderMonths() {
+  var months = data[year].months;
+  if (months.indexOf(month) === -1) month = months[0];
+  document.getElementById('month-row').innerHTML = months.map(function(m) {
+    return '<button class="month-chip' + (m === month ? ' active' : '') + '" onclick="selectMonth(\'' + m + '\')">' + m + '</button>';
+  }).join('');
+}
+
+function renderContent() {
+  var isAvailable = data[year].available.indexOf(month) !== -1;
+  if (!isAvailable) {
+    document.getElementById('content-area').innerHTML =
+      '<div class="soon-card">📚 ' + year + '년 ' + month + ' 모의고사 학습지는<br>아직 준비 중이에요.<br>조금만 기다려주세요!</div>';
+    return;
+  }
+  var html = marCardsHtml;
+  document.getElementById('content-area').innerHTML = html;
+}
+
+function selectYear(y) {
+  year = y;
+  renderYears();
+  renderMonths();
+  renderContent();
+}
+
+function selectMonth(m) {
+  month = m;
+  renderMonths();
+  renderContent();
+}
+
+renderYears();
+renderMonths();
+renderContent();
+</script>
+<script src="study-stats.js"></script>
+<script type="module" src="firebase-sync.js"></script>
+</body>
+</html>

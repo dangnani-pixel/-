@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 고2 3월 모의고사 영어 듣기평가 1~17번</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+.top-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.prog-text { font-size: 13px; color: #888; white-space: nowrap; min-width: 42px; }
+.progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.3s ease; }
+
+.player-card { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.player-note { font-size: 11.5px; color: #aaa; margin-bottom: 10px; line-height: 1.5; }
+.player-row { display: flex; align-items: center; gap: 12px; }
+.player-playbtn { width: 50px; height: 50px; border-radius: 50%; background: #7F77DD; color: #fff; border: none; font-size: 18px; cursor: pointer; flex: 0 0 auto; -webkit-tap-highlight-color: transparent; }
+.player-playbtn:active { transform: scale(0.95); }
+.player-info { flex: 1; min-width: 0; }
+.seek-bar { width: 100%; accent-color: #7F77DD; cursor: pointer; }
+.player-time { font-size: 11.5px; color: #aaa; margin-top: 2px; display: flex; justify-content: space-between; }
+.audio-missing { font-size: 13px; color: #a67c1f; background: #FFF8E6; border: 1.5px dashed #E0B84D; border-radius: 12px; padding: 14px 16px; line-height: 1.65; }
+
+.rate-card { background: #fff; border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.rate-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; font-weight: 700; }
+.rate-row { display: flex; gap: 6px; }
+.rate-btn { flex: 1; padding: 9px 4px; border-radius: 10px; border: none; background: #F8F7FF; color: #7F77DD; font-weight: 700; font-size: 13.5px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.rate-btn.active { background: #7F77DD; color: #fff; }
+
+.problem-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.problem-tabs::-webkit-scrollbar { height: 4px; }
+.p-tab { flex: 0 0 auto; padding: 9px 15px; font-size: 14px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.p-tab.active { background: #7F77DD; color: #fff; }
+
+.type-badge { display: inline-block; font-size: 12px; font-weight: 600; color: #fff; background: #534AB7; border-radius: 99px; padding: 5px 14px; margin-bottom: 10px; }
+
+.given-card { display: none; background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-align: center; }
+.given-card.show { display: block; }
+.given-card img { max-width: 100%; border-radius: 8px; }
+.given-card svg { max-width: 100%; height: auto; }
+.given-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.given-table th, .given-table td { border: 1px solid #E0DED8; padding: 7px 4px; text-align: center; }
+.given-table th { background: #F8F7FF; color: #534AB7; }
+
+.action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.action-btn.on { background: #7F77DD; color: #fff; }
+
+.script-box, .translation-box { display: none; background: #F8F7FF; border: 1px solid #E4E1FA; border-radius: 12px; padding: 16px; margin-bottom: 12px; font-size: 14px; line-height: 1.85; color: #3a2f8f; }
+.script-box.show, .translation-box.show { display: block; }
+.script-line { margin-bottom: 8px; }
+.script-line:last-child { margin-bottom: 0; }
+.script-spk { font-weight: 700; color: #534AB7; margin-right: 4px; }
+.translation-box { white-space: pre-line; }
+
+.quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
+.quiz-choice { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 10px; background: #F8F7FF; margin-bottom: 8px; cursor: pointer; font-size: 14px; line-height: 1.55; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.quiz-choice:last-of-type { margin-bottom: 0; }
+.quiz-choice.selected { border-color: #7F77DD; background: #EEEDFE; }
+.quiz-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 600; }
+.quiz-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.quiz-check-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; }
+.quiz-result { margin-top: 12px; font-size: 13.5px; padding: 12px 14px; border-radius: 10px; line-height: 1.65; display: none; }
+.quiz-result.show { display: block; }
+.quiz-result.ok { background: #E8F8F1; color: #177350; }
+.quiz-result.no { background: #FDEDEC; color: #a8362f; }
+
+.vocab-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; font-weight: 700; }
+.example-item { background: #F8F7FF; border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.example-item:last-child { margin-bottom: 0; }
+.example-text { flex: 1; }
+.example-en { font-size: 14.5px; color: #1a1a1a; font-weight: 600; line-height: 1.5; }
+.example-pron { font-size: 12px; color: #aaa; margin-top: 2px; }
+.example-ko { font-size: 13px; color: #7F77DD; margin-top: 3px; line-height: 1.5; }
+.example-speak { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 30px; height: 30px; font-size: 13px; cursor: pointer; flex: 0 0 auto; -webkit-tap-highlight-color: transparent; }
+
+.nav-row { display: flex; gap: 10px; margin-top: 16px; }
+.nav-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nav-btn:active { transform: scale(0.98); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.secondary { background: #E0DED8; color: #555; }
+.nav-btn.primary { background: #7F77DD; color: #fff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">🎧 2026 고2 3월 전국연합학력평가 · 영어 듣기평가 1~17번</div>
+<h1>듣기평가 완전정복</h1>
+<p class="subtitle">먼저 듣고 문제를 풀어본 뒤, 대본과 해석을 확인해 보세요.<br><a class="home-link" href="grade2.html">← 고2 학습 홈</a></p>
+
+<div class="player-card" id="player-card"></div>
+
+<div class="rate-card">
+  <div class="rate-label">🔊 재생 속도</div>
+  <div class="rate-row" id="rate-row"></div>
+</div>
+
+<div class="top-bar">
+  <span class="prog-text" id="prog-text">1 / 16</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="problem-tabs" id="problem-tabs"></div>
+
+<div class="type-badge" id="type-badge"></div>
+
+<div class="given-card" id="given-card"></div>
+
+<div class="action-row">
+  <button class="action-btn" id="btn-script" onclick="toggleScript()">📄 대본 보기</button>
+  <button class="action-btn" id="btn-trans" onclick="toggleTranslation()">🇰🇷 해석 보기</button>
+</div>
+
+<div class="script-box" id="script-box"></div>
+<div class="translation-box" id="translation-box"></div>
+
+<div id="quiz-container"></div>
+
+<div class="vocab-card">
+  <div class="section-label">📖 꼭 알아야 할 단어</div>
+  <div id="vocab-list"></div>
+</div>
+
+<div class="nav-row">
+  <button class="nav-btn secondary" id="btn-prev" onclick="go(-1)">← 이전 문제</button>
+  <button class="nav-btn primary" id="btn-next" onclick="go(1)">다음 문제 →</button>
+</div>
+</div>
+
+<script>
+const AUDIO_URL = "https://horaeng.com/wp-content/uploads/%EC%84%9C%EC%9A%B8-%EC%97%B0%ED%95%A9%EA%B3%A0%EC%82%AC-%EA%B3%A02.mp3";
+
+const items = [
+{ label:"1번", type:"목적 파악",
+  lines:[{spk:"M", text:"Hello, students. This is your vice principal. Our school is preparing to launch a school newspaper. Before we publish our first issue, we need your help with an important part of the project. We are looking for a great name for the newspaper that reflects our school spirit. If you have a creative idea, please submit it by scanning the QR code on the notice board by next Friday. Once all the suggestions have been collected, there will be a student vote to choose the final name. The name of the student who suggests the winning name will be mentioned in the first issue. We look forward to your participation. Thank you."}],
+  translation:"M: 안녕하세요, 학생 여러분. 저는 교감입니다. 우리 학교는 학교 신문을 창간할 준비를 하고 있습니다. 첫 호를 발행하기 전에, 이 프로젝트의 중요한 부분에 여러분의 도움이 필요합니다. 우리는 학교 정신을 반영하는 신문의 멋진 이름을 찾고 있습니다. 창의적인 아이디어가 있다면, 다음 주 금요일까지 게시판의 QR 코드를 스캔해서 제출해 주세요. 모든 제안이 모아지면, 최종 이름을 정하기 위한 학생 투표가 있을 것입니다. 당선된 이름을 제안한 학생의 이름은 창간호에 언급될 것입니다. 여러분의 참여를 기대합니다. 감사합니다.",
+  vocab:[
+    { word:"launch", pron:"[론치]", meaning:"창간하다, 시작하다", ex:"Our school is preparing to launch a school newspaper.", ko:"우리 학교는 학교 신문을 창간할 준비를 하고 있다." },
+    { word:"reflect", pron:"[리플렉트]", meaning:"반영하다", ex:"We are looking for a name that reflects our school spirit.", ko:"우리는 학교 정신을 반영하는 이름을 찾고 있다." },
+    { word:"submit", pron:"[서브밋]", meaning:"제출하다", ex:"Please submit it by scanning the QR code.", ko:"QR 코드를 스캔해서 제출해 주세요." },
+    { word:"participation", pron:"[파티시페이션]", meaning:"참여", ex:"We look forward to your participation.", ko:"여러분의 참여를 기대합니다." }
+  ],
+  questions:[{ qNum:1, question:"다음을 듣고, 남자가 하는 말의 목적으로 가장 적절한 것을 고르시오.",
+    choices:["학교 신문 이름의 공모를 안내하려고","학교 신문에 게재할 기사를 모집하려고","학교 신문 창간 기념식 개최를 공지하려고","학교 신문 동아리의 지원 절차를 설명하려고","학교 신문 디자인 선호도 조사를 실시하려고"],
+    answer:0, explanation:"'We are looking for a great name for the newspaper... please submit it'에서 신문 이름 아이디어를 공모하고 있으므로 ①번이 정답입니다." }]
+},
+{ label:"2번", type:"의견 파악",
+  lines:[
+    {spk:"W", text:"You don't look happy, Jason. What's wrong?"},
+    {spk:"M", text:"It's nothing serious, but I've been feeling a bit down because of things between me and my friend, Sarah."},
+    {spk:"W", text:"Really? I thought you two were best friends."},
+    {spk:"M", text:"We are. We're really close. The thing is, we sometimes have different thoughts, and it's hard for me to express how I feel."},
+    {spk:"W", text:"I understand, but keeping your feelings to yourself is only making things worse."},
+    {spk:"M", text:"But I just don't want to make things awkward."},
+    {spk:"W", text:"I know, but it only creates distance between you and Sarah. So, I think it's important to express your feelings honestly."},
+    {spk:"M", text:"Do you really think being open about my emotions is better?"},
+    {spk:"W", text:"Yes. Hiding your feelings leads to misunderstandings. Telling her how you truly feel will help solve the problem."}
+  ],
+  translation:"W: Jason, 기분이 안 좋아 보이네. 무슨 일이야?\nM: 심각한 건 아닌데, 친구 Sarah랑 있었던 일 때문에 좀 우울했어.\nW: 정말? 너희 둘이 가장 친한 친구인 줄 알았는데.\nM: 맞아. 우리는 정말 가까워. 그런데, 우리는 가끔 생각이 다르고, 내 감정을 표현하기가 힘들어.\nW: 이해해, 그런데 감정을 혼자 담아두는 건 상황을 더 악화시킬 뿐이야.\nM: 근데 난 그냥 어색해지고 싶지 않아.\nW: 알아, 그런데 그건 너랑 Sarah 사이에 거리감만 만들 뿐이야. 그러니까, 네 감정을 솔직하게 표현하는 게 중요하다고 생각해.\nM: 정말 내 감정에 솔직한 게 더 낫다고 생각해?\nW: 응. 감정을 숨기면 오해로 이어져. 진심을 그녀에게 말하는 게 문제를 해결하는 데 도움이 될 거야.",
+  vocab:[
+    { word:"awkward", pron:"[어크워드]", meaning:"어색한", ex:"I just don't want to make things awkward.", ko:"그냥 상황이 어색해지는 걸 원하지 않는다." },
+    { word:"honestly", pron:"[아너스틀리]", meaning:"솔직하게", ex:"It's important to express your feelings honestly.", ko:"감정을 솔직하게 표현하는 것이 중요하다." },
+    { word:"misunderstand", pron:"[미스언더스탠드]", meaning:"오해하다", ex:"Hiding your feelings leads to misunderstandings.", ko:"감정을 숨기면 오해로 이어진다." }
+  ],
+  questions:[{ qNum:2, question:"대화를 듣고, 여자의 의견으로 가장 적절한 것을 고르시오.",
+    choices:["친구 사이라도 예의를 갖추어 행동해야 한다.","논쟁 상황에서는 잠시 침묵을 지키는 것이 좋다.","자신의 감정을 솔직하게 표현하는 것이 중요하다.","상대방의 입장에서 먼저 생각하고 이해해야 한다.","의견이 다를 때는 이성적으로 판단하려 노력해야 한다."],
+    answer:2, explanation:"여자는 'it's important to express your feelings honestly'와 'Hiding your feelings leads to misunderstandings.'라고 반복해서 말하므로 ③번이 정답입니다." }]
+},
+{ label:"3번", type:"요지 파악",
+  lines:[{spk:"M", text:"Hello, I'm doctor Robert Morgan. Today, I'm going to talk about how to make a good choice. Let me give you an example. Imagine you are trying to choose something in a store. You might think that spending more time will lead to a better decision. But research shows that your initial choice in the store is often the best one. That's because it reflects your true preference before being influenced by outside factors. When you think too much about every possible outcome and keep changing, you struggle with even simple decisions and lose confidence. That's why trusting your instinct about your first choice can actually lead to a better result in the end."}],
+  translation:"M: 안녕하세요, 저는 Robert Morgan 박사입니다. 오늘은 좋은 선택을 하는 방법에 대해 이야기하려고 합니다. 예를 들어 드리겠습니다. 여러분이 가게에서 무언가를 고르려 한다고 상상해 보세요. 시간을 더 많이 들이는 것이 더 나은 결정으로 이어질 것이라고 생각할 수 있습니다. 하지만 연구에 따르면 가게에서의 처음 선택이 종종 최선인 경우가 많습니다. 이는 외부 요인에 영향을 받기 전, 여러분의 진짜 선호를 반영하기 때문입니다. 가능한 모든 결과에 대해 지나치게 생각하고 계속 마음을 바꾸면, 아주 간단한 결정에도 어려움을 겪고 자신감을 잃게 됩니다. 그래서 첫 선택에 대한 본능을 믿는 것이 결국 더 나은 결과로 이어질 수 있는 것입니다.",
+  vocab:[
+    { word:"initial", pron:"[이니셜]", meaning:"처음의", ex:"Your initial choice in the store is often the best one.", ko:"가게에서의 처음 선택이 종종 최선이다." },
+    { word:"preference", pron:"[프레퍼런스]", meaning:"선호", ex:"It reflects your true preference.", ko:"그것은 당신의 진짜 선호를 반영한다." },
+    { word:"struggle with", pron:"[스트러글 위드]", meaning:"~로 고심하다", ex:"You struggle with even simple decisions.", ko:"당신은 아주 간단한 결정에도 어려움을 겪는다." },
+    { word:"instinct", pron:"[인스팅트]", meaning:"본능", ex:"Trust your instinct about your first choice.", ko:"첫 선택에 대한 본능을 믿어라." }
+  ],
+  questions:[{ qNum:3, question:"다음을 듣고, 남자가 하는 말의 요지로 가장 적절한 것을 고르시오.",
+    choices:["선택의 기준은 개인의 필요와 처한 상황에 따라 달라진다.","결정 상황에서 처음 정한 선택이 가장 바람직한 경우가 많다.","빠르고 정확한 판단은 분석적 사고력이 뒷받침될 때 가능하다.","중요한 결정에는 주변 사람들의 조언을 구하는 것이 도움이 된다.","하나의 결론만 고집하기보다 여러 가능성을 살피는 것이 좋다."],
+    answer:1, explanation:"'your initial choice in the store is often the best one'과 'trusting your instinct about your first choice can actually lead to a better result'가 핵심이므로 ②번이 정답입니다." }]
+},
+{ label:"4번", type:"그림 불일치", svgKey:"hotelroom",
+  lines:[
+    {spk:"M", text:"Judy, take a look at this picture of the hotel room I booked. What do you think?"},
+    {spk:"W", text:"It looks great! Is it for our family trip?"},
+    {spk:"M", text:"Yes. Since there will be three of us, I decided on this room."},
+    {spk:"W", text:"Then a room with three beds seems perfect."},
+    {spk:"M", text:"Exactly. And the lamp in the corner will be useful at night."},
+    {spk:"W", text:"Right. Also, the window seems to offer an ocean view."},
+    {spk:"M", text:"That was one of the main reasons I chose this room."},
+    {spk:"W", text:"I see. And I think the round table can be a nice place to enjoy some snacks."},
+    {spk:"M", text:"I agree. There's even an electric teapot on the table, so we can enjoy some tea, too."},
+    {spk:"W", text:"Great! I think you booked a really nice room."},
+    {spk:"M", text:"Yes, I can't wait for our family trip."}
+  ],
+  translation:"M: Judy, 내가 예약한 호텔 방 사진 좀 봐. 어때?\nW: 정말 좋아 보여! 우리 가족여행을 위한 거야?\nM: 응. 우리가 셋이니까, 이 방으로 정했어.\nW: 그럼 침대가 세 개 있는 방이 딱이겠다.\nM: 맞아. 그리고 구석에 있는 램프는 밤에 유용할 거야.\nW: 그러네. 또, 창문은 바다 전망을 제공하는 것 같아.\nM: 그게 내가 이 방을 고른 주된 이유 중 하나였어.\nW: 그렇구나. 그리고 둥근 탁자는 간식을 즐기기 좋은 자리인 것 같아.\nM: 맞아. 탁자 위에 전기 주전자도 있어서, 차도 즐길 수 있어.\nW: 좋다! 정말 좋은 방을 예약한 것 같아.\nM: 응, 가족여행이 너무 기다려져.",
+  vocab:[
+    { word:"book", pron:"[북]", meaning:"예약하다", ex:"Take a look at this picture of the hotel room I booked.", ko:"내가 예약한 호텔 방 사진을 좀 봐." },
+    { word:"corner", pron:"[코너]", meaning:"구석", ex:"The lamp in the corner will be useful at night.", ko:"구석에 있는 램프는 밤에 유용할 것이다." },
+    { word:"offer a view", pron:"[오퍼 어 뷰]", meaning:"전망을 제공하다", ex:"The window seems to offer an ocean view.", ko:"창문은 바다 전망을 제공하는 것 같다." },
+    { word:"electric teapot", pron:"[일렉트릭 티팟]", meaning:"전기 주전자", ex:"There's even an electric teapot on the table.", ko:"탁자 위에 전기 주전자도 있다." }
+  ],
+  questions:[{ qNum:4, question:"대화를 듣고, 그림에서 대화의 내용과 일치하지 않는 것을 고르시오.",
+    choices:["①","②","③","④","⑤"],
+    answer:4, explanation:"대화에서는 탁자 위에 '전기 주전자(electric teapot)'가 있다고 했지만, 그림에는 화분(식물)이 놓여 있으므로 일치하지 않는 것은 ⑤번입니다." }]
+},
+{ label:"5번", type:"할 일 파악",
+  lines:[
+    {spk:"M", text:"Emily, are you ready for our hike tomorrow?"},
+    {spk:"W", text:"Almost. Let's go over the list of things we need to do."},
+    {spk:"M", text:"Okay. You wanted to choose a hiking trail. Have you picked one?"},
+    {spk:"W", text:"Yes. I decided on Trail A. It doesn't have many stairs."},
+    {spk:"M", text:"Good choice. What about lunch? Should we pack something?"},
+    {spk:"W", text:"I'll make some sandwiches. Don't worry about that."},
+    {spk:"M", text:"Sounds great. Then I'll take care of the snacks. I already bought some yesterday."},
+    {spk:"W", text:"Great. Also I'll bring trash bags to carry our trash back down."},
+    {spk:"M", text:"Good thinking. One more thing — it can get windy at the top of the mountain, so you'll probably need a windbreaker."},
+    {spk:"W", text:"Really? But I don't have one."},
+    {spk:"M", text:"Don't worry. I have an extra windbreaker. I'll lend it to you tomorrow."},
+    {spk:"W", text:"Thanks. See you tomorrow."},
+    {spk:"M", text:"See you then."}
+  ],
+  translation:"M: Emily, 내일 등산 준비 다 됐어?\nW: 거의. 우리가 해야 할 것들 목록을 한번 살펴보자.\nM: 좋아. 등산로를 고르고 싶다고 했잖아. 하나 골랐어?\nW: 응. Trail A로 정했어. 계단이 많지 않더라고.\nM: 좋은 선택이야. 점심은 어떻게 할까? 뭘 좀 싸 갈까?\nW: 내가 샌드위치를 만들게. 그건 걱정하지 마.\nM: 좋아. 그럼 간식은 내가 맡을게. 어제 이미 좀 샀어.\nW: 좋아. 그리고 내려올 때 쓰레기 가져올 쓰레기봉투도 내가 챙길게.\nM: 좋은 생각이야. 한 가지 더 — 산 정상에서는 바람이 셀 수 있으니까, 아마 바람막이가 필요할 거야.\nW: 정말? 근데 나 없는데.\nM: 걱정 마. 나한테 여분의 바람막이가 있어. 내일 빌려줄게.\nW: 고마워. 내일 봐.\nM: 그때 봐.",
+  vocab:[
+    { word:"go over", pron:"[고 오버]", meaning:"살펴보다, 검토하다", ex:"Let's go over the list of things we need to do.", ko:"우리가 해야 할 것들의 목록을 살펴보자." },
+    { word:"trail", pron:"[트레일]", meaning:"등산로", ex:"You wanted to choose a hiking trail.", ko:"너는 등산로를 고르고 싶어했다." },
+    { word:"windbreaker", pron:"[윈드브레이커]", meaning:"바람막이", ex:"You'll probably need a windbreaker.", ko:"아마 바람막이가 필요할 것이다." },
+    { word:"lend", pron:"[렌드]", meaning:"빌려주다", ex:"I have an extra windbreaker. I'll lend it to you.", ko:"여분의 바람막이가 있어. 빌려줄게." }
+  ],
+  questions:[{ qNum:5, question:"대화를 듣고, 남자가 할 일로 가장 적절한 것을 고르시오.",
+    choices:["쓰레기봉투 가져가기","바람막이 빌려주기","샌드위치 만들기","간식 구매하기","등산로 정하기"],
+    answer:1, explanation:"남자가 'I have an extra windbreaker. I'll lend it to you tomorrow.'라고 했으므로 남자가 할 일은 ②번입니다. (쓰레기봉투·샌드위치는 여자, 간식 구매와 등산로 선택은 이미 끝난 일)" }]
+},
+{ label:"6번", type:"금액 계산",
+  lines:[
+    {spk:"M", text:"Welcome to Sweet Hands Baking Studio. How can I help you?"},
+    {spk:"W", text:"Hi, I'd like to join the cupcake-making class at 4 o'clock today. Are there any spots left?"},
+    {spk:"M", text:"Sure. The class fee is $20 for an adult and $10 for a child."},
+    {spk:"W", text:"Okay. I'll sign up for one adult and two children. Is there anything I need to bring for the class?"},
+    {spk:"M", text:"No, all basic tools and ingredients are included. But if you pay an extra $3, you can buy a special decorating kit."},
+    {spk:"W", text:"That sounds good. Then, I'll add two kits for my children."},
+    {spk:"M", text:"So, that's one adult, two children, and two decorating kits. Do you have anything to bring for the class?"},
+    {spk:"W", text:"No, but I have this coupon. Can I use it?"},
+    {spk:"M", text:"Yes. You can get $7 off the total."},
+    {spk:"W", text:"Perfect. Here's my credit card."}
+  ],
+  translation:"M: Sweet Hands Baking Studio에 오신 것을 환영합니다. 무엇을 도와드릴까요?\nW: 안녕하세요, 오늘 4시 컵케이크 만들기 수업에 참여하고 싶어요. 자리가 남아 있나요?\nM: 물론이죠. 수업료는 성인 20달러, 어린이 10달러입니다.\nW: 알겠어요. 성인 한 명과 어린이 두 명으로 신청할게요. 수업에 가져와야 할 게 있나요?\nM: 아니요, 기본 도구와 재료는 모두 포함되어 있습니다. 하지만 3달러를 추가로 내시면, 특별 장식 세트를 구매하실 수 있어요.\nW: 좋네요. 그럼, 아이들을 위해 두 개 추가할게요.\nM: 그럼, 성인 한 명, 어린이 두 명, 장식 세트 두 개네요. 수업에 가져오실 게 있나요?\nW: 아니요, 근데 이 쿠폰이 있어요. 사용할 수 있나요?\nM: 네. 총액에서 7달러 할인받으실 수 있어요.\nW: 완벽하네요. 여기 제 신용카드요.",
+  vocab:[
+    { word:"sign up for", pron:"[사인 업 포]", meaning:"~을 신청하다", ex:"I'll sign up for one adult and two children.", ko:"성인 한 명과 어린이 두 명으로 신청할게요." },
+    { word:"ingredient", pron:"[인그리디언트]", meaning:"재료", ex:"All basic tools and ingredients are included.", ko:"기본 도구와 재료는 모두 포함되어 있다." },
+    { word:"decorating kit", pron:"[데코레이팅 킷]", meaning:"장식 세트", ex:"You can buy a special decorating kit.", ko:"특별 장식 세트를 구매할 수 있다." }
+  ],
+  questions:[{ qNum:6, question:"대화를 듣고, 여자가 지불할 금액을 고르시오. [3점]",
+    choices:["$33","$39","$40","$43","$46"],
+    answer:1, explanation:"성인 1명($20)+어린이 2명($10×2=$20)=$40, 장식 세트 2개($3×2=$6) 추가로 $46, 쿠폰으로 $7 할인되어 $46-$7=$39이므로 정답은 ②번입니다." }]
+},
+{ label:"7번", type:"이유 파악",
+  lines:[
+    {spk:"M", text:"Hello, CloudNest Customer Service. How may I help you?"},
+    {spk:"W", text:"Hi, I'd like to cancel my cloud service subscription."},
+    {spk:"M", text:"I'm sorry to hear that. May I ask why you'd like to cancel? If it's about the cost, we actually just came out with a cheaper plan."},
+    {spk:"W", text:"I see. But the price isn't the issue."},
+    {spk:"M", text:"Okay. Then were you dissatisfied with our storage capacity?"},
+    {spk:"W", text:"No. Actually storage capacity hasn't been a problem at all."},
+    {spk:"M", text:"How about the system performance? Did you experience any server errors?"},
+    {spk:"W", text:"Not at all. Everything runs smoothly. Actually, I really liked your smartphone app. I used it a lot."},
+    {spk:"M", text:"It's good to hear that. Then, can I ask why you want to cancel your subscription?"},
+    {spk:"W", text:"The thing is, my company recently changed its data security policy, so I can't access your cloud service at work."},
+    {spk:"M", text:"Oh, I see. I'll proceed with the cancellation for you."},
+    {spk:"W", text:"Thank you."}
+  ],
+  translation:"M: 안녕하세요, CloudNest 고객 서비스입니다. 무엇을 도와드릴까요?\nW: 안녕하세요, 클라우드 서비스 구독을 취소하고 싶어요.\nM: 그 말씀을 들으니 유감이네요. 왜 취소하고 싶으신지 여쭤봐도 될까요? 비용 때문이시라면, 저희가 최근에 더 저렴한 요금제를 새로 출시했어요.\nW: 그렇군요. 하지만 가격이 문제는 아니에요.\nM: 알겠습니다. 그럼 저장 용량에 불만족하셨나요?\nW: 아니요. 사실 저장 용량은 전혀 문제가 아니었어요.\nM: 시스템 성능은 어떠셨나요? 서버 오류를 경험하신 적이 있나요?\nW: 전혀요. 모든 게 원활하게 작동해요. 사실, 스마트폰 앱이 정말 마음에 들었어요. 많이 사용했어요.\nM: 그 말씀을 들으니 다행이네요. 그럼, 왜 구독을 취소하고 싶으신지 여쭤봐도 될까요?\nW: 사실은, 제 회사가 최근에 데이터 보안 정책을 바꿔서, 직장에서 귀사의 클라우드 서비스에 접속할 수가 없어요.\nM: 아, 그렇군요. 취소를 진행해 드리겠습니다.\nW: 감사합니다.",
+  vocab:[
+    { word:"cancel", pron:"[캔슬]", meaning:"취소하다", ex:"I'd like to cancel my cloud service subscription.", ko:"클라우드 서비스 구독을 취소하고 싶다." },
+    { word:"dissatisfied", pron:"[디스새티스파이드]", meaning:"불만족스러운", ex:"Were you dissatisfied with our storage capacity?", ko:"저장 용량에 불만족하셨나요?" },
+    { word:"security policy", pron:"[시큐리티 팔러시]", meaning:"보안 정책", ex:"My company changed its data security policy.", ko:"회사가 데이터 보안 정책을 바꿨다." },
+    { word:"proceed with", pron:"[프러시드 위드]", meaning:"~을 진행하다", ex:"I'll proceed with the cancellation for you.", ko:"취소를 진행해 드리겠다." }
+  ],
+  questions:[{ qNum:7, question:"대화를 듣고, 여자가 클라우드 서비스 구독을 취소하려는 이유를 고르시오.",
+    choices:["회사에서 접속이 불가능해서","서비스 이용 요금이 너무 비싸서","스마트폰 전용 앱을 지원하지 않아서","저장 용량에 만족하지 못해서","서버 오류가 자주 발생해서"],
+    answer:0, explanation:"'my company recently changed its data security policy, so I can't access your cloud service at work.'이라고 했으므로 ①번이 정답입니다." }]
+},
+{ label:"8번", type:"언급되지 않은 것",
+  lines:[
+    {spk:"W", text:"What are you looking at on your phone?"},
+    {spk:"M", text:"Oh, Kate! I'm looking at an event post for an upcoming history lecture. Do you want to come with me?"},
+    {spk:"W", text:"A history lecture? What's the topic?"},
+    {spk:"M", text:"It's about the struggle for independence in Korea and in Ireland."},
+    {spk:"W", text:"Sounds interesting. I think I heard both countries have similar histories. Who's giving the lecture?"},
+    {spk:"M", text:"Professor Matthew Stevens. He's an expert in modern history."},
+    {spk:"W", text:"I've heard of him. When is the lecture?"},
+    {spk:"M", text:"It's scheduled for 3 p.m., April 5th."},
+    {spk:"W", text:"April 5th... I'm free that day. Where is it?"},
+    {spk:"M", text:"It's at the National History Museum downtown."},
+    {spk:"W", text:"Great. I'd love to go with you."},
+    {spk:"M", text:"Perfect. Let's meet up before the lecture."}
+  ],
+  translation:"W: 폰으로 뭘 보고 있어?\nM: 오, Kate! 다가오는 역사 강연 행사 게시물을 보고 있어. 같이 갈래?\nW: 역사 강연? 주제가 뭐야?\nM: 한국과 아일랜드의 독립을 위한 투쟁에 관한 거야.\nW: 흥미롭겠다. 두 나라가 비슷한 역사를 가지고 있다고 들은 것 같아. 누가 강연을 해?\nM: Matthew Stevens 교수님이야. 근대사 전문가셔.\nW: 그분 얘기 들어봤어. 강연이 언제야?\nM: 4월 5일 오후 3시로 예정되어 있어.\nW: 4월 5일... 그날 나 시간 있어. 어디서 해?\nM: 시내에 있는 국립역사박물관이야.\nW: 좋아. 너랑 같이 가고 싶어.\nM: 좋아. 강연 전에 만나자.",
+  vocab:[
+    { word:"upcoming", pron:"[업커밍]", meaning:"다가오는", ex:"I'm looking at an event post for an upcoming history lecture.", ko:"다가오는 역사 강연 행사 게시물을 보고 있다." },
+    { word:"independence", pron:"[인디펜던스]", meaning:"독립", ex:"It's about the struggle for independence.", ko:"그것은 독립을 위한 투쟁에 관한 것이다." },
+    { word:"expert", pron:"[엑스퍼트]", meaning:"전문가", ex:"He's an expert in modern history.", ko:"그는 근대사 전문가다." }
+  ],
+  questions:[{ qNum:8, question:"대화를 듣고, 역사 강연에 관해 언급되지 않은 것을 고르시오.",
+    choices:["주제","강연자","날짜","참가비","장소"],
+    answer:3, explanation:"주제(한국·아일랜드 독립 투쟁), 강연자(Matthew Stevens 교수), 날짜(4월 5일), 장소(국립역사박물관)는 언급되었지만 참가비는 언급되지 않았으므로 ④번이 정답입니다." }]
+},
+{ label:"9번", type:"내용 불일치",
+  lines:[{spk:"W", text:"Hello, everyone! This is Chloe Anderson with the 2026 World Folk Dance Festival Committee. We invite you to 2026 World Folk Dance Festival, a magical evening of music and dance. The event will be held on Friday, March 27th, at 7 p.m. in Maplehurst Square. Six amazing dance teams will take the stage, representing South Korea, Bulgaria, Poland, India, Russia, and Peru. Each team will perform their traditional dance. You'll also have the chance to try on folk dance costumes from these countries. After the performances, you can take photos with the performers. Admission is free for all Maplehurst residents. In addition, the first 50 visitors will receive a special souvenir. Don't miss this amazing chance!"}],
+  translation:"W: 안녕하세요, 여러분! 저는 2026 World Folk Dance Festival 위원회의 Chloe Anderson입니다. 음악과 춤의 마법 같은 저녁, 2026 World Folk Dance Festival에 여러분을 초대합니다. 행사는 3월 27일 금요일 오후 7시 Maplehurst Square에서 열립니다. 대한민국, 불가리아, 폴란드, 인도, 러시아, 페루를 대표하는 여섯 개의 놀라운 댄스팀이 무대에 오릅니다. 각 팀은 자국의 전통춤을 공연합니다. 여러분은 이 나라들의 민속춤 의상을 입어볼 기회도 가지실 수 있습니다. 공연 후에는 공연자들과 함께 사진을 찍을 수 있습니다. 입장은 모든 Maplehurst 거주자에게 무료입니다. 또한, 처음 방문하시는 50분께는 특별 기념품을 드립니다. 이 놀라운 기회를 놓치지 마세요!",
+  vocab:[
+    { word:"represent", pron:"[레프리젠트]", meaning:"대표하다", ex:"Six teams will take the stage, representing six countries.", ko:"여섯 개의 팀이 여섯 나라를 대표하여 무대에 오른다." },
+    { word:"costume", pron:"[코스튬]", meaning:"의상", ex:"You'll have the chance to try on folk dance costumes.", ko:"민속춤 의상을 입어볼 기회를 가질 것이다." },
+    { word:"admission", pron:"[어드미션]", meaning:"입장", ex:"Admission is free for all Maplehurst residents.", ko:"입장은 모든 Maplehurst 거주자에게 무료다." },
+    { word:"souvenir", pron:"[수버니어]", meaning:"기념품", ex:"The first 50 visitors will receive a special souvenir.", ko:"처음 50명의 방문객은 특별 기념품을 받는다." }
+  ],
+  questions:[{ qNum:9, question:"2026 World Folk Dance Festival에 관한 다음 내용을 듣고, 일치하지 않는 것을 고르시오.",
+    choices:["3월 27일 금요일에 열린다.","여섯 개의 댄스팀이 무대에 오른다.","민속춤 의상을 입어 볼 수 있다.","공연 후 공연자들과 함께 사진을 찍을 수 있다.","방문객 모두에게 특별 기념품을 증정한다."],
+    answer:4, explanation:"'the first 50 visitors will receive a special souvenir'라고 했으므로 방문객 전원이 아니라 처음 50명에게만 기념품을 준다는 것이 일치하지 않습니다. 따라서 ⑤번이 정답입니다." }]
+},
+{ label:"10번", type:"도표 파악",
+  table:{ headers:["","Model","Price","Visibility Features","Weight","Number of Bottle Holders"], rows:[["①","A","$17","None","Medium","2"],["②","B","$25","Reflective Strips","Lightweight","1"],["③","C","$27","Reflective Strips","Lightweight","2"],["④","D","$29","LED Lights","Medium","1"],["⑤","E","$35","LED Lights","Lightweight","1"]] },
+  lines:[
+    {spk:"M", text:"Clara, I want to buy a running vest, but I have no idea which to choose. I need your help."},
+    {spk:"W", text:"Oh, I've got a website I always use. I'll show you. [Typing sound] Here. Do you have a budget in mind?"},
+    {spk:"M", text:"I'd like to keep it under $30."},
+    {spk:"W", text:"Okay. When do you usually run?"},
+    {spk:"M", text:"I usually run at night."},
+    {spk:"W", text:"Then, you should get one with LED lights or reflective strips."},
+    {spk:"M", text:"Got it. How about the weight?"},
+    {spk:"W", text:"The medium-weight model is more durable, while the lightweight one is better for speed."},
+    {spk:"M", text:"Then I'll go with a lightweight one."},
+    {spk:"W", text:"Great choice. How many bottle holders do you need?"},
+    {spk:"M", text:"Hmm... I think just one is enough."},
+    {spk:"W", text:"Then, this is the best option for you."},
+    {spk:"M", text:"Okay. Thanks so much for your help."}
+  ],
+  translation:"M: Clara, 러닝 조끼를 사고 싶은데, 뭘 골라야 할지 전혀 모르겠어. 도움이 필요해.\nW: 아, 나 항상 쓰는 웹사이트가 있어. 보여줄게. [타이핑 소리] 여기. 생각해 둔 예산 있어?\nM: 30달러 아래로 하고 싶어.\nW: 알겠어. 보통 언제 뛰어?\nM: 나는 보통 밤에 뛰어.\nW: 그럼, LED 조명이나 반사 스트립이 있는 걸로 골라야 해.\nM: 알겠어. 무게는 어때?\nW: 미디엄 무게 모델이 더 내구성이 좋고, 가벼운 모델이 속도에는 더 나아.\nM: 그럼 가벼운 걸로 할게.\nW: 좋은 선택이야. 물병 홀더는 몇 개 필요해?\nM: 음... 하나면 충분할 것 같아.\nW: 그럼, 이게 너한테 최고의 선택이야.\nM: 알겠어. 도와줘서 정말 고마워.",
+  vocab:[
+    { word:"budget", pron:"[버짓]", meaning:"예산", ex:"Do you have a budget in mind?", ko:"생각해 둔 예산이 있나요?" },
+    { word:"reflective", pron:"[리플렉티브]", meaning:"빛을 반사하는", ex:"You should get one with reflective strips.", ko:"반사 스트립이 있는 것을 골라야 한다." },
+    { word:"durable", pron:"[듀러블]", meaning:"내구성이 있는", ex:"The medium-weight model is more durable.", ko:"미디엄 무게 모델이 더 내구성이 좋다." },
+    { word:"lightweight", pron:"[라이트웨이트]", meaning:"가벼운", ex:"I'll go with a lightweight one.", ko:"가벼운 것으로 할게." }
+  ],
+  questions:[{ qNum:10, question:"다음 표를 보면서 대화를 듣고, 남자가 구매할 달리기용 조끼를 고르시오.",
+    choices:["A / $17 / None / Medium / 2","B / $25 / Reflective Strips / Lightweight / 1","C / $27 / Reflective Strips / Lightweight / 2","D / $29 / LED Lights / Medium / 1","E / $35 / LED Lights / Lightweight / 1"],
+    answer:1, explanation:"$30 미만(⑤ 제외), 야간용 LED/반사 스트립(①은 없음, 제외), 가벼운 모델(④는 medium, 제외), 물병 홀더 1개(③은 2개, 제외)이므로 ②번이 정답입니다." }]
+},
+{ label:"11번", type:"응답 고르기",
+  lines:[
+    {spk:"M", text:"[Telephone rings] Cathy, have you arrived at the station? I'm on my way."},
+    {spk:"W", text:"Yes. I'm waiting at the platform. You know our train leaves in twenty minutes."},
+    {spk:"M", text:"I'm sorry. I'm in a taxi, but it's taking longer than I expected because of traffic. I think I'll be there in about ten minutes."}
+  ],
+  translation:"M: [전화벨 소리] Cathy, 역에 도착했어? 나 가는 중이야.\nW: 응. 플랫폼에서 기다리고 있어. 우리 기차 20분 후에 출발하는 거 알지.\nM: 미안해. 택시 안인데, 교통 체증 때문에 예상보다 오래 걸리고 있어. 한 10분 정도 후면 도착할 것 같아.\nW: (여자의 응답을 골라보세요)",
+  vocab:[
+    { word:"platform", pron:"[플랫폼]", meaning:"플랫폼, 승강장", ex:"I'm waiting at the platform.", ko:"플랫폼에서 기다리고 있다." },
+    { word:"traffic", pron:"[트래픽]", meaning:"교통, 교통량", ex:"It's taking longer because of traffic.", ko:"교통 체증 때문에 더 오래 걸리고 있다." }
+  ],
+  questions:[{ qNum:11, question:"대화를 듣고, 남자의 마지막 말에 대한 여자의 응답으로 가장 적절한 것을 고르시오.",
+    choices:["You're too late. The train already left five minutes ago.","That's tight. You need to hurry after you get off.","I agree. There'll be less traffic tomorrow.","That's my fault. I'll leave earlier next time.","No problem. I can give you a ride to the station."],
+    answer:1, explanation:"기차는 20분 후 출발인데 남자가 10분 정도 걸린다고 했으므로, 시간이 빠듯하니 내려서 서두르라는 ②번이 가장 자연스러운 응답입니다." }]
+},
+{ label:"12번", type:"응답 고르기",
+  lines:[
+    {spk:"W", text:"Dad, tomorrow is my first day at my part-time job."},
+    {spk:"M", text:"Oh, so tomorrow's the big day! How do you feel about it?"},
+    {spk:"W", text:"Yes, but I'm a little nervous. What if I make a mistake?"}
+  ],
+  translation:"W: 아빠, 내일이 저 아르바이트 첫날이에요.\nM: 오, 그럼 내일이 그 중요한 날이구나! 기분이 어때?\nW: 네, 근데 좀 긴장돼요. 제가 실수하면 어쩌죠?\nM: (남자의 응답을 골라보세요)",
+  vocab:[
+    { word:"part-time job", pron:"[파트타임 잡]", meaning:"아르바이트, 시간제 일", ex:"Tomorrow is my first day at my part-time job.", ko:"내일이 아르바이트 첫날이다." },
+    { word:"nervous", pron:"[너버스]", meaning:"긴장한", ex:"I'm a little nervous.", ko:"나는 조금 긴장돼 있다." }
+  ],
+  questions:[{ qNum:12, question:"대화를 듣고, 여자의 마지막 말에 대한 남자의 응답으로 가장 적절한 것을 고르시오.",
+    choices:["Good job. I feel proud of you finishing the work.","You'll be fine. That job doesn't require a uniform.","Don't worry. Just do your best and trust yourself.","You're right. Many students are looking for part-time jobs.","It won't matter. Some part-time jobs start in the afternoon."],
+    answer:2, explanation:"딸이 실수할까 봐 긴장된다고 했으므로, 걱정하지 말고 최선을 다하며 스스로를 믿으라는 ③번이 가장 자연스러운 응답입니다." }]
+},
+{ label:"13번", type:"응답 고르기",
+  lines:[
+    {spk:"M", text:"I heard you've been looking for me. Is it about our club's T-shirts that we ordered yesterday?"},
+    {spk:"W", text:"Yes. the shop called and said our logo is way too complicated to print quickly. We might not get them in time."},
+    {spk:"M", text:"No way! Is there any other way to get them faster?"},
+    {spk:"W", text:"They suggested simplifying the design. If we do that, we can still get them on time."},
+    {spk:"M", text:"That's a relief!"},
+    {spk:"W", text:"But the problem is that I'm not good with design software. What about you?"},
+    {spk:"M", text:"Well, I know a little bit about how to use the design program. So I can give it a try."},
+    {spk:"W", text:"Great. Then could you send the updated design later today?"},
+    {spk:"M", text:"Hmm... I have a student council meeting this afternoon. But I can definitely finish it tonight. Does that work?"}
+  ],
+  translation:"M: 네가 나 찾고 있었다고 들었어. 어제 주문한 우리 동아리 티셔츠에 관한 거야?\nW: 응. 가게에서 전화가 왔는데 우리 로고가 너무 복잡해서 빨리 인쇄하기 어렵대. 제때 못 받을 수도 있어.\nM: 안 돼! 더 빨리 받을 다른 방법은 없대?\nW: 디자인을 단순화하는 걸 제안했어. 그렇게 하면, 제시간에 받을 수 있대.\nM: 다행이다!\nW: 근데 문제는 내가 디자인 소프트웨어를 잘 못 다뤄. 너는 어때?\nM: 음, 나 디자인 프로그램 쓰는 법을 조금 알아. 그러니까 한번 해볼 수 있어.\nW: 좋아. 그럼 오늘 이따가 업데이트된 디자인을 보내줄 수 있어?\nM: 음... 오늘 오후에 학생회 회의가 있어. 근데 오늘 밤에는 확실히 끝낼 수 있어. 그래도 괜찮아?\nW: (여자의 응답을 골라보세요)",
+  vocab:[
+    { word:"complicated", pron:"[컴플리케이티드]", meaning:"복잡한", ex:"Our logo is way too complicated to print quickly.", ko:"우리 로고는 빨리 인쇄하기엔 너무 복잡하다." },
+    { word:"simplify", pron:"[심플리파이]", meaning:"단순화하다", ex:"They suggested simplifying the design.", ko:"그들은 디자인을 단순화할 것을 제안했다." },
+    { word:"be good with", pron:"[비 굿 위드]", meaning:"~을 잘 다루다", ex:"I'm not good with design software.", ko:"나는 디자인 소프트웨어를 잘 다루지 못한다." }
+  ],
+  questions:[{ qNum:13, question:"대화를 듣고, 남자의 마지막 말에 대한 여자의 응답으로 가장 적절한 것을 고르시오.",
+    choices:["That's perfect. Thank you so much for doing that.","Too bad. We could have ordered the T-shirts.","Good idea. I can help you right now.","Not really. We can just use the original design.","I agree. We'd better ask the printing shop to fix it."],
+    answer:0, explanation:"남자가 오늘 밤까지 디자인을 끝낼 수 있다고 제안했으므로, 그것에 감사한다는 ①번이 가장 자연스러운 응답입니다." }]
+},
+{ label:"14번", type:"응답 고르기",
+  lines:[
+    {spk:"W", text:"Honey, what's our plan for tomorrow?"},
+    {spk:"M", text:"I'm thinking of visiting a local farmers' market. I heard there's a lot to see."},
+    {spk:"W", text:"But tomorrow is the day we move to another hotel. There's no way we can walk around with all our suitcases."},
+    {spk:"M", text:"You're right. They're too heavy to carry around all day. What should we do?"},
+    {spk:"W", text:"Oh, wait. I think I heard about a luggage delivery service. It picks up suitcases from one hotel and drops them off at the next one."},
+    {spk:"M", text:"Really? Let me look it up. [Smartphone typing sound] Oh, the website says the service is available at our hotels. And it's only $10 for up to three suitcases."},
+    {spk:"W", text:"That's a good deal. It is totally worth it."},
+    {spk:"M", text:"I'll go ahead and book it now."}
+  ],
+  translation:"W: 여보, 내일 계획이 뭐예요?\nM: 근처 농산물 직판장에 갈까 생각하고 있어요. 볼 게 많다고 들었어요.\nW: 근데 내일은 우리가 다른 호텔로 옮기는 날이잖아요. 짐 가방을 다 들고 돌아다닐 수는 없어요.\nM: 맞아요. 하루 종일 들고 다니기엔 너무 무거워요. 어떻게 하죠?\nW: 아, 잠깐만요. 짐 배송 서비스에 대해 들은 것 같아요. 한 호텔에서 여행 가방을 수거해서 다음 호텔에 내려다 준대요.\nM: 정말요? 한번 찾아볼게요. [스마트폰 타이핑 소리] 오, 웹사이트에 우리 호텔들에서 그 서비스를 이용할 수 있다고 나와 있어요. 그리고 여행 가방 세 개까지 겨우 10달러예요.\nW: 그거 괜찮은 거래네요. 완전히 그만한 가치가 있어요.\nM: 지금 바로 예약할게요.\nW: (여자의 응답을 골라보세요)",
+  vocab:[
+    { word:"suitcase", pron:"[수트케이스]", meaning:"여행 가방", ex:"There's no way we can walk around with all our suitcases.", ko:"우리 짐 가방을 다 들고 돌아다닐 수는 없다." },
+    { word:"drop off", pron:"[드롭 오프]", meaning:"~을 내려 주다", ex:"It drops them off at the next one.", ko:"그것들을 다음 호텔에 내려다 준다." },
+    { word:"worth it", pron:"[워스 잇]", meaning:"가치가 있는", ex:"It is totally worth it.", ko:"그것은 완전히 그만한 가치가 있다." }
+  ],
+  questions:[{ qNum:14, question:"대화를 듣고, 여자의 마지막 말에 대한 남자의 응답으로 가장 적절한 것을 고르시오. [3점]",
+    choices:["Great. Let's use the service and enjoy the day.","Never mind. I'd rather stay in the hotel tomorrow.","Okay. We can take our luggage with us the whole day.","I'm sorry. I totally forgot to cancel our hotel reservation.","Right. We can come back here and pick up our suitcases."],
+    answer:0, explanation:"짐 배송 서비스를 이용하기로 이야기가 정리되었으므로, 서비스를 이용해서 하루를 즐기자는 ①번이 가장 자연스러운 응답입니다." }]
+},
+{ label:"15번", type:"상황에 맞는 말",
+  lines:[{spk:"M", text:"Hailey and Brian get along well as classmates and often communicate through their class group chat, which is mainly used to share information about their school life. One afternoon, they worked together in a science project group and Brian took several photos of their group during the activity. Later that day, he shared some of the photos in the class group chat. He didn't think much of it, since classmates often share photos in the group chat. However, when Hailey sees herself in the photos, she feels embarrassed because she didn't know the pictures would be posted in the group chat. She doesn't want her photos to stay there, so she decides to ask Brian to delete them. In this situation, what would Hailey most likely say to Brian?"}],
+  translation:"M: Hailey와 Brian은 반 친구로서 사이가 좋고 학급 단체 채팅방을 통해 자주 소통하는데, 이 채팅방은 주로 학교생활에 관한 정보를 공유하는 데 쓰입니다. 어느 날 오후, 둘은 과학 프로젝트 조에서 함께 활동했고 Brian은 활동 중에 그들 조의 사진을 여러 장 찍었습니다. 그날 늦게, 그는 학급 단체 채팅방에 그 사진 중 몇 장을 공유했습니다. 그는 별생각 없이 그렇게 했는데, 반 친구들이 단체 채팅방에서 사진을 공유하는 일이 흔했기 때문입니다. 하지만, Hailey는 사진 속 자신의 모습을 보고, 그 사진들이 단체 채팅방에 올라갈 줄 몰랐기 때문에 당황스러움을 느낍니다. 그녀는 자신의 사진이 그곳에 남아 있는 것을 원하지 않아서, Brian에게 사진을 삭제해 달라고 부탁하기로 합니다. 이런 상황에서, Hailey는 Brian에게 뭐라고 말할까요?",
+  vocab:[
+    { word:"get along well", pron:"[겟 얼롱 웰]", meaning:"사이좋게 지내다", ex:"They get along well as classmates.", ko:"그들은 반 친구로서 사이좋게 지낸다." },
+    { word:"embarrassed", pron:"[임배러스트]", meaning:"당황스러운", ex:"She feels embarrassed because of the photos.", ko:"그녀는 사진 때문에 당황스러움을 느낀다." },
+    { word:"delete", pron:"[딜리트]", meaning:"삭제하다", ex:"She decides to ask Brian to delete them.", ko:"그녀는 Brian에게 삭제를 부탁하기로 한다." }
+  ],
+  questions:[{ qNum:15, question:"다음 상황 설명을 듣고, Hailey가 Brian에게 할 말로 가장 적절한 것을 고르시오.",
+    choices:["Do you mind sharing it again in the class group chat?","I didn't get the photo. Did you send it in another chat?","The photos aren't clear. Could you share different ones?","I'm not comfortable with the photos, so can you remove them?","How about taking pictures with all the classmates instead?"],
+    answer:3, explanation:"Hailey는 단체 채팅방에 올라온 자기 사진을 부담스러워하며 삭제를 부탁하고 싶어 하므로, 사진이 불편하니 지워달라는 ④번이 정답입니다." }]
+},
+{ label:"16~17번", type:"주제 · 언급되지 않은 것",
+  lines:[{spk:"W", text:"Hello, students. Last time, we talked about the importance of eating healthy food. Today, I want to talk about some foods that may look healthy at first, but are not actually good for you when you check the nutrition labels. Even though it is marketed as healthy, it often contains surprisingly high levels of salt and sugar. Second, let's talk about nut bars. They often contain sweetened nuts or chocolate, so a small bar may have more calories than you expect. This might lead to unwanted weight gain. Third is wheat bread. Most wheat breads are not made with 100% whole grains, so they do not provide enough dietary fiber. Finally, let's talk about veggie chips. They are usually processed and fried, which removes much of their original nutrition. Although they may taste like vegetables, they do not offer the same health benefits. You should be careful not to be fooled by foods that only sound healthy."}],
+  translation:"W: 안녕하세요, 학생 여러분. 지난 시간에는 건강한 음식을 먹는 것의 중요성에 대해 이야기했습니다. 오늘은 처음에는 건강해 보이지만, 영양성분표를 확인해 보면 실제로는 몸에 좋지 않은 음식 몇 가지에 대해 이야기해 보려고 합니다. 먼저, 라이트 샐러드 드레싱을 살펴봅시다. 건강한 것으로 광고되지만, 종종 놀라울 정도로 높은 수준의 나트륨과 설탕을 함유하고 있습니다. 둘째, 견과류 바에 대해 이야기해 봅시다. 이것들은 종종 달게 만든 견과류나 초콜릿을 포함하고 있어서, 작은 바 하나가 여러분이 예상하는 것보다 더 많은 칼로리를 가질 수 있습니다. 이는 원치 않는 체중 증가로 이어질 수 있습니다. 셋째는 밀빵입니다. 대부분의 밀빵은 100% 통곡물로 만들어지지 않아서, 충분한 식이 섬유를 제공하지 않습니다. 마지막으로, 채소 칩에 대해 이야기해 봅시다. 이것들은 보통 가공되고 튀겨지는데, 이는 원래의 영양분 대부분을 제거합니다. 채소 같은 맛이 날 수는 있지만, 같은 건강상의 이점을 제공하지는 않습니다. 건강하게 들리기만 하는 음식에 속지 않도록 주의해야 합니다.",
+  vocab:[
+    { word:"nutrition label", pron:"[뉴트리션 레이블]", meaning:"영양성분표", ex:"Check the nutrition labels.", ko:"영양성분표를 확인하라." },
+    { word:"sweetened", pron:"[스위튼드]", meaning:"단맛을 낸", ex:"They often contain sweetened nuts or chocolate.", ko:"그것들은 종종 달게 만든 견과류나 초콜릿을 포함한다." },
+    { word:"dietary fiber", pron:"[다이어터리 파이버]", meaning:"식이 섬유", ex:"They do not provide enough dietary fiber.", ko:"그것들은 충분한 식이 섬유를 제공하지 않는다." },
+    { word:"be fooled by", pron:"[비 풀드 바이]", meaning:"~에 속다", ex:"Be careful not to be fooled by foods that only sound healthy.", ko:"건강하게 들리기만 하는 음식에 속지 않도록 주의하라." }
+  ],
+  questions:[
+    { qNum:16, question:"여자가 하는 말의 주제로 가장 적절한 것은?",
+      choices:["foods that seem healthy but may be misleading","nutritional benefits of eating healthy foods","the role of packaging in food marketing","how low-calorie foods help with weight control","why people can't trust nutrition labels completely"],
+      answer:0, explanation:"여자는 겉으로는 건강해 보이지만 실제로는 그렇지 않은 음식들(라이트 드레싱·견과류 바·밀빵·채소 칩)을 소개하고 있으므로 ①번이 정답입니다." },
+    { qNum:17, question:"언급된 음식이 아닌 것은?",
+      choices:["light salad dressing","nut bars","wheat bread","fruit juice","veggie chips"],
+      answer:3, explanation:"라이트 샐러드 드레싱, 견과류 바, 밀빵, 채소 칩은 언급되었지만 과일 주스(fruit juice)는 언급되지 않았으므로 ④번이 정답입니다." }
+  ]
+}
+];
+
+let current = 0;
+let currentRate = 1;
+let realAudio = null;
+
+function formatTime(s) {
+  s = Math.max(0, Math.floor(s || 0));
+  var m = Math.floor(s / 60);
+  var sec = s % 60;
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function buildPlayer() {
+  var card = document.getElementById('player-card');
+  if (!AUDIO_URL) {
+    card.innerHTML = '<div class="audio-missing">🎧 듣기 파일 주소가 아직 연결되지 않았어요. 그때까지는 아래 <b>대본 보기</b>로 학습해 주세요.</div>';
+    return;
+  }
+  card.innerHTML =
+    '<div class="player-note">🎧 듣기평가 음성 (1~17번 전체, 순서대로 재생돼요)</div>' +
+    '<div class="player-row">' +
+      '<button class="player-playbtn" id="player-playbtn" onclick="toggleRealAudio()">▶️</button>' +
+      '<div class="player-info">' +
+        '<input type="range" class="seek-bar" id="seek-bar" min="0" max="100" value="0" oninput="seekRealAudio(this.value)">' +
+        '<div class="player-time"><span id="time-current">0:00</span><span id="time-total">0:00</span></div>' +
+      '</div>' +
+    '</div>';
+
+  realAudio = new Audio(AUDIO_URL);
+  realAudio.preload = 'none';
+  realAudio.addEventListener('play', function() { document.getElementById('player-playbtn').textContent = '⏸️'; });
+  realAudio.addEventListener('pause', function() { document.getElementById('player-playbtn').textContent = '▶️'; });
+  realAudio.addEventListener('ended', function() { document.getElementById('player-playbtn').textContent = '▶️'; });
+  realAudio.addEventListener('loadedmetadata', function() {
+    document.getElementById('time-total').textContent = formatTime(realAudio.duration);
+  });
+  realAudio.addEventListener('timeupdate', function() {
+    var bar = document.getElementById('seek-bar');
+    if (realAudio.duration) bar.value = (realAudio.currentTime / realAudio.duration) * 100;
+    document.getElementById('time-current').textContent = formatTime(realAudio.currentTime);
+  });
+}
+
+function toggleRealAudio() {
+  if (!realAudio) return;
+  if (realAudio.paused) { realAudio.play(); } else { realAudio.pause(); }
+}
+
+function seekRealAudio(pct) {
+  if (realAudio && realAudio.duration) realAudio.currentTime = (pct / 100) * realAudio.duration;
+}
+
+function buildRateRow() {
+  var rates = [0.5, 0.7, 1, 1.2, 1.5];
+  document.getElementById('rate-row').innerHTML = rates.map(function(r) {
+    return '<button class="rate-btn' + (r === 1 ? ' active' : '') + '" onclick="setRate(' + r + ', this)">' + r + '배</button>';
+  }).join('');
+}
+
+function setRate(r, btnEl) {
+  currentRate = r;
+  if (realAudio) realAudio.playbackRate = r;
+  document.querySelectorAll('.rate-btn').forEach(function(b) { b.classList.remove('active'); });
+  btnEl.classList.add('active');
+}
+
+function buildTabs() {
+  document.getElementById('problem-tabs').innerHTML = items.map(function(it, i) {
+    return '<div class="p-tab" onclick="selectItem(' + i + ')">' + it.label + '</div>';
+  }).join('');
+}
+
+const circled = ['①', '②', '③', '④', '⑤'];
+
+function choiceLabel(c, i) {
+  return /^[①②③④⑤]/.test(c) ? c : circled[i] + ' ' + c;
+}
+
+function renderChoicesHtml(q, qi) {
+  return q.choices.map(function(c, i) {
+    return '<div class="quiz-choice" onclick="selectChoice(' + qi + ',' + i + ')"><span>' + choiceLabel(c, i) + '</span></div>';
+  }).join('');
+}
+
+let quizState = [];
+
+function renderQuiz(it) {
+  quizState = it.questions.map(function() { return { selected: null, checked: false }; });
+  document.getElementById('quiz-container').innerHTML = it.questions.map(function(q, qi) {
+    return '<div class="quiz-card">' +
+      '<div class="quiz-q">' + q.qNum + '. ' + q.question + '</div>' +
+      '<div id="qchoices-' + qi + '">' + renderChoicesHtml(q, qi) + '</div>' +
+      '<button class="quiz-check-btn" id="qcheck-' + qi + '" onclick="checkAnswer(' + qi + ')">정답 확인</button>' +
+      '<div class="quiz-result" id="qresult-' + qi + '"></div>' +
+    '</div>';
+  }).join('');
+}
+
+function selectChoice(qi, i) {
+  if (quizState[qi].checked) return;
+  quizState[qi].selected = i;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    el.classList.toggle('selected', idx === i);
+  });
+}
+
+function checkAnswer(qi) {
+  var it = items[current];
+  var q = it.questions[qi];
+  if (quizState[qi].checked) return;
+  if (quizState[qi].selected === null) {
+    document.getElementById('qchoices-' + qi).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  quizState[qi].checked = true;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    if (idx === q.answer) el.classList.add('correct');
+    else if (idx === quizState[qi].selected) el.classList.add('wrong');
+  });
+  var result = document.getElementById('qresult-' + qi);
+  var isCorrect = quizState[qi].selected === q.answer;
+  if (window.studyStats) window.studyStats.record('quiz', isCorrect);
+  result.classList.add('show', isCorrect ? 'ok' : 'no');
+  var head = isCorrect ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[q.answer] + '번이에요.';
+  result.innerHTML = '<b>' + head + '</b><br>' + q.explanation;
+  var btn = document.getElementById('qcheck-' + qi);
+  btn.textContent = '다시 풀기';
+  btn.onclick = function() { retryQuestion(qi); };
+}
+
+function retryQuestion(qi) {
+  var it = items[current];
+  quizState[qi] = { selected: null, checked: false };
+  document.getElementById('qchoices-' + qi).innerHTML = renderChoicesHtml(it.questions[qi], qi);
+  var result = document.getElementById('qresult-' + qi);
+  result.classList.remove('show', 'ok', 'no');
+  result.innerHTML = '';
+  var btn = document.getElementById('qcheck-' + qi);
+  btn.textContent = '정답 확인';
+  btn.onclick = function() { checkAnswer(qi); };
+}
+
+const SVGS = {
+  hotelroom: '<svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" style="background:#fafafa;border-radius:8px;">' +
+    '<rect x="4" y="4" width="292" height="212" fill="none" stroke="#ccc" stroke-width="2"/>' +
+    '<rect x="20" y="130" width="70" height="60" fill="#EEEDFE" stroke="#7F77DD" stroke-width="1.5"/>' +
+    '<rect x="95" y="130" width="70" height="60" fill="#EEEDFE" stroke="#7F77DD" stroke-width="1.5"/>' +
+    '<text x="55" y="165" font-size="15" text-anchor="middle" fill="#534AB7">①</text>' +
+    '<text x="130" y="165" font-size="15" text-anchor="middle" fill="#534AB7">①</text>' +
+    '<circle cx="30" cy="40" r="14" fill="#fff" stroke="#7F77DD" stroke-width="1.5"/>' +
+    '<text x="30" y="45" font-size="14" text-anchor="middle" fill="#534AB7">②</text>' +
+    '<rect x="110" y="15" width="90" height="45" fill="#E8F0FE" stroke="#7F77DD" stroke-width="1.5"/>' +
+    '<path d="M120 45 L140 30 L160 42 L180 28 L195 40" fill="none" stroke="#888" stroke-width="1.5"/>' +
+    '<text x="155" y="12" font-size="14" text-anchor="middle" fill="#534AB7">③</text>' +
+    '<circle cx="230" cy="110" r="35" fill="#FFF8E6" stroke="#7F77DD" stroke-width="1.5"/>' +
+    '<text x="230" y="80" font-size="14" text-anchor="middle" fill="#534AB7">④</text>' +
+    '<ellipse cx="230" cy="108" rx="10" ry="14" fill="#8fd19e" stroke="#3f8f56" stroke-width="1.2"/>' +
+    '<text x="255" y="95" font-size="14" text-anchor="middle" fill="#534AB7">⑤</text>' +
+    '</svg>'
+};
+
+function renderGiven(it) {
+  var card = document.getElementById('given-card');
+  if (it.svgKey && SVGS[it.svgKey]) {
+    card.classList.add('show');
+    card.innerHTML = SVGS[it.svgKey];
+  } else if (it.image) {
+    card.classList.add('show');
+    card.innerHTML = '<img src="' + it.image + '" alt="문제 자료 그림">';
+  } else if (it.table) {
+    card.classList.add('show');
+    var thead = '<tr>' + it.table.headers.map(function(h) { return '<th>' + h + '</th>'; }).join('') + '</tr>';
+    var rows = it.table.rows.map(function(r) {
+      return '<tr>' + r.map(function(c) { return '<td>' + c + '</td>'; }).join('') + '</tr>';
+    }).join('');
+    card.innerHTML = '<table class="given-table">' + thead + rows + '</table>';
+  } else {
+    card.classList.remove('show');
+    card.innerHTML = '';
+  }
+}
+
+function render() {
+  var it = items[current];
+  document.getElementById('prog-text').textContent = (current + 1) + ' / ' + items.length;
+  document.getElementById('prog-fill').style.width = ((current + 1) / items.length * 100) + '%';
+  document.getElementById('type-badge').textContent = it.label + ' · ' + it.type;
+
+  renderGiven(it);
+  renderQuiz(it);
+
+  document.getElementById('script-box').innerHTML = it.lines.map(function(l) {
+    return '<div class="script-line"><span class="script-spk">' + l.spk + ':</span>' + l.text + '</div>';
+  }).join('');
+  document.getElementById('script-box').classList.remove('show');
+  document.getElementById('btn-script').classList.remove('on');
+  document.getElementById('btn-script').textContent = '📄 대본 보기';
+
+  document.getElementById('translation-box').textContent = it.translation;
+  document.getElementById('translation-box').classList.remove('show');
+  document.getElementById('btn-trans').classList.remove('on');
+  document.getElementById('btn-trans').textContent = '🇰🇷 해석 보기';
+
+  document.getElementById('vocab-list').innerHTML = it.vocab.map(function(v) {
+    return '<div class="example-item"><div class="example-text"><div class="example-en">' + v.word + '</div><div class="example-pron">' + v.pron + ' ' + v.meaning + '</div><div class="example-ko">' + v.ex + '<br>' + v.ko + '</div></div><button class="example-speak" onclick="speak(\'' + v.word.replace(/'/g, "\\'") + '\')">🔊</button></div>';
+  }).join('');
+
+  document.querySelectorAll('.p-tab').forEach(function(t, i) {
+    t.classList.toggle('active', i === current);
+  });
+
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === items.length - 1;
+  document.getElementById('btn-next').textContent = current === items.length - 1 ? '처음으로' : '다음 문제 →';
+}
+
+function selectItem(i) {
+  current = i;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function go(delta) {
+  if (current === items.length - 1 && delta === 1) current = 0;
+  else current = Math.max(0, Math.min(items.length - 1, current + delta));
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleScript() {
+  var box = document.getElementById('script-box');
+  var btn = document.getElementById('btn-script');
+  var show = !box.classList.contains('show');
+  box.classList.toggle('show', show);
+  btn.classList.toggle('on', show);
+  btn.textContent = show ? '📄 대본 숨기기' : '📄 대본 보기';
+}
+
+function toggleTranslation() {
+  var box = document.getElementById('translation-box');
+  var btn = document.getElementById('btn-trans');
+  var show = !box.classList.contains('show');
+  box.classList.toggle('show', show);
+  btn.classList.toggle('on', show);
+  btn.textContent = show ? '🇰🇷 해석 숨기기' : '🇰🇷 해석 보기';
+}
+
+var ttsVoices = [];
+if ('speechSynthesis' in window) {
+  var loadTtsVoices = function() { ttsVoices = window.speechSynthesis.getVoices(); };
+  loadTtsVoices();
+  window.speechSynthesis.onvoiceschanged = loadTtsVoices;
+}
+
+function speak(text) {
+  if (!text || !('speechSynthesis' in window)) return;
+  var synth = window.speechSynthesis;
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  var voices = (ttsVoices && ttsVoices.length) ? ttsVoices : synth.getVoices();
+  if (voices && voices.length) {
+    var enVoice = voices.find(function(v) { return v.lang === 'en-US'; }) || voices.find(function(v) { return v.lang && v.lang.indexOf('en') === 0; });
+    if (enVoice) utter.voice = enVoice;
+  }
+  synth.cancel();
+  setTimeout(function() { synth.speak(utter); }, 80);
+}
+
+buildPlayer();
+buildRateRow();
+buildTabs();
+render();
+</script>
+<script src="study-stats.js"></script>
+<script type="module" src="firebase-sync.js"></script>
+</body>
+</html>

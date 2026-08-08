@@ -110,6 +110,10 @@
       '#stats-panel .sp-wrong-word { font-size: 14.5px; font-weight: 700; color: #1a1a1a; }' +
       '#stats-panel .sp-wrong-pron { font-size: 11.5px; color: #aaa; margin-left: 6px; font-weight: 400; }' +
       '#stats-panel .sp-wrong-meaning { font-size: 12.5px; color: #534AB7; margin-top: 2px; }' +
+      '#stats-panel .sp-item-actions { flex: 0 0 auto; display: flex; align-items: center; gap: 2px; }' +
+      '#stats-panel .sp-item-play { background: none; border: none; color: #7F77DD; font-size: 16px; cursor: pointer; padding: 2px 5px; line-height: 1; -webkit-tap-highlight-color: transparent; }' +
+      '#stats-panel .sp-item-play.playing { animation: sp-pulse 0.9s ease-in-out infinite; }' +
+      '@keyframes sp-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }' +
       '#stats-panel .sp-item-del { flex: 0 0 auto; background: none; border: none; color: #ccc; font-size: 15px; cursor: pointer; padding: 2px 4px; line-height: 1; -webkit-tap-highlight-color: transparent; }' +
       '#stats-panel .sp-item-del:active { color: #e0524d; }' +
       '#stats-panel .sp-empty { text-align: center; font-size: 13px; color: #aaa; padding: 30px 10px; }';
@@ -135,7 +139,7 @@
     var pn = document.getElementById('stats-panel');
     if (!ov) {
       ov = document.createElement('div'); ov.id = 'stats-overlay';
-      ov.onclick = closePanel;
+      ov.onclick = function () { stopSpeak(); closePanel(); };
       document.body.appendChild(ov);
     }
     if (!pn) {
@@ -176,16 +180,47 @@
     pn.classList.add('show');
   }
 
+  var speakTimer = null;
+  function stopSpeak() {
+    if (speakTimer) { clearTimeout(speakTimer); speakTimer = null; }
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    var playing = document.querySelectorAll('#stats-panel .sp-item-play.playing');
+    for (var i = 0; i < playing.length; i++) playing[i].classList.remove('playing');
+  }
+  function speakWord(w, btn) {
+    if (!('speechSynthesis' in window)) { alert('이 브라우저는 단어 읽어주기 기능을 지원하지 않아요.'); return; }
+    stopSpeak();
+    if (btn) btn.classList.add('playing');
+    var enUtter = new SpeechSynthesisUtterance(w.word);
+    enUtter.lang = 'en-US';
+    window.speechSynthesis.speak(enUtter);
+    speakTimer = setTimeout(function () {
+      speakTimer = null;
+      if (w.meaning) {
+        var koUtter = new SpeechSynthesisUtterance(w.meaning);
+        koUtter.lang = 'ko-KR';
+        if (btn) koUtter.onend = function () { btn.classList.remove('playing'); };
+        window.speechSynthesis.speak(koUtter);
+      } else if (btn) {
+        btn.classList.remove('playing');
+      }
+    }, 3000);
+  }
+
   function wordListHtml(words) {
     return words.map(function (w, i) {
       return '<div class="sp-wrong-item"><div><div class="sp-wrong-word">' + w.word +
         (w.pron ? '<span class="sp-wrong-pron">' + w.pron + '</span>' : '') + '</div>' +
         (w.meaning ? '<div class="sp-wrong-meaning">' + w.meaning + '</div>' : '') + '</div>' +
-        '<button class="sp-item-del" data-idx="' + i + '" title="삭제">✕</button></div>';
+        '<div class="sp-item-actions">' +
+        '<button class="sp-item-play" data-idx="' + i + '" title="단어 읽어주기">🔊</button>' +
+        '<button class="sp-item-del" data-idx="' + i + '" title="삭제">✕</button>' +
+        '</div></div>';
     }).join('');
   }
 
   function openWordList(title, words, emptyMsg, onDelete) {
+    stopSpeak();
     var pn = ensureShell();
     var listHtml = words.length ? wordListHtml(words) : ('<div class="sp-empty">' + emptyMsg + '</div>');
     pn.innerHTML =
@@ -193,13 +228,19 @@
       '<button class="sp-back-btn" id="sp-back-btn">← 뒤로</button>' +
       '<div class="sp-wrong-title">' + title + ' (' + words.length + '개)</div>' +
       '<div class="sp-wrong-list">' + listHtml + '</div>';
-    document.getElementById('sp-close-btn').onclick = closePanel;
-    document.getElementById('sp-back-btn').onclick = openPanel;
+    document.getElementById('sp-close-btn').onclick = function () { stopSpeak(); closePanel(); };
+    document.getElementById('sp-back-btn').onclick = function () { stopSpeak(); openPanel(); };
     var delBtns = pn.querySelectorAll('.sp-item-del');
     for (var i = 0; i < delBtns.length; i++) {
       delBtns[i].onclick = (function (idx) {
-        return function (e) { e.stopPropagation(); onDelete(idx); };
+        return function (e) { e.stopPropagation(); stopSpeak(); onDelete(idx); };
       })(Number(delBtns[i].getAttribute('data-idx')));
+    }
+    var playBtns = pn.querySelectorAll('.sp-item-play');
+    for (var i = 0; i < playBtns.length; i++) {
+      playBtns[i].onclick = (function (idx, btn) {
+        return function (e) { e.stopPropagation(); speakWord(words[idx], btn); };
+      })(Number(playBtns[i].getAttribute('data-idx')), playBtns[i]);
     }
   }
 

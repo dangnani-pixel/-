@@ -112,7 +112,9 @@
       '#stats-panel .sp-wrong-meaning { font-size: 12.5px; color: #534AB7; margin-top: 2px; }' +
       '#stats-panel .sp-item-del { flex: 0 0 auto; background: none; border: none; color: #ccc; font-size: 15px; cursor: pointer; padding: 2px 4px; line-height: 1; -webkit-tap-highlight-color: transparent; }' +
       '#stats-panel .sp-item-del:active { color: #e0524d; }' +
-      '#stats-panel .sp-empty { text-align: center; font-size: 13px; color: #aaa; padding: 30px 10px; }';
+      '#stats-panel .sp-empty { text-align: center; font-size: 13px; color: #aaa; padding: 30px 10px; }' +
+      '#stats-panel .sp-export-btn { display: block; margin: -6px auto 14px; background: #F8F7FF; color: #534AB7; border: none; border-radius: 99px; padding: 7px 16px; font-size: 12.5px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }' +
+      '#stats-panel .sp-export-btn:active { background: #EEEDFE; }';
     document.head.appendChild(st);
   }
 
@@ -185,16 +187,47 @@
     }).join('');
   }
 
-  function openWordList(title, words, emptyMsg, onDelete) {
+  function wordsToText(title, words) {
+    var plainTitle = title.replace(/^\S+\s*/, '');
+    var dateStr = new Date().toISOString().slice(0, 10);
+    var lines = ['[' + plainTitle + '] (총 ' + words.length + '개, ' + dateStr + ' 내보냄)', ''];
+    words.forEach(function (w, i) {
+      lines.push((i + 1) + '. ' + w.word + (w.pron ? ' ' + w.pron : '') + ' - ' + (w.meaning || '뜻 정보 없음'));
+      if (w.en) lines.push('   예문: ' + w.en);
+      if (w.ko) lines.push('   해석: ' + w.ko);
+      lines.push('');
+    });
+    return lines.join('\n');
+  }
+
+  function exportWords(title, words, filename) {
+    if (!words.length) return;
+    var text = wordsToText(title, words);
+    var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename + '_' + new Date().toISOString().slice(0, 10) + '.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function openWordList(title, words, emptyMsg, onDelete, exportFilename) {
     var pn = ensureShell();
     var listHtml = words.length ? wordListHtml(words) : ('<div class="sp-empty">' + emptyMsg + '</div>');
+    var exportBtnHtml = (exportFilename && words.length) ? '<button class="sp-export-btn" id="sp-export-btn">⬇ 텍스트 파일로 내보내기</button>' : '';
     pn.innerHTML =
       '<button class="sp-close" id="sp-close-btn">✕</button>' +
       '<button class="sp-back-btn" id="sp-back-btn">← 뒤로</button>' +
       '<div class="sp-wrong-title">' + title + ' (' + words.length + '개)</div>' +
+      exportBtnHtml +
       '<div class="sp-wrong-list">' + listHtml + '</div>';
     document.getElementById('sp-close-btn').onclick = closePanel;
     document.getElementById('sp-back-btn').onclick = openPanel;
+    var exportBtn = document.getElementById('sp-export-btn');
+    if (exportBtn) exportBtn.onclick = function () { exportWords(title, words, exportFilename); };
     var delBtns = pn.querySelectorAll('.sp-item-del');
     for (var i = 0; i < delBtns.length; i++) {
       delBtns[i].onclick = (function (idx) {
@@ -204,11 +237,11 @@
   }
 
   function openWrongList() {
-    openWordList('📝 복습할 오답 단어', getWrongWords(), '아직 복습할 오답 단어가 없어요.<br>단어장 퀴즈에서 틀린 단어가 여기 모여요.', deleteWrongWordAt);
+    openWordList('📝 복습할 오답 단어', getWrongWords(), '아직 복습할 오답 단어가 없어요.<br>단어장 퀴즈에서 틀린 단어가 여기 모여요.', deleteWrongWordAt, '복습할_오답_단어');
   }
 
   function openStarredList() {
-    openWordList('⭐ 저장한 단어', getStarredWords(), '아직 저장한 단어가 없어요.<br>지문에서 단어를 클릭하고 별표를 눌러보세요.', deleteStarredWordAt);
+    openWordList('⭐ 저장한 단어', getStarredWords(), '아직 저장한 단어가 없어요.<br>지문에서 단어를 클릭하고 별표를 눌러보세요.', deleteStarredWordAt, '저장한_단어');
   }
 
   function closePanel() {

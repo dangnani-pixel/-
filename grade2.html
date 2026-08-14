@@ -16,6 +16,8 @@ h1 { font-size: 21px; margin-bottom: 22px; line-height: 1.4; }
 .year-row { display: flex; gap: 8px; margin-bottom: 20px; }
 .year-chip { flex: 1; padding: 12px; border-radius: 12px; font-size: 15px; font-weight: 700; background: #fff; color: #888; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; border: none; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .year-chip.active { background: #7F77DD; color: #fff; }
+.year-chip.paper-chip { flex: 1.3; }
+.month-row.hide { display: none; }
 
 .month-row { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 22px; padding-bottom: 4px; }
 .month-chip { flex: 0 0 auto; padding: 8px 16px; border-radius: 99px; font-size: 13px; font-weight: 600; background: #fff; color: #aaa; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; cursor: pointer; border: none; font-family: inherit; -webkit-tap-highlight-color: transparent; }
@@ -41,7 +43,7 @@ h1 { font-size: 21px; margin-bottom: 22px; line-height: 1.4; }
   <div class="section-title">연도 선택</div>
   <div class="year-row" id="year-row"></div>
 
-  <div class="section-title">회차 선택</div>
+  <div class="section-title" id="month-section-title">회차 선택</div>
   <div class="month-row" id="month-row"></div>
 
   <div class="section-title">학습 자료</div>
@@ -141,27 +143,62 @@ const sepCardsHtml = '<div class="cards">' +
   '</a>' +
 '</div>';
 
+const paper1CardsHtml = '<div class="cards">' +
+  '<a class="card" href="g2paper1-study77-83.html">' +
+    '<div class="card-main"><div class="card-title">77~83번 지문 완전정복</div><div class="card-sub">단어 클릭 뜻·발음, 전체 해석, 문법, 실전 문제</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2paper1-study84-90.html">' +
+    '<div class="card-main"><div class="card-title">84~90번 지문 완전정복</div><div class="card-sub">도표·인물·안내문·어법·어휘까지, 단어 클릭 학습</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2paper1-study91-97.html">' +
+    '<div class="card-main"><div class="card-title">91~97번 지문 완전정복</div><div class="card-sub">빈칸추론·무관한 문장·순서배열·문장삽입, 단어 클릭 학습</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2paper1-study98-104.html">' +
+    '<div class="card-main"><div class="card-title">98~104번 지문 완전정복</div><div class="card-sub">문장삽입·요약문·장문까지, 단어 클릭 학습</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2paper1-vocab77-104.html">' +
+    '<div class="card-main"><div class="card-title">단어장 퀴즈 (77~104번)</div><div class="card-sub">핵심 단어 + 지문 학습지에서 저장한 단어로 퀴즈 풀기</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+'</div>';
+
 const _params = new URLSearchParams(location.search);
+let mode = _params.get('mode') === 'paper1' ? 'paper1' : 'mock';
 let year = Number(_params.get('year')) || 2025;
 if (!data.hasOwnProperty(year)) year = 2025;
 let month = _params.get('month');
 if (!month || data[year].months.indexOf(month) === -1) month = data[year].available[0] || data[year].months[0];
 
 function renderYears() {
-  document.getElementById('year-row').innerHTML = Object.keys(data).map(function(y) {
-    return '<button class="year-chip' + (Number(y) === year ? ' active' : '') + '" onclick="selectYear(' + y + ')">' + y + '</button>';
+  var chips = Object.keys(data).map(function(y) {
+    return '<button class="year-chip' + (mode === 'mock' && Number(y) === year ? ' active' : '') + '" onclick="selectYear(' + y + ')">' + y + '</button>';
   }).join('');
+  chips += '<button class="year-chip paper-chip' + (mode === 'paper1' ? ' active' : '') + '" onclick="selectPaper1()">📝 1차지필</button>';
+  document.getElementById('year-row').innerHTML = chips;
 }
 
 function renderMonths() {
+  var row = document.getElementById('month-row');
+  var title = document.getElementById('month-section-title');
+  if (mode === 'paper1') { row.classList.add('hide'); row.innerHTML = ''; title.style.display = 'none'; return; }
+  row.classList.remove('hide');
+  title.style.display = '';
   var months = data[year].months;
   if (months.indexOf(month) === -1) month = months[0];
-  document.getElementById('month-row').innerHTML = months.map(function(m) {
+  row.innerHTML = months.map(function(m) {
     return '<button class="month-chip' + (m === month ? ' active' : '') + '" onclick="selectMonth(\'' + m + '\')">' + m + '</button>';
   }).join('');
 }
 
 function renderContent() {
+  if (mode === 'paper1') {
+    document.getElementById('content-area').innerHTML = paper1CardsHtml;
+    return;
+  }
   var isAvailable = data[year].available.indexOf(month) !== -1;
   if (!isAvailable) {
     document.getElementById('content-area').innerHTML =
@@ -175,7 +212,15 @@ function renderContent() {
 }
 
 function selectYear(y) {
+  mode = 'mock';
   year = y;
+  renderYears();
+  renderMonths();
+  renderContent();
+}
+
+function selectPaper1() {
+  mode = 'paper1';
   renderYears();
   renderMonths();
   renderContent();

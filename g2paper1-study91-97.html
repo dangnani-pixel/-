@@ -319,6 +319,9 @@ const problems = [
     take_place: { word:"take place", pron:"[테이크 플레이스]", meaning:"개최되다, 일어나다", ex:"120,000 procedures take place globally each year.", exko:"매년 전 세계적으로 120,000건의 시술이 이루어진다." },
     due_in_no_small_part_to: { word:"due in no small part to", pron:"[듀 인 노 스몰 파트 투]", meaning:"적지 않은 부분에서 ~ 덕분인", ex:"The growing success of organ transplant surgery is due in no small part to the effectiveness of immunosuppressive drugs.", exko:"장기 이식 수술의 성공적인 증가에는 적지 않은 부분에서 면역 억제 약물의 효과성 때문이다." }
   },
+  funcWords: {
+    accounted: { word:"accounted", tag:"[숙어 account for · ~을 차지하다]", meaning:"account는 명사 '계좌'가 먼저 떠오르지만, 'account for'는 '~을 차지하다, ~의 이유가 되다'라는 뜻의 숙어예요. accounted for almost half는 '거의 절반을 차지했다'로 해석돼요.", ex:"Penicillin and its many derivatives accounted for almost half of all antibiotic prescriptions in England in 2015.", exko:"페니실린과 그것의 많은 파생물은 2015년 영국의 모든 항생제 처방의 거의 절반을 차지했다." }
+  },
   passage: `[[antibiotic::Antibiotics]] brought to market in the 1940s and 1950s provide the foundation of our formulary of antibiotics today. Penicillin and its many derivatives accounted for almost half of all antibiotic prescriptions in England in 2015.
 
 (A) This, in turn, creates a need for effective antibiotics to treat these infections for months and sometimes years after surgery. Without antibiotics, successful [[transplant::transplant]] surgery would not have been possible — the risks and consequences of bacterial infections would have been too great.
@@ -621,6 +624,23 @@ function cleanKoMeaning(data) {
   return null;
 }
 
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
 function showPlain(rawWord) {
   var clean = rawWord.replace(/[^A-Za-z']/g, '');
   if (!clean) return;
@@ -629,6 +649,7 @@ function showPlain(rawWord) {
   for (var k in p.vocab) {
     if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
   }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
   activeVocabKey = null;
   currentSpeakWord = clean;
   activeSheetWord = lower;

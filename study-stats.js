@@ -244,7 +244,8 @@
     }).catch(function (e) {
       console.error('leaderboard fetch failed', e);
       var statusEl = document.getElementById('sp-lb-status');
-      if (statusEl) statusEl.textContent = '순위 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.';
+      var code = (e && (e.code || e.message)) || '알 수 없는 오류';
+      if (statusEl) statusEl.innerHTML = '순위 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.<br><span style="color:#c00;font-size:11px;">(오류: ' + code + ')</span>';
     });
   }
 

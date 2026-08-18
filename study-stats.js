@@ -103,6 +103,15 @@
       '#stats-panel .sp-label { font-size: 11px; color: #888; margin-top: 3px; }' +
       '#stats-panel .sp-cell.clickable { cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background 0.1s ease; }' +
       '#stats-panel .sp-cell.clickable:active { background: #EEEDFE; }' +
+      '#stats-panel .sp-compete-btn { display: block; width: 100%; margin: 4px 0 14px; background: linear-gradient(90deg, #F5B700, #F59E00); color: #fff; border: none; border-radius: 12px; padding: 11px 14px; font-size: 14px; font-weight: 800; cursor: pointer; -webkit-tap-highlight-color: transparent; font-family: inherit; }' +
+      '#stats-panel .sp-compete-btn:active { opacity: 0.85; }' +
+      '#stats-panel .sp-compete-btn.sp-compete-locked { background: #F5F4F0; color: #999; font-weight: 600; font-size: 12.5px; }' +
+      '#stats-panel .sp-lb-list { display: flex; flex-direction: column; gap: 8px; }' +
+      '#stats-panel .sp-lb-row { display: flex; align-items: center; gap: 10px; background: #F8F7FF; border-radius: 12px; padding: 10px 14px; }' +
+      '#stats-panel .sp-lb-row.sp-lb-me { background: #EEEDFE; box-shadow: 0 0 0 2px #7F77DD inset; }' +
+      '#stats-panel .sp-lb-rank { flex: 0 0 auto; width: 34px; font-size: 14px; font-weight: 800; color: #534AB7; text-align: center; }' +
+      '#stats-panel .sp-lb-name { flex: 1; font-size: 13.5px; font-weight: 600; color: #1a1a1a; }' +
+      '#stats-panel .sp-lb-xp { flex: 0 0 auto; font-size: 13px; font-weight: 700; color: #7F77DD; }' +
       '#stats-panel .sp-back-btn { position: absolute; top: 14px; left: 16px; font-size: 12.5px; color: #534AB7; background: none; border: none; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }' +
       '#stats-panel .sp-wrong-title { font-size: 15px; font-weight: 800; text-align: center; margin: 18px 0 14px; }' +
       '#stats-panel .sp-export-btn { display: block; margin: -6px auto 10px; background: #F8F7FF; color: #534AB7; border: none; border-radius: 99px; padding: 7px 16px; font-size: 12.5px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }' +
@@ -163,6 +172,10 @@
     var next = LEVELS[lv + 1] || null;
     var barPct = next ? Math.min(100, Math.round((s.xp - cur.xp) / (next.xp - cur.xp) * 100)) : 100;
     var xpLine = next ? (s.xp + ' XP · 다음 레벨까지 ' + (next.xp - s.xp) + ' XP') : (s.xp + ' XP · 최고 레벨 달성!');
+    var loggedIn = !!(window.starSync && window.starSync.isLoggedIn && window.starSync.isLoggedIn());
+    var competeBtnHtml = loggedIn
+      ? '<button class="sp-compete-btn" id="sp-compete-btn">🏆 경쟁</button>'
+      : '<button class="sp-compete-btn sp-compete-locked" id="sp-compete-btn">🔒 로그인하고 경쟁 참여하기</button>';
 
     pn.innerHTML =
       '<button class="sp-close" id="sp-close-btn">✕</button>' +
@@ -171,6 +184,7 @@
       '<div class="sp-lv">Lv.' + (lv + 1) + ' / ' + LEVELS.length + '</div>' +
       '<div class="sp-bar"><div class="sp-fill" style="width:' + barPct + '%"></div></div>' +
       '<div class="sp-xp">' + xpLine + '</div>' +
+      competeBtnHtml +
       '<div class="sp-grid">' +
         '<div class="sp-cell"><div class="sp-num">' + s.solved + '</div><div class="sp-label">푼 문제 수</div></div>' +
         '<div class="sp-cell"><div class="sp-num">' + pct(s.correct, s.solved) + '</div><div class="sp-label">문제 정답률</div></div>' +
@@ -182,8 +196,56 @@
     document.getElementById('sp-close-btn').onclick = closePanel;
     document.getElementById('sp-starred-cell').onclick = openStarredList;
     document.getElementById('sp-wrong-cell').onclick = openWrongList;
+    document.getElementById('sp-compete-btn').onclick = function () {
+      if (loggedIn) openLeaderboard();
+      else alert('로그인 후 이용할 수 있어요. 화면 오른쪽 위 로그인 버튼을 눌러주세요.');
+    };
     document.getElementById('stats-overlay').classList.add('show');
     pn.classList.add('show');
+  }
+
+  function openLeaderboard() {
+    stopSpeak();
+    var pn = ensureShell();
+    pn.innerHTML =
+      '<button class="sp-close" id="sp-close-btn">✕</button>' +
+      '<button class="sp-back-btn" id="sp-back-btn">← 뒤로</button>' +
+      '<div class="sp-wrong-title">🏆 XP 랭킹 TOP 10</div>' +
+      '<div class="sp-empty" id="sp-lb-status">불러오는 중...</div>';
+    document.getElementById('sp-close-btn').onclick = closePanel;
+    document.getElementById('sp-back-btn').onclick = openPanel;
+    document.getElementById('stats-overlay').classList.add('show');
+    pn.classList.add('show');
+
+    if (!window.starSync || !window.starSync.fetchLeaderboard) {
+      var noneEl = document.getElementById('sp-lb-status');
+      if (noneEl) noneEl.textContent = '랭킹 기능을 사용할 수 없어요.';
+      return;
+    }
+    window.starSync.fetchLeaderboard().then(function (list) {
+      var statusEl = document.getElementById('sp-lb-status');
+      if (!statusEl) return; // panel was closed/navigated away before this resolved
+      if (!list.length) {
+        statusEl.innerHTML = '아직 순위 정보가 없어요.<br>퀴즈를 풀어 XP를 쌓아보세요!';
+        return;
+      }
+      var myUid = window.starSync.getUid ? window.starSync.getUid() : null;
+      var medals = ['🥇', '🥈', '🥉'];
+      var rowsHtml = list.map(function (item, i) {
+        var isMe = myUid && item.uid === myUid;
+        var rankLabel = medals[i] || ((i + 1) + '위');
+        return '<div class="sp-lb-row' + (isMe ? ' sp-lb-me' : '') + '">' +
+          '<span class="sp-lb-rank">' + rankLabel + '</span>' +
+          '<span class="sp-lb-name">' + item.name + (isMe ? ' (나)' : '') + '</span>' +
+          '<span class="sp-lb-xp">' + item.xp + ' XP</span>' +
+        '</div>';
+      }).join('');
+      statusEl.outerHTML = '<div class="sp-lb-list">' + rowsHtml + '</div>';
+    }).catch(function (e) {
+      console.error('leaderboard fetch failed', e);
+      var statusEl = document.getElementById('sp-lb-status');
+      if (statusEl) statusEl.textContent = '순위 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.';
+    });
   }
 
   var speakTimer = null;
@@ -367,11 +429,18 @@
   }
 
   var syncTimer = null;
+  var lbSyncTimer = null;
   function scheduleSync() {
     clearTimeout(syncTimer);
     syncTimer = setTimeout(function () {
       if (window.starSync && window.starSync.notifyStarChange) window.starSync.notifyStarChange(KEY);
     }, 1500);
+    if (window.starSync && window.starSync.isLoggedIn && window.starSync.isLoggedIn()) {
+      clearTimeout(lbSyncTimer);
+      lbSyncTimer = setTimeout(function () {
+        window.starSync.updateLeaderboardXP(load().xp);
+      }, 1500);
+    }
   }
 
   window.studyStats = {

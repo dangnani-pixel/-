@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAIhZbOGZwHuz3WWj8HoKOjLNNoQ0gtrgk",
@@ -90,6 +90,32 @@ function pushKey(uid, key) {
   return setDoc(doc(db, 'users', uid), data, { merge: true });
 }
 
+// Masks the last 3 characters of a name/id with '***' so rankings stay anonymous.
+// e.g. "홍길동" -> "***", "dangnani" -> "dangn***"
+function maskName(name) {
+  var chars = Array.from(String(name || '').trim());
+  if (!chars.length) return '익명';
+  if (chars.length <= 3) return '***';
+  return chars.slice(0, chars.length - 3).join('') + '***';
+}
+
+function pushLeaderboard(uid, displayName, xp) {
+  var data = { name: maskName(displayName), xp: Number(xp) || 0, updatedAt: Date.now() };
+  return setDoc(doc(db, 'leaderboard', uid), data, { merge: true });
+}
+
+function fetchLeaderboard() {
+  return getDocs(query(collection(db, 'leaderboard'), orderBy('xp', 'desc'), limit(10)))
+    .then(function (snap) {
+      var list = [];
+      snap.forEach(function (d) {
+        var v = d.data() || {};
+        list.push({ uid: d.id, name: v.name || '익명', xp: Number(v.xp) || 0 });
+      });
+      return list;
+    });
+}
+
 var currentUser = null;
 
 function ensureStyles() {
@@ -153,6 +179,8 @@ onAuthStateChanged(auth, function (user) {
   if (user) {
     pullAndMerge(user.uid).then(function (changed) {
       pushAll(user.uid).catch(function (e) { console.error('push failed', e); });
+      var rawName = user.displayName || (user.email ? user.email.split('@')[0] : '');
+      pushLeaderboard(user.uid, rawName, readStats().xp).catch(function (e) { console.error('leaderboard push failed', e); });
       if (changed && !sessionStorage.getItem(RELOAD_FLAG)) {
         sessionStorage.setItem(RELOAD_FLAG, '1');
         showToast('다른 기기에서 저장한 단어를 불러왔어요. 새로고침할게요...');
@@ -169,5 +197,13 @@ window.starSync = {
     if (currentUser) {
       pushKey(currentUser.uid, key).catch(function (e) { console.error('star push failed', e); });
     }
-  }
+  },
+  isLoggedIn: function () { return !!currentUser; },
+  getUid: function () { return currentUser ? currentUser.uid : null; },
+  updateLeaderboardXP: function (xp) {
+    if (!currentUser) return;
+    var rawName = currentUser.displayName || (currentUser.email ? currentUser.email.split('@')[0] : '');
+    pushLeaderboard(currentUser.uid, rawName, xp).catch(function (e) { console.error('leaderboard push failed', e); });
+  },
+  fetchLeaderboard: fetchLeaderboard
 };

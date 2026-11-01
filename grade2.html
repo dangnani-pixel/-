@@ -167,11 +167,18 @@ const paper1CardsHtml = '<div class="cards">' +
 '</div>';
 
 const _params = new URLSearchParams(location.search);
-let mode = _params.get('mode') === 'paper1' ? 'paper1' : 'mock';
-let year = Number(_params.get('year')) || 2025;
+let mode = _params.get('mode') || localStorage.getItem('grade2_lastMode') || 'mock';
+if (mode !== 'paper1') mode = 'mock';
+let year = Number(_params.get('year')) || Number(localStorage.getItem('grade2_lastYear')) || 2025;
 if (!data.hasOwnProperty(year)) year = 2025;
-let month = _params.get('month');
+let month = _params.get('month') || localStorage.getItem('grade2_lastMonth');
 if (!month || data[year].months.indexOf(month) === -1) month = data[year].available[0] || data[year].months[0];
+
+function saveState() {
+  localStorage.setItem('grade2_lastMode', mode);
+  localStorage.setItem('grade2_lastYear', year);
+  localStorage.setItem('grade2_lastMonth', month);
+}
 
 function renderYears() {
   var chips = Object.keys(data).map(function(y) {
@@ -217,6 +224,7 @@ function selectYear(y) {
   renderYears();
   renderMonths();
   renderContent();
+  saveState();
 }
 
 function selectPaper1() {
@@ -224,17 +232,20 @@ function selectPaper1() {
   renderYears();
   renderMonths();
   renderContent();
+  saveState();
 }
 
 function selectMonth(m) {
   month = m;
   renderMonths();
   renderContent();
+  saveState();
 }
 
 renderYears();
 renderMonths();
 renderContent();
+saveState();
 </script>
 <script src="study-stats.js"></script>
 <script type="module" src="firebase-sync.js"></script>

@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 고2 2차 지필고사 대비 영어 119~125번 정밀 학습</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F4F0; min-height: 100vh; padding: 16px; color: #1a1a1a; padding-bottom: 40px; }
+.wrap { max-width: 640px; margin: 0 auto; }
+.source-tag { display: inline-block; font-size: 12px; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 4px 12px; margin-bottom: 10px; }
+h1 { font-size: 18px; margin-bottom: 4px; }
+.subtitle { font-size: 12.5px; color: #888; margin-bottom: 14px; line-height: 1.5; }
+.home-link { font-size: 12px; color: #534AB7; text-decoration: none; }
+.top-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.prog-text { font-size: 13px; color: #888; white-space: nowrap; min-width: 42px; }
+.progress-bar { flex: 1; height: 6px; background: #E0DED8; border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: #7F77DD; border-radius: 99px; transition: width 0.3s ease; }
+
+.problem-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.problem-tabs::-webkit-scrollbar { height: 4px; }
+.p-tab { flex: 0 0 auto; padding: 9px 16px; font-size: 14px; font-weight: 600; border-radius: 99px; background: #fff; color: #888; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); white-space: nowrap; }
+.p-tab.active { background: #7F77DD; color: #fff; }
+
+.type-badge { display: inline-block; font-size: 12px; font-weight: 600; color: #fff; background: #534AB7; border-radius: 99px; padding: 5px 14px; margin-bottom: 10px; }
+
+.insert-card { display: none; background: #FFF8E6; border: 1.5px dashed #E0B84D; border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; }
+.insert-card.show { display: block; }
+.insert-label { font-size: 11.5px; color: #a67c1f; font-weight: 700; margin-bottom: 6px; }
+.insert-text { font-size: 15px; color: #5a4413; line-height: 1.6; }
+.insert-text-ko { font-size: 13px; color: #a67c1f; margin-top: 6px; line-height: 1.5; }
+.passage-text .plabel { font-weight: 700; color: #534AB7; }
+.given-card { display: none; background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-align: center; }
+.given-card.show { display: block; }
+.given-card img { max-width: 100%; border-radius: 8px; }
+.passage-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.passage-text p { font-size: 16px; line-height: 1.95; margin-bottom: 12px; }
+.passage-text p:last-child { margin-bottom: 0; }
+.w { color: #4b3fc4; border-bottom: 2px dotted #b7b0f0; cursor: pointer; padding: 0 1px; border-radius: 3px; }
+.w:active { background: #EEEDFE; }
+.p { cursor: pointer; }
+.uline { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: #534AB7; }
+.p:active { background: #EFEFEF; border-radius: 3px; }
+
+.quiz-card { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.quiz-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
+.quiz-choice { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 10px; background: #F8F7FF; margin-bottom: 8px; cursor: pointer; font-size: 14px; line-height: 1.55; border: 2px solid transparent; -webkit-tap-highlight-color: transparent; }
+.quiz-choice:last-of-type { margin-bottom: 0; }
+.quiz-choice.selected { border-color: #7F77DD; background: #EEEDFE; }
+.quiz-choice.correct { border-color: #22a06b; background: #E8F8F1; font-weight: 600; }
+.quiz-choice.wrong { border-color: #e0524d; background: #FDEDEC; }
+.quiz-check-btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: #7F77DD; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; }
+.quiz-result { margin-top: 12px; font-size: 13.5px; padding: 12px 14px; border-radius: 10px; line-height: 1.65; display: none; }
+.quiz-result.show { display: block; }
+.quiz-result.ok { background: #E8F8F1; color: #177350; }
+.quiz-result.no { background: #FDEDEC; color: #a8362f; }
+
+.action-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.action-btn { font-size: 13.5px; color: #534AB7; background: #EEEDFE; border: none; border-radius: 99px; padding: 8px 14px; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.action-btn.on { background: #7F77DD; color: #fff; }
+
+.translation-box { display: none; background: #F8F7FF; border: 1px solid #E4E1FA; border-radius: 12px; padding: 16px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.85; color: #3a2f8f; white-space: pre-line; }
+.translation-box.show { display: block; }
+
+.vocab-grid { display: none; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.vocab-grid.show { display: grid; }
+.vocab-chip { background: #fff; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; }
+.vocab-chip b { display: block; font-size: 13.5px; color: #1a1a1a; }
+.vocab-chip span { display: block; font-size: 12px; color: #7F77DD; margin-top: 2px; }
+
+.tab-row { display: flex; background: #fff; border-radius: 12px; padding: 4px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.tab { flex: 1; padding: 10px 4px; font-size: 14px; text-align: center; cursor: pointer; color: #888; border-radius: 9px; -webkit-tap-highlight-color: transparent; }
+.tab.active { background: #7F77DD; color: #fff; font-weight: 600; }
+.panel { display: none; }
+.panel.active { display: block; }
+.section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+
+.grammar-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.grammar-title { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+.grammar-desc { font-size: 13px; color: #555; line-height: 1.65; }
+.grammar-ex { font-size: 13px; color: #7F77DD; margin-top: 7px; font-style: italic; line-height: 1.5; }
+
+.tip-item { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #7F77DD; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.tip-item p { font-size: 13.5px; color: #444; line-height: 1.7; }
+
+.tab-row .tab { font-size: 13px; }
+.syn-legend { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.syn-legend span { font-size: 11px; padding: 2px 8px; border-radius: 99px; border: 1.5px solid; background: #fff; }
+.syn-legend-note { font-size: 11.5px; color: #888; margin-bottom: 10px; line-height: 1.5; }
+.syn-card { background: #fff; border-radius: 12px; padding: 14px 14px 12px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.syn-num { font-size: 11px; color: #aaa; margin-bottom: 8px; }
+.syn-line { display: flex; flex-wrap: wrap; gap: 4px 3px; line-height: 1.3; }
+.syn-ch { display: inline-flex; flex-direction: column; align-items: flex-start; border-bottom: 3px solid; padding: 2px 5px 3px; border-radius: 4px 4px 0 0; }
+.syn-ch .t { font-size: 14.5px; color: #1a1a1a; }
+.syn-ch .l { font-size: 10px; font-weight: 700; margin-top: 1px; }
+.syn-ch.sub { border-bottom-style: dashed; }
+.syn-ch.sub .l::after { content: '*'; }
+.r-S { border-color: #3B82F6; background: #EFF6FF; } .r-S .l { color: #3B82F6; }
+.r-V { border-color: #EF4444; background: #FEF2F2; } .r-V .l { color: #EF4444; }
+.r-O { border-color: #16A34A; background: #F0FDF4; } .r-O .l { color: #16A34A; }
+.r-C { border-color: #F59E0B; background: #FFFBEB; } .r-C .l { color: #D97706; }
+.r-M { border-color: #9CA3AF; background: #F9FAFB; } .r-M .l { color: #6B7280; }
+.r-J { border-color: #8B5CF6; background: #F5F3FF; } .r-J .l { color: #7C3AED; }
+.syn-slash { margin-top: 10px; padding-top: 9px; border-top: 1px dashed #e4e2f0; font-size: 13.5px; color: #333; line-height: 1.75; }
+.syn-slash b { color: #7F77DD; font-weight: 700; margin: 0 3px; }
+.syn-ko { font-size: 13px; color: #534AB7; line-height: 1.75; }
+.syn-note { margin-top: 8px; font-size: 12.5px; color: #555; line-height: 1.65; background: #F8F7FF; border-radius: 8px; padding: 8px 10px; }
+
+.nav-row { display: flex; gap: 10px; margin-top: 16px; }
+.nav-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nav-btn:active { transform: scale(0.98); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.secondary { background: #E0DED8; color: #555; }
+.nav-btn.primary { background: #7F77DD; color: #fff; }
+
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; z-index: 50; }
+.overlay.show { display: block; }
+.sheet { position: fixed; left: 0; right: 0; bottom: -100%; background: #fff; border-radius: 20px 20px 0 0; padding: 22px 20px 26px; z-index: 51; transition: bottom 0.25s ease; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); max-width: 640px; margin: 0 auto; }
+.sheet.show { bottom: 0; }
+.sheet-close { position: absolute; top: 14px; right: 18px; font-size: 20px; color: #aaa; cursor: pointer; background:none; border:none; }
+.sheet-star { position: absolute; top: 12px; right: 52px; font-size: 24px; color: #ccc; cursor: pointer; background:none; border:none; line-height: 1; -webkit-tap-highlight-color: transparent; }
+.sheet-star.starred { color: #F5B700; }
+.sheet-star.hide { display: none; }
+.sheet-pron.tag-mode { display: inline-block; font-size: 11px; font-weight: 700; color: #534AB7; background: #EEEDFE; border-radius: 99px; padding: 3px 10px; margin-bottom: 8px; }
+.sheet-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.sheet-word { font-size: 22px; font-weight: 700; }
+.speak-btn { background: #7F77DD; color: #fff; border: none; border-radius: 99px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; flex: 0 0 auto; }
+.sheet-pron { font-size: 13px; color: #aaa; margin-bottom: 12px; }
+.sheet-meaning { font-size: 15.5px; color: #333; margin-bottom: 10px; font-weight: 600; }
+.sheet-example { font-size: 13.5px; color: #7F77DD; line-height: 1.6; background: #F8F7FF; border-radius: 10px; padding: 10px 12px; }
+.sheet-etym { display: none; font-size: 12.5px; color: #8a6d1f; line-height: 1.6; background: #FFF8E4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.sheet-etym.show { display: block; }
+.sheet-etym b { color: #b8860b; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="source-tag">📖 2026 고2 2차 지필고사 대비 · Light 영어독해연습 119~125번</div>
+<h1>지문 완전정복 학습지</h1>
+<p class="subtitle">지문 속 단어를 클릭하면 뜻·발음·예문이 나와요. 팝업의 ⭐를 누르면 단어장에 저장돼요.<br><a class="home-link" href="grade2.html?mode=paper2">← 2차지필 처음으로</a> · <a class="home-link" href="g2paper2-study112-118.html">112~118번 학습지</a></p>
+
+<div class="top-bar">
+  <span class="prog-text" id="prog-text">1 / 7</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="problem-tabs" id="problem-tabs"></div>
+<div class="type-badge" id="type-badge"></div>
+
+<div class="given-card" id="given-card"></div>
+
+<div class="insert-card" id="insert-card">
+  <div class="insert-label">📌 삽입할 문장</div>
+  <div class="insert-text" id="insert-text"></div>
+  <div class="insert-text-ko" id="insert-text-ko"></div>
+</div>
+
+<div class="passage-card"><div class="passage-text" id="passage-text"></div></div>
+
+<div class="action-row">
+  <button class="action-btn" id="btn-trans" onclick="toggleTranslation()">🇰🇷 전체 해석 보기</button>
+  <button class="action-btn" id="btn-vocab" onclick="toggleVocabGrid()">📖 핵심 단어 목록</button>
+</div>
+
+<div class="translation-box" id="translation-box"></div>
+<div class="vocab-grid" id="vocab-grid"></div>
+
+<div id="quiz-container"></div>
+
+<div class="tab-row">
+  <div class="tab active" data-t="grammar" onclick="switchTab('grammar')">📝 문법</div>
+  <div class="tab" data-t="syntax" onclick="switchTab('syntax')">🔬 구문분석</div>
+  <div class="tab" data-t="tip" onclick="switchTab('tip')">💡 풀이 팁</div>
+</div>
+<div class="panel active" id="tab-grammar"><div class="section-label">문법 포인트</div><div id="grammar-list"></div></div>
+<div class="panel" id="tab-syntax"><div class="section-label">구문분석 · 끊어읽기 직독직해</div><div id="syntax-list"></div></div>
+<div class="panel" id="tab-tip"><div class="section-label">유형별 풀이 팁</div><div id="tip-list"></div></div>
+
+<div class="nav-row">
+  <button class="nav-btn secondary" id="btn-prev" onclick="go(-1)">← 이전 문제</button>
+  <button class="nav-btn primary" id="btn-next" onclick="go(1)">다음 문제 →</button>
+</div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeWord()"></div>
+<div class="sheet" id="sheet">
+  <button class="sheet-close" onclick="closeWord()">✕</button>
+  <button class="sheet-star" id="sheet-star" onclick="toggleSheetStar()">☆</button>
+  <div class="sheet-word-row">
+    <div class="sheet-word" id="sheet-word"></div>
+    <button class="speak-btn" onclick="speakCurrent()">🔊</button>
+  </div>
+  <div class="sheet-pron" id="sheet-pron"></div>
+  <div class="sheet-meaning" id="sheet-meaning"></div>
+  <div class="sheet-example" id="sheet-example"></div>
+  <div class="sheet-etym" id="sheet-etym"></div>
+</div>
+
+<script>
+const problems = [
+{
+  num: "119", label: "119번", type: "빈칸 추론",
+  vocab: {
+    boundary: { word:"boundary", pron:"[바운더리]", meaning:"경계", ex:"Relationship boundaries are the invisible lines that we put in place.", exko:"관계에서의 경계란 우리가 설정해 두는 보이지 않는 선이다." },
+    invisible: { word:"invisible", pron:"[인비저블]", meaning:"보이지 않는", ex:"the invisible lines that we put in place, consciously or not", exko:"우리가 의식적으로든 아니든 설정해 두는 보이지 않는 선" },
+    consciously: { word:"consciously", pron:"[칸셔슬리]", meaning:"의식적으로", ex:"the invisible lines that we put in place, consciously or not", exko:"우리가 의식적으로든 아니든 설정해 두는 보이지 않는 선" },
+    differentiation: { word:"differentiation", pron:"[디퍼렌시에이션]", meaning:"분화", ex:"Murray Bowen used the term differentiation.", exko:"Murray Bowen은 ‘분화’라는 용어를 사용했다." },
+    crisis: { word:"crisis", pron:"[크라이시스]", meaning:"위기", ex:"When someone else is in crisis, it doesn't become our crisis.", exko:"다른 누군가가 위기에 처했을 때, 그것이 우리의 위기가 되지는 않는다." },
+    indifferent: { word:"indifferent", pron:"[인디퍼런트]", meaning:"무관심한", ex:"That doesn't mean that they're cold or indifferent to other people's needs or wants.", exko:"그렇다고 해서 그들이 냉담하다거나 타인의 필요나 욕구에 무관심하다는 뜻은 아니다." }
+  },
+  funcWords: {
+    place: { word:"place", tag:"[숙어 put ~ in place · ~을 설정하다, 마련하다]", meaning:"place는 '장소'이지만, 'put ~ in place'는 '~을 (제자리에) 마련하다, 설정하다'라는 숙어예요. the invisible lines that we put in place는 '우리가 설정해 두는 보이지 않는 선'이에요.", ex:"the invisible lines that we put in place, consciously or not", exko:"우리가 의식적으로든 아니든 설정해 두는 보이지 않는 선" },
+    icon: { word:"icon", tag:"[명사 icon · 대표적 인물, 우상]", meaning:"icon은 컴퓨터의 '아이콘'이 먼저 떠오르지만, 여기서는 어떤 분야를 대표하는 '상징적 인물'이에요.", ex:"Murray Bowen, an icon for marriage and family therapists", exko:"결혼 및 가족 치료의 대표적 인물인 Murray Bowen" },
+    degree: { word:"degree", tag:"[숙어 to the degree that · ~할 정도로]", meaning:"degree는 '(온도의) 도, 학위'라는 뜻도 있지만, 'to the degree that ~'은 '~할 정도로'라는 표현이에요.", ex:"they don't make themselves overly responsible for others to the degree that they ________.", exko:"그들은 (빈칸)할 정도로 타인을 지나치게 책임지려 들지 않는다." }
+  },
+  passage: `Relationship [[boundary::boundaries]] are the [[invisible::invisible]] lines that we put in place, [[consciously::consciously]] or not, that allow us to distinguish ourselves (our thoughts, feelings, opinions, needs, expectations, and standards) from everyone else. Murray Bowen, an icon for marriage and family therapists, used the term ‹[[differentiation::differentiation]]› — how it's necessary, while exploring togetherness, that we are still able to see ourselves as separate/different from others. So just because they react, we don't have to react. When we have a bad day, we don't expect others to also have a bad day. When someone else is in [[crisis::crisis]], it doesn't become our crisis. Those who are able to relationally differentiate don't naturally expect others to think the way that they do, or feel what they feel. That doesn't mean that they're cold or [[indifferent::indifferent]] to other people's needs or wants, but they don't make themselves overly responsible for others to the degree that they ________.`,
+  translation: `관계에서의 경계란 우리가 의식적으로든 아니든 설정해 두는, 우리가 우리 자신(우리의 생각, 감정, 의견, 욕구, 기대, 기준)을 다른 모든 사람과 구분할 수 있도록 해 주는 보이지 않는 선이다. 결혼 및 가족 치료의 대표적 인물인 Murray Bowen은, 함께함의 의미를 탐색하면서도 우리가 여전히 자신을 타인과 구별된 다른 존재로 이해할 수 있는 것이 얼마나 필요한지를 말하기 위해 ‘분화’라는 용어를 사용했다. 그러므로 다른 사람이 반응한다고 해서, 우리가 반응해야 하는 것은 아니다. 우리가 힘든 하루를 보낼 때, 다른 사람들도 또한 힘든 하루를 보낼 거라고 기대하지는 않는다. 다른 누군가가 위기에 처했을 때, 그것이 우리의 위기가 되지는 않는다. 관계적으로 분화할 수 있는 사람들은 타인이 자기가 생각하는 방식으로 생각하거나 자신이 느끼는 것을 느낄 거라고 당연히 기대하지 않는다. 그렇다고 해서 그들이 냉담하다거나 타인의 필요나 욕구에 무관심하다는 뜻은 아니지만, 그들은 자신의 균형감을 잃어버릴 정도로 타인을 지나치게 책임지려 들지 않는다.`,
+  syntax: [
+    {c:[["S","Relationship boundaries","관계에서의 경계는"],["V","are","~이다"],["C","the invisible lines","보이지 않는 선"],["m","that we put in place, consciously or not,","우리가 의식적으로든 아니든 설정해 두는"],["m","that allow us to distinguish ourselves (our thoughts, feelings, opinions, needs, expectations, and standards) from everyone else.","우리 자신(생각, 감정, 의견, 욕구, 기대, 기준)을 다른 모든 사람과 구분할 수 있게 해 주는"]],n:"두 개의 that 관계절이 모두 the invisible lines를 꾸며요. allow + O + to부정사는 'O가 ~할 수 있게 하다', distinguish A from B는 'A를 B와 구분하다'예요."},
+    {c:[["S","Murray Bowen,","Murray Bowen은"],["M","an icon for marriage and family therapists,","결혼 및 가족 치료사들의 대표적 인물인"],["V","used","사용했다"],["O","the term differentiation","‘분화’라는 용어를"],["M","— how it's necessary,","— 얼마나 필요한지(를 말하기 위해)"],["M","while exploring togetherness,","함께함을 탐색하면서도"],["j","that","~라는 것이"],["s","we","우리가"],["v","are still able to see","여전히 볼 수 있다"],["o","ourselves","우리 자신을"],["m","as separate/different from others.","타인과 분리된/다른 존재로"]],n:"대시 뒤 how절은 differentiation의 의미를 풀어 설명해요. how it's necessary ~ that ...에서 it은 가주어, that절이 진주어예요. see A as B는 'A를 B로 여기다'예요."},
+    {c:[["J","So","그러므로"],["J","just because","~한다고 해서"],["s","they","그들이"],["v","react,","반응한다"],["S","we","우리가"],["V","don't have to react.","반응할 필요는 없다"]],n:"just because A, (it doesn't mean) B는 'A라고 해서 B인 것은 아니다'라는 표현이에요. don't have to는 '~할 필요가 없다'예요."},
+    {c:[["J","When","~할 때"],["s","we","우리가"],["v","have","보내다"],["o","a bad day,","힘든 하루를"],["S","we","우리는"],["V","don't expect","기대하지 않는다"],["O","others","다른 사람들이"],["C","to also have a bad day.","또한 힘든 하루를 보낼 거라고"]],n:"expect + O + to부정사는 'O가 ~할 것이라고 기대하다'(5형식)예요."},
+    {c:[["J","When","~할 때"],["s","someone else","다른 누군가가"],["v","is","있다"],["m","in crisis,","위기에"],["S","it","그것은"],["V","doesn't become","되지 않는다"],["C","our crisis.","우리의 위기가"]],n:"앞 두 문장과 같은 'When ~, we don't ...' 구조를 반복하며 '분화'의 예시를 보여 줘요."},
+    {c:[["S","Those","사람들은"],["m","who are able to relationally differentiate","관계적으로 분화할 수 있는"],["M","don't naturally","당연히 ~하지 않는다"],["V","expect","기대하다"],["O","others","타인이"],["C","to think the way that they do, or feel what they feel.","그들이 생각하는 방식으로 생각하거나 그들이 느끼는 것을 느낄 거라고"]],n:"Those who ~는 '~하는 사람들'이에요. to 뒤에 think ~와 feel ~이 or로 병렬되고, what they feel은 '그들이 느끼는 것'이에요."},
+    {c:[["S","That","그것은"],["V","doesn't mean","의미하지 않는다"],["O","that they're cold or indifferent to other people's needs or wants,","그들이 냉담하거나 타인의 필요나 욕구에 무관심하다는 것을"],["J","but","하지만"],["S","they","그들은"],["V","don't make","만들지 않는다"],["O","themselves","자기 자신을"],["C","overly responsible for others","타인에게 지나치게 책임감 있게"],["J","to the degree that","~할 정도로"],["s","they","그들이"],["v","________.","(자신의 균형감을 잃어버릴)"]],n:"make + O + C(5형식)에서 목적어가 주어 자신이라 재귀대명사 themselves를 썼어요. to the degree that ~은 '~할 정도로'예요."}
+  ],
+  grammar: [
+    { title:"just because A, ~ not B", desc:"'A라고 해서 (반드시) B인 것은 아니다'라는 뜻이에요.", ex:"So just because they react, we don't have to react. (그러므로 그들이 반응한다고 해서 우리가 반응해야 하는 것은 아니다.)" },
+    { title:"expect + O + to부정사", desc:"'O가 ~할 것이라고 기대하다'라는 5형식 구조예요.", ex:"we don't expect others to also have a bad day. (우리는 다른 사람들도 힘든 하루를 보낼 거라고 기대하지 않는다.)" }
+  ],
+  tips: [
+    "빈칸이 마지막 문장에 있으면 글 전체의 개념(여기서는 '분화' = 자신과 타인을 구분하는 것)을 반대로 깨뜨리는 상황을 떠올려 보세요.",
+    "타인을 '지나치게 책임지려 할 때' 잃게 되는 것은 자신과 타인의 경계, 즉 자신의 균형감이에요."
+  ],
+  questions: [{ qNum:119, question:"다음 빈칸에 들어갈 말로 가장 적절한 것을 고르시오.",
+    choices:["lose their own sense of perspective","rationalize others' harmful behavior","delay their dreams for years on end","ignore warning signs in a relationship","feel guilty for pursuing their career goals"],
+    answer:0,
+    explanation:"관계에서 자신과 타인을 구분하는 경계(분화)의 필요성을 설명하는 글로, 분화를 잘하는 사람들은 자신의 균형감을 잃을 정도로 타인을 지나치게 책임지지 않는다는 흐름이므로 ①번이 정답입니다." }]
+},
+{
+  num: "120", label: "120번", type: "빈칸 추론",
+  vocab: {
+    dozen: { word:"dozen", pron:"[더즌]", meaning:"12개(의)", ex:"we walk into the store with a list of a dozen items we need to buy.", exko:"우리가 사야 할 12개의 물품 목록을 가지고 상점에 들어간다." },
+    aisle: { word:"aisle", pron:"[아일]", meaning:"통로", ex:"We rush through the aisles.", exko:"우리는 통로를 빠르게 지나간다." },
+    average: { word:"average", pron:"[애버리지]", meaning:"평균적인", ex:"The average supermarket today has about 40,000 items on its shelves.", exko:"오늘날 평균적인 슈퍼마켓에는 약 40,000개의 물품이 선반에 진열되어 있다." },
+    relatively: { word:"relatively", pron:"[렐러티블리]", meaning:"비교적", ex:"in the relatively short time we were in the supermarket", exko:"우리가 슈퍼마켓에 머무는 비교적 짧은 시간 동안" },
+    weigh: { word:"weigh", pron:"[웨이]", meaning:"따져 보다", ex:"we did not consider each product, weigh its merits relative to other products", exko:"우리는 각각의 제품을 고려하고, 다른 제품들과 비교해 장점을 따져 본 것은 아니다" },
+    merit: { word:"merit", pron:"[메릿]", meaning:"장점", ex:"weigh its merits relative to other products", exko:"다른 제품들과 비교해 장점을 따져 보다" }
+  },
+  funcWords: {
+    say: { word:"say", tag:"[표현 Let's say ~ · ~라고 가정해 보자]", meaning:"say는 '말하다'가 기본 뜻이지만, 'Let's say ~'는 '~라고 가정해 보자'라는 표현이에요.", ex:"Let's say we walk into the store with a list of a dozen items we need to buy.", exko:"우리가 사야 할 12개의 물품 목록을 가지고 상점에 들어간다고 가정해 보자." },
+    rush: { word:"rush", tag:"[숙어 rush through · 서둘러 지나가다]", meaning:"rush는 '돌진하다, 서두르다'예요. rush through the aisles는 '통로들을 서둘러 지나가다'예요.", ex:"We rush through the aisles.", exko:"우리는 통로를 빠르게 지나간다." },
+    relative: { word:"relative", tag:"[표현 relative to · ~와 비교해서]", meaning:"relative는 '친척'이라는 명사로도 쓰이지만, 'relative to ~'는 '~와 비교해서, ~에 비해'라는 뜻이에요.", ex:"weigh its merits relative to other products", exko:"다른 제품들과 비교해 장점을 따져 보다" },
+    guess: { word:"guess", tag:"[명사 guess · 추측]", meaning:"guess는 '추측하다'라는 동사로 익숙하지만, 여기서는 '추측'이라는 명사예요. Our first guess는 '우리의 첫 추측'이에요.", ex:"Our first guess is to say 12 decisions.", exko:"우리의 첫 번째 추측은 12번의 결정이라고 말하는 것이다." }
+  },
+  passage: `Consider what we do when we go to the supermarket to buy food. Let's say we walk into the store with a list of a [[dozen::dozen]] items we need to buy. We rush through the [[aisle::aisles]], and 15 minutes later we walk out of the store with our dozen items. In this scenario, how many decisions had we made? Our first guess is to say 12 decisions. But what about all the items we decided not to buy? The [[average::average]] supermarket today has about 40,000 items on its shelves. So we actually made 40,000 decisions in the [[relatively::relatively]] short time we were in the supermarket — 12 decisions to buy a product and 39,988 decisions not to buy a product. That is 45 decisions for each and every second we were in the store; that is indeed some fast thinking! Of course, we did not consider each product, [[weigh::weigh]] its [[merit::merits]] relative to other products, and pick the best option. Instead, we relied on automatic programs running in our minds that guided us to certain products and brands while ignoring all others. These automatic programs ________.`,
+  translation: `우리가 식품을 사기 위해 슈퍼마켓에 갈 때 무엇을 하는지를 생각해 보라. 우리가 사야 할 12개의 물품 목록을 가지고 상점에 들어간다고 가정해 보자. 우리는 통로를 빠르게 지나가고, 15분 후에 12개의 물품을 들고 상점을 나선다. 이 시나리오에서 우리는 몇 번의 결정을 내렸을까? 우리의 첫 번째 추측은 12번의 결정이라고 말하는 것이다. 하지만 우리가 사지 않기로 결정한 모든 물품은 어떠한가? 오늘날 평균적인 슈퍼마켓에는 약 40,000개의 물품이 선반에 진열되어 있다. 따라서 우리는 슈퍼마켓에 머무는 비교적 짧은 시간 동안 실제로 40,000번의 결정, 즉 제품을 사기 위한 12번의 결정과 사지 않기 위한 39,988번의 결정을 내렸다. 그것은 우리가 상점에 있는 동안 매초마다 45번의 결정을 내린 셈이며, 그것은 정말로 빠른 사고이다! 물론 우리는 각각의 제품을 고려하고, 다른 제품들과 비교해 장점을 따져 본 뒤, 최선의 선택을 한 것은 아니다. 대신, 우리는 우리 머릿속에서 작동하고 있는 특정 제품과 브랜드로 우리를 이끌면서 다른 모든 것들은 무시하게 하는 자동화된 프로그램에 의존했다. 이러한 자동화된 프로그램은 우리의 머릿속이 그렇게 빠르고 효율적으로 작동할 수 있게 해 주는 것이다.`,
+  syntax: [
+    {c:[["V","Consider","생각해 보라"],["O","what we do","우리가 무엇을 하는지"],["J","when","~할 때"],["s","we","우리가"],["v","go","가다"],["m","to the supermarket","슈퍼마켓에"],["m","to buy food.","식품을 사기 위해"]],n:"명령문이에요. what we do는 '우리가 하는 것'이라는 명사절로 Consider의 목적어예요."},
+    {c:[["V","Let's say","가정해 보자"],["s","we","우리가"],["v","walk into","들어간다"],["o","the store","상점에"],["m","with a list of a dozen items","12개의 물품 목록을 가지고"],["m","we need to buy.","우리가 사야 할"]],n:"Let's say ~는 '~라고 가정해 보자'예요. items 뒤에 목적격 관계대명사가 생략됐어요."},
+    {c:[["S","We","우리는"],["V","rush through","빠르게 지나간다"],["O","the aisles,","통로들을"],["J","and","그리고"],["M","15 minutes later","15분 후에"],["S","we","우리는"],["V","walk out of","나선다"],["O","the store","상점을"],["M","with our dozen items.","12개의 물품을 들고"]],n:"두 개의 절이 and로 이어진 문장이에요. 현재시제로 상황을 생생하게 그리고 있어요."},
+    {c:[["M","In this scenario,","이 시나리오에서"],["O","how many decisions","몇 번의 결정을"],["V","had","~했을까"],["S","we","우리는"],["V","made?","내렸다"]],n:"how many + 명사가 목적어로 앞에 나온 의문문이에요. 과거완료(had made)로 '상점을 나설 때까지 내린 결정'을 묻고 있어요."},
+    {c:[["S","Our first guess","우리의 첫 번째 추측은"],["V","is","~이다"],["C","to say 12 decisions.","12번의 결정이라고 말하는 것"]],n:"to say ~는 보어 역할을 하는 to부정사(명사적 용법)예요."},
+    {c:[["J","But","하지만"],["M","what about","~은 어떠한가"],["O","all the items","모든 물품은"],["m","we decided not to buy?","우리가 사지 않기로 결정한"]],n:"What about ~?는 '~은 어때?'라는 표현이에요. decide not to + 동사원형은 '~하지 않기로 결정하다'예요(not의 위치 주의)."},
+    {c:[["S","The average supermarket today","오늘날 평균적인 슈퍼마켓은"],["V","has","가지고 있다"],["O","about 40,000 items","약 40,000개의 물품을"],["M","on its shelves.","선반에"]],n:"기본 3형식 문장이에요."},
+    {c:[["J","So","따라서"],["S","we","우리는"],["M","actually","실제로"],["V","made","내렸다"],["O","40,000 decisions","40,000번의 결정을"],["M","in the relatively short time","비교적 짧은 시간 동안"],["m","we were in the supermarket","우리가 슈퍼마켓에 있던"],["M","— 12 decisions to buy a product and 39,988 decisions not to buy a product.","— 즉 제품을 사기 위한 12번의 결정과 사지 않기 위한 39,988번의 결정"]],n:"time 뒤에 관계부사 when(that)이 생략됐어요. 대시 뒤는 40,000번의 결정을 풀어 설명하는 동격 어구예요."},
+    {c:[["S","That","그것은"],["V","is","~이다"],["C","45 decisions","45번의 결정"],["M","for each and every second","매 초마다"],["m","we were in the store;","우리가 상점에 있던"],["S","that","그것은"],["V","is","~이다"],["M","indeed","정말로"],["C","some fast thinking!","대단히 빠른 사고"]],n:"세미콜론(;)이 두 문장을 이어 줘요. each and every는 '하나하나 모두'라는 강조 표현이에요."},
+    {c:[["M","Of course,","물론"],["S","we","우리는"],["V","did not consider","고려하지 않았다"],["O","each product,","각 제품을"],["V","weigh","따져 보지 않았다"],["O","its merits","그것의 장점을"],["M","relative to other products,","다른 제품들과 비교해"],["J","and","그리고"],["V","pick","고르지 않았다"],["O","the best option.","최선의 선택을"]],n:"did not 뒤에 동사원형 세 개(consider, weigh, pick)가 병렬돼요. relative to는 '~와 비교해서'예요."},
+    {c:[["J","Instead,","대신"],["S","we","우리는"],["V","relied on","의존했다"],["O","automatic programs","자동화된 프로그램에"],["m","running in our minds","우리 머릿속에서 작동하는"],["m","that guided us to certain products and brands","특정 제품과 브랜드로 우리를 이끄는"],["m","while ignoring all others.","다른 모든 것은 무시하면서"]],n:"automatic programs를 현재분사구(running ~)와 that 관계절이 함께 꾸며요. while ignoring ~은 접속사가 남은 분사구문이에요."},
+    {c:[["S","These automatic programs","이러한 자동화된 프로그램은"],["V","________.","(우리 머릿속이 그렇게 빠르고 효율적으로 작동하게 해 주는 것이다)"]],n:"빈칸은 이 문장의 동사부예요. 앞에서 '매초 45번의 빠른 결정'을 가능하게 한 것이 이 프로그램이라고 했으므로 '빠르고 효율적인 작동'이 들어가요."}
+  ],
+  grammar: [
+    { title:"decide not to + 동사원형", desc:"to부정사를 부정할 때는 not을 to 바로 앞에 써요.", ex:"all the items we decided not to buy (우리가 사지 않기로 결정한 모든 물품)" },
+    { title:"관계사 생략 (명사 + 주어 + 동사)", desc:"목적격 관계대명사나 관계부사가 생략되면 명사 뒤에 바로 '주어+동사'가 와요.", ex:"a dozen items (that) we need to buy / the relatively short time (that) we were in the supermarket" }
+  ],
+  tips: [
+    "빈칸이 마지막 문장의 동사 자리이면, 바로 앞 문장(자동화된 프로그램에 의존했다)과 글 중간의 핵심 숫자(매초 45번 결정 = 빠른 사고)를 연결하세요.",
+    "①·②처럼 '신중한 분석, 타인의 피드백이 필요하다'는 선택지는 '자동화'와 정반대예요."
+  ],
+  questions: [{ qNum:120, question:"다음 빈칸에 들어갈 말로 가장 적절한 것을 고르시오.",
+    choices:["need deliberate attention and careful analysis to work effectively","require frequent feedback from other people to function properly","have the potential to interfere with emotionally driven judgments","can slow us down when faced with morally complex situations","are what enable our minds to work so quickly and efficiently"],
+    answer:4,
+    explanation:"슈퍼마켓에서 매초 45번이라는 놀라운 속도로 결정을 내리는 것은 뇌 속 자동화된 프로그램 덕분이라는 내용이므로 ⑤ '우리의 머릿속이 그렇게 빠르고 효율적으로 작동할 수 있게 해 주는 것이다'가 정답입니다." }]
+},
+{
+  num: "121", label: "121번", type: "빈칸 추론",
+  vocab: {
+    favor: { word:"favor", pron:"[페이버]", meaning:"선호하다", ex:"The nature of the web will favor some commonalities over others.", exko:"웹의 특성은 어떤 공통성들을 다른 것들보다 선호할 것이다." },
+    commonality: { word:"commonality", pron:"[카머낼러티]", meaning:"공통성", ex:"The nature of the web will favor some commonalities over others.", exko:"웹의 특성은 어떤 공통성들을 다른 것들보다 선호할 것이다." },
+    specifically: { word:"specifically", pron:"[스퍼시피컬리]", meaning:"구체적으로 말하면", ex:"Specifically, it favors commonalities that can be spelled out in very exact, searchable language.", exko:"구체적으로 말하면, 그것은 매우 정확하고 검색 가능한 언어로 분명하게 설명될 수 있는 공통성들을 선호한다." },
+    construct: { word:"construct", pron:"[컨스트럭트]", meaning:"구성하다", ex:"it might be possible to construct a small coalition of members", exko:"구성원들의 작은 연합체를 구성하는 것이 가능할지도 모른다" },
+    particular: { word:"particular", pron:"[퍼티큘러]", meaning:"특별한", ex:"whimsical in a very particular yet hard-to-describe way", exko:"매우 특별하지만 묘사하기 어려운 방식으로 기발한" },
+    notion: { word:"notion", pron:"[노션]", meaning:"개념", ex:"Maybe I know what notion of “whimsical” I have in mind.", exko:"아마도 나는 내가 염두에 두고 있는 ‘기발한’이라는 개념이 무엇인지 안다." }
+  },
+  funcWords: {
+    person: { word:"person", tag:"[숙어 in person · 직접 (만나서)]", meaning:"person은 '사람'이지만, 'in person'은 '직접, 몸소'라는 숙어예요. meet a group of people in person은 '한 무리의 사람들을 직접 만나다'예요.", ex:"if you meet a group of people in person", exko:"여러분이 직접 한 무리의 사람들을 만난다면" },
+    mind: { word:"mind", tag:"[숙어 have ~ in mind · ~을 염두에 두다]", meaning:"mind는 '마음'이지만, 'have ~ in mind'는 '~을 염두에 두다, 생각하고 있다'라는 숙어예요.", ex:"What I have in mind is “the kind of whimsical like that girl Alison Murray I used to know.”", exko:"내가 염두에 두고 있는 것은 ‘내가 예전에 알던 Alison Murray라는 소녀 같은 종류의 기발한’이다." },
+    busy: { word:"busy", tag:"[표현 you will be busy · 결과가 넘쳐 할 일이 많다]", meaning:"busy는 '바쁜'이에요. 여기서는 검색 결과가 너무 많아서 '하루 종일 볼 게 많을 것'이라는 뜻으로 쓰였어요.", ex:"type in “blogs about model trains” or “Victorian collectibles” and you will be busy for the rest of the day.", exko:"‘모형 기차에 관한 블로그들’이나 ‘Victorian 수집품들’을 입력하면 여러분은 하루 종일 바쁠 것이다." }
+  },
+  passage: `The nature of the web will [[favor::favor]] some [[commonality::commonalities]] over others. [[specifically::Specifically]], it favors commonalities that ________. For instance, if you meet a group of people in person, it might be possible to [[construct::construct]] a small coalition of members who are whimsical in a very [[particular::particular]] yet hard-to-describe way. You know such people when you see them, and you can all go off and take a short pedal boat ride together. But constructing the same coalition with a web search would be much more difficult. Maybe I know what [[notion::notion]] of “whimsical” I have in mind, but I can't write it down exactly in a way that anyone else would understand. What I have in mind is “the kind of whimsical like that girl Alison Murray I used to know.” I typed that into a search engine and really didn't get anything useful. But type in “blogs about model trains” or “Victorian collectibles” and you will be busy for the rest of the day.`,
+  translation: `웹의 특성은 어떤 공통성들을 다른 것들보다 선호할 것이다. 구체적으로 말하면, 그것은 매우 정확하고 검색 가능한 언어로 분명하게 설명될 수 있는 공통성들을 선호한다. 예를 들어 여러분이 직접 한 무리의 사람들을 만난다면, 매우 특별하지만 묘사하기 어려운 방식으로 기발한 구성원들의 작은 연합체를 구성하는 것이 가능할지도 모른다. 여러분은 그런 사람들을 보면 알아보고 여러분은 모두 자리를 떠서 짧은 페달 보트 타기를 함께 할 수 있다. 하지만 웹 검색으로 같은 연합체를 구성하는 것은 훨씬 더 어려울 것이다. 아마도 나는 내가 염두에 두고 있는 ‘기발한’이라는 개념이 무엇인지 알지만, 다른 누구든지 이해할 수 있는 방식으로 그것을 정확히 적을 수는 없다. 내가 염두에 두고 있는 것은 ‘내가 예전에 알던 Alison Murray라는 소녀 같은 종류의 기발한’이다. 나는 그것을 검색 엔진에 입력했지만 유용한 것을 정말 아무것도 얻지 못했다. 하지만 ‘모형 기차에 관한 블로그들’이나 ‘Victorian 수집품들’을 입력하면 여러분은 하루 종일 바쁠 것이다.`,
+  syntax: [
+    {c:[["S","The nature of the web","웹의 특성은"],["V","will favor","선호할 것이다"],["O","some commonalities","어떤 공통성들을"],["M","over others.","다른 것들보다"]],n:"favor A over B는 'B보다 A를 선호하다'예요."},
+    {c:[["M","Specifically,","구체적으로 말하면"],["S","it","그것은"],["V","favors","선호한다"],["O","commonalities","공통성들을"],["m","that ________.","(매우 정확하고 검색 가능한 언어로 분명하게 설명될 수 있는)"]],n:"빈칸은 commonalities를 꾸미는 관계절의 동사부예요. 첫 문장의 '어떤 공통성'이 무엇인지 구체화하는 자리예요."},
+    {c:[["M","For instance,","예를 들어"],["J","if","만약 ~라면"],["s","you","여러분이"],["v","meet","만나다"],["o","a group of people","한 무리의 사람들을"],["m","in person,","직접"],["S","it","(가주어)"],["V","might be","~일지도 모른다"],["C","possible","가능한"],["S","to construct a small coalition of members","구성원들의 작은 연합체를 구성하는 것이"],["m","who are whimsical in a very particular yet hard-to-describe way.","매우 특별하지만 묘사하기 어려운 방식으로 기발한"]],n:"it은 가주어, to construct ~가 진주어예요. who절은 members를 꾸며요."},
+    {c:[["S","You","여러분은"],["V","know","알아본다"],["O","such people","그런 사람들을"],["J","when","~할 때"],["s","you","여러분이"],["v","see","보다"],["o","them,","그들을"],["J","and","그리고"],["S","you","여러분은"],["M","can all","모두"],["V","go off","자리를 떠나"],["J","and","그리고"],["V","take","하다"],["O","a short pedal boat ride","짧은 페달 보트 타기를"],["M","together.","함께"]],n:"직접 만나면 말로 설명하지 않아도 알아볼 수 있다는 점을 보여 주는 예시예요."},
+    {c:[["J","But","하지만"],["S","constructing the same coalition with a web search","웹 검색으로 같은 연합체를 구성하는 것은"],["V","would be","~일 것이다"],["C","much more difficult.","훨씬 더 어려운"]],n:"동명사구 주어예요. much는 비교급(more difficult)을 강조해요."},
+    {c:[["M","Maybe","아마도"],["S","I","나는"],["V","know","안다"],["O","what notion of “whimsical”","‘기발한’의 어떤 개념을"],["s","I","내가"],["v","have in mind,","염두에 두고 있는지"],["J","but","하지만"],["S","I","나는"],["V","can't write","적을 수 없다"],["O","it","그것을"],["M","down exactly","정확히 (적어)"],["M","in a way","방식으로"],["m","that anyone else would understand.","다른 누구든 이해할 수 있는"]],n:"what notion ~ I have in mind는 know의 목적어인 간접의문문이에요. write ~ down은 '~을 적다'이고, that절은 a way를 꾸며요."},
+    {c:[["S","What I have in mind","내가 염두에 두고 있는 것은"],["V","is","~이다"],["C","“the kind of whimsical","‘~ 같은 종류의 기발한’"],["M","like that girl Alison Murray","Alison Murray라는 그 소녀처럼"],["m","I used to know.”","내가 예전에 알던"]],n:"What절(명사절)이 주어예요. used to + 동사원형은 '(예전에) ~하곤 했다'예요."},
+    {c:[["S","I","나는"],["V","typed","입력했다"],["O","that","그것을"],["M","into a search engine","검색 엔진에"],["J","and","그리고"],["M","really","정말"],["V","didn't get","얻지 못했다"],["O","anything useful.","유용한 것을 아무것도"]],n:"anything처럼 -thing으로 끝나는 말은 형용사가 뒤에서 꾸며요(anything useful)."},
+    {c:[["J","But","하지만"],["V","type in","입력해 보라"],["O","“blogs about model trains” or “Victorian collectibles”","‘모형 기차 블로그’나 ‘Victorian 수집품’을"],["J","and","그러면"],["S","you","여러분은"],["V","will be","~일 것이다"],["C","busy","바쁜"],["M","for the rest of the day.","하루의 나머지 동안"]],n:"명령문 + and는 '~하라, 그러면 …할 것이다'예요. 정확한 말로 표현할 수 있는 관심사는 검색이 아주 잘 된다는 대조예요."}
+  ],
+  grammar: [
+    { title:"명령문 + and (~하라, 그러면 …)", desc:"명령문 뒤의 and는 '그러면'이라는 결과를 나타내요(or는 '그렇지 않으면').", ex:"type in “blogs about model trains” and you will be busy for the rest of the day. (‘모형 기차 블로그’를 입력해 보라, 그러면 하루 종일 바쁠 것이다.)" },
+    { title:"가주어 it ~ to부정사", desc:"긴 to부정사 주어를 뒤로 보내고 그 자리에 it을 써요.", ex:"it might be possible to construct a small coalition of members (구성원들의 작은 연합체를 구성하는 것이 가능할지도 모른다)" }
+  ],
+  tips: [
+    "빈칸이 글 앞부분에 있으면 뒤의 예시들이 공통으로 말하는 성질을 찾으세요. 검색이 안 되는 것(말로 정확히 못 쓰는 ‘기발함’) vs 잘 되는 것(‘모형 기차 블로그’ 같은 명확한 말).",
+    "결국 웹이 선호하는 것은 '정확하고 검색 가능한 언어로 표현되는' 공통성이에요."
+  ],
+  questions: [{ qNum:121, question:"다음 빈칸에 들어갈 말로 가장 적절한 것을 고르시오.",
+    choices:["are generalized in clear, literal definitions","are based on subjective, individual categories","depend on voluntary inquiry, not mere obedience","can be applied to authentic, personalized experiences","can be spelled out in very exact, searchable language"],
+    answer:4,
+    explanation:"‘기발한’처럼 누구나 이해할 수 있게 정확히 쓸 수 없는 것은 검색해도 유용한 결과가 없지만, ‘모형 기차 블로그’처럼 명확히 표현할 수 있는 것은 검색이 쉽다는 내용이므로 ⑤번이 정답입니다." }]
+},
+{
+  num: "122", label: "122번", type: "무관한 문장 찾기",
+  vocab: {
+    executive: { word:"executive", pron:"[이그제큐티브]", meaning:"경영진", ex:"the owners and executives of sport organizations initially felt wary about television", exko:"스포츠 조직의 소유주들과 경영진은 처음에는 텔레비전에 대해 경계심을 느꼈다" },
+    attendance: { word:"attendance", pron:"[어텐던스]", meaning:"참석자 수", ex:"they feared that it might decrease attendance at sport events.", exko:"그들은 그것이 스포츠 경기 참석자 수를 줄일까 봐 두려워했다." },
+    underestimate: { word:"underestimate", pron:"[언더에스터메이트]", meaning:"과소평가하다", ex:"a classical case of organizations underestimating the potential of new technology", exko:"새로운 기술의 잠재력을 조직이 과소평가한 전형적인 사례" },
+    vanish: { word:"vanish", pron:"[배니시]", meaning:"사라지다", ex:"Their fears of television vanished.", exko:"텔레비전에 대한 그들의 두려움은 사라졌다." },
+    unanticipated: { word:"unanticipated", pron:"[언앤티서페이티드]", meaning:"예상치 못한", ex:"it also opened unanticipated streams of revenue from advertising.", exko:"그것은 광고를 통한 예상치 못한 끊임없는 수익도 열어 주었다." },
+    in_person: { word:"in person", pron:"[인 퍼슨]", meaning:"직접", ex:"unless they attended sport events in person.", exko:"그들이 스포츠 행사에 직접 참석하지 않으면" }
+  },
+  funcWords: {
+    mine: { word:"mine", tag:"[명사 gold mine · 금광, 보고(寶庫)]", meaning:"mine은 '나의 것'이라는 대명사로 익숙하지만, 여기서는 '광산'이라는 명사예요. a gold mine은 비유적으로 '큰 돈벌이가 되는 것, 보고'를 뜻해요.", ex:"televised sport would open a veritable gold mine of potential wealth.", exko:"텔레비전으로 중계되는 스포츠가 잠재적인 부의 진정한 보고를 열어 줄 것이다." },
+    streams: { word:"streams", tag:"[명사 stream · (끊임없는) 흐름]", meaning:"stream은 '시내, 개울'이지만, 'streams of revenue'는 '끊임없이 들어오는 수익의 흐름'이에요.", ex:"it also opened unanticipated streams of revenue from advertising.", exko:"그것은 광고를 통한 예상치 못한 끊임없는 수익도 열어 주었다." },
+    relate: { word:"relate", tag:"[숙어 relate to · ~을 이해하다, 공감하다]", meaning:"relate는 '관련시키다'라는 뜻이지만, 'relate to ~'는 '~을 이해하다, ~에 공감하다'라는 뜻으로도 쓰여요.", ex:"it harder for people to relate to sport unless they attended sport events in person.", exko:"사람들이 스포츠 행사에 직접 참석하지 않으면 스포츠를 이해하기 더 어렵게" },
+    capital: { word:"capital", tag:"[명사 capital · 자본]", meaning:"capital은 '수도'라는 뜻도 있지만, 여기서는 '자본'이에요. sport social capital은 스포츠가 만들어 내는 사회적 유대·네트워크라는 '사회 자본'이에요.", ex:"the development and expansion of sport social capital in modern urban societies", exko:"현대 도시 사회에서 스포츠 사회 자본의 발전과 확산" }
+  },
+  passage: `Interestingly, the owners and [[executive::executives]] of sport organizations initially felt wary about television because they feared that it might decrease [[attendance::attendance]] at sport events. This turned out to be a classical case of organizations [[underestimate::underestimating]] the potential of new technology. ①Their fears of television [[vanish::vanished]] once they realized that televised sport would open a veritable gold mine of potential wealth. ②Not only did it greatly increase the sport fan base; it also opened [[unanticipated::unanticipated]] streams of revenue from advertising. ③Tens of millions of people who seldom went to sport events became sport fans. ④This shift dramatically made it harder for people to relate to sport unless they attended sport events [[in_person::in person]]. ⑤In fact, televised sport became the primary mechanism behind the development and expansion of sport social capital in modern urban societies.`,
+  translation: `흥미롭게도, 스포츠 조직의 소유주들과 경영진은 처음에는 텔레비전에 대해 경계심을 느꼈는데, 그들은 그것이 스포츠 경기 참석자 수를 줄일까 봐 두려워했기 때문이다. 이것은 새로운 기술의 잠재력을 조직이 과소평가한 전형적인 사례로 드러났다. ① 텔레비전에 대한 그들의 두려움은 그들이 텔레비전으로 중계되는 스포츠가 잠재적인 부의 진정한 보고(寶庫)를 열어 줄 것임을 깨닫자마자 사라졌다. ② 그것은 스포츠 팬층을 크게 확장시켰을 뿐만 아니라 광고를 통한 예상치 못한 끊임없는 수익도 열어 주었다. ③ 스포츠 경기에 거의 가지 않았던 수천만 명의 사람들이 스포츠 팬이 되었다. ④ (이러한 변화는 극적일 정도로 사람들이 스포츠 행사에 직접 참석하지 않으면 스포츠를 이해하기 더 어렵게 만들었다.) ⑤ 사실 텔레비전으로 중계되는 스포츠는 현대 도시 사회에서 스포츠 사회 자본의 발전과 확산 뒤에 있는 주요 메커니즘이 되었다.`,
+  syntax: [
+    {c:[["M","Interestingly,","흥미롭게도"],["S","the owners and executives of sport organizations","스포츠 조직의 소유주들과 경영진은"],["M","initially","처음에는"],["V","felt","느꼈다"],["C","wary","경계하는"],["M","about television","텔레비전에 대해"],["J","because","왜냐하면"],["s","they","그들이"],["v","feared","두려워했다"],["o","that it might decrease attendance at sport events.","그것이 스포츠 경기 참석자 수를 줄일까 봐"]],n:"feel + 형용사(wary)는 2형식이에요. because절 안에서 that절이 feared의 목적어예요."},
+    {c:[["S","This","이것은"],["V","turned out","드러났다"],["C","to be a classical case","전형적인 사례인 것으로"],["m","of organizations underestimating the potential of new technology.","조직이 새로운 기술의 잠재력을 과소평가한"]],n:"turn out to be는 '~인 것으로 드러나다'예요. organizations는 동명사 underestimating의 의미상 주어예요."},
+    {c:[["S","Their fears of television","텔레비전에 대한 그들의 두려움은"],["V","vanished","사라졌다"],["J","once","~하자마자"],["s","they","그들이"],["v","realized","깨달았다"],["o","that televised sport would open a veritable gold mine of potential wealth.","텔레비전 중계 스포츠가 잠재적 부의 진정한 보고를 열어 줄 것임을"]],n:"once는 접속사로 '일단 ~하면, ~하자마자'예요. televised는 '텔레비전으로 중계되는'이라는 과거분사예요."},
+    {c:[["J","Not only","~뿐만 아니라"],["V","did","~했다"],["S","it","그것은"],["M","greatly","크게"],["V","increase","늘렸다"],["O","the sport fan base;","스포츠 팬층을"],["S","it","그것은"],["M","also","또한"],["V","opened","열어 주었다"],["O","unanticipated streams of revenue","예상치 못한 끊임없는 수익을"],["M","from advertising.","광고로부터"]],n:"부정어구 Not only가 문장 앞에 나와 조동사 did가 주어 it 앞으로 도치되었어요."},
+    {c:[["S","Tens of millions of people","수천만 명의 사람들이"],["m","who seldom went to sport events","스포츠 경기에 거의 가지 않던"],["V","became","되었다"],["C","sport fans.","스포츠 팬이"]],n:"seldom은 '좀처럼 ~하지 않는'이라는 부정의 부사예요. who절이 people을 꾸며요."},
+    {c:[["S","This shift","이러한 변화는"],["M","dramatically","극적으로"],["V","made","만들었다"],["O","it","(가목적어)"],["C","harder","더 어렵게"],["O","for people to relate to sport","사람들이 스포츠를 이해하는 것을"],["J","unless","~하지 않으면"],["s","they","그들이"],["v","attended","참석하다"],["o","sport events","스포츠 행사에"],["m","in person.","직접"]],n:"make it + 형용사 + (for 의미상 주어) to부정사: it은 가목적어, to relate ~가 진목적어예요. TV 덕분에 직접 가지 않아도 팬이 되었다는 흐름과 반대라 무관한 문장이에요(④)."},
+    {c:[["M","In fact,","사실"],["S","televised sport","텔레비전 중계 스포츠는"],["V","became","되었다"],["C","the primary mechanism","주요 메커니즘이"],["M","behind the development and expansion of sport social capital","스포츠 사회 자본의 발전과 확산 뒤에 있는"],["M","in modern urban societies.","현대 도시 사회에서"]],n:"In fact는 앞 내용을 강화하는 연결어예요."}
+  ],
+  grammar: [
+    { title:"make it + 형용사 + to부정사 (가목적어)", desc:"긴 to부정사 목적어를 뒤로 보내고 그 자리에 it을 둬요.", ex:"This shift made it harder for people to relate to sport. (이 변화는 사람들이 스포츠를 이해하는 것을 더 어렵게 만들었다.)" },
+    { title:"Not only + 조동사 + 주어 (도치)", desc:"부정어구가 문장 앞에 오면 조동사(do/does/did)가 주어 앞으로 나와요.", ex:"Not only did it greatly increase the sport fan base; it also opened unanticipated streams of revenue." }
+  ],
+  tips: [
+    "무관한 문장 문제는 글의 흐름(TV → 팬층 확대 → 수익 → 사회 자본)을 한 줄로 정리한 뒤, 방향이 반대인 문장을 찾으세요.",
+    "④는 '직접 가지 않으면 스포츠를 이해하기 어려워졌다'로, '경기장에 안 가던 사람들도 팬이 됐다'는 ③과 정면으로 충돌해요."
+  ],
+  questions: [{ qNum:122, question:"다음 글에서 전체 흐름과 관계 없는 문장은?",
+    choices:["①","②","③","④","⑤"],
+    answer:3,
+    explanation:"텔레비전 중계가 경기장에 가지 않던 사람들까지 팬으로 만들고 수익과 스포츠 사회 자본을 확대했다는 흐름이므로, 직접 참석하지 않으면 스포츠를 이해하기 더 어려워졌다는 ④는 전체 흐름과 관계가 없습니다." }]
+},
+{
+  num: "123", label: "123번", type: "글의 순서 배열",
+  vocab: {
+    journeyman: { word:"journeyman", pron:"[저니맨]", meaning:"숙련 기술자, 준숙련공", ex:"an apprentice became a journeyman", exko:"견습생은 숙련 기술자가 되었다" },
+    supervise: { word:"supervise", pron:"[수퍼바이즈]", meaning:"감독하다", ex:"the craft guild that supervised training and standards", exko:"훈련과 기준을 감독하는 기능 조합" },
+    status: { word:"status", pron:"[스테이터스]", meaning:"지위", ex:"To achieve full status in the guild", exko:"그 조합에서 정식 지위를 얻기 위해" },
+    masterpiece: { word:"masterpiece", pron:"[마스터피스]", meaning:"걸작", ex:"a journeyman had to complete their “masterpiece”", exko:"숙련 기술자는 자신의 ‘걸작’을 완성해야 했다" },
+    profession: { word:"profession", pron:"[프러페션]", meaning:"직업", ex:"a student who learned all aspects of a profession from a master", exko:"장인으로부터 직업의 모든 측면을 배웠던 학생" },
+    untrained: { word:"untrained", pron:"[언트레인드]", meaning:"훈련받지 않은", ex:"That is not to say they were untrained.", exko:"그것이 그들이 훈련받지 않았다는 것을 말하는 것은 아니다." }
+  },
+  funcWords: {
+    trade: { word:"trade", tag:"[명사 trade · 직종, (손기술) 직업]", meaning:"trade는 '무역'이라는 뜻이 먼저 떠오르지만, 여기서는 손기술이 필요한 '직종, 직업'이에요. those working in that trade는 '그 직종에서 일하는 사람들'이에요.", ex:"those working in that trade", exko:"그 직종에서 일하는 사람들" },
+    master: { word:"master", tag:"[명사 master · (기술의) 장인, 명장]", meaning:"master는 '주인'이라는 뜻도 있지만, 여기서는 자기 작업장을 가진 숙련된 '장인'을 말해요.", ex:"from a master who had their own workshop", exko:"자신의 작업장을 가진 장인으로부터" },
+    guild: { word:"guild", tag:"[명사 guild · (중세의) 동업 조합]", meaning:"guild는 게임의 '길드'로 익숙하지만, 원래는 중세 장인·상인들의 '동업 조합'이에요.", ex:"a member of the craft guild", exko:"기능 조합의 구성원" }
+  },
+  passage: `In many cultures throughout much of history, those who produced, decorated, painted, and built were not considered to be artists as we think of them now.
+
+(A) At the end of that period, an apprentice became a [[journeyman::journeyman]] and was allowed to become a member of the craft guild that [[supervise::supervised]] training and standards for those working in that trade. To achieve full [[status::status]] in the guild, a journeyman had to complete their “[[masterpiece::masterpiece]],” demonstrating sufficient skill and craftsmanship to be named a master.
+
+(B) In Medieval Europe, or the Middle Ages (fifth–fifteenth centuries), for example, an artisan generally began around the age of twelve as an apprentice, that is, a student who learned all aspects of a [[profession::profession]] from a master who had their own workshop. Apprenticeships lasted five to nine years or more, and included learning trades ranging from painting to baking, and masonry to candle making.
+
+(C) They were artisans and craftspeople, and their role was to make the objects and build the structures for which they were hired, according to the design (their own or another's) agreed upon with those for whom they were working. That is not to say they were [[untrained::untrained]].`,
+  translation: `역사의 많은 부분 동안 내내 많은 문화에서, 생산하고 장식하고 색칠하고 건축했던 사람들은 우리가 지금 그들에 대해 생각하는 것처럼 예술가로 여겨지지 않았다.
+
+(C) 그들은 장인과 공예가였고, 그들의 역할은 그들이 일하고 있는 사람들과 (자신의 혹은 또 다른 사람의) 합의된 설계에 따라 그들이 고용된 (목적의) 물건을 만들고 구조물을 건축하는 것이었다. 그것이 그들이 훈련받지 않았다는 것을 말하는 것은 아니다.
+
+(B) 예를 들어, 중세 유럽이나 중세 시대(5세기~15세기)에 장인은 열두 살 무렵에 보통 견습생, 즉, 자신의 작업장을 가진 장인으로부터 직업의 모든 측면을 배웠던 학생으로서 시작했다. 수습 기간은 5년에서 9년 혹은 그 이상 지속되었고 범위가 회화에서 굽기 그리고 석공에서 양초 제작에 이르는 학습 직종을 포함했다.
+
+(A) 그 기간이 끝날 때, 견습생은 숙련 기술자가 되고 그 직종에서 일하는 사람들을 위한 훈련과 기준을 감독하는 기능 조합의 구성원이 되는 것이 허용되었다. 그 조합에서 정식 지위를 얻기 위해 숙련 기술자는 자신의 ‘걸작’을 완성하여, 장인으로 명명되기 위해 충분한 기술과 솜씨를 보여 주어야 했다.`,
+  syntax: [
+    {c:[["M","In many cultures throughout much of history,","역사의 많은 기간 동안 많은 문화에서"],["S","those","사람들은"],["m","who produced, decorated, painted, and built","생산하고, 장식하고, 색칠하고, 건축했던"],["V","were not considered","여겨지지 않았다"],["C","to be artists","예술가로"],["M","as we think of them now.","우리가 지금 그들을 생각하는 것처럼"]],n:"those who ~는 '~하는 사람들'이에요. be considered to be ~는 '~로 여겨지다'(consider O to be C의 수동태)예요."},
+    {c:[["M","At the end of that period,","그 기간이 끝날 때"],["S","an apprentice","견습생은"],["V","became","되었다"],["C","a journeyman","숙련 기술자가"],["J","and","그리고"],["V","was allowed","허용되었다"],["O","to become a member of the craft guild","기능 조합의 구성원이 되는 것이"],["m","that supervised training and standards for those working in that trade.","그 직종에서 일하는 사람들의 훈련과 기준을 감독하는"]],n:"that period는 (B)의 '수습 기간'을 가리키는 지시어라 (A)는 (B) 뒤에 와야 해요. be allowed to는 '~하는 것이 허용되다'예요."},
+    {c:[["M","To achieve full status in the guild,","조합에서 정식 지위를 얻기 위해"],["S","a journeyman","숙련 기술자는"],["V","had to complete","완성해야 했다"],["O","their “masterpiece,”","자신의 ‘걸작’을"],["M","demonstrating sufficient skill and craftsmanship","충분한 기술과 솜씨를 보여 주면서"],["m","to be named a master.","장인으로 명명되기 위한"]],n:"demonstrating ~은 부수 상황의 분사구문이에요. be named + 명사는 '~로 명명되다'(name O C의 수동태)예요."},
+    {c:[["M","In Medieval Europe, or the Middle Ages (fifth–fifteenth centuries), for example,","예를 들어 중세 유럽, 즉 중세 시대(5~15세기)에"],["S","an artisan","장인은"],["M","generally","보통"],["V","began","시작했다"],["M","around the age of twelve","열두 살 무렵에"],["M","as an apprentice,","견습생으로서"],["M","that is, a student","즉, 학생으로서"],["m","who learned all aspects of a profession from a master","장인으로부터 직업의 모든 측면을 배우는"],["m","who had their own workshop.","자신의 작업장을 가진"]],n:"that is는 '즉'이라는 뜻으로 apprentice를 풀어 설명해요. for example은 (C)의 '훈련받지 않은 건 아니다'에 대한 예시라는 신호예요."},
+    {c:[["S","Apprenticeships","수습 기간은"],["V","lasted","지속되었다"],["M","five to nine years or more,","5년에서 9년 혹은 그 이상"],["J","and","그리고"],["V","included","포함했다"],["O","learning trades","직종을 배우는 것을"],["m","ranging from painting to baking, and masonry to candle making.","회화에서 굽기, 석공에서 양초 제작에 이르는"]],n:"ranging from A to B는 'A에서 B에 이르는'이라는 뜻의 분사구로 trades를 꾸며요."},
+    {c:[["S","They","그들은"],["V","were","~였다"],["C","artisans and craftspeople,","장인과 공예가"],["J","and","그리고"],["S","their role","그들의 역할은"],["V","was","~이었다"],["C","to make the objects and build the structures","물건을 만들고 구조물을 건축하는 것"],["m","for which they were hired,","그들이 고용된 (목적의)"],["M","according to the design (their own or another's)","(자신의 혹은 다른 사람의) 설계에 따라"],["m","agreed upon with those","사람들과 합의된"],["m","for whom they were working.","그들이 일해 주던"]],n:"They는 주어진 글의 those who produced ~를 가리켜서 (C)가 맨 처음에 와요. for which, for whom은 '전치사 + 관계대명사'예요."},
+    {c:[["S","That","그것은"],["V","is not to say","~라는 말은 아니다"],["O","they were untrained.","그들이 훈련받지 않았다는"]],n:"That is not to say ~는 '그렇다고 ~라는 말은 아니다'라는 표현이에요. 이 문장 뒤에 훈련 과정의 예(B)가 이어져요."}
+  ],
+  grammar: [
+    { title:"전치사 + 관계대명사 (for which / for whom)", desc:"관계절 안의 동사가 전치사를 필요로 할 때 '전치사 + 관계대명사'로 앞에 둘 수 있어요.", ex:"the structures for which they were hired (그들이 고용된 목적인 구조물) / those for whom they were working (그들이 일해 주던 사람들)" },
+    { title:"That is not to say ~", desc:"'그렇다고 ~라는 뜻은 아니다'라는 의미로, 오해를 막는 표현이에요.", ex:"That is not to say they were untrained. (그렇다고 그들이 훈련받지 않았다는 말은 아니다.)" }
+  ],
+  tips: [
+    "순서 배열은 지시어를 먼저 보세요. (C)의 They = 주어진 글의 those, (A)의 that period = (B)의 수습 기간(Apprenticeships)이에요.",
+    "(C) 마지막 '훈련받지 않은 건 아니다' → (B) 'for example' 훈련 과정 → (A) 그 기간이 끝난 후 순서예요."
+  ],
+  questions: [{ qNum:123, question:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것을 고르시오.",
+    choices:["(A) – (C) – (B)","(B) – (A) – (C)","(B) – (C) – (A)","(C) – (A) – (B)","(C) – (B) – (A)"],
+    answer:4,
+    explanation:"예술가로 여겨지지 않았다는 주어진 글 뒤에 그들은 장인이었으나 훈련받지 않은 건 아니라는 (C), 그 예로 견습생으로 시작한 과정을 설명하는 (B), 그 기간이 끝난 뒤 숙련 기술자와 장인이 되는 (A)가 이어지므로 ⑤ '(C)-(B)-(A)'가 정답입니다." }]
+},
+{
+  num: "124", label: "124번", type: "글의 순서 배열",
+  vocab: {
+    sensation: { word:"sensation", pron:"[센세이션]", meaning:"감각", ex:"When we focus on the sensations produced by food and drink", exko:"음식과 음료가 만들어 내는 감각에 집중할 때" },
+    bodily: { word:"bodily", pron:"[바딜리]", meaning:"신체의", ex:"if we think of this in terms of bodily functions only", exko:"이를 신체 기능의 관점에서만 생각한다면" },
+    aspect: { word:"aspect", pron:"[애스펙트]", meaning:"측면", ex:"Our taste, our hearing, our vision — these are all aspects of the mind.", exko:"우리의 미각, 청각, 시각, 이 모든 것은 정신의 측면이다." },
+    variation: { word:"variation", pron:"[베어리에이션]", meaning:"차이, 변화", ex:"The variation in types of processing, cognition, and understanding between people", exko:"사람 간의 처리, 인지, 이해 유형의 차이" },
+    cognition: { word:"cognition", pron:"[카그니션]", meaning:"인지", ex:"types of processing, cognition, and understanding", exko:"처리, 인지, 이해 유형" },
+    intervention: { word:"intervention", pron:"[인터벤션]", meaning:"치료 행위, 개입", ex:"as will illness or other interventions affecting the brain", exko:"뇌에 영향을 미치는 질병이나 다른 치료 행위와 마찬가지로" }
+  },
+  funcWords: {
+    terms: { word:"terms", tag:"[숙어 in terms of · ~의 관점에서]", meaning:"term은 '용어, 기간'이라는 뜻이 있지만, 'in terms of ~'는 '~의 관점에서, ~ 면에서'라는 숙어예요.", ex:"if we think of this in terms of bodily functions only", exko:"이를 신체 기능의 관점에서만 생각한다면" },
+    given: { word:"given", tag:"[표현 as if given · 주어진 것처럼]", meaning:"given은 give의 과거분사로 '주어진'이에요. as if given은 '(그대로) 주어진 것처럼', 즉 가공 없이 그대로 들어온다는 뜻이에요.", ex:"the information from the senses does not come purely from the world as if given", exko:"감각으로부터의 정보가 주어진 것처럼 순전히 세상으로부터 오는 것이 아니다" },
+    myriad: { word:"myriad", tag:"[형용사 myriad · 무수한]", meaning:"myriad는 '무수한, 아주 많은'이라는 뜻이에요. in myriad ways는 '무수한 방법으로'예요.", ex:"we can prove this in myriad ways.", exko:"우리는 무수한 방법으로 이를 증명할 수 있다." }
+  },
+  passage: `When we focus on the [[sensation::sensations]] produced by food and drink, or on hearing a symphony, we misunderstand what is going on if we think of this in terms of [[bodily::bodily]] functions only. Our taste, our hearing, our vision — these are all [[aspect::aspects]] of the mind.
+
+(A) Of course, in addition to inter-species differences in such processing, there are smaller intra-species differences. The [[variation::variation]] in types of processing, [[cognition::cognition]], and understanding between people is increasingly well-known today.
+
+(B) And not only do we know that the information from the senses does not come purely from the world as if given, it is processed by our brains in certain ways. Thus, we experience the world differently than does a bird or a cat. Our bodies are different, the senses are different, and the way those senses are processed in our brains is different.
+
+(C) These are all produced by the mind, and we can prove this in myriad ways. Brain damage or ingestion of mind-altering drugs will change the sensations of these things, as will illness or other [[intervention::interventions]] affecting the brain. Our experience is created wholly by the mind, from the information of the senses, yes, but still by the mind.`,
+  translation: `음식과 음료가 만들어 내는 감각이나 교향곡을 듣는 것에 집중할 때, 이를 신체 기능의 관점에서만 생각하면 우리는 무슨 일이 일어나고 있는지 잘못 이해하게 된다. 우리의 미각, 청각, 시각, 이 모든 것은 정신의 측면이다.
+
+(C) 이 모든 것은 정신에 의해 만들어지며, 우리는 무수한 방법으로 이를 증명할 수 있다. 뇌 손상이나 정신을 변화시키는 약물의 복용은 뇌에 영향을 미치는 질병이나 다른 치료 행위와 마찬가지로 이러한 것들에 대한 감각을 변화시킨다. 우리의 경험은 전적으로 정신에 의해 만들어지며, 감각의 정보에서 비롯되는 것은 사실이지만, 여전히 정신에 의해서이다.
+
+(B) 그리고 우리는 감각으로부터의 정보가 주어진 것처럼 순전히 세상으로부터 오는 것이 아니라는 것뿐 아니라 우리의 뇌에서 특정한 방식으로 처리된다는 것도 알고 있다. 따라서 우리는 새나 고양이와 다르게 세상을 경험한다. 우리의 몸도 다르고, 감각도 다르고, 그 감각이 뇌에서 처리되는 방식도 다르다.
+
+(A) 물론 이러한 처리 방식에는 종 간 차이 외에도 더 작은 종 내 차이가 있다. 사람 간의 처리, 인지, 이해 유형의 차이는 오늘날 점점 더 잘 알려져 있다.`,
+  syntax: [
+    {c:[["J","When","~할 때"],["s","we","우리가"],["v","focus on","집중하다"],["o","the sensations","감각에"],["m","produced by food and drink,","음식과 음료가 만들어 내는"],["j","or","또는"],["o","on hearing a symphony,","교향곡을 듣는 것에"],["S","we","우리는"],["V","misunderstand","잘못 이해한다"],["O","what is going on","무슨 일이 일어나고 있는지"],["J","if","만약 ~라면"],["s","we","우리가"],["v","think of","생각하다"],["o","this","이것을"],["m","in terms of bodily functions only.","신체 기능의 관점에서만"]],n:"주절 앞뒤로 When절(시간)과 if절(조건)이 붙어 있어요. what is going on은 misunderstand의 목적어인 명사절이에요."},
+    {c:[["S","Our taste, our hearing, our vision —","우리의 미각, 청각, 시각 —"],["S","these","이것들은"],["V","are","~이다"],["M","all","모두"],["C","aspects of the mind.","정신의 측면"]],n:"앞에 나열한 것을 대시 뒤 these로 다시 받아 주어로 삼았어요."},
+    {c:[["M","Of course,","물론"],["M","in addition to inter-species differences in such processing,","그러한 처리에서의 종 간 차이 외에도"],["V","there are","있다"],["S","smaller intra-species differences.","더 작은 종 내 차이가"]],n:"inter-는 '~사이(종과 종 사이)', intra-는 '~안(같은 종 안)'이에요. such processing은 (B)의 '뇌에서의 처리'를 가리켜서 (A)는 (B) 뒤에 와요."},
+    {c:[["S","The variation","차이는"],["M","in types of processing, cognition, and understanding between people","사람 간의 처리, 인지, 이해 유형의"],["V","is","~이다"],["M","increasingly","점점 더"],["C","well-known","잘 알려진"],["M","today.","오늘날"]],n:"주어의 핵심이 variation(단수)이라 is예요."},
+    {c:[["J","And not only","그리고 ~뿐만 아니라"],["V","do","~하다"],["S","we","우리는"],["V","know","안다"],["O","that the information from the senses does not come purely from the world as if given,","감각에서 오는 정보가 주어진 것처럼 순전히 세상에서만 오는 것이 아니라는 것을"],["S","it","그것은"],["V","is processed","처리된다"],["M","by our brains","우리의 뇌에 의해"],["M","in certain ways.","특정한 방식으로"]],n:"부정어구 not only가 앞에 나와 do we know로 도치됐어요. 뒤의 it은 the information from the senses를 가리켜요."},
+    {c:[["J","Thus,","따라서"],["S","we","우리는"],["V","experience","경험한다"],["O","the world","세상을"],["M","differently","다르게"],["J","than","~보다"],["v","does","(경험하는)"],["s","a bird or a cat.","새나 고양이가"]],n:"than 뒤에서 does(= experiences the world)가 주어 앞으로 도치됐어요. 비교 구문에서 흔한 도치예요."},
+    {c:[["S","Our bodies","우리의 몸은"],["V","are","~이다"],["C","different,","다른"],["S","the senses","감각은"],["V","are","~이다"],["C","different,","다른"],["J","and","그리고"],["S","the way","방식은"],["m","those senses are processed in our brains","그 감각이 뇌에서 처리되는"],["V","is","~이다"],["C","different.","다른"]],n:"같은 구조(주어 + are different)를 세 번 반복해 강조해요. the way 뒤에 관계부사가 생략됐어요."},
+    {c:[["S","These","이것들은"],["V","are","~이다"],["M","all","모두"],["V","produced","만들어진다"],["M","by the mind,","정신에 의해"],["J","and","그리고"],["S","we","우리는"],["V","can prove","증명할 수 있다"],["O","this","이것을"],["M","in myriad ways.","무수한 방법으로"]],n:"These는 주어진 글의 taste, hearing, vision을 가리켜서 (C)가 맨 처음에 와요."},
+    {c:[["S","Brain damage or ingestion of mind-altering drugs","뇌 손상이나 정신을 변화시키는 약물의 복용은"],["V","will change","변화시킬 것이다"],["O","the sensations of these things,","이러한 것들의 감각을"],["J","as","~와 마찬가지로"],["v","will","(변화시킬 것이다)"],["s","illness or other interventions","질병이나 다른 치료 행위가"],["m","affecting the brain.","뇌에 영향을 미치는"]],n:"as will + 주어는 '~도 그러하듯이'라는 도치 구문이에요(will = will change the sensations)."},
+    {c:[["S","Our experience","우리의 경험은"],["V","is created","만들어진다"],["M","wholly","전적으로"],["M","by the mind,","정신에 의해"],["M","from the information of the senses, yes,","감각의 정보로부터 (나오는 건) 맞지만"],["M","but still by the mind.","그래도 여전히 정신에 의해"]],n:"yes, but ~은 '물론 ~이긴 하지만'이라는 양보의 흐름이에요."}
+  ],
+  grammar: [
+    { title:"비교·양태의 도치 (than does ~ / as will ~)", desc:"than이나 as 뒤에서 대동사(does, will)가 주어 앞으로 나오는 도치가 자주 쓰여요.", ex:"we experience the world differently than does a bird or a cat. / ~ will change the sensations, as will illness." },
+    { title:"not only + 도치", desc:"부정어구 not only가 문장 앞에 오면 조동사와 주어의 순서가 바뀌어요.", ex:"And not only do we know that the information does not come purely from the world, it is processed by our brains." }
+  ],
+  tips: [
+    "순서 배열은 지시어와 연결어를 단서로 쓰세요. (C)의 These = 주어진 글의 감각들, (B)의 And not only = (C) 내용에 덧붙임, (A)의 such processing = (B)의 뇌의 처리 방식.",
+    "범위가 점점 좁아지는 흐름(정신 → 종 간 차이 → 종 내(사람 간) 차이)을 떠올리면 (C)-(B)-(A)가 자연스러워요."
+  ],
+  questions: [{ qNum:124, question:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것을 고르시오.",
+    choices:["(A) – (C) – (B)","(B) – (A) – (C)","(B) – (C) – (A)","(C) – (A) – (B)","(C) – (B) – (A)"],
+    answer:4,
+    explanation:"감각은 정신의 측면이라는 주어진 글 뒤에 감각이 정신에 의해 만들어진다는 (C), 감각 정보가 뇌에서 특정 방식으로 처리되어 종마다 세상을 다르게 경험한다는 (B), 종 내(사람 간) 차이도 있다는 (A)가 이어지므로 ⑤ '(C)-(B)-(A)'가 정답입니다." }]
+},
+{
+  num: "125", label: "125번", type: "문장 삽입",
+  insertSentence: "They also reduce risky behaviors such as crime, violence, or drug use.",
+  insertSentenceKo: "그것[이러한 능력]은 또한 범죄, 폭력, 혹은 약물 사용과 같은 위험한 행동을 감소시킨다.",
+  vocab: {
+    socioemotional: { word:"socioemotional", pron:"[소시오이모셔널]", meaning:"사회 정서적인", ex:"Socioemotional skills such as self-control can be central to life outcomes.", exko:"자기 통제와 같은 사회 정서적 능력은 인생의 성과에 중요할 수 있다." },
+    broadly: { word:"broadly", pron:"[브로들리]", meaning:"광범위하게", ex:"not just economic outcomes but life outcomes more broadly", exko:"경제적 성과뿐만 아니라 더 광범위하게 인생의 성과에도" },
+    occupational: { word:"occupational", pron:"[아큐페이셔널]", meaning:"직업의", ex:"such skills strongly affect employment status, work experience, occupational choice, and wages.", exko:"이러한 능력이 고용 상태, 경력, 직업 선택, 그리고 임금에 강하게 영향을 미친다." },
+    measure: { word:"measure", pron:"[메저]", meaning:"측정하다", ex:"An understanding of how to measure these skills is growing rapidly.", exko:"이러한 능력을 어떻게 측정할지에 대한 이해가 빠르게 증가하고 있다." },
+    vice_versa: { word:"vice versa", pron:"[바이스 버사]", meaning:"그 반대도 마찬가지이다", ex:"socioemotional skills help build cognitive skills and vice versa", exko:"사회 정서적 능력은 인지 능력을 개발하는 데 도움을 주고 그 반대도 마찬가지이다" },
+    dependent_on: { word:"dependent on", pron:"[디펜던트 온]", meaning:"~에 좌우되는", ex:"with current skill levels dependent on investments made earlier in life.", exko:"현재의 능력 수준은 더 어린 시절에 이루어진 투자에 좌우된다." }
+  },
+  funcWords: {
+    controlling: { word:"controlling", tag:"[숙어 control for · (변수의 영향을) 통제하다]", meaning:"control은 '통제하다'예요. 연구에서 'control for ~'는 '~의 영향을 제외하고(통제하고) 비교하다'라는 뜻이에요. even after controlling for cognitive skills는 '인지 능력의 영향을 통제한 후에도'예요.", ex:"even after controlling for cognitive skills, socioemotional skills were important", exko:"인지 능력을 통제한 이후에도 사회 정서적 능력은 중요했다" },
+    central: { word:"central", tag:"[형용사 central · 중요한, 중추적인]", meaning:"central은 '중앙의'라는 뜻이 먼저 떠오르지만, 'be central to ~'는 '~에 매우 중요하다'라는 뜻이에요.", ex:"can be central to not just economic outcomes but life outcomes more broadly.", exko:"경제적 성과뿐만이 아니라 더 광범위하게 인생의 성과에도 중요할 수 있다." },
+    malleable: { word:"malleable", tag:"[형용사 malleable · 잘 변하는]", meaning:"malleable은 원래 금속이 '두드려 펴지는'이라는 뜻이고, 여기서는 능력이 노력이나 환경에 따라 '잘 변하는, 바꿀 수 있는'이라는 뜻이에요.", ex:"socioemotional skills develop early in life but are malleable.", exko:"사회 정서적 능력은 어린 시절에 발달하지만 잘 변한다." }
+  },
+  passage: `[[socioemotional::Socioemotional]] skills (sometimes called noncognitive skills) such as self-control, self-management, effective communication, and prosocial behavior can be central to not just economic outcomes but life outcomes more [[broadly::broadly]]. (  ①  ) Evidence from high-income countries suggests that such skills strongly affect employment status, work experience, [[occupational::occupational]] choice, and wages. (  ②  ) For example, a study from the United Kingdom found that even after controlling for cognitive skills, socioemotional skills were important for predicting whether individuals stayed in school, obtained a degree, were employed, smoked, or were involved in a crime. (  ③  ) An understanding of how to [[measure::measure]] these skills, along with how to influence them, is growing rapidly. (  ④  ) Like cognitive skills, socioemotional skills develop early in life but are malleable. (  ⑤  ) In fact, socioemotional skills help build cognitive skills and [[vice_versa::vice versa]], with current skill levels [[dependent_on::dependent on]] investments made earlier in life.`,
+  translation: `자기 통제, 자기 관리, 효과적인 의사소통, 그리고 친사회적 행동과 같은 (때때로 비인지적 능력이라고도 불리는) 사회 정서적 능력은 경제적 성과뿐만이 아니라 더 광범위하게 인생의 성과에도 중요할 수 있다. 이러한 능력이 고용 상태, 경력, 직업 선택, 그리고 임금에 강하게 영향을 미친다는 점을 고소득 국가로부터의 증거가 보여 준다. [그것은 또한 범죄, 폭력, 혹은 약물 사용과 같은 위험한 행동을 감소시킨다.] 예를 들어, 영국의 한 연구는, 인지 능력을 통제한 이후에도 사회 정서적 능력은 개인이 학교에 계속 다니는지, 학위를 취득하는지, 취업하는지, 흡연하는지, 아니면 범죄에 연루되는지를 예측하는 데 중요하다는 사실을 밝혀냈다. 이러한 능력을 어떻게 측정하고, 또 그것에 어떻게 영향을 미칠지에 대한 이해가 빠르게 증가하고 있다. 인지 능력과 마찬가지로, 사회 정서적 능력은 어린 시절에 발달하지만 잘 변한다. 실제로, 사회 정서적 능력은 인지 능력을 개발하는 데 도움을 주고 그 반대도 마찬가지인데, 현재의 능력 수준은 더 어린 시절에 이루어진 투자에 좌우된다.`,
+  syntax: [
+    {c:[["S","Socioemotional skills","사회 정서적 능력은"],["M","(sometimes called noncognitive skills)","(때때로 비인지적 능력이라고 불리는)"],["M","such as self-control, self-management, effective communication, and prosocial behavior","자기 통제, 자기 관리, 효과적인 의사소통, 친사회적 행동과 같은"],["V","can be","~일 수 있다"],["C","central","중요한"],["M","to not just economic outcomes but life outcomes more broadly.","경제적 성과뿐만 아니라 더 넓게는 인생의 성과에"]],n:"be central to는 '~에 매우 중요하다'예요. not just A but B는 'A뿐만 아니라 B도'예요."},
+    {c:[["S","Evidence from high-income countries","고소득 국가로부터의 증거는"],["V","suggests","보여 준다"],["j","that","~라는 것을"],["s","such skills","그러한 능력이"],["m","strongly","강하게"],["v","affect","영향을 미친다"],["o","employment status, work experience, occupational choice, and wages.","고용 상태, 경력, 직업 선택, 그리고 임금에"]],n:"suggest that ~은 '~임을 보여 주다, 시사하다'예요. 주어의 핵심이 Evidence(셀 수 없는 명사)라 suggests예요."},
+    {c:[["M","For example,","예를 들어"],["S","a study from the United Kingdom","영국의 한 연구는"],["V","found","밝혀냈다"],["j","that","~라는 것을"],["m","even after controlling for cognitive skills,","인지 능력을 통제한 후에도"],["s","socioemotional skills","사회 정서적 능력이"],["v","were","~였다"],["c","important","중요한"],["m","for predicting whether individuals stayed in school, obtained a degree, were employed, smoked, or were involved in a crime.","개인이 학교에 계속 다니는지, 학위를 취득하는지, 취업하는지, 흡연하는지, 범죄에 연루되는지를 예측하는 데"]],n:"For example 뒤에 흡연·범죄 같은 '위험한 행동'의 예가 나오므로, 주어진 문장(위험한 행동을 줄인다)은 바로 이 앞인 ②에 들어가야 해요. whether절이 predicting의 목적어예요."},
+    {c:[["S","An understanding","이해가"],["M","of how to measure these skills,","이러한 능력을 어떻게 측정할지에 대한"],["M","along with how to influence them,","그것들에 어떻게 영향을 미칠지와 함께"],["V","is growing","증가하고 있다"],["M","rapidly.","빠르게"]],n:"주어의 핵심은 An understanding(단수)이라 is예요. how to + 동사원형은 '어떻게 ~할지'예요."},
+    {c:[["M","Like cognitive skills,","인지 능력과 마찬가지로"],["S","socioemotional skills","사회 정서적 능력은"],["V","develop","발달한다"],["M","early in life","어린 시절에"],["J","but","하지만"],["V","are","~이다"],["C","malleable.","잘 변하는"]],n:"like는 '~처럼'이라는 전치사예요. develop과 are가 but으로 연결돼요."},
+    {c:[["M","In fact,","실제로"],["S","socioemotional skills","사회 정서적 능력은"],["V","help","돕는다"],["O","build cognitive skills","인지 능력을 키우는 것을"],["J","and","그리고"],["M","vice versa,","그 반대도 마찬가지이다"],["M","with current skill levels dependent on investments made earlier in life.","현재의 능력 수준이 더 이른 시기에 이루어진 투자에 좌우되면서"]],n:"help + 동사원형은 '~하는 것을 돕다'예요. with + 목적어 + 형용사(dependent)는 부대상황을 나타내요."}
+  ],
+  grammar: [
+    { title:"with + 목적어 + 형용사/분사 (부대상황)", desc:"'~가 …한 채로, ~가 …하면서'라는 뜻으로 주절에 상황을 덧붙여요.", ex:"with current skill levels dependent on investments made earlier in life (현재의 능력 수준이 더 어린 시절의 투자에 좌우되면서)" },
+    { title:"not just A but B", desc:"'A뿐만 아니라 B도'라는 뜻으로 not only A but also B와 같아요.", ex:"central to not just economic outcomes but life outcomes more broadly (경제적 성과뿐 아니라 더 넓게 인생의 성과에도 중요한)" }
+  ],
+  tips: [
+    "주어진 문장의 also(또한)는 앞에 다른 긍정적 효과가 있다는 신호예요. ② 앞에는 '고용·임금에 미치는 영향'이 나와요.",
+    "② 뒤의 For example에 '흡연, 범죄 연루' 같은 위험 행동의 예가 나오므로, 주어진 문장은 ②에 들어가야 예시와 연결돼요."
+  ],
+  questions: [{ qNum:125, question:"글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳을 고르시오.",
+    choices:["①","②","③","④","⑤"],
+    answer:1,
+    explanation:"주어진 문장은 이러한 능력이 위험한 행동도 '또한' 줄인다는 내용이므로, 고용·임금에 미치는 영향을 말한 문장 뒤, 그리고 흡연·범죄 연루 같은 위험 행동을 예측한다는 예시(For example) 앞인 ②에 들어가는 것이 가장 적절합니다." }]
+}
+
+];
+
+let current = 0, activeVocabKey = null, currentSpeakWord = null, activeSheetWord = null;
+let currentSheetWordData = null;
+
+function starKey(gid) { return 'vocabStar_' + gid; }
+function getStarred(gid) { try { return JSON.parse(localStorage.getItem(starKey(gid)) || '[]'); } catch(e) { return []; } }
+function setStarred(gid, list) { localStorage.setItem(starKey(gid), JSON.stringify(list)); }
+function gidOf() { return 'g2paper2' + problems[current].num; }
+
+function updateSheetStarBtn() {
+  var btn = document.getElementById('sheet-star');
+  if (!currentSheetWordData) { btn.textContent = '☆'; btn.classList.remove('starred'); return; }
+  var starred = getStarred(gidOf());
+  var is = starred.some(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  btn.textContent = is ? '★' : '☆';
+  btn.classList.toggle('starred', is);
+}
+
+function toggleSheetStar() {
+  if (!currentSheetWordData) return;
+  var gid = gidOf(), starred = getStarred(gid);
+  var idx = starred.findIndex(function(w) { return w.word.toLowerCase() === currentSheetWordData.word.toLowerCase(); });
+  if (idx >= 0) starred.splice(idx, 1);
+  else starred.push({ word: currentSheetWordData.word, pron: currentSheetWordData.pron || '', meaning: currentSheetWordData.meaning || '뜻 정보 없음', en: currentSheetWordData.en || '', ko: currentSheetWordData.ko || '' });
+  setStarred(gid, starred);
+  if (window.starSync) window.starSync.notifyStarChange(starKey(gid));
+  if (idx < 0 && window.studyStats) window.studyStats.record('star', true);
+  else if (idx >= 0 && window.studyStats) window.studyStats.unrecord('star');
+  updateSheetStarBtn();
+}
+
+function renderPassage(text) {
+  return text.split('\n\n').map(function(para) {
+    var ph = [];
+    var html = para.replace(/\[\[(.+?)::(.+?)\]\]/g, function(m, key, disp) {
+      ph.push('<span class="w" onclick="showWord(\'' + key + '\')">' + disp + '</span>');
+      return '§' + (ph.length - 1) + '§';
+    });
+    html = html.replace(/^\(([A-D])\)/, function(m, letter) {
+      ph.push('<span class="plabel">(' + letter + ')</span>');
+      return '§' + (ph.length - 1) + '§';
+    });
+    html = html.replace(/[A-Za-z]+(?:['’][A-Za-z]+)*/g, function(w) {
+      return '<span class="p" onclick="showPlain(\'' + w.replace(/'/g, "\\'") + '\')">' + w + '</span>';
+    });
+    html = html.replace(/§(\d+)§/g, function(m, i) { return ph[i]; });
+    html = html.replace(/‹(.+?)›/g, '<u class="uline">$1</u>');
+    return '<p>' + html.replace(/\n/g, '<br>') + '</p>';
+  }).join('');
+}
+
+function buildTabs() {
+  document.getElementById('problem-tabs').innerHTML = problems.map(function(p, i) {
+    return '<div class="p-tab" onclick="selectProblem(' + i + ')">' + p.label + '</div>';
+  }).join('');
+}
+
+const circled = ['①','②','③','④','⑤'];
+function choiceLabel(c, i) { return /^[①②③④⑤]/.test(c) ? c : circled[i] + ' ' + c; }
+
+let quizState = [];
+
+function renderChoicesHtml(q, qi) {
+  return q.choices.map(function(c, i) {
+    return '<div class="quiz-choice" onclick="selectChoice(' + qi + ',' + i + ')"><span>' + choiceLabel(c, i) + '</span></div>';
+  }).join('');
+}
+
+function renderQuiz(p) {
+  quizState = p.questions.map(function() { return { selected: null, checked: false }; });
+  document.getElementById('quiz-container').innerHTML = p.questions.map(function(q, qi) {
+    return '<div class="quiz-card">' +
+      '<div class="quiz-q">' + q.qNum + '. ' + q.question + '</div>' +
+      '<div id="qchoices-' + qi + '">' + renderChoicesHtml(q, qi) + '</div>' +
+      '<button class="quiz-check-btn" id="qcheck-' + qi + '" onclick="checkAnswer(' + qi + ')">정답 확인</button>' +
+      '<div class="quiz-result" id="qresult-' + qi + '"></div>' +
+    '</div>';
+  }).join('');
+}
+
+function selectChoice(qi, i) {
+  if (quizState[qi].checked) return;
+  quizState[qi].selected = i;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    el.classList.toggle('selected', idx === i);
+  });
+}
+
+function checkAnswer(qi) {
+  var q = problems[current].questions[qi];
+  if (quizState[qi].checked) return;
+  if (quizState[qi].selected === null) {
+    document.getElementById('qchoices-' + qi).scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+  quizState[qi].checked = true;
+  document.querySelectorAll('#qchoices-' + qi + ' .quiz-choice').forEach(function(el, idx) {
+    if (idx === q.answer) el.classList.add('correct');
+    else if (idx === quizState[qi].selected) el.classList.add('wrong');
+  });
+  var r = document.getElementById('qresult-' + qi);
+  var ok = quizState[qi].selected === q.answer;
+  if (window.studyStats) window.studyStats.record('quiz', ok);
+  r.classList.add('show', ok ? 'ok' : 'no');
+  r.innerHTML = '<b>' + (ok ? '🎉 정답이에요!' : '아쉬워요, 정답은 ' + circled[q.answer] + '번이에요.') + '</b><br>' + q.explanation;
+  var b = document.getElementById('qcheck-' + qi);
+  b.textContent = '다시 풀기';
+  b.onclick = function() { retryQuestion(qi); };
+}
+
+function retryQuestion(qi) {
+  var p = problems[current];
+  quizState[qi] = { selected: null, checked: false };
+  document.getElementById('qchoices-' + qi).innerHTML = renderChoicesHtml(p.questions[qi], qi);
+  var r = document.getElementById('qresult-' + qi);
+  r.classList.remove('show','ok','no'); r.innerHTML = '';
+  var b = document.getElementById('qcheck-' + qi);
+  b.textContent = '정답 확인';
+  b.onclick = function() { checkAnswer(qi); };
+}
+
+function render() {
+  closeWord();
+  var p = problems[current];
+  document.getElementById('prog-text').textContent = (current + 1) + ' / ' + problems.length;
+  document.getElementById('prog-fill').style.width = ((current + 1) / problems.length * 100) + '%';
+  document.getElementById('type-badge').textContent = p.label + ' · ' + p.type;
+  var gc = document.getElementById('given-card');
+  if (p.image) { gc.classList.add('show'); gc.innerHTML = '<img src="' + p.image + '" alt="문제 자료">'; }
+  else { gc.classList.remove('show'); gc.innerHTML = ''; }
+  var ic = document.getElementById('insert-card');
+  if (p.insertSentence) {
+    ic.classList.add('show');
+    document.getElementById('insert-text').textContent = p.insertSentence;
+    document.getElementById('insert-text-ko').textContent = p.insertSentenceKo || '';
+  } else { ic.classList.remove('show'); }
+  document.getElementById('passage-text').innerHTML = renderPassage(p.passage);
+  renderQuiz(p);
+  document.getElementById('translation-box').textContent = p.translation;
+  document.getElementById('translation-box').classList.remove('show');
+  document.getElementById('btn-trans').classList.remove('on');
+  document.getElementById('btn-trans').textContent = '🇰🇷 전체 해석 보기';
+
+  var vg = document.getElementById('vocab-grid');
+  vg.innerHTML = Object.keys(p.vocab).map(function(k) {
+    var v = p.vocab[k];
+    return '<div class="vocab-chip" onclick="showWord(\'' + k + '\')"><b>' + v.word + '</b><span>' + v.meaning + '</span></div>';
+  }).join('');
+  vg.classList.remove('show');
+  document.getElementById('btn-vocab').classList.remove('on');
+  document.getElementById('btn-vocab').textContent = '📖 핵심 단어 목록';
+
+  document.getElementById('grammar-list').innerHTML = p.grammar.map(function(g) {
+    return '<div class="grammar-item"><div class="grammar-title">' + g.title + '</div><div class="grammar-desc">' + g.desc + '</div><div class="grammar-ex">' + g.ex + '</div></div>';
+  }).join('');
+  renderSyntax(p);
+  document.getElementById('tip-list').innerHTML = p.tips.map(function(t) { return '<div class="tip-item"><p>' + t + '</p></div>'; }).join('');
+
+  document.querySelectorAll('.p-tab').forEach(function(t, i) { t.classList.toggle('active', i === current); });
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === problems.length - 1;
+  document.getElementById('btn-next').textContent = current === problems.length - 1 ? '처음으로' : '다음 문제 →';
+  switchTab('grammar');
+}
+
+function selectProblem(i, skipHistory) {
+  current = i; render(); window.scrollTo({top:0, behavior:'smooth'});
+  if (!skipHistory) { var h = '#p' + current; if (location.hash !== h) history.pushState({pIdx:current}, '', h); }
+}
+function go(d) {
+  if (current === problems.length - 1 && d === 1) current = 0;
+  else current = Math.max(0, Math.min(problems.length - 1, current + d));
+  selectProblem(current);
+}
+
+function toggleTranslation() {
+  var box = document.getElementById('translation-box'), btn = document.getElementById('btn-trans');
+  var s = !box.classList.contains('show');
+  box.classList.toggle('show', s); btn.classList.toggle('on', s);
+  btn.textContent = s ? '🇰🇷 해석 숨기기' : '🇰🇷 전체 해석 보기';
+}
+
+function toggleVocabGrid() {
+  var g = document.getElementById('vocab-grid'), btn = document.getElementById('btn-vocab');
+  var s = !g.classList.contains('show');
+  g.classList.toggle('show', s); btn.classList.toggle('on', s);
+  btn.textContent = s ? '📖 목록 숨기기' : '📖 핵심 단어 목록';
+}
+
+var SYN_LABEL = { S:'주어', V:'동사', O:'목적어', C:'보어', M:'수식어', J:'연결어' };
+function synLabel(r) {
+  return r.split('+').map(function(x) { return SYN_LABEL[x.toUpperCase()] || x; }).join('+');
+}
+function renderSyntax(p) {
+  var el = document.getElementById('syntax-list');
+  if (!p.syntax || !p.syntax.length) { el.innerHTML = '<div class="syn-legend-note">이 지문의 구문분석은 준비 중이에요.</div>'; return; }
+  var legend = '<div class="syn-legend">' +
+    ['S','V','O','C','M','J'].map(function(r) { return '<span class="r-' + r + '">' + SYN_LABEL[r] + ' ' + r + '</span>'; }).join('') + '</div>' +
+    '<div class="syn-legend-note">점선 밑줄과 * 표시는 종속절·준동사구 안의 성분이에요. 수식어(M)는 문장 성분이 아닌 꾸미는 말, 연결어(J)는 접속사·연결 표현이에요.</div>';
+  el.innerHTML = legend + p.syntax.map(function(s, i) {
+    var line = s.c.map(function(c) {
+      var first = c[0].split('+')[0];
+      var sub = first === first.toLowerCase();
+      return '<span class="syn-ch r-' + first.toUpperCase() + (sub ? ' sub' : '') + '"><span class="t">' + c[1] + '</span><span class="l">' + synLabel(c[0]) + '</span></span>';
+    }).join('');
+    var slash = s.c.map(function(c) { return c[1].replace(/\s+$/, ''); }).join(' <b>/</b> ');
+    var ko = s.c.map(function(c) { return c[2]; }).join(' <b>/</b> ');
+    return '<div class="syn-card"><div class="syn-num">문장 ' + (i + 1) + '</div><div class="syn-line">' + line + '</div>' +
+      '<div class="syn-slash">' + slash + '</div><div class="syn-ko">' + ko + '</div>' +
+      '<div class="syn-note">💡 ' + s.n + '</div></div>';
+  }).join('');
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.toggle('active', t.getAttribute('data-t') === name); });
+  document.getElementById('tab-grammar').classList.toggle('active', name === 'grammar');
+  document.getElementById('tab-syntax').classList.toggle('active', name === 'syntax');
+  document.getElementById('tab-tip').classList.toggle('active', name === 'tip');
+}
+
+function showWord(key) {
+  var v = problems[current].vocab[key];
+  if (!v) return;
+  activeVocabKey = key; activeSheetWord = null; currentSpeakWord = v.word;
+  currentSheetWordData = { word:v.word, pron:v.pron, meaning:v.meaning, en:v.ex, ko:v.exko };
+  document.getElementById('sheet-word').textContent = v.word;
+  document.getElementById('sheet-pron').textContent = v.pron;
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
+  document.getElementById('sheet-meaning').textContent = v.meaning;
+  document.getElementById('sheet-example').innerHTML = v.ex + '<br>' + v.exko;
+  var etymEl = document.getElementById('sheet-etym');
+  if (v.etym) { etymEl.innerHTML = '<b>🔤 어원</b><br>' + v.etym; etymEl.classList.add('show'); }
+  else { etymEl.innerHTML = ''; etymEl.classList.remove('show'); }
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+}
+
+function splitSentences(text) {
+  var flat = text.replace(/\s+/g, ' ').trim();
+  var parts = flat.match(/[^.!?]+[.!?]+(?=\s|$)|[^.!?]+$/g) || [flat];
+  return parts.map(function(s) { return s.trim(); }).filter(Boolean);
+}
+
+function findSentenceForWord(word) {
+  var p = problems[current];
+  var plain = p.passage.replace(/\[\[(.+?)::(.+?)\]\]/g, '$2');
+  var enSentences = splitSentences(plain);
+  var re = new RegExp('\\b' + word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+  for (var i = 0; i < enSentences.length; i++) {
+    if (re.test(enSentences[i])) {
+      var koSentences = splitSentences(p.translation || '');
+      var ko = (koSentences.length === enSentences.length) ? koSentences[i] : null;
+      return { en: enSentences[i], ko: ko };
+    }
+  }
+  return null;
+}
+
+var POS_KO = { noun:'명사', verb:'동사', adjective:'형용사', adverb:'부사', preposition:'전치사', conjunction:'접속사', pronoun:'대명사', interjection:'감탄사', determiner:'한정사', numeral:'수사', article:'관사', exclamation:'감탄사' };
+
+function cleanKoMeaning(data) {
+  var cands = [];
+  if (data && data.responseData && data.responseData.translatedText) cands.push(data.responseData.translatedText);
+  if (data && data.matches) for (var j = 0; j < data.matches.length; j++) { if (data.matches[j] && data.matches[j].translation) cands.push(data.matches[j].translation); }
+  for (var i = 0; i < cands.length; i++) {
+    var t = String(cands[i]).trim();
+    if (/[가-힣]/.test(t) && !/[一-鿿぀-ヿ]/.test(t) && t.length <= 40) return t;
+  }
+  for (var i2 = 0; i2 < cands.length; i2++) {
+    var t2 = String(cands[i2]).replace(/[一-鿿぀-ヿ]/g, '').replace(/\s+/g, ' ').trim();
+    if (/[가-힣]/.test(t2)) return t2;
+  }
+  return null;
+}
+
+function showFuncWord(displayWord, entry) {
+  activeVocabKey = null;
+  activeSheetWord = null;
+  currentSpeakWord = displayWord;
+  currentSheetWordData = null;
+  document.getElementById('sheet-word').textContent = displayWord;
+  document.getElementById('sheet-pron').textContent = entry.tag || '문법 포인트';
+  document.getElementById('sheet-pron').classList.add('tag-mode');
+  document.getElementById('sheet-star').classList.add('hide');
+  document.getElementById('sheet-meaning').textContent = entry.meaning;
+  document.getElementById('sheet-example').innerHTML = entry.ex + '<br>' + entry.exko;
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+
+function showPlain(rawWord) {
+  var clean = rawWord.replace(/[^A-Za-z']/g, '');
+  if (!clean) return;
+  var lower = clean.toLowerCase();
+  var p = problems[current];
+  for (var k in p.vocab) {
+    if (p.vocab[k].word.toLowerCase() === lower) { showWord(k); return; }
+  }
+  if (p.funcWords && p.funcWords[lower]) { showFuncWord(clean, p.funcWords[lower]); return; }
+  activeVocabKey = null;
+  currentSpeakWord = clean;
+  activeSheetWord = lower;
+  var found = findSentenceForWord(clean);
+  var sentence = found ? found.en : null;
+  var koSentence = found ? found.ko : null;
+  currentSheetWordData = { word: clean, pron: '', meaning: '뜻을 찾는 중...', en: sentence || '', ko: koSentence || '' };
+  document.getElementById('sheet-word').textContent = clean;
+  document.getElementById('sheet-pron').textContent = '';
+  document.getElementById('sheet-pron').classList.remove('tag-mode');
+  document.getElementById('sheet-star').classList.remove('hide');
+  document.getElementById('sheet-meaning').textContent = '뜻을 찾는 중...';
+  document.getElementById('sheet-example').innerHTML = sentence ? (sentence + '<br>' + (koSentence || '해석을 불러오는 중...')) : '';
+  document.getElementById('sheet-etym').innerHTML = '';
+  document.getElementById('sheet-etym').classList.remove('show');
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  updateSheetStarBtn();
+  lookupWord(lower, sentence, koSentence);
+}
+
+function lookupWord(lower, sentence, koSentence) {
+  var posText = '';
+  var koMeaning = '';
+  function renderMeaning() {
+    if (!koMeaning) return;
+    var full = (posText ? '[' + posText + '] ' : '') + koMeaning;
+    document.getElementById('sheet-meaning').textContent = full;
+    if (currentSheetWordData) currentSheetWordData.meaning = full;
+  }
+
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(lower))
+    .then(function(r) { if (!r.ok) throw new Error('no entry'); return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var entry = data[0];
+      var phonetic = entry.phonetic || '';
+      if (!phonetic && entry.phonetics) {
+        for (var i = 0; i < entry.phonetics.length; i++) {
+          if (entry.phonetics[i].text) { phonetic = entry.phonetics[i].text; break; }
+        }
+      }
+      if (phonetic) document.getElementById('sheet-pron').textContent = phonetic;
+      if (currentSheetWordData) currentSheetWordData.pron = phonetic;
+      if (entry.meanings) {
+        var seen = {};
+        var list = [];
+        for (var m = 0; m < entry.meanings.length; m++) {
+          var ko = POS_KO[entry.meanings[m].partOfSpeech];
+          if (ko && !seen[ko]) { seen[ko] = true; list.push(ko); }
+        }
+        if (list.length) { posText = list.slice(0, 2).join('·'); renderMeaning(); }
+      }
+    })
+    .catch(function() {});
+
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(lower) + '&langpair=en|ko')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (activeSheetWord !== lower) return;
+      var ko = cleanKoMeaning(data);
+      if (ko) { koMeaning = ko; renderMeaning(); }
+      else {
+        document.getElementById('sheet-meaning').textContent = '뜻을 찾을 수 없어요. 🔊 버튼으로 발음만 들어보세요.';
+        if (currentSheetWordData) currentSheetWordData.meaning = '뜻 정보 없음';
+      }
+    })
+    .catch(function() {
+      if (activeSheetWord !== lower) return;
+      document.getElementById('sheet-meaning').textContent = '인터넷 연결을 확인해주세요. 🔊 버튼으로 발음은 들을 수 있어요.';
+    });
+
+  if (sentence && !koSentence) {
+    fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(sentence) + '&langpair=en|ko')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (activeSheetWord !== lower) return;
+        var ko = data && data.responseData && data.responseData.translatedText;
+        document.getElementById('sheet-example').innerHTML = sentence + (ko ? ('<br>' + ko) : '');
+        if (currentSheetWordData) { currentSheetWordData.en = sentence; currentSheetWordData.ko = ko || ''; }
+      })
+      .catch(function() {
+        if (activeSheetWord !== lower) return;
+        document.getElementById('sheet-example').innerHTML = sentence;
+      });
+  }
+}
+
+function closeWord() {
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('sheet').classList.remove('show');
+  activeSheetWord = null;
+}
+
+function speakCurrent() { if (currentSpeakWord) speak(currentSpeakWord); }
+
+var ttsVoices = [];
+if ('speechSynthesis' in window) {
+  var lv = function() { ttsVoices = window.speechSynthesis.getVoices(); };
+  lv(); window.speechSynthesis.onvoiceschanged = lv;
+}
+
+function speak(text) {
+  if (!text || !('speechSynthesis' in window)) return;
+  var s = window.speechSynthesis, u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.9;
+  var vs = (ttsVoices && ttsVoices.length) ? ttsVoices : s.getVoices();
+  if (vs && vs.length) {
+    var v = vs.find(function(x) { return x.lang === 'en-US'; }) || vs.find(function(x) { return x.lang && x.lang.indexOf('en') === 0; });
+    if (v) u.voice = v;
+  }
+  s.cancel();
+  setTimeout(function() { s.speak(u); }, 80);
+}
+
+buildTabs();
+(function() {
+  var m = /^#p(\d+)$/.exec(location.hash);
+  var idx = m ? parseInt(m[1], 10) : -1;
+  if (idx >= 0 && idx < problems.length) current = idx;
+  render();
+  history.replaceState({ pIdx: current }, '', '#p' + current);
+  window.addEventListener('popstate', function(e) {
+    var i = (e.state && typeof e.state.pIdx === 'number') ? e.state.pIdx : -1;
+    if (i < 0) {
+      var mm = /^#p(\d+)$/.exec(location.hash);
+      i = mm ? parseInt(mm[1], 10) : 0;
+    }
+    if (i >= 0 && i < problems.length && i !== current) selectProblem(i, true);
+  });
+})();
+</script>
+<script src="study-stats.js"></script>
+<script type="module" src="firebase-sync.js"></script>
+</body>
+</html>

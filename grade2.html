@@ -166,9 +166,32 @@ const paper1CardsHtml = '<div class="cards">' +
   '</a>' +
 '</div>';
 
+const paper2CardsHtml = '<div class="cards">' +
+  '<a class="card" href="g2paper2-study105-111.html">' +
+    '<div class="card-main"><div class="card-title">105~111번 지문 완전정복</div><div class="card-sub">단어 클릭 뜻·발음, 전체 해석, 문법, 구문분석, 실전 문제</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2paper2-study112-118.html">' +
+    '<div class="card-main"><div class="card-title">112~118번 지문 완전정복</div><div class="card-sub">도표·인물·안내문·어법·어휘·빈칸까지, 구문분석 포함</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2paper2-study119-125.html">' +
+    '<div class="card-main"><div class="card-title">119~125번 지문 완전정복</div><div class="card-sub">빈칸추론·무관한 문장·순서배열·문장삽입, 구문분석 포함</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2paper2-study126-132.html">' +
+    '<div class="card-main"><div class="card-title">126~132번 지문 완전정복</div><div class="card-sub">문장삽입·요약문·장문까지, 구문분석 포함</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+  '<a class="card" href="g2paper2-vocab105-132.html">' +
+    '<div class="card-main"><div class="card-title">단어장 퀴즈 (105~132번)</div><div class="card-sub">핵심 단어 + 지문 학습지에서 저장한 단어로 퀴즈 풀기</div></div>' +
+    '<div class="card-arrow">→</div>' +
+  '</a>' +
+'</div>';
+
 const _params = new URLSearchParams(location.search);
 let mode = _params.get('mode') || localStorage.getItem('grade2_lastMode') || 'mock';
-if (mode !== 'paper1') mode = 'mock';
+if (mode !== 'paper1' && mode !== 'paper2') mode = 'mock';
 let year = Number(_params.get('year')) || Number(localStorage.getItem('grade2_lastYear')) || 2025;
 if (!data.hasOwnProperty(year)) year = 2025;
 let month = _params.get('month') || localStorage.getItem('grade2_lastMonth');
@@ -185,13 +208,14 @@ function renderYears() {
     return '<button class="year-chip' + (mode === 'mock' && Number(y) === year ? ' active' : '') + '" onclick="selectYear(' + y + ')">' + y + '</button>';
   }).join('');
   chips += '<button class="year-chip paper-chip' + (mode === 'paper1' ? ' active' : '') + '" onclick="selectPaper1()">📝 1차지필</button>';
+  chips += '<button class="year-chip paper-chip' + (mode === 'paper2' ? ' active' : '') + '" onclick="selectPaper2()">📝 2차지필</button>';
   document.getElementById('year-row').innerHTML = chips;
 }
 
 function renderMonths() {
   var row = document.getElementById('month-row');
   var title = document.getElementById('month-section-title');
-  if (mode === 'paper1') { row.classList.add('hide'); row.innerHTML = ''; title.style.display = 'none'; return; }
+  if (mode === 'paper1' || mode === 'paper2') { row.classList.add('hide'); row.innerHTML = ''; title.style.display = 'none'; return; }
   row.classList.remove('hide');
   title.style.display = '';
   var months = data[year].months;
@@ -204,6 +228,10 @@ function renderMonths() {
 function renderContent() {
   if (mode === 'paper1') {
     document.getElementById('content-area').innerHTML = paper1CardsHtml;
+    return;
+  }
+  if (mode === 'paper2') {
+    document.getElementById('content-area').innerHTML = paper2CardsHtml;
     return;
   }
   var isAvailable = data[year].available.indexOf(month) !== -1;
@@ -229,6 +257,14 @@ function selectYear(y) {
 
 function selectPaper1() {
   mode = 'paper1';
+  renderYears();
+  renderMonths();
+  renderContent();
+  saveState();
+}
+
+function selectPaper2() {
+  mode = 'paper2';
   renderYears();
   renderMonths();
   renderContent();
